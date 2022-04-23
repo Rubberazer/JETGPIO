@@ -6,7 +6,7 @@ No libraries used, mapped directly into user memory (mmap) and accessing the teg
 
 https://github.com/valentis/jetson-nano-gpio-example
 
-https://github.com/jwatte/jetson-gpio-example/blob/master/gpiomem.cpp
+https://github.com/jwatte/jetson-gpio-example/
 
 Jetson nano SCO family: tegra210 (TX1)
 Board:P3449-0000
