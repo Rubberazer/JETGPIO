@@ -1,4 +1,4 @@
-// In C: gcc -Wall -g -o gpio_test gpio_test.c
+// Compile: gcc -Wall -g -o gpio_test gpio_test.c
 // run with:
 //  sudo ./gpio_test
 //
@@ -37,6 +37,8 @@
 #define APB_MISC 0x70000000 				//Base address for PAD control registers
 #define PINMUX_AUX_GPIO_PE6_0 0x70003248  	//Header pin 33, GPIO_PE6. Typical value for output: 0x00000008
 #define GPIO_PE6_CFG 0x700009c8 			//Header pin 33, GPIO_PE6. Typical value for output: 0x01f1f000
+#define PINMUX_AUX_AUD_MCLK_0 0x70003180	//Header pin 7 , GPIO AUD_MCLK. Typical value ofr input:
+#define AUD_MCLK_CFG 0x700008f4				//Header pin 7 , GPIO AUD_MCLK. Typical value for input:
 
 //  layout based on the definitions above
 //  Each GPIO controller has four ports, each port controls 8 pins, each
@@ -91,9 +93,25 @@ int main(void)
         exit(1);
     }
 	
+	   //  This page will contain all pin_mux registers
+    void *base_mux_in = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, (PINMUX_AUX_AUD_MCLK_0 & ~pagemask));
+    if (base == NULL) {
+        perror("mmap()");
+        exit(1);
+    }
+	
+	 //  This page will contain all cfg registers
+    void *base_cfg_in = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, (AUD_MCLK_CFG & ~pagemask));
+    if (base == NULL) {
+        perror("mmap()");
+        exit(1);
+    }
+	
+	
 	
     //  set up a pointer for convenient access -- this pointer is to the selected GPIO controller
     GPIO_mem volatile *pin = (GPIO_mem volatile *)((char *)base + (GPIO_1 & pagemask));
+    GPIO_mem volatile *pin_input = (GPIO_mem volatile *)((char *)base + (GPIO_1 & pagemask));
     
     //  set up a pointer for convenient access -- this pointer is to the selected pin_mux register
     uint32_t volatile *pin_mux = (uint32_t volatile *)((char *)base_mux + (PINMUX_AUX_GPIO_PE6_0 & pagemask));
@@ -101,41 +119,62 @@ int main(void)
     //  set up a pointer for convenient access -- this pointer is to the selected pin_cfg register
     uint32_t volatile *pin_cfg = (uint32_t volatile *)((char *)base_cfg + (GPIO_PE6_CFG & pagemask));
     
+    //  set up a pointer for convenient access -- this pointer is to the selected pin_mux register
+    uint32_t volatile *pin_mux_in = (uint32_t volatile *)((char *)base_mux_in + (PINMUX_AUX_AUD_MCLK_0 & pagemask));
+    
+    //  set up a pointer for convenient access -- this pointer is to the selected pin_cfg register
+    uint32_t volatile *pin_cfg_in = (uint32_t volatile *)((char *)base_cfg_in + (AUD_MCLK_CFG & pagemask));
+    
+    /*
     printf("pin: %p\n", pin);
     printf("base: %p\n", base);
     printf("base_mux: %p\n", base_mux);
     printf("pin_mux: %p\n", pin_mux);
-    
+    */
      
     int offset = 0x100;
+    int offset_in = 0x60C;
+     
+    pin_input = (GPIO_mem volatile *)((char *)pin_input + offset_in);
      
     pin = (GPIO_mem volatile *)((char *)pin + offset);
     
+    /*
 	printf("pin+offset:%p\n", pin->CNF);
 	printf("*pin->CNF value:%x\n", pin->CNF[0]);
 	printf("*pin.OE:%p\n", pin->OE);
 	printf("*pin->OE value:%x\n", pin->OE[0]);
 	printf("*pin.OUT:%p\n", pin->OUT);
 	printf("*pin->OUT value:%x\n", pin->OUT[0]);
+	*/
 	
-	*pin_mux = 0x00000008;
+	*pin_mux = 0x00000000;
 	*pin_cfg = 0x01F1F000;
+	
+	*pin_mux_in = 0x00000040;
+	*pin_cfg_in = 0x00000000;
 	
     printf("NOW configure the CNF\n");
     
     pin->CNF[0] = 0x00000040;
     
+    pin_input->CNF[0] = 0x00000001;
+    
     printf("NOW select output\n");
     pin->OE[0] = 0x00000040;
     
     int x =0;
-    while (x<5) {
+    while (x<10) {
         pin->OUT[0] = 0x00000040;
         printf("HIGH\n");
-        sleep(5);
+        usleep(5);
+        printf("*pin->IN value:%x\n", pin_input->IN[0]);
+        sleep(2);
         pin->OUT[0] = 0x00000000;
+        usleep(5);
         printf("LOW\n");
-        sleep(5);
+        printf("*pin->IN value:%x\n", pin_input->IN[0]);
+        sleep(2);
 		x++;
     }
     pin->OUT[0] = 0x00000000;
