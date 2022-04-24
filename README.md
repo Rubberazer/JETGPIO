@@ -1,7 +1,7 @@
 # JETGPIO_TESTS
 First attempts playing with a Jetson NANO using direct memory access to control the GPIO
 
-Testing pins on a Jetson nano developer kit 40 pin header GPIO, setting pin 33 (GPIO_PE6) as an output and changing the value, the thing works, tested with an oscilloscope. Still very initial attempts, will increase more pins and functionality when i have the time but nice proof of concept anyways, very dirty code yet.
+Testing pins on a Jetson nano developer kit 40 pin header GPIO, setting pin 33 (GPIO_PE6) as an output and pin 7 (AUD_MCLK) as an input, the thing works, tested with an oscilloscope. Still very initial attempts, will increase more pins and functionality when i have the time but nice proof of concept anyways, very dirty code yet.
 No libraries used, mapped directly into user memory (mmap) and accessing the tegra registers bypassing the kernel for low latency and higher degree of control, NO need to configure the GPIO previously to manipulate the kernel tree. Credit where credit is due, these guys got me started (although those 2 examples didn't work for me as they were):
 
 https://github.com/valentis/jetson-nano-gpio-example
