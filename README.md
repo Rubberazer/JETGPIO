@@ -28,6 +28,7 @@ FUNCTIONALITY:
  HOW TO:
  
     See 'jetgpio_example.c' for an example of how to use the library, the main functions provided are there
+    
     The library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis) for the Raspberry PI family
 
 THIS IS A VERY ALPHA, INCOMPLETE VERSION AND ALL SORT OF BUGS ARE EXPECTED! 
