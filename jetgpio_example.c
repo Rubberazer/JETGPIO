@@ -17,13 +17,13 @@ Init = gpioInitialise();
 if (Init < 0)
 {
    /* jetgpio initialisation failed */
-   printf("Jetpio initialisation failed. Error code:  %d\n", Init);
+   printf("Jetgpio initialisation failed. Error code:  %d\n", Init);
    exit(Init);
 }
 else
 {
    /* jetgpio initialised okay*/
-   printf("Jetpio initialisation OK. Return code:  %d\n", Init);
+   printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
 }	
 
 // Setting up pin 3 as OUTPUT and 7 as INPUT
