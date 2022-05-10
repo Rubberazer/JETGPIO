@@ -4,7 +4,7 @@ C library to manage the JETSON NANO GPIO v0.1 (ALPHA)
 
 FUNCTIONALITY:
 
-    JETSON NANO (TX1) family only, so far it does not support the Xaviers,etc
+    JETSON NANO (TX1) family only, so far it does not support the Xaviers,etc. No hardware to test it
   
     GPIO control setup of all the header pinout as input or output
   
