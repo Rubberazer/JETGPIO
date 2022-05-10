@@ -39,10 +39,10 @@ For more information, please refer to <http://unlicense.org/>
 
 /* GPIO CNF registers */
 
-#define CNF_3 0x204						// Pin 3 GEN2_I2C_SDA 0x6000d204
-#define CNF_5 0x204						// Pin 5 GEN2_I2C_SCL
-#define CNF_7 0x60C						// Pin 7 AUD_MCLK
-#define CNF_8 0x108						// Pin 8 UART2_TX
+#define CNF_3 0x204						    // Pin 3 GEN2_I2C_SDA 0x6000d204
+#define CNF_5 0x204						    // Pin 5 GEN2_I2C_SCL
+#define CNF_7 0x60C						    // Pin 7 AUD_MCLK
+#define CNF_8 0x108						    // Pin 8 UART2_TX
 #define CNF_10 0x108						// Pin 10 UART2_RX
 #define CNF_11 0x108						// Pin 11 UART2_RTS
 #define CNF_12 0x204						// Pin 12 DAP4_SCLK
@@ -70,10 +70,10 @@ For more information, please refer to <http://unlicense.org/>
 
 /* GPIO Pinmux registers */
 
-#define PINMUX_3 0x0c8 					// Pinmux 3 PINMUX_AUX_GEN2_I2C_SDA_0 0x700030c8
-#define PINMUX_5 0x0c4 					// Pinmux 5 PINMUX_AUX_GEN2_I2C_SCL_0
-#define PINMUX_7 0x180 					// Pinmux 7 PINMUX_AUX_AUD_MCLK_0
-#define PINMUX_8 0x0f4 					// Pinmux 8 PINMUX_AUX_UART2_TX_0
+#define PINMUX_3 0x0c8 					    // Pinmux 3 PINMUX_AUX_GEN2_I2C_SDA_0 0x700030c8
+#define PINMUX_5 0x0c4 					    // Pinmux 5 PINMUX_AUX_GEN2_I2C_SCL_0
+#define PINMUX_7 0x180 					    // Pinmux 7 PINMUX_AUX_AUD_MCLK_0
+#define PINMUX_8 0x0f4 					    // Pinmux 8 PINMUX_AUX_UART2_TX_0
 #define PINMUX_10 0x0f8 					// Pinmux 10 PINMUX_AUX_UART2_RX_0
 #define PINMUX_11 0x0fc 					// Pinmux 11 PINMUX_AUX_UART2_RTS_0
 #define PINMUX_12 0x150 					// Pinmux 12 PINMUX_AUX_DAP4_SCLK_0
@@ -132,11 +132,11 @@ For more information, please refer to <http://unlicense.org/>
 
 /* Typical values Pinmux & Cfg registers */
 
-#define PINMUX_IN 0x00000040 					// Typical for pinmux register as input
-#define PINMUX_OUT 0x00000400 					// Typical for pinmux register as output
-#define CFG_IN 0x00000000					    // Typical for config register as input
-#define CFG_OUT 0x01F1F000						// Typical for config register as output
-#define CFG_OUT1 0xF0000000						// Typical for config register as output
+#define PINMUX_IN 0x00000040 				// Typical for pinmux register as input
+#define PINMUX_OUT 0x00000400 				// Typical for pinmux register as output
+#define CFG_IN 0x00000000					// Typical for config register as input
+#define CFG_OUT 0x01F1F000					// Typical for config register as output
+#define CFG_OUT1 0xF0000000					// Typical for config register as output
 
 /* Define typical input/output */
 
