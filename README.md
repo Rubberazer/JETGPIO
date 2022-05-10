@@ -1,15 +1,25 @@
-# JETGPIO test
-First attempts playing with a Jetson NANO using direct memory access to control the GPIO
+# JETGPIO library
+C library to manage the JETSON nano GPIO v0.1 (ALPHA)
+FUNCTIONALITY:
+  JETSON NANO (TX1) family only, so far it does not support the Xaviers,etc
+  GPIO control setup of all the header pinout as input or output
+  SFIO (special functions) such as I2C, Hardware PWM and others are not supported yet
+  No need of previous kernel configuration, teh library will take care of that ono runtime
+  Low latency is expected (it does not go through the kernel) direct writing to the registers
+  by using DMA
+  
+ INSTALLATION:
+  CLone the content into any folder in your JETSON
+  Change access rights to the make.sh: chmod +x make.sh
+  Execute make.sh: sudo ./make.sh
+  That's it the library should be installed and ready to be used
+  
+ HOW TO:
+  See 'jetgpio_example.c' for an example of how to use the library, the main functions provided are there
 
-Testing pins on a Jetson nano developer kit 40 pin header GPIO, setting pin 33 (GPIO_PE6) as an output and pin 7 (AUD_MCLK) as an input, the thing works, tested with an oscilloscope. Still very initial attempts, will increase more pins and functionality when i have the time but nice proof of concept anyways, very dirty code yet.
-No libraries used, mapped directly into user memory (mmap) and accessing the tegra registers bypassing the kernel for low latency and higher degree of control, NO need to configure the GPIO previously to manipulate the kernel tree. Credit where credit is due, these guys got me started (although those 2 examples didn't work for me as they were):
+THIS IS A VERY ALPHA, UNCOMPLETED VERSION AND ALL SORT OF BUGS ARE EXPECTED! 
 
-https://github.com/valentis/jetson-nano-gpio-example
-
-https://github.com/jwatte/jetson-gpio-example/
-
-Jetson nano SCO family: tegra210 (TX1)
-Board: P3449-0000
+The library has been tested on a Jetson nano SCO family: tegra210 (TX1), Board: P3449-0000
 
 ![image](https://user-images.githubusercontent.com/47650457/164944765-998ca31c-d72c-4d2b-8cbc-7bea594ce8d5.png)
 
