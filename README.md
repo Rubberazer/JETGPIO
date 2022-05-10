@@ -1,6 +1,6 @@
 # JETGPIO library
 
-C library to manage the JETSON nano GPIO v0.1 (ALPHA)
+C library to manage the JETSON NANO GPIO v0.1 (ALPHA)
 
 FUNCTIONALITY:
 
