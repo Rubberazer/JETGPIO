@@ -8,7 +8,7 @@ FUNCTIONALITY:
   
     GPIO control setup of all the header pinout as input or output
   
-    SFIO (special functions) such as I2C, Hardware PWM and others are not supported yet
+    SFIO (special functions) such as I2C, Hardware PWM and others are NOT supported yet
   
     No need of previous kernel configuration, the library will take care of that on runtime
   
