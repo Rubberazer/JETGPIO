@@ -17,7 +17,7 @@ FUNCTIONALITY:
   
  INSTALLATION:
  
-    CLone the content into any folder in your JETSON
+    Clone the content into any folder in your JETSON
   
     Change access rights to the make.sh: chmod +x make.sh
   
