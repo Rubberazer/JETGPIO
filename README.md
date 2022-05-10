@@ -10,10 +10,10 @@ FUNCTIONALITY:
   
     SFIO (special functions) such as I2C, Hardware PWM and others are not supported yet
   
-    No need of previous kernel configuration, teh library will take care of that ono runtime
+    No need of previous kernel configuration, the library will take care of that on runtime
   
     Low latency is expected (it does not go through the kernel) direct writing to the registers
-    by using DMA
+    by DMA
   
  INSTALLATION:
  
