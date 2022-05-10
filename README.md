@@ -19,7 +19,7 @@ FUNCTIONALITY:
  
     Clone the content into any folder in your JETSON
   
-    Change access rights to make.sh: sudo chmod +x make.sh (no proper makefile yet, it will come)
+    Change access rights to make.sh executable: sudo chmod +x make.sh (no proper makefile yet, it will come)
   
     Execute make.sh: sudo ./make.sh
   
