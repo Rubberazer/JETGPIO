@@ -31,7 +31,7 @@ FUNCTIONALITY:
     
     The library functions names and usage mimic the ones of the pigpio library (which I recommend 
     
-    if you work with Raspberry Pis) 
+    if you work with Raspberry Pis). Learnt a lot from that one
     
 
 THIS IS A VERY ALPHA, INCOMPLETE VERSION AND ALL SORT OF BUGS ARE EXPECTED! 
