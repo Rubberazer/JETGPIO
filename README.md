@@ -23,7 +23,7 @@ FUNCTIONALITY:
   
     Execute make.sh: sudo ./make.sh
   
-    That's it the library should be installed and ready to be used
+    That's it, the library should be installed and ready to be used
   
  HOW TO:
  
