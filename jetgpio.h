@@ -264,11 +264,11 @@ it stores the status of all the relevant registers before using/modifying them
 ...
 if (gpioInitialise() < 0)
 {
-   // pigpio initialisation failed.
+   // jetgpio initialisation failed.
 }
 else
 {
-   // pigpio initialised okay.
+   // jetgpio initialised okay.
 }
 
 */
