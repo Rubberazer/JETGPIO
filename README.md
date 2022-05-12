@@ -14,8 +14,7 @@ FUNCTIONALITY:
   
     No need of previous kernel configuration, the library will take care of that on runtime
   
-    Low latency is expected (it does not go through the kernel) direct writing to the registers
-    by DMA
+    Low latency is expected (it does not go through the kernel) direct writing to the registers (DMA)
   
  INSTALLATION:
  
