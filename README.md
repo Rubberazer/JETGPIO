@@ -8,7 +8,7 @@ FUNCTIONALITY:
   
     GPIO control of all the header pinout as input or output
     
-    PWM (hardware) control on pins 32 & 33
+    PWM (hardware) control on header pins 32 & 33
   
     Serial communications such as I2C, SPI and UART are NOT supported yet
   
