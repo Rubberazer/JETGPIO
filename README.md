@@ -7,8 +7,10 @@ FUNCTIONALITY:
     JETSON NANO (TX1) family only, so far it does not support the Xaviers,etc. No hardware to test it
   
     GPIO control of all the header pinout as input or output
+    
+    PWM (hardware) control on pins 32 & 33
   
-    SFIO (special functions) such as I2C, Hardware PWM and others are NOT supported yet
+    Serial communications such as I2C, SPI and UART are NOT supported yet
   
     No need of previous kernel configuration, the library will take care of that on runtime
   
