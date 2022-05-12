@@ -39,7 +39,7 @@ For more information, please refer to <http://unlicense.org/>
 
 /* PWM Control */
 
-#define base_PWM 0x7000a000       // PWM Controller base address
+#define base_PWM 0x7000a000             // PWM Controller base address
 #define PM3_PWM0 0x00                   // PWM0 pin 32 LCD_BL_PWM 
 #define PM3_PWM2 0x20                   // PWM2 pin 33 GPIO_PE6
 
@@ -350,7 +350,7 @@ Sets the frequency in hertz to be used for the GPIO.
 gpio: 32, 33
 frequency: 20Hz to 20 kHz
 . .
-Returns the numerically closest frequency if OK, otherwise
+Returns 1 if OK, otherwise
 -1.
 
 ...
