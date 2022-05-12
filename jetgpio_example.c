@@ -26,7 +26,7 @@ else
    printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
 }	
 
-// Setting up pin 3 as OUTPUT and 7 as INPUT
+// Setting up pin 3 as OUTPUT and 38 as INPUT
 
 int stat1 = gpioSetMode(3, JET_OUTPUT);
 if (stat1 < 0)
@@ -41,7 +41,7 @@ else
    printf("gpio setting up okay. Return code:  %d\n", stat1);
 }
 
-int stat2 = gpioSetMode(7, JET_INPUT);
+int stat2 = gpioSetMode(7, 0);
 if (stat2 < 0)
 {
    /* gpio setting up failed */
@@ -52,6 +52,37 @@ else
 {
    /* gpio setting up okay*/
    printf("gpio setting up okay. Return code:  %d\n", stat2);
+}
+
+/* Setting up PWM frequency pin 32 */
+
+int PWMstat = gpioSetPWMfrequency(32, 10000);
+
+if (PWMstat < 0)
+{
+   /* PWM frequency set up failed */
+   printf("PWM frequency set up failed. Error code:  %d\n", PWMstat);
+   exit(Init);
+}
+else
+{
+   /* PWM frequency set up okay*/
+   printf("PWM frequency set up okay. Return code:  %d\n", PWMstat);
+}
+
+int PWMstat2 = gpioPWM(32, 200);
+
+
+if (PWMstat2 < 0)
+{
+   /* PWM start on failed */
+   printf("PWM start failed. Error code:  %d\n", PWMstat2);
+   exit(Init);
+}
+else
+{
+   /* PWM started on okay*/
+   printf("PWM started up okay. Return code:  %d\n", PWMstat2);
 }
 
 int x =0;

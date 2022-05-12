@@ -38,6 +38,9 @@ int fd;
 GPIO_CNF_Init volatile pin_CNF;
 GPIO_PINMUX_Init volatile pin_MUX;
 GPIO_CFG_Init volatile pin_CFG;
+GPIO_PWM volatile pinPWM_Init;
+
+GPIO_PWM volatile *pinPWM;
 
 GPIO_CNF volatile *pin3;
 GPIO_CNF volatile *pin5;
@@ -132,6 +135,8 @@ void *basePINMUX;
 
 void *baseCFG;
 
+void *basePWM;
+
 
 int gpioInitialise(void)
 {
@@ -167,6 +172,17 @@ int gpioInitialise(void)
         perror("mmap()");
         status = -3;
     }
+    
+       //  Mapping GPIO_PWM
+	basePWM = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, base_PWM);
+    if (basePWM == NULL) {
+        perror("mmap()");
+        status = -3;
+    }
+    
+     // Pointer to PM3_PWMx
+    pinPWM = (GPIO_PWM volatile *)((char *)basePWM + PM3_PWM0);
+    pinPWM_Init = *pinPWM;
     
     // Pointer to CNF3
     pin3 = (GPIO_CNF volatile *)((char *)baseCNF + CNF_3);
@@ -513,6 +529,7 @@ void gpioTerminate(void)
 {
 	int pagesize = sysconf(_SC_PAGESIZE);
 	/* Restoring registers to their previous state */
+	*pinPWM = pinPWM_Init;
 	pin3->CNF[0] = pin_CNF.CNF3;
 	*pinmux3 = pin_MUX.PINMUX3;
 	*pincfg3 = pin_CFG.CFG3;
@@ -606,6 +623,9 @@ void gpioTerminate(void)
 	
 	/* Ummapping CFG registers */
 	munmap(baseCFG, pagesize);
+	
+	/* Ummapping PWM registers */
+	munmap(basePWM, pagesize);
   
 	/* close /dev/mem */
     close(fd);
@@ -1266,5 +1286,60 @@ int gpioWrite(unsigned gpio, unsigned level)
 	return status;
 }
 
+int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)
+{
+	int status = 1;
+	if ((frequency >= 20) && (frequency <=200000)){
+		frequency = frequency -20;
+		frequency = frequency/24;
+	switch (gpio){
+		
+		case 32:
+			pinPWM->PWM_0 = frequency;
+			break;
+		case 33:
+			pinPWM->PWM_2 = frequency;
+			break;
+		default:
+			status = -1;
+			printf("Only gpio numbers f32 and 33 are accepted,\n");
+		}
+		
+	}
+	else {printf("Only frequencies from 20 to 200000 Hz are allowed\n");
+		status =-1;}
+	return status;
+}
+
+int gpioPWM(unsigned gpio, unsigned dutycycle)
+{
+	int status = 1;
+	if ((dutycycle >= 0) && (dutycycle <=256)){
+	switch (gpio){
+		
+		case 32:
+			*pinmux32 = 0x00000001;
+			*pincfg32 = CFG_OUT;
+			pin32->CNF[0] &= ~(0x00000001);
+			pinPWM->PWM_0 |= dutycycle<<15;
+			pinPWM->PWM_0 |= 0x80000000;
+			break;
+		case 33:
+			*pinmux33 = 0x00000002;
+			*pincfg33 = CFG_OUT;
+			pin33->CNF[0] &= ~(0x00000040);
+			pinPWM->PWM_2 |= dutycycle<<15;
+			pinPWM->PWM_2 |= 0x80000000;
+			break;
+		default:
+			status = -1;
+			printf("Only gpio numbers f32 and 33 are accepted,\n");
+		}
+		
+	}
+	else {printf("Only a dutycycle from 0 to 256 is allowed\n");
+		status =-1;}
+	return status;
+}
 
 
