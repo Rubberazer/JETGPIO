@@ -1321,14 +1321,14 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 			*pinmux32 = 0x00000001;
 			*pincfg32 = CFG_OUT;
 			pin32->CNF[0] &= ~(0x00000001);
-			pinPWM->PWM_0 |= dutycycle<<15;
+			pinPWM->PWM_0 |= dutycycle<<16;
 			pinPWM->PWM_0 |= 0x80000000;
 			break;
 		case 33:
 			*pinmux33 = 0x00000002;
 			*pincfg33 = CFG_OUT;
 			pin33->CNF[0] &= ~(0x00000040);
-			pinPWM->PWM_2 |= dutycycle<<15;
+			pinPWM->PWM_2 |= dutycycle<<16;
 			pinPWM->PWM_2 |= 0x80000000;
 			break;
 		default:
