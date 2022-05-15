@@ -75,7 +75,7 @@ For more information, please refer to <http://unlicense.org/>
 #define CNF_35 0x204                    // Pin 35 DAP4_FS
 #define CNF_36 0x108                    // Pin 36 UART2_CTS
 #define CNF_37 0x004                    // Pin 37 SPI2_MOSI
-#define CNF_38 0x004                    // Pin 38 DAP4_DIN
+#define CNF_38 0x204                    // Pin 38 DAP4_DIN
 #define CNF_40 0x204                    // Pin 40 DAP4_DOUT
 
 /* GPIO Pinmux registers */
