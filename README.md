@@ -9,8 +9,12 @@ FUNCTIONALITY:
     GPIO control of all the header pinout as input or output
     
     PWM (hardware) control on header pins 32 & 33
+    
+    I2C serial communication over pins: I2C number 0: 27 (GEN1_I2C_SDA) & 28 (GEN1_I2C_SCL)  and 
+    
+    I2C number 1: 3 (GEN2_I2C_SDA) & 5 (GEN2_I2C_SCL) i2c1
   
-    Serial communications such as I2C, SPI and UART are NOT supported yet
+    SPI and UART are NOT supported yet
   
     No need of previous kernel configuration, the library will take care of that on runtime
   
@@ -29,6 +33,10 @@ FUNCTIONALITY:
  HOW TO:
  
     See 'jetgpio_example.c' for an example of how to use the library, the main functions provided are there
+    
+    See 'jetgpio_i2c_example.c' for an example of how to use the i2c comms with a MPU6050 gyroscope connected 
+    
+    to i2c 0 (pins 27 & 28)
     
     The library functions names and usage mimic the ones of the pigpio library (which I recommend 
     
