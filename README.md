@@ -10,7 +10,9 @@ FUNCTIONALITY:
     
     PWM (hardware) control on header pins 32 & 33
     
-    I2C serial communication over pins: 27 (GEN1_I2C_SDA) & 28 (GEN1_I2C_SCL)  and 3 (GEN2_I2C_SDA) & 5 (GEN2_I2C_SCL) i2c1
+    I2C serial communication over pins: 27 (GEN1_I2C_SDA) & 28 (GEN1_I2C_SCL)  and 3 (GEN2_I2C_SDA) 
+    
+    & 5 (GEN2_I2C_SCL) i2c1
   
     SPI and UART are NOT supported yet
   
