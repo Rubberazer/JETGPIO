@@ -270,6 +270,14 @@ typedef struct {
     uint32_t PWM_3;
 } GPIO_PWM;
 
+typedef struct {
+	int32_t state;
+	int32_t	 fd;
+	int32_t addr;
+	int32_t flags;
+	int32_t funcs;
+} i2cInfo_t;
+
 /* Functions */
 
 int gpioInitialise(void);
@@ -369,6 +377,61 @@ Arduino style: analogWrite
 gpioPWM(32, 256); // Sets pin 32 full on.
 gpioPWM(33, 128); // Sets pin 33 half on.
 ...
+*/
+
+int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags);
+/*
+This returns a handle for the device at the address on the I2C bus.
+. .
+i2cBus: 1 or 2, 1 are pins 27 (SDA) & 28 (SCL), 2 are pins 3(
+i2cAddr: 0-0x7F
+i2cFlags: 0
+. .
+No flags are currently defined.  This parameter should be set to zero.
+Physically buses 0 and 1 are available on the Jetson Nano.
+. .
+Returns a handle with the I2C bus number being opened (>=0) if OK, otherwise -1.
+. .
+*/
+
+int i2cClose(unsigned handle);
+/*
+This closes the I2C device associated with the handle.
+. .
+handle: >=0, as returned by a call to [*i2cOpen*]
+. .
+Returns 0 if OK, otherwise -1.
+*/
+
+int i2cWriteByteData(unsigned handle, unsigned i2cReg, unsigned bVal);
+/*
+This writes a single byte to the specified register of the device
+associated with handle.
+. .
+handle: >=0, as returned by a call to [*i2cOpen*]
+i2cReg: 0-255, the register to write
+  bVal: 0-0xFF, the value to write
+. .
+Returns 0 if OK, otherwise -1.
+Write byte. SMBus 2.0 5.5.4
+. .
+S Addr Wr [A] i2cReg [A] bVal [A] P
+. .
+*/
+
+int i2cReadByteData(unsigned handle, unsigned i2cReg);
+/*
+This reads a single byte from the specified register of the device
+associated with handle.
+. .
+handle: >=0, as returned by a call to [*i2cOpen*]
+i2cReg: 0-255, the register to read
+. .
+Returns the byte read (>=0) if OK, otherwise -1.
+Read byte. SMBus 2.0 5.5.5
+. .
+S Addr Wr [A] i2cReg [A] S Addr Rd [A] [Data] NA P
+. .
 */
 
 #ifdef __cplusplus

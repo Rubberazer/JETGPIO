@@ -31,111 +31,120 @@ For more information, please refer to <http://unlicense.org/>
 #include <unistd.h>
 #include <sys/fcntl.h>
 #include <sys/mman.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <sys/file.h>
+#include <sys/types.h>
+#include <linux/i2c-dev.h>
+#include <linux/i2c.h>
+#include <linux/types.h>
+
 #include "jetgpio.h"
 
-int fd;
+static int fd_GPIO;
 
-GPIO_CNF_Init volatile pin_CNF;
-GPIO_PINMUX_Init volatile pin_MUX;
-GPIO_CFG_Init volatile pin_CFG;
-GPIO_PWM volatile pinPWM_Init;
+static volatile GPIO_CNF_Init pin_CNF;
+static volatile GPIO_PINMUX_Init pin_MUX;
+static volatile GPIO_CFG_Init pin_CFG;
+static volatile GPIO_PWM pinPWM_Init;
+static volatile GPIO_PWM *pinPWM;
 
-GPIO_PWM volatile *pinPWM;
+static i2cInfo_t i2cInfo[512];
 
-GPIO_CNF volatile *pin3;
-GPIO_CNF volatile *pin5;
-GPIO_CNF volatile *pin7;
-GPIO_CNF volatile *pin8;
-GPIO_CNF volatile *pin10;
-GPIO_CNF volatile *pin11;
-GPIO_CNF volatile *pin12;
-GPIO_CNF volatile *pin13;
-GPIO_CNF volatile *pin15;
-GPIO_CNF volatile *pin16;
-GPIO_CNF volatile *pin18;
-GPIO_CNF volatile *pin19;
-GPIO_CNF volatile *pin21;
-GPIO_CNF volatile *pin22;
-GPIO_CNF volatile *pin23;
-GPIO_CNF volatile *pin24;
-GPIO_CNF volatile *pin26;
-GPIO_CNF volatile *pin27;
-GPIO_CNF volatile *pin28;
-GPIO_CNF volatile *pin29;
-GPIO_CNF volatile *pin31;
-GPIO_CNF volatile *pin32;
-GPIO_CNF volatile *pin33;
-GPIO_CNF volatile *pin35;
-GPIO_CNF volatile *pin36;
-GPIO_CNF volatile *pin37;
-GPIO_CNF volatile *pin38;
-GPIO_CNF volatile *pin40;
+static volatile GPIO_CNF *pin3;
+static volatile GPIO_CNF *pin5;
+static volatile GPIO_CNF *pin7;
+static volatile GPIO_CNF *pin8;
+static volatile GPIO_CNF *pin10;
+static volatile GPIO_CNF *pin11;
+static volatile GPIO_CNF *pin12;
+static volatile GPIO_CNF *pin13;
+static volatile GPIO_CNF *pin15;
+static volatile GPIO_CNF *pin16;
+static volatile GPIO_CNF *pin18;
+static volatile GPIO_CNF *pin19;
+static volatile GPIO_CNF *pin21;
+static volatile GPIO_CNF *pin22;
+static volatile GPIO_CNF *pin23;
+static volatile GPIO_CNF *pin24;
+static volatile GPIO_CNF *pin26;
+static volatile GPIO_CNF *pin27;
+static volatile GPIO_CNF *pin28;
+static volatile GPIO_CNF *pin29;
+static volatile GPIO_CNF *pin31;
+static volatile GPIO_CNF *pin32;
+static volatile GPIO_CNF *pin33;
+static volatile GPIO_CNF *pin35;
+static volatile GPIO_CNF *pin36;
+static volatile GPIO_CNF *pin37;
+static volatile GPIO_CNF *pin38;
+static volatile GPIO_CNF *pin40;
 
-uint32_t volatile *pinmux3;
-uint32_t volatile *pinmux5;
-uint32_t volatile *pinmux7;
-uint32_t volatile *pinmux8;
-uint32_t volatile *pinmux10;
-uint32_t volatile *pinmux11;
-uint32_t volatile *pinmux12;
-uint32_t volatile *pinmux13;
-uint32_t volatile *pinmux15;
-uint32_t volatile *pinmux16;
-uint32_t volatile *pinmux18;
-uint32_t volatile *pinmux19;
-uint32_t volatile *pinmux21;
-uint32_t volatile *pinmux22;
-uint32_t volatile *pinmux23;
-uint32_t volatile *pinmux24;
-uint32_t volatile *pinmux26;
-uint32_t volatile *pinmux27;
-uint32_t volatile *pinmux28;
-uint32_t volatile *pinmux29;
-uint32_t volatile *pinmux31;
-uint32_t volatile *pinmux32;
-uint32_t volatile *pinmux33;
-uint32_t volatile *pinmux35;
-uint32_t volatile *pinmux36;
-uint32_t volatile *pinmux37;
-uint32_t volatile *pinmux38;
-uint32_t volatile *pinmux40;
+static volatile uint32_t *pinmux3;
+static volatile uint32_t *pinmux5;
+static volatile uint32_t *pinmux7;
+static volatile uint32_t *pinmux8;
+static volatile uint32_t *pinmux10;
+static volatile uint32_t *pinmux11;
+static volatile uint32_t *pinmux12;
+static volatile uint32_t *pinmux13;
+static volatile uint32_t *pinmux15;
+static volatile uint32_t *pinmux16;
+static volatile uint32_t *pinmux18;
+static volatile uint32_t *pinmux19;
+static volatile uint32_t *pinmux21;
+static volatile uint32_t *pinmux22;
+static volatile uint32_t *pinmux23;
+static volatile uint32_t *pinmux24;
+static volatile uint32_t *pinmux26;
+static volatile uint32_t *pinmux27;
+static volatile uint32_t *pinmux28;
+static volatile uint32_t *pinmux29;
+static volatile uint32_t *pinmux31;
+static volatile uint32_t *pinmux32;
+static volatile uint32_t *pinmux33;
+static volatile uint32_t *pinmux35;
+static volatile uint32_t *pinmux36;
+static volatile uint32_t *pinmux37;
+static volatile uint32_t *pinmux38;
+static volatile uint32_t *pinmux40;
 
-uint32_t volatile *pincfg3;
-uint32_t volatile *pincfg5;
-uint32_t volatile *pincfg7;
-uint32_t volatile *pincfg8;
-uint32_t volatile *pincfg10;
-uint32_t volatile *pincfg11;
-uint32_t volatile *pincfg12;
-uint32_t volatile *pincfg13;
-uint32_t volatile *pincfg15;
-uint32_t volatile *pincfg16;
-uint32_t volatile *pincfg18;
-uint32_t volatile *pincfg19;
-uint32_t volatile *pincfg21;
-uint32_t volatile *pincfg22;
-uint32_t volatile *pincfg23;
-uint32_t volatile *pincfg24;
-uint32_t volatile *pincfg26;
-uint32_t volatile *pincfg27;
-uint32_t volatile *pincfg28;
-uint32_t volatile *pincfg29;
-uint32_t volatile *pincfg31;
-uint32_t volatile *pincfg32;
-uint32_t volatile *pincfg33;
-uint32_t volatile *pincfg35;
-uint32_t volatile *pincfg36;
-uint32_t volatile *pincfg37;
-uint32_t volatile *pincfg38;
-uint32_t volatile *pincfg40;
+static volatile uint32_t *pincfg3;
+static volatile uint32_t *pincfg5;
+static volatile uint32_t *pincfg7;
+static volatile uint32_t *pincfg8;
+static volatile uint32_t *pincfg10;
+static volatile uint32_t *pincfg11;
+static volatile uint32_t *pincfg12;
+static volatile uint32_t *pincfg13;
+static volatile uint32_t *pincfg15;
+static volatile uint32_t *pincfg16;
+static volatile uint32_t *pincfg18;
+static volatile uint32_t *pincfg19;
+static volatile uint32_t *pincfg21;
+static volatile uint32_t *pincfg22;
+static volatile uint32_t *pincfg23;
+static volatile uint32_t *pincfg24;
+static volatile uint32_t *pincfg26;
+static volatile uint32_t *pincfg27;
+static volatile uint32_t *pincfg28;
+static volatile uint32_t *pincfg29;
+static volatile uint32_t *pincfg31;
+static volatile uint32_t *pincfg32;
+static volatile uint32_t *pincfg33;
+static volatile uint32_t *pincfg35;
+static volatile uint32_t *pincfg36;
+static volatile uint32_t *pincfg37;
+static volatile uint32_t *pincfg38;
+static volatile uint32_t *pincfg40;
 
-void *baseCNF;
+static void *baseCNF;
 
-void *basePINMUX;
+static void *basePINMUX;
 
-void *baseCFG;
+static void *baseCFG;
 
-void *basePWM;
+static void *basePWM;
 
 
 int gpioInitialise(void)
@@ -146,35 +155,35 @@ int gpioInitialise(void)
     //int pagemask = pagesize-1;
 	
 	//  read physical memory (needs root)
-	fd = open("/dev/mem", O_RDWR | O_SYNC);
-    if (fd < 0) {
+	fd_GPIO = open("/dev/mem", O_RDWR | O_SYNC);
+    if (fd_GPIO < 0) {
         perror("/dev/mem");
         fprintf(stderr, "please run this program as root (for example with sudo)\n");
         status = -1;
     }
     //  Mapping GPIO_CNF
-    baseCNF = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, base_CNF);
+    baseCNF = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CNF);
     if (baseCNF == NULL) {
         perror("mmap()");
         status = -3;
     }
     
     //  Mapping GPIO_PINMUX
-	basePINMUX = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, base_PINMUX);
+	basePINMUX = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PINMUX);
     if (basePINMUX == NULL) {
         perror("mmap()");
         status = -3;
     }
     
         //  Mapping GPIO_CFG
-	baseCFG = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, base_CFG);
+	baseCFG = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CFG);
     if (baseCFG == NULL) {
         perror("mmap()");
         status = -3;
     }
     
        //  Mapping GPIO_PWM
-	basePWM = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, base_PWM);
+	basePWM = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM);
     if (basePWM == NULL) {
         perror("mmap()");
         status = -3;
@@ -628,7 +637,7 @@ void gpioTerminate(void)
 	munmap(basePWM, pagesize);
   
 	/* close /dev/mem */
-    close(fd);
+    close(fd_GPIO);
 }
 
 int gpioSetMode(unsigned gpio, unsigned mode)
@@ -1342,4 +1351,112 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 	return status;
 }
 
+int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
+{
+	char dev[20];
+	int fd, slot, i;
+	uint32_t funcs;
 
+	if (i2cAddr > 0x7f){
+      	printf( "bad I2C address (%d)", i2cAddr);
+	return -1;
+	}
+
+	if (i2cFlags != 0){
+        printf( "Only supported flags at the moment is 0 (%d)", i2cFlags);
+        return -2;
+	}
+	
+	slot = -1;
+	
+	for (i=0; i<512; i++) {
+		if (i2cInfo[i].state == 0)
+		{
+			slot = i;
+			i2cInfo[slot].state = 1;
+			break;
+		}
+	}
+	
+	if (slot < 0) {printf("No i2c handles\n");};
+	
+	
+	snprintf(dev, 19, "/dev/i2c-%d", i2cBus);
+	fd = open(dev, O_RDWR);
+	if (fd < 0) {
+		printf( "bad handle (%d)\n", fd);
+		return -3;	
+	}
+	
+	if (ioctl(fd, I2C_SLAVE, i2cAddr) < 0) {
+      	close(fd);
+      	i2cInfo[slot].state = 0;
+      	return -4;;
+   	}
+
+   	if (ioctl(fd, I2C_FUNCS, &funcs) < 0){
+      		funcs = -1; /* assume all smbus commands allowed */
+      		return -5;
+   	}
+
+   i2cInfo[slot].fd = fd;
+   i2cInfo[slot].addr = i2cAddr;
+   i2cInfo[slot].flags = i2cFlags;
+   i2cInfo[slot].funcs = funcs;
+   i2cInfo[slot].state = 2;
+
+   return slot;
+}
+
+int i2cClose(unsigned handle)
+{
+   if (handle > 512) {
+      printf( "bad handle (%d)", handle);
+		return(-1);
+	}
+
+   if (i2cInfo[handle].state != 2) {
+	   printf( "bad handle (%d)", handle);
+		return(-1);	
+	}
+     
+   if (i2cInfo[handle].fd >= 0) {close(i2cInfo[handle].fd);};
+
+   i2cInfo[handle].fd = -1;
+   i2cInfo[handle].state = 0;
+
+   return 0;
+}
+
+int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
+{	
+	int status;
+	int buf[2];
+	
+	buf[0] = reg;
+	buf[1] = bVal;
+	
+	if (write(i2cInfo[handle].fd, buf, 2) != 2) {
+		printf( "writing failed\n");
+		status = -1;
+	}
+	else {status = 1;}
+	
+	return status;
+}
+
+int i2cReadByteData(unsigned handle, unsigned reg)
+{
+	int status;
+	int buf[1];
+	
+	buf[0] = reg;
+	
+	if (read(i2cInfo[handle].fd, buf, 1) != 1) {
+		printf( "reading failed\n");
+		status =  -1;
+	}
+
+	status = buf[0] & 0xff;
+	return status;
+}
