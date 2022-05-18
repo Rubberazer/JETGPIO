@@ -83,7 +83,7 @@ while (x<10) {
 	
     // Reading gyroscope values
     gyro_x_H = i2cReadByteData(MPU6050, GYRO_XOUT0); /* getting the H register 15:8 */
-    gyro_x_L = i2cReadByteData(MPU6050, GYRO_XOUT0+1); /* getting the H register 7:0 */
+    gyro_x_L = i2cReadByteData(MPU6050, GYRO_XOUT0+1); /* getting the L register 7:0 */
     gyro_x = (gyro_x_H << 8) + gyro_x_L;
     if (gyro_x >= 0x8000)
     {
@@ -94,7 +94,7 @@ while (x<10) {
     
     
     gyro_y_H = i2cReadByteData(MPU6050, GYRO_YOUT0); /* getting the H register 15:8 */
-    gyro_y_L = i2cReadByteData(MPU6050, GYRO_YOUT0+1); /* getting the H register 7:0 */
+    gyro_y_L = i2cReadByteData(MPU6050, GYRO_YOUT0+1); /* getting the L register 7:0 */
     gyro_y = (gyro_y_H << 8) + gyro_y_L;
     if (gyro_y >= 0x8000)
     {
@@ -105,7 +105,7 @@ while (x<10) {
     
     
     gyro_z_H = i2cReadByteData(MPU6050, GYRO_ZOUT0); /* getting the H register 15:8 */
-    gyro_z_L = i2cReadByteData(MPU6050, GYRO_ZOUT0+1); /* getting the H register 7:0 */
+    gyro_z_L = i2cReadByteData(MPU6050, GYRO_ZOUT0+1); /* getting the L register 7:0 */
     gyro_z = (gyro_z_H << 8) + gyro_z_L;
     if (gyro_z >= 0x8000)
     {
