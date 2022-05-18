@@ -1455,16 +1455,17 @@ int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 	
    if (reg > 0x7F){
 		printf( "register address on device bigger than 0x7F");
-		status = -3;
+		status = -4;
 	}
 
    if (bVal > 0xFF){
 		printf( "value to be written bigger than byte");
-		status = -3;
+		status = -5;
 	}
 	
 	data.byte = bVal;
-	status = i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE,reg, I2C_SMBUS_BYTE_DATA, &data);
+	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE,reg, I2C_SMBUS_BYTE_DATA, &data)) {
+		status = -6;}
 	return status;
 }
 
@@ -1490,12 +1491,12 @@ int i2cReadByteData(unsigned handle, unsigned reg)
 	
    if (reg > 0x7F){
 		printf( "register address on device bigger than 0x7F");
-		status = -3;
+		status = -4;
 	}
 	
-	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ,reg, I2C_SMBUS_BYTE_DATA,&data))
-		status = -1;
+	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ,reg, I2C_SMBUS_BYTE_DATA,&data)) {
+		status = -5;}
 	else
-		status = 0x0FF & data.byte;
+		{status = 0x0FF & data.byte;}
 	return status;
 }
