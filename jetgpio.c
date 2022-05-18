@@ -1428,7 +1428,7 @@ int i2cClose(unsigned handle)
    if (i2cInfo[handle].fd >= 0) {close(i2cInfo[handle].fd);};
 
    i2cInfo[handle].fd = -1;
-   i2cInfo[handle].state = 0;
+   i2cInfo[handle].state = I2C_CLOSED;
 
    return 0;
 }
@@ -1436,25 +1436,36 @@ int i2cClose(unsigned handle)
 int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 {	
 	union i2c_smbus_data data;
-	data.byte = bVal;
 	int status;
 	
-	
-	status = i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE,reg, I2C_SMBUS_BYTE_DATA, &data);
-	return status;
-	
-	/*
-	int buf[2];
-	buf[0] = reg;
-	buf[1] = bVal;
-	
-	if (write(i2cInfo[handle].fd, buf, 2) != 2) {
-		printf( "writing failed\n");
+	if (handle >= 2) {
+		printf( "bad handle (%d)", handle);
 		status = -1;
 	}
-	else {status = 1;}
+
+   if (i2cInfo[handle].state != I2C_OPENED){
+		printf( "i2c%d is not open)", handle);
+		status = -2;
+	}
+
+   if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_WRITE_BYTE_DATA) == 0){
+		printf( "write byte data function not supported by device");
+		status = -3;
+	}
 	
-	return status; */
+   if (reg > 0x7F){
+		printf( "register address on device bigger than 0x7F");
+		status = -3;
+	}
+
+   if (bVal > 0xFF){
+		printf( "value to be written bigger than byte");
+		status = -3;
+	}
+	
+	data.byte = bVal;
+	status = i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE,reg, I2C_SMBUS_BYTE_DATA, &data);
+	return status;
 }
 
 int i2cReadByteData(unsigned handle, unsigned reg)
@@ -1462,21 +1473,29 @@ int i2cReadByteData(unsigned handle, unsigned reg)
 	int status;
 	union i2c_smbus_data data;
 	
+	if (handle >= 2) {
+		printf( "bad handle (%d)", handle);
+		status = -1;
+	}
+
+   if (i2cInfo[handle].state != I2C_OPENED){
+		printf( "i2c%d is not open)", handle);
+		status = -2;
+	}
+
+   if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA) == 0){
+		printf( "write byte data function not supported by device");
+		status = -3;
+	}
+	
+   if (reg > 0x7F){
+		printf( "register address on device bigger than 0x7F");
+		status = -3;
+	}
+	
 	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ,reg, I2C_SMBUS_BYTE_DATA,&data))
 		status = -1;
 	else
 		status = 0x0FF & data.byte;
 	return status;
-	
-	/*
-	int buf[1];
-	buf[0] = reg;
-	
-	if (read(i2cInfo[handle].fd, buf, 1) != 1) {
-		printf( "reading failed\n");
-		status =  -1;
-	}
-
-	status = buf[0] & 0xff;
-	return status; */
 }

@@ -158,10 +158,6 @@ For more information, please refer to <http://unlicense.org/>
 #define I2C_CLOSED   0
 #define I2C_RESERVED 1
 #define I2C_OPENED   2
-#define I2C_SMBUS_BLOCK_MAX	32
-#define I2C_SMBUS_READ	1
-#define I2C_SMBUS_WRITE	0
-
 
 #ifdef __cplusplus
 extern "C" {
