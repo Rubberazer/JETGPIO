@@ -50,6 +50,7 @@ static volatile GPIO_PWM pinPWM_Init;
 static volatile GPIO_PWM *pinPWM;
 
 static i2cInfo_t i2cInfo[2];
+static int i2c_speed[2];
 
 static volatile GPIO_CNF *pin3;
 static volatile GPIO_CNF *pin5;
@@ -1363,18 +1364,34 @@ int i2c_smbus_access(int file, char read_write, __u8 command, int size, union i2
 
 int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 {
-	char dev[20];
-	int fd, slot;
+	char dev[20], buf[100];
+	int fd, slot, speed;
 	uint32_t funcs;
+	FILE *fptr;
 
 	if (i2cAddr > 0x7f){
       	printf( "bad I2C address (%d)", i2cAddr);
 	return -1;
 	}
 
-	if (i2cFlags != 0){
-        printf( "Only supported flags at the moment is 0 (%d)", i2cFlags);
+	if (i2cFlags > 3){
+        printf( "Only flags 0 to 2 are supported to set up bus speed");
         return -2;
+	}
+	
+	switch(i2cFlags) {
+		
+		case 0: 
+			speed = 100000;
+			break;
+		case 1:
+			speed = 400000;
+			break;
+		case 2: 
+			speed = 1000000;
+			break;
+		default:
+			i2cFlags = 3;
 	}
 	
 	slot = -3;
@@ -1383,7 +1400,24 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 			slot = i2cBus;
 			i2cInfo[slot].state = I2C_RESERVED;
 	}
-
+	else { printf("i2c bus already open");
+		return -3;
+	}
+	
+	snprintf(buf, sizeof(buf), "/sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2cBus);
+	fptr = fopen(buf, "r");
+	
+	if (fptr == NULL) {
+	printf("not possible to read current bus speed\n");
+	}
+	
+	fscanf(fptr, "%d", &i2c_speed[i2cBus]);
+   	
+   	snprintf(buf, sizeof(buf), "echo %d > /sys/bus/i2c/devices/i2c-%d/bus_clk_rate", speed, i2cBus);
+   	if (system(buf) == -1) { 
+		printf( "not possible to change bus speed\n");
+	}
+	
 	snprintf(dev, 19, "/dev/i2c-%d", i2cBus);
 	fd = open(dev, O_RDWR);
 	if (fd < 0) {
@@ -1391,17 +1425,15 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 		return -4;	
 	}
 	
-	//const char *i2c_freq_mode_string(100000);
-	
 	if (ioctl(fd, I2C_SLAVE, i2cAddr) < 0) {
       	close(fd);
       	i2cInfo[slot].state = 0;
-      	return -5;;
+      	return -6;;
    	}
 
    	if (ioctl(fd, I2C_FUNCS, &funcs) < 0){
       		funcs = -1; /* assume all smbus commands allowed */
-      		return -5;
+      		return -7;
    	}
 
    i2cInfo[slot].fd = fd;
@@ -1415,20 +1447,27 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 
 int i2cClose(unsigned handle)
 {
-   if (handle > 1) {
+	char buf[100];
+	
+	if (handle > 1) {
       printf( "bad handle (%d)", handle);
 		return(-1);
 	}
 
-   if (i2cInfo[handle].state != I2C_OPENED) {
+	if (i2cInfo[handle].state != I2C_OPENED) {
 	   printf( "i2c bus is already closed (%d)", handle);
 		return(-1);	
 	}
      
-   if (i2cInfo[handle].fd >= 0) {close(i2cInfo[handle].fd);};
+	if (i2cInfo[handle].fd >= 0) {close(i2cInfo[handle].fd);};
 
-   i2cInfo[handle].fd = -1;
-   i2cInfo[handle].state = I2C_CLOSED;
+	i2cInfo[handle].fd = -1;
+	i2cInfo[handle].state = I2C_CLOSED;
+   
+	snprintf(buf, sizeof(buf), "echo %d > /sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2c_speed[handle], handle);
+   	if (system(buf) == -1) { 
+		printf( "not possible to return bus speed to original value\n");
+	}
 
    return 0;
 }

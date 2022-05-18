@@ -389,12 +389,14 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags);
 /*
 This returns a handle for the device at the address on the I2C bus.
 . .
-i2cBus: 1 or 2, 1 are pins 27 (SDA) & 28 (SCL), 2 are pins 3(
+i2cBus: 0 or 1, 0 are pins 27 (SDA) & 28 (SCL), 1 are pins 3(SDA) & 5(SCL)
 i2cAddr: 0-0x7F
 i2cFlags: 0
 . .
-No flags are currently defined.  This parameter should be set to zero.
-Physically buses 0 and 1 are available on the Jetson Nano.
+Flags allow you to change the bus speed:
+i2cFlags: 0 -> 100 kHz
+i2cFlags: 1 -> 400 kHz
+i2cFlags: 0 -> 1 MHz
 . .
 Returns a handle with the I2C bus number being opened (>=0) if OK, otherwise -1.
 . .
