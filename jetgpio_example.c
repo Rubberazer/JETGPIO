@@ -41,7 +41,7 @@ else
    printf("gpio setting up okay. Return code:  %d\n", stat1);
 }
 
-int stat2 = gpioSetMode(7, 0);
+int stat2 = gpioSetMode(7, JET_INPUT);
 if (stat2 < 0)
 {
    /* gpio setting up failed */
