@@ -49,7 +49,7 @@ static volatile GPIO_CFG_Init pin_CFG;
 static volatile GPIO_PWM pinPWM_Init;
 static volatile GPIO_PWM *pinPWM;
 
-static i2cInfo_t i2cInfo[512];
+static i2cInfo_t i2cInfo[2];
 
 static volatile GPIO_CNF *pin3;
 static volatile GPIO_CNF *pin5;
@@ -1351,10 +1351,20 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 	return status;
 }
 
+int i2c_smbus_access(int file, char read_write, __u8 command, int size, union i2c_smbus_data *data)
+{
+	struct i2c_smbus_ioctl_data args;
+	args.read_write = read_write;
+	args.command = command;
+	args.size = size;
+	args.data = data;
+	return ioctl(file,I2C_SMBUS,&args);
+}
+
 int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 {
 	char dev[20];
-	int fd, slot, i;
+	int fd, slot;
 	uint32_t funcs;
 
 	if (i2cAddr > 0x7f){
@@ -1367,31 +1377,26 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
         return -2;
 	}
 	
-	slot = -1;
+	slot = -3;
 	
-	for (i=0; i<512; i++) {
-		if (i2cInfo[i].state == 0)
-		{
-			slot = i;
-			i2cInfo[slot].state = 1;
-			break;
-		}
+	if (i2cInfo[i2cBus].state == I2C_CLOSED) {
+			slot = i2cBus;
+			i2cInfo[slot].state = I2C_RESERVED;
 	}
-	
-	if (slot < 0) {printf("No i2c handles\n");};
-	
-	
+
 	snprintf(dev, 19, "/dev/i2c-%d", i2cBus);
 	fd = open(dev, O_RDWR);
 	if (fd < 0) {
 		printf( "bad handle (%d)\n", fd);
-		return -3;	
+		return -4;	
 	}
+	
+	//const char *i2c_freq_mode_string(100000);
 	
 	if (ioctl(fd, I2C_SLAVE, i2cAddr) < 0) {
       	close(fd);
       	i2cInfo[slot].state = 0;
-      	return -4;;
+      	return -5;;
    	}
 
    	if (ioctl(fd, I2C_FUNCS, &funcs) < 0){
@@ -1403,20 +1408,20 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
    i2cInfo[slot].addr = i2cAddr;
    i2cInfo[slot].flags = i2cFlags;
    i2cInfo[slot].funcs = funcs;
-   i2cInfo[slot].state = 2;
+   i2cInfo[slot].state = I2C_OPENED;
 
    return slot;
 }
 
 int i2cClose(unsigned handle)
 {
-   if (handle > 512) {
+   if (handle > 1) {
       printf( "bad handle (%d)", handle);
 		return(-1);
 	}
 
-   if (i2cInfo[handle].state != 2) {
-	   printf( "bad handle (%d)", handle);
+   if (i2cInfo[handle].state != I2C_OPENED) {
+	   printf( "i2c bus is already closed (%d)", handle);
 		return(-1);	
 	}
      
@@ -1430,9 +1435,16 @@ int i2cClose(unsigned handle)
 
 int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 {	
+	union i2c_smbus_data data;
+	data.byte = bVal;
 	int status;
-	int buf[2];
 	
+	
+	status = i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE,reg, I2C_SMBUS_BYTE_DATA, &data);
+	return status;
+	
+	/*
+	int buf[2];
 	buf[0] = reg;
 	buf[1] = bVal;
 	
@@ -1442,14 +1454,22 @@ int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 	}
 	else {status = 1;}
 	
-	return status;
+	return status; */
 }
 
 int i2cReadByteData(unsigned handle, unsigned reg)
 {
 	int status;
-	int buf[1];
+	union i2c_smbus_data data;
 	
+	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ,reg, I2C_SMBUS_BYTE_DATA,&data))
+		status = -1;
+	else
+		status = 0x0FF & data.byte;
+	return status;
+	
+	/*
+	int buf[1];
 	buf[0] = reg;
 	
 	if (read(i2cInfo[handle].fd, buf, 1) != 1) {
@@ -1458,5 +1478,5 @@ int i2cReadByteData(unsigned handle, unsigned reg)
 	}
 
 	status = buf[0] & 0xff;
-	return status;
+	return status; */
 }
