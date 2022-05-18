@@ -1475,7 +1475,7 @@ int i2cClose(unsigned handle)
 int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 {	
 	union i2c_smbus_data data;
-	int status;
+	int status = 0;
 	
 	if (handle >= 2) {
 		printf( "bad handle (%d)", handle);
