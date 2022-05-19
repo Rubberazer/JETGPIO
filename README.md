@@ -22,7 +22,7 @@ FUNCTIONALITY:
   
  INSTALLATION:
  
-    Clone the content into any folder in your JETSON
+    Clone/download the content into any folder in your JETSON
   
     make
   
