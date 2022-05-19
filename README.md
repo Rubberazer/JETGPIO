@@ -24,9 +24,9 @@ FUNCTIONALITY:
  
     Clone the content into any folder in your JETSON
   
-    Change access rights to make.sh executable: sudo chmod +x make.sh (no proper makefile yet, it will come)
+    make
   
-    Execute make.sh: sudo ./make.sh
+    sudo make install
   
     That's it, the library should be installed and ready to be used
   
