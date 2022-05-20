@@ -396,7 +396,7 @@ i2cFlags: 0
 Flags allow you to change the bus speed:
 i2cFlags: 0 -> 100 kHz
 i2cFlags: 1 -> 400 kHz
-i2cFlags: 0 -> 1 MHz
+i2cFlags: 2 -> 1 MHz
 . .
 Returns a handle with the I2C bus number being opened (>=0) if OK, otherwise -1.
 . .
