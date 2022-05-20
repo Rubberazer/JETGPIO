@@ -42,7 +42,6 @@ FUNCTIONALITY:
     if you work with Raspberry Pis). Learnt a lot from that one
     
 
-THIS IS A VERY ALPHA, INCOMPLETE VERSION AND ALL SORT OF BUGS ARE EXPECTED! 
 
 The library has been tested on a Jetson nano SCO family: tegra210 (TX1), Board: P3449-0000
 
