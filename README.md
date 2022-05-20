@@ -24,8 +24,8 @@ FUNCTIONALITY:
  
     Clone/download the content into any folder in your JETSON
   
-    make                                                                                                                                              
-    sudo make install                                                                                                                                            
+    make                                                     
+    sudo make install                                             
   
     That's it, the library should be installed and ready to be used
   
