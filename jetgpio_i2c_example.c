@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "jetgpio.h"
+#include <jetgpio.h>
 
 int main(int argc, char *argv[])
 {
