@@ -6,7 +6,9 @@ FUNCTIONALITY:
 
     JETSON NANO (TX1) family only, so far it does not support the Xaviers,etc. No hardware to test it
   
-    GPIO control of all the header pinout as input or output
+    GPIO control of all the header pinout as input or output. Low latency is expected (it does not go through the kernel) 
+    
+    direct writing to the registers (DMA)
     
     PWM (hardware) control on header pins 32 & 33
     
@@ -18,7 +20,6 @@ FUNCTIONALITY:
   
     No need of previous kernel configuration, the library will take care of that on runtime
   
-    Low latency is expected (it does not go through the kernel) direct writing to the registers (DMA)
   
  INSTALLATION:
  
