@@ -409,7 +409,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency);
 Sets the frequency in hertz to be used for the GPIO.
 . .
 gpio: 32, 33
-frequency: 50Hz to 200 kHz
+frequency: 20Hz to 150 kHz
 . .
 Returns 1 if OK, otherwise -1.
 
