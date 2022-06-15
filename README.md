@@ -34,6 +34,8 @@ FUNCTIONALITY:
  
     See 'jetgpio_example.c' for an example of how to use the library, the main functions provided are there
     
+    See 'jetgpio_PWM_example.c' for an example of how to use the PWM funcionality (pins 32 & 33)
+    
     See 'jetgpio_i2c_example.c' for an example of how to use the i2c comms with a MPU6050 gyroscope connected 
     
     to i2c 0 (pins 27 & 28)
