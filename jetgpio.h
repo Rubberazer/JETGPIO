@@ -31,7 +31,7 @@ For more information, please refer to <http://unlicense.org/>
 
 /* Definitions */
 
-/* Mmap() base address */
+/* GPIO base address */
 
 #define base_CNF 0x6000d000
 #define base_PINMUX 0x70003000
@@ -45,7 +45,45 @@ For more information, please refer to <http://unlicense.org/>
 
 /* Clock and Reset Controller */
 
-#define CAR 0x60006000                  // Clock and Reset Controller (CAR) base address
+#define CAR 0x60006000                  			// Clock and Reset Controller (CAR) base address
+#define CLK_RST_CONTROLLER_CLK_OUT_ENB_H_0 0x14 	// CLK_RST_CONTROLLER_CLK_OUT_ENB offset
+#define CLK_RST_CONTROLLER_CLK_SOURCE_SPI2_0 0x118 	// CLK_RST_CONTROLLER_CLK_SOURCE_SPI2_0 source clock and divider spi2
+#define CLK_RST_CONTROLLER_CLK_SOURCE_SPI1_0 0x134 	// CLK_RST_CONTROLLER_CLK_SOURCE_SPI1_0 source clokc and divider spi1
+#define CLK_RST_CONTROLLER_RST_DEVICES_H_0 0x8	   	// Reset the spi controllers
+
+/* SPI control */
+
+#define base_SPI 0x7000d400				// SPI Controller base address
+
+/* SPI1 */
+#define SPI1_COMMAND_0 0x0				// SPI1 command0 offset
+#define SPI1_COMMAND2_0 0x4				// SPI1 command2 offset	
+#define SPI1_TIMING_REG1_0 0x8			// SPI1 timing reg1 offset
+#define SPI1_TIMING_REG2_0 0xc			// SPI1 timing reg2 offset
+#define SPI1_TRANSFER_STATUS_0 0x10		// SPI1 transfer status 
+#define SPI1_FIFO_STATUS_0 0x14			// SPI1 fifo status
+#define SPI1_TX_DATA_0 0x18				// SPI1 tx data
+#define	SPI1_RX_DATA_0 0x1c				// SPI1 rx data
+#define SPI1_DMA_CTL_0 0x20				// SPI1 dma control
+#define SPI1_DMA_BLK_SIZE_0 0x24		// SPI1 dma block size
+#define SPI1_TX_FIFO_0 0x108			// SPI1 TX FIFO Buffer
+#define SPI1_RX_FIFO_0 0x188			// SPI1 RX FIFO Buffer
+#define SPI1_INTR_MASK_0 0x18c			// SPI1 Interrupt Mask Register
+
+/* SPI2 */
+#define SPI2_COMMAND_0 0x200			// SPI2 command0 offset
+#define SPI2_COMMAND2_0 0x204			// SPI2 command2 offset	
+#define SPI2_TIMING_REG1_0 0x208		// SPI2 timing reg1 offset
+#define SPI2_TIMING_REG2_0 0x20c		// SPI2 timing reg2 offset
+#define SPI2_TRANSFER_STATUS_0 0x210	// SPI2 transfer status 
+#define SPI2_FIFO_STATUS_0 0x214		// SPI2 fifo status
+#define SPI2_TX_DATA_0 0x218			// SPI2 tx data
+#define	SPI2_RX_DATA_0 0x21c			// SPI2 rx data
+#define SPI2_DMA_CTL_0 0x220			// SPI2 dma control
+#define SPI2_DMA_BLK_SIZE_0 0x224		// SPI2 dma block size
+#define SPI2_TX_FIFO_0 0x308			// SPI2 TX FIFO Buffer
+#define SPI2_RX_FIFO_0 0x388			// SPI2 RX FIFO Buffer
+#define SPI2_INTR_MASK_0 0x38c			// SPI2 Interrupt Mask Register 
 
 /* GPIO CNF registers */
 
@@ -271,8 +309,17 @@ typedef struct {
 
 typedef struct {
     uint32_t PWM_0;
+    uint32_t Padding_0;
+    uint32_t Padding_1;
+    uint32_t Padding_3;
     uint32_t PWM_1;
+    uint32_t Padding_4;
+    uint32_t Padding_5;
+    uint32_t Padding_6;
     uint32_t PWM_2;
+    uint32_t Padding_7;
+    uint32_t Padding_8;
+    uint32_t Padding_9;
     uint32_t PWM_3;
 } GPIO_PWM;
 
@@ -362,10 +409,9 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency);
 Sets the frequency in hertz to be used for the GPIO.
 . .
 gpio: 32, 33
-frequency: 20Hz to 20 kHz
+frequency: 50Hz to 200 kHz
 . .
-Returns 1 if OK, otherwise
--1.
+Returns 1 if OK, otherwise -1.
 
 ...
 */
@@ -396,7 +442,7 @@ i2cFlags: 0
 Flags allow you to change the bus speed:
 i2cFlags: 0 -> 100 kHz
 i2cFlags: 1 -> 400 kHz
-i2cFlags: 2 -> 1 MHz
+i2cFlags: 0 -> 1 MHz
 . .
 Returns a handle with the I2C bus number being opened (>=0) if OK, otherwise -1.
 . .
@@ -440,6 +486,109 @@ Read byte. SMBus 2.0 5.5.5
 . .
 S Addr Wr [A] i2cReg [A] S Addr Rd [A] [Data] NA P
 . .
+*/
+
+int spiOpen(unsigned spiChan, unsigned baud, unsigned spiFlags);
+/*
+This function returns a handle for the SPI device on the channel.
+Data will be transferred at baud bits per second.  The flags may
+be used to modify the default behaviour of 4-wire operation, mode 0,
+active low chip select.
+There are 2 SPI channels SPI1 & SPI2.
+
+The GPIO used are given in the following table.
+         @ MISO @ MOSI @ SCLK @ CS0 @ CS1
+SPI1 	 @   21 @   19 @   23 @  24 @  26 
+SPI2 	 @   22 @   37 @   13 @  18 @  16 
+. .
+spiChan: 0-1 (o stand for SPI1 and 1 for SPI2)
+baud: up to 50M (beyond that expect problems)
+spiFlags: see below
+. .
+Returns a handle (>=0) if OK, otherwise a negavitve number.
+spiFlags consists of the least significant 22 bits.
+. .
+10  9  8  7  6  5  4  3  2  1  0
+ b  b  b  b  b  R  T p1 p0  m  m
+. .
+mm defines the SPI mode.
+
+. .
+Mode POL PHA
+ 0    0   0
+ 1    0   1
+ 2    1   0
+ 3    1   1
+. .
+px is 0 if CSx is active low (default) and 1 for active high.
+
+T is 1 if the least significant bit is transmitted on MOSI first, the
+default (0) shifts the most significant bit out first.  
+* 
+R is 1 if the least significant bit is received on MISO first, the
+default (0) receives the most significant bit first.  Auxiliary SPI
+only.
+bbbbbb defines the word size in bits (0-32).  The default (0)
+sets 8 bits per word.
+The [*spiRead*], [*spiWrite*], and [*spiXfer*] functions
+transfer data packed into 1, 2, or 4 bytes according to
+the word size in bits.
+For bits 1-8 there will be one byte per word. 
+For bits 9-16 there will be two bytes per word. 
+For bits 17-32 there will be four bytes per word.
+Multi-byte transfers are made in least significant byte first order.
+E.g. to transfer 32 11-bit words buf should contain 64 bytes
+and count should be 64.
+E.g. to transfer the 14 bit value 0x1ABC send the bytes 0xBC followed
+by 0x1A.
+The other bits in flags should be set to zero.
+*/
+
+int spiClose(unsigned handle);
+/*
+This functions closes the SPI device identified by the handle.
+. .
+handle: >=0, as returned by a call to [*spiOpen*]
+. .
+Returns 0 if OK, otherwise -1.
+*/
+
+int spiRead(unsigned handle, char *buf, unsigned count);
+/*
+This function reads count bytes of data from the SPI
+device associated with the handle.
+. .
+handle: >=0, as returned by a call to [*spiOpen*]
+   buf: an array to receive the read data bytes
+ count: the number of bytes to read
+. .
+Returns the number of bytes transferred if OK, otherwise -1
+*/
+
+int spiWrite(unsigned handle, char *buf, unsigned count);
+/*
+This function writes count bytes of data from buf to the SPI
+device associated with the handle.
+. .
+handle: >=0, as returned by a call to [*spiOpen*]
+   buf: the data bytes to write
+ count: the number of bytes to write
+. .
+Returns the number of bytes transferred if OK, otherwise -1.
+*/
+
+int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned count);
+/*
+This function transfers count bytes of data from txBuf to the SPI
+device associated with the handle.  Simultaneously count bytes of
+data are read from the device and placed in rxBuf.
+. .
+handle: >=0, as returned by a call to [*spiOpen*]
+ txBuf: the data bytes to write
+ rxBuf: the received data bytes
+ count: the number of bytes to transfer
+. .
+Returns the number of bytes transferred if OK, otherwise a negative number.
 */
 
 #ifdef __cplusplus

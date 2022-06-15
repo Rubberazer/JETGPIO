@@ -1299,24 +1299,26 @@ int gpioWrite(unsigned gpio, unsigned level)
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)
 {
 	int status = 1;
-	if ((frequency >= 20) && (frequency <=200000)){
-		frequency = frequency -20;
-		frequency = frequency/24;
+	if ((frequency >= 50) && (frequency <=200000)){
+		frequency = frequency/48.84F;
+		frequency = frequency;
 	switch (gpio){
 		
 		case 32:
+			pinPWM->PWM_0 = 0x0;
 			pinPWM->PWM_0 = frequency;
 			break;
 		case 33:
+			pinPWM->PWM_2 = 0x0;
 			pinPWM->PWM_2 = frequency;
 			break;
 		default:
-			status = -1;
+			//status = -1;
 			printf("Only gpio numbers f32 and 33 are accepted,\n");
 		}
 		
 	}
-	else {printf("Only frequencies from 20 to 200000 Hz are allowed\n");
+	else {printf("Only frequencies from 50 to 200000 Hz are allowed\n");
 		status =-1;}
 	return status;
 }
@@ -1331,6 +1333,7 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 			*pinmux32 = 0x00000001;
 			*pincfg32 = CFG_OUT;
 			pin32->CNF[0] &= ~(0x00000001);
+			pinPWM->PWM_0 &= ~(0xFFFF0000);
 			pinPWM->PWM_0 |= dutycycle<<16;
 			pinPWM->PWM_0 |= 0x80000000;
 			break;
@@ -1338,6 +1341,7 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 			*pinmux33 = 0x00000002;
 			*pincfg33 = CFG_OUT;
 			pin33->CNF[0] &= ~(0x00000040);
+			pinPWM->PWM_2 &= ~(0xFFFF0000);
 			pinPWM->PWM_2 |= dutycycle<<16;
 			pinPWM->PWM_2 |= 0x80000000;
 			break;
@@ -1524,7 +1528,7 @@ int i2cReadByteData(unsigned handle, unsigned reg)
 	}
 
    if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA) == 0){
-		printf( "read byte data function not supported by device");
+		printf( "write byte data function not supported by device");
 		status = -3;
 	}
 	
