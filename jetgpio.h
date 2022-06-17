@@ -308,19 +308,10 @@ typedef struct {
 } GPIO_CFG_Init;
 
 typedef struct {
-    uint32_t PWM_0;
-    uint32_t Padding_0;
-    uint32_t Padding_1;
-    uint32_t Padding_3;
-    uint32_t PWM_1;
-    uint32_t Padding_4;
-    uint32_t Padding_5;
-    uint32_t Padding_6;
-    uint32_t PWM_2;
-    uint32_t Padding_7;
-    uint32_t Padding_8;
-    uint32_t Padding_9;
-    uint32_t PWM_3;
+    uint32_t PWM_0[4];
+    uint32_t PWM_1[4];
+    uint32_t PWM_2[4];
+    uint32_t PWM_3[4];
 } GPIO_PWM;
 
 typedef struct {

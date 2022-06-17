@@ -1303,14 +1303,13 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)
 	if ((frequency >= 25) && (frequency <=200000)){
 		PFM = (204800/frequency)-1;
 	switch (gpio){
-		
 		case 32:
-			pinPWM->PWM_0 = 0x0;
-			pinPWM->PWM_0 = PFM;
+			pinPWM->PWM_0[0] = 0x0;
+			pinPWM->PWM_0[0] = PFM;
 			break;
 		case 33:
-			pinPWM->PWM_2 = 0x0;
-			pinPWM->PWM_2 = PFM;
+			pinPWM->PWM_2[0] = 0x0;
+			pinPWM->PWM_2[0] = PFM;
 			break;
 		default:
 			//status = -1;
@@ -1333,17 +1332,17 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 			*pinmux32 = 0x00000001;
 			*pincfg32 = CFG_OUT;
 			pin32->CNF[0] &= ~(0x00000001);
-			pinPWM->PWM_0 &= ~(0xFFFF0000);
-			pinPWM->PWM_0 |= dutycycle<<16;
-			pinPWM->PWM_0 |= 0x80000000;
+			pinPWM->PWM_0[0] &= ~(0xFFFF0000);
+			pinPWM->PWM_0[0] |= dutycycle<<16;
+			pinPWM->PWM_0[0] |= 0x80000000;
 			break;
 		case 33:
 			*pinmux33 = 0x00000002;
 			*pincfg33 = CFG_OUT;
 			pin33->CNF[0] &= ~(0x00000040);
-			pinPWM->PWM_2 &= ~(0xFFFF0000);
-			pinPWM->PWM_2 |= dutycycle<<16;
-			pinPWM->PWM_2 |= 0x80000000;
+			pinPWM->PWM_2[0] &= ~(0xFFFF0000);
+			pinPWM->PWM_2[0] |= dutycycle<<16;
+			pinPWM->PWM_2[0] |= 0x80000000;
 			break;
 		default:
 			status = -1;
