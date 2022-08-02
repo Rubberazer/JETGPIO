@@ -26,7 +26,7 @@ else
    printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
 }	
 
-// Setting up pin 3 as OUTPUT and 38 as INPUT
+// Setting up pin 3 as OUTPUT and 7 as INPUT
 
 int stat1 = gpioSetMode(3, JET_OUTPUT);
 if (stat1 < 0)
