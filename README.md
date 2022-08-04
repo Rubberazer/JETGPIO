@@ -54,7 +54,7 @@ FUNCTIONALITY:
     pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference 
     or if not available you can use this one:
 
-    https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
+   https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
 
 The library has been tested on a Jetson nano SCO family: tegra210 (TX1), Board: P3449-0000
 
