@@ -4,7 +4,7 @@ C library to manage the JETSON NANO GPIO 0.1
 
 FUNCTIONALITY:
 
-    JETSON NANO (TX1) family only, so far it does not support the Xaviers,etc. No hardware to test it
+    JETSON NANO (TX1) family only, so far it does not support the Xaviers,etc
   
     GPIO control of all the header pinout as input or output. Low latency is expected (it does not go 
     
@@ -15,8 +15,6 @@ FUNCTIONALITY:
     I2C serial communication over pins: 27 (GEN1_I2C_SDA) & 28 (GEN1_I2C_SCL)  and 3 (GEN2_I2C_SDA) 
     
     & 5 (GEN2_I2C_SCL)
-  
-    SPI and UART are NOT supported yet
   
     No need of previous kernel configuration, the library will take care of that on runtime
   
