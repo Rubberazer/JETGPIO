@@ -52,7 +52,7 @@ FUNCTIONALITY:
     
  JETSON NANO PINOUT:
  
-    The library uses the 'typical' 40 pin header numbering, taking the dev kit as reference so for instance 
+    The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance 
     pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference 
     or if not available you can use this one below:
 
