@@ -8,7 +8,7 @@ FUNCTIONALITY:
   
     GPIO control of all the header pinout as input or output. Low latency is expected (it does not go 
     
-    through the kernel) direct writing to the CPU registers
+    through the kernel) writing directly to the CPU registers
     
     PWM (hardware) control on header pins 32 & 33
     
