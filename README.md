@@ -36,7 +36,7 @@ FUNCTIONALITY:
     
     'jetgpio_example.c' & 'jetgpio_example.cpp' show how to setup and use any of the pins as Inputs/Outputs,
     this will allow you to toggle pins from 0V (logic 0) to 3.3V (logic 1) or read the pin as an input where 3.3V at the pin 
-    is a logic 1
+    is a logic 1. Note that when reading inputs, floating pins will throw unreliable results ( as there is no actual input)
     
     'jetgpio_PWM_example.c' & jetgpio_PWM_example.cpp' show how to use the PWM funcionality (pin 32)
     
