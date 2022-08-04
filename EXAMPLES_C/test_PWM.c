@@ -40,9 +40,10 @@ else
    /* jetgpio initialised okay*/
    printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
 }	
-int PWMstat = gpioSetPWMfrequency(33, 1000);
 
-int PWMstat2 = gpioPWM(33, 0);
+gpioSetPWMfrequency(33, 1000);
+
+gpioPWM(33, 0);
 
 int x = 0;
 
