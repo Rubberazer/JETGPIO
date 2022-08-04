@@ -1,6 +1,6 @@
 /* Usage example of the JETGPIO library
- * Compile with: gcc -Wall -g -o jetgpio_i2c_example jetgpio_i2c_example.c -I./ -ljetgpio
- * Execute with: sudo ./jetgpio_example
+ * Compile with: gcc -Wall -g -o jetgpio_i2c_example jetgpio_i2c_example.c -ljetgpio
+ * Execute with: sudo ./jetgpio_i2c_example
 */
 
 #include <stdio.h>
