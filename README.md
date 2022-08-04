@@ -32,11 +32,20 @@ FUNCTIONALITY:
   
  HOW TO:
  
-    See 'jetgpio_example.c' for an example of how to use the library, the main functions provided are there
+    You will find code examples of to use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains 
+    all the C examples, the second one contains the same examples written in C++. The library uses the 'typical' 40 pin
+    header pin numbers, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on.
+    Use the official NVIDIA pinmux configuration for reference or if not available you can use this one:
+    JETSON NANO PINOUT:
+
+    https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
     
-    See 'jetgpio_PWM_example.c' for an example of how to use the PWM funcionality (pins 32 & 33)
     
-    See 'jetgpio_i2c_example.c' for an example of how to use the i2c comms with a MPU6050 gyroscope connected 
+    'jetgpio_example.c' & 'jetgpio_example.cpp' show how to setup pins as Inputs and Outputs e.g. stndard GPIO functionality
+    
+    'jetgpio_PWM_example.c' & jetgpio_PWM_example.cpp' show how to use the PWM funcionality (pins 32 & 33)
+    
+    'jetgpio_i2c_example.c' & 'jetgpio_i2c_example.cpp' show how to use the i2c comms to talk to a MPU6050 gyroscope connected 
     
     to i2c 0 (pins 27 & 28)
     
@@ -48,9 +57,6 @@ FUNCTIONALITY:
 
 The library has been tested on a Jetson nano SCO family: tegra210 (TX1), Board: P3449-0000
 
-JETSON NANO PINOUT:
-
-https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
 
 ![image](https://user-images.githubusercontent.com/47650457/164944765-998ca31c-d72c-4d2b-8cbc-7bea594ce8d5.png)
 
