@@ -21,7 +21,7 @@ FUNCTIONALITY:
   
  INSTALLATION:
  
-    Clone/download the content into any folder in your JETSON and type:
+    Clone/download the content into any folder in your JETSON, cd to that folder and type:
   
     make                                                     
     sudo make install                                             
