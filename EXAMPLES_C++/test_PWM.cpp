@@ -67,7 +67,7 @@ while (x<=256) {
 }
 
 x = 256;
-// Decrease brightness returns status 1 but does not lower the brightness
+// Decrease brightness
 
 while (x>=0) {
 
