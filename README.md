@@ -30,7 +30,7 @@ FUNCTIONALITY:
   
  HOW TO:
  
-    You will find code examples to learn how use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains 
+    You will find code examples to learn how to use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains 
     all the C examples, the second one contains the same examples written in C++. To compile the examples you will
     find instructions at the comment section on top of the example files
     
