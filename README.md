@@ -33,27 +33,30 @@ FUNCTIONALITY:
  HOW TO:
  
     You will find code examples of to use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains 
-    all the C examples, the second one contains the same examples written in C++. The library uses the 'typical' 40 pin
-    header pin numbers, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on.
-    Use the official NVIDIA pinmux configuration for reference or if not available you can use this one:
-    JETSON NANO PINOUT:
-
-    https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
+    all the C examples, the second one contains the same examples written in C++
     
+    'jetgpio_example.c' & 'jetgpio_example.cpp' show how to setup and use any of the pins as Inputs and Outputs,
+    this will allow you to toggle pins 0V (logic 0) to 3.3V (logic 1) or read the pin as an input where 3.3V at the pin is a logic 1
     
-    'jetgpio_example.c' & 'jetgpio_example.cpp' show how to setup pins as Inputs and Outputs e.g. stndard GPIO functionality
+    'jetgpio_PWM_example.c' & jetgpio_PWM_example.cpp' show how to use the PWM funcionality (pin 32)
     
-    'jetgpio_PWM_example.c' & jetgpio_PWM_example.cpp' show how to use the PWM funcionality (pins 32 & 33)
+    'test_PWM.c' & test_PWM.cpp' show again how to use the PWM funcionality in a bit fancier way and also capturing interruptions
     
     'jetgpio_i2c_example.c' & 'jetgpio_i2c_example.cpp' show how to use the i2c comms to talk to a MPU6050 gyroscope connected 
     
-    to i2c 0 (pins 27 & 28)
+    to i2c0 (pins 27 & 28)
     
     The library functions names and usage mimic the ones of the pigpio library (which I recommend 
     
     if you work with Raspberry Pis). Learnt a lot from that one
     
+ JETSON NANO PINOUT:
+ 
+    The library uses the 'typical' 40 pin header numbering, taking the dev kit as reference so for instance 
+    pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can chweck the official NVIDIA pinmux configuration for reference 
+    or if not available you can use this one:
 
+    https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
 
 The library has been tested on a Jetson nano SCO family: tegra210 (TX1), Board: P3449-0000
 
