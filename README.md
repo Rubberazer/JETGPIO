@@ -31,7 +31,7 @@ FUNCTIONALITY:
  HOW TO:
  
     You will find code examples to learn how to use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains 
-    all the C examples, the second one contains the same examples written in C++. To compile the examples you will
+    all the C examples, the second one contains the same examples ready to compile in C++. To compile the examples you will
     find instructions in the comment section at the top of each of the example files
     
     'jetgpio_example.c' & 'jetgpio_example.cpp' show how to setup and use any of the pins as Inputs/Outputs,
