@@ -32,7 +32,7 @@ FUNCTIONALITY:
  
     You will find code examples to learn how to use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains 
     all the C examples, the second one contains the same examples written in C++. To compile the examples you will
-    find instructions at the comment section on top of the example files
+    find instructions in the comment section at the top of each of the example files
     
     'jetgpio_example.c' & 'jetgpio_example.cpp' show how to setup and use any of the pins as Inputs/Outputs,
     this will allow you to toggle pins from 0V (logic 0) to 3.3V (logic 1) or read the pin as an input where 3.3V at the pin 
