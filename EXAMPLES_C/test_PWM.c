@@ -88,4 +88,5 @@ while (x>=0) {
 
 }
 gpioTerminate();
+exit(0)
 }
