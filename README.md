@@ -4,7 +4,7 @@ C library to manage the JETSON NANO GPIO 0.2
 
 <h2 align="left">FUNCTIONALITY:</h2>
 
-- JETSON NANO (TX1) family only, so far it does not support the Xaviers,etc
+- JETSON NANO (TX1) family only, so far it does not support other models such as Xavier or Orin
 
 - GPIO control of all the header pinout as input or output. Low latency is expected (it does not go through the kernel) writing directly to the CPU registers
 
