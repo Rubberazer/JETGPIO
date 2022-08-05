@@ -20,7 +20,6 @@ No need of previous kernel configuration, the library will take care of that on 
 Clone/download the content into any folder in your JETSON, cd to that folder and type:
   
     make   
-
     sudo make install                                             
   
 That's it, the library should be installed and ready to be used
