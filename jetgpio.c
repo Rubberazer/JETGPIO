@@ -1373,12 +1373,12 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 	FILE *fptr;
 
 	if (i2cAddr > 0x7f){
-      	printf( "bad I2C address (%d)", i2cAddr);
+      	printf( "bad I2C address (%d)\n", i2cAddr);
 	return -1;
 	}
 
 	if (i2cFlags > 3){
-        printf( "Only flags 0 to 2 are supported to set up bus speed");
+        printf( "Only flags 0 to 2 are supported to set up bus speed\n");
         return -2;
 	}
 	
@@ -1403,7 +1403,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 			slot = i2cBus;
 			i2cInfo[slot].state = I2C_RESERVED;
 	}
-	else { printf("i2c bus already open");
+	else { printf("i2c bus already open\n");
 		return -3;
 	}
 	
@@ -1453,13 +1453,13 @@ int i2cClose(unsigned handle)
 	char buf[100];
 	
 	if (handle > 1) {
-      printf( "bad handle (%d)", handle);
-		return(-1);
+      printf( "bad handle (%d)\n", handle);
+		return -1;
 	}
 
 	if (i2cInfo[handle].state != I2C_OPENED) {
-	   printf( "i2c bus is already closed (%d)", handle);
-		return(-1);	
+	   printf( "i2c bus is already closed (%d)\n", handle);
+		return -1;	
 	}
      
 	if (i2cInfo[handle].fd >= 0) {close(i2cInfo[handle].fd);};
@@ -1481,32 +1481,33 @@ int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 	int status = 0;
 	
 	if (handle >= 2) {
-		printf( "bad handle (%d)", handle);
+		printf( "bad handle (%d)\n", handle);
 		status = -1;
 	}
 
    if (i2cInfo[handle].state != I2C_OPENED){
-		printf( "i2c%d is not open)", handle);
+		printf( "i2c%d is not open\n", handle);
 		status = -2;
 	}
 
    if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_WRITE_BYTE_DATA) == 0){
-		printf( "write byte data function not supported by device");
+		printf( "write byte data function not supported by device\n");
 		status = -3;
 	}
 	
    if (reg > 0x7F){
-		printf( "register address on device bigger than 0x7F");
+		printf( "register address on device bigger than 0x7F\n");
 		status = -4;
 	}
 
    if (bVal > 0xFF){
-		printf( "value to be written bigger than byte");
+		printf( "value to be written bigger than byte\n");
 		status = -5;
 	}
 	
 	data.byte = bVal;
-	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE,reg, I2C_SMBUS_BYTE_DATA, &data)) {
+	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE,reg, I2C_SMBUS_BYTE_DATA, &data)<0) {
+		printf( "not possible to write register\n");
 		status = -6;}
 	return status;
 }
@@ -1517,26 +1518,27 @@ int i2cReadByteData(unsigned handle, unsigned reg)
 	union i2c_smbus_data data;
 	
 	if (handle >= 2) {
-		printf( "bad handle (%d)", handle);
+		printf( "bad handle (%d)\n", handle);
 		status = -1;
 	}
 
    if (i2cInfo[handle].state != I2C_OPENED){
-		printf( "i2c%d is not open)", handle);
+		printf( "i2c%d is not open\n", handle);
 		status = -2;
 	}
 
    if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA) == 0){
-		printf( "write byte data function not supported by device");
+		printf( "write byte data function not supported by device\n");
 		status = -3;
 	}
 	
    if (reg > 0x7F){
-		printf( "register address on device bigger than 0x7F");
+		printf( "register address on device bigger than 0x7F\n");
 		status = -4;
 	}
 	
-	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ,reg, I2C_SMBUS_BYTE_DATA,&data)) {
+	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ,reg, I2C_SMBUS_BYTE_DATA,&data)<0) {
+		printf( "not possible to read register\n");
 		status = -5;}
 	else
 		{status = 0x0FF & data.byte;}
