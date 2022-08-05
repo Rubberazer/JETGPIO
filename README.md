@@ -2,7 +2,7 @@
 
 C library to manage the JETSON NANO GPIO 0.2
 
-[<h2 align="left">FUNCTIONALITY:</h2>]
+<h2 align="left">FUNCTIONALITY:</h2>
 
 JETSON NANO (TX1) family only, so far it does not support the Xaviers,etc
 
