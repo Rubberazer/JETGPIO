@@ -15,7 +15,7 @@ I2C serial communication over pins: 27 (GEN1_I2C_SDA) & 28 (GEN1_I2C_SCL)  and 3
 No need of previous kernel configuration, the library will take care of that on runtime
   
   
-[<h2 align="left">INSTALLATION:</h2>]
+<h2 align="left">INSTALLATION:</h2>
  
 Clone/download the content into any folder in your JETSON, cd to that folder and type:
   
@@ -24,7 +24,7 @@ Clone/download the content into any folder in your JETSON, cd to that folder and
   
 That's it, the library should be installed and ready to be used
   
-[<h2 align="left">HOW TO:</h2>] 
+<h2 align="left">HOW TO:</h2> 
  
 You will find code examples to learn how to use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains all the C examples, the second one contains the same examples ready to compile in C++. To compile the examples you will find instructions in the comment section at the top of each of the example files
 
@@ -38,7 +38,7 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 The library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis). Learnt a lot from that one
     
-[<h2 align="left">JETSON NANO PINOUT:</h2>] 
+<h2 align="left">JETSON NANO PINOUT:</h2>
 
 The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use this one below:
 
