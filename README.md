@@ -30,7 +30,7 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 - 'jetgpio_example.c' & 'jetgpio_example.cpp' show how to setup and use any of the pins as Inputs/Outputs, this will allow you to toggle pins from 0V (logic 0) to 3.3V (logic 1) or read the pin as an input where 3.3V at the pin is a logic 1. Note that when reading inputs, floating pins will throw unreliable results (as there is no actual input)
 
-- 'jetgpio_PWM_example.c' & jetgpio_PWM_example.cpp' show how to use the PWM funcionality at pin 32
+- 'jetgpio_PWM_example.c' & 'jetgpio_PWM_example.cpp' show how to use the PWM funcionality at pin 32
 
 - 'test_PWM.c' & 'test_PWM.cpp' show again how to use the PWM funcionality with some LEDs connected and also capturing interruptions
 
