@@ -12,7 +12,7 @@ C library to manage the JETSON NANO GPIO version 0.2
 
 - I2C serial communication over pins: 27 (GEN1_I2C_SDA) & 28 (GEN1_I2C_SCL)  and 3 (GEN2_I2C_SDA) & 5 (GEN2_I2C_SCL)
   
-- No need of previous kernel configuration, the library will take care of that on runtime
+- No need of previous kernel configuration
   
   
 <h2 align="left">INSTALLATION:</h2>
