@@ -32,7 +32,7 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 - 'jetgpio_PWM_example.c' & jetgpio_PWM_example.cpp' show how to use the PWM funcionality at pin 32
 
-- 'test_PWM.c' & test_PWM.cpp' show again how to use the PWM funcionality with some LEDs connected and also capturing interruptions
+- 'test_PWM.c' & 'test_PWM.cpp' show again how to use the PWM funcionality with some LEDs connected and also capturing interruptions
 
 - 'jetgpio_i2c_example.c' & 'jetgpio_i2c_example.cpp' show how to use the i2c comms to talk to a MPU6050 gyroscope connected to i2c0 (pins 27 & 28)
 
