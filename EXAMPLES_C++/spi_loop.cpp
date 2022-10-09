@@ -31,7 +31,10 @@ else
 /* Port SPI2 pins: 37, 22, 13 & 18
    to perform a simple loop test, pins 22: SPI2_MISO & 37:SPI2_MOSI should be connected
    with a short jumper cable, when the cable is disconnected the output on screen will show
-   all the rx values as zeros */
+   all the rx values as zeros 
+   spiOpen() parameters go as follows: spiOpen(port number, speed in Hz, mode, cs pin delay in us, 
+   bits per word, least significant bit first, cs change)
+*/
 
 SPI_init = spiOpen(1, 5000000, 0, 0, 8, 1, 1);
 if (SPI_init < 0)
