@@ -40,13 +40,13 @@ SPI_init = spiOpen(1, 5000000, 0, 0, 8, 1, 1);
 if (SPI_init < 0)
 {
    /* Spi port 1 opening failed */
-   printf("Spi port 1 opening failed. Error code:  %d\n", Init);
+   printf("Spi port 1 opening failed. Error code:  %d\n", SPI_init);
    exit(Init);
 }
 else
 {
    /* Spi port 1 opened  okay*/
-   printf("Spi port 1 opened OK. Return code:  %d\n", Init);
+   printf("Spi port 1 opened OK. Return code:  %d\n", SPI_init);
 }
 
 tx[0] = 0xFF;
@@ -67,13 +67,13 @@ SPI_stat = spiXfer(SPI_init, tx, rx, 7);
 if (SPI_stat < 0)
 {
    /* Spi transfer failed */
-   printf("Spi port transfer failed. Error code:  %d\n", Init);
+   printf("Spi port transfer failed. Error code:  %d\n", SPI_stat);
    exit(Init);
 }
 else
 {
    /* Spi transfer okay*/
-   printf("Spi port transfer OK. Return code:  %d\n", Init);
+   printf("Spi port transfer OK. Return code:  %d\n", SPI_stat);
 }
 
 printf("tx0:%x --> rx0:%x\n",tx[0], rx[0]);
