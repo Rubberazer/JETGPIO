@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.2 */
+/* jetgpio version 0.5 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +37,7 @@ For more information, please refer to <http://unlicense.org/>
 #include <sys/types.h>
 #include <linux/i2c-dev.h>
 #include <linux/i2c.h>
+#include <linux/spi/spidev.h>
 #include <linux/types.h>
 
 #include "jetgpio.h"
@@ -51,6 +52,8 @@ static volatile GPIO_PWM *pinPWM;
 
 static i2cInfo_t i2cInfo[2];
 static int i2c_speed[2];
+
+static SPIInfo_t SpiInfo[2];
 
 static volatile GPIO_CNF *pin3;
 static volatile GPIO_CNF *pin5;
@@ -139,6 +142,11 @@ static volatile uint32_t *pincfg37;
 static volatile uint32_t *pincfg38;
 static volatile uint32_t *pincfg40;
 
+static volatile uint32_t *controller_clk_out_enb_h;
+static volatile uint32_t *controller_rst_devices_h;
+static volatile uint32_t *clk_source_spi1;
+static volatile uint32_t *clk_source_spi2;
+
 static void *baseCNF;
 
 static void *basePINMUX;
@@ -147,16 +155,16 @@ static void *baseCFG;
 
 static void *basePWM;
 
+static void *baseCAR;
 
 int gpioInitialise(void)
 {
-	int status = 1;
-	//  Getting the page size
+    int status = 1;
+    //  Getting the page size
     int pagesize = sysconf(_SC_PAGESIZE);    //getpagesize();
-    //int pagemask = pagesize-1;
 	
-	//  read physical memory (needs root)
-	fd_GPIO = open("/dev/mem", O_RDWR | O_SYNC);
+    //  read physical memory (needs root)
+    fd_GPIO = open("/dev/mem", O_RDWR | O_SYNC);
     if (fd_GPIO < 0) {
         perror("/dev/mem");
         fprintf(stderr, "please run this program as root (for example with sudo)\n");
@@ -166,44 +174,45 @@ int gpioInitialise(void)
     baseCNF = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CNF);
     if (baseCNF == NULL) {
         perror("mmap()");
-        status = -3;
+        status = -2;
     }
     
     //  Mapping GPIO_PINMUX
-	basePINMUX = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PINMUX);
+    basePINMUX = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PINMUX);
     if (basePINMUX == NULL) {
         perror("mmap()");
         status = -3;
     }
     
-        //  Mapping GPIO_CFG
-	baseCFG = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CFG);
+    //  Mapping GPIO_CFG
+    baseCFG = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CFG);
     if (baseCFG == NULL) {
         perror("mmap()");
-        status = -3;
+        status = -4;
     }
     
-       //  Mapping GPIO_PWM
-	basePWM = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM);
+    //  Mapping GPIO_PWM
+    basePWM = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM);
     if (basePWM == NULL) {
         perror("mmap()");
-        status = -3;
+        status = -5;
     }
     
-     // Pointer to PM3_PWMx
-    pinPWM = (GPIO_PWM volatile *)((char *)basePWM + PM3_PWM0);
-    pinPWM_Init = *pinPWM;
+    //  Mapping CAR
+    baseCAR = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, CAR);
+    if (baseCAR == NULL) {
+        perror("mmap()");
+        status = -6;
+    }
     
     // Pointer to CNF3
     pin3 = (GPIO_CNF volatile *)((char *)baseCNF + CNF_3);
     pin_CNF.CNF3 = pin3->CNF[0];
     
-    
     // Pointer to PINMUX3
     pinmux3 = (uint32_t volatile *)((char *)basePINMUX + PINMUX_3);
     pin_MUX.PINMUX3 = *pinmux3;
     
-
     // Pointer to PINCFG3
     pincfg3 = (uint32_t volatile *)((char *)baseCFG + CFG_3);
     pin_CFG.CFG3 = *pincfg3;
@@ -531,6 +540,30 @@ int gpioInitialise(void)
     // Pointer to PINCFG40
     pincfg40 = (uint32_t volatile *)((char *)baseCFG + CFG_40);
     pin_CFG.CFG40 = *pincfg40;
+    
+    // Pointer to PM3_PWMx
+    pinPWM = (GPIO_PWM volatile *)((char *)basePWM + PM3_PWM0);
+    pinPWM_Init = *pinPWM;
+
+    // Pointer to controller_clk_out_enb_h
+    controller_clk_out_enb_h = (uint32_t volatile *)((char *)baseCAR + CLK_RST_CONTROLLER_CLK_OUT_ENB_H_0);
+
+    // Pointer to controller_rst_devices_h
+    controller_rst_devices_h = (uint32_t volatile *)((char *)baseCAR + CLK_RST_CONTROLLER_RST_DEVICES_H_0);
+
+    // Pointer to clksourcespi1
+    clk_source_spi1 = (uint32_t volatile *)((char *)baseCAR + CLK_RST_CONTROLLER_CLK_SOURCE_SPI1_0);
+
+    // Pointer to clksourcespi2
+    clk_source_spi2 = (uint32_t volatile *)((char *)baseCAR + CLK_RST_CONTROLLER_CLK_SOURCE_SPI2_0);
+
+    // Initialize i2c
+    i2cInfo[0].state = I2C_CLOSED;
+    i2cInfo[1].state = I2C_CLOSED;
+    
+    // Initialize spi
+    SpiInfo[0].state = SPI_CLOSED;
+    SpiInfo[1].state = SPI_CLOSED;
 
 	return status;
 }
@@ -540,7 +573,7 @@ void gpioTerminate(void)
 	int pagesize = sysconf(_SC_PAGESIZE);
 	/* Restoring registers to their previous state */
 	*pinPWM = pinPWM_Init;
-	pin3->CNF[0] = pin_CNF.CNF3;
+    pin3->CNF[0] = pin_CNF.CNF3;
 	*pinmux3 = pin_MUX.PINMUX3;
 	*pincfg3 = pin_CFG.CFG3;
 	pin5->CNF[0] = pin_CNF.CNF5;
@@ -626,7 +659,7 @@ void gpioTerminate(void)
 	*pincfg40 = pin_CFG.CFG40;
 	
 	/* Ummapping CNF registers */
-    munmap(baseCNF, pagesize);
+	munmap(baseCNF, pagesize);
     
 	/* Ummapping PINMUX registers */
 	munmap(basePINMUX, pagesize);
@@ -636,9 +669,12 @@ void gpioTerminate(void)
 	
 	/* Ummapping PWM registers */
 	munmap(basePWM, pagesize);
+	
+	/* Ummapping CAR registers */
+	munmap(baseCAR, pagesize);
   
 	/* close /dev/mem */
-    close(fd_GPIO);
+	close(fd_GPIO);
 }
 
 int gpioSetMode(unsigned gpio, unsigned mode)
@@ -683,7 +719,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			pin11->CNF[0] |= 0x00000004;
 			pin11->OE[0] &= ~(0x00000004);
 			break;
-	    case 12:
+	        case 12:
 			*pinmux12 = PINMUX_IN;
 			*pincfg12 = CFG_IN;
 			pin12->CNF[0] |= 0x00000080;
@@ -860,7 +896,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			pin11->CNF[0] |= 0x00000004;
 			pin11->OE[0] |= 0x00000004;
 			break;
-	    case 12:
+		case 12:
 			*pinmux12 = PINMUX_OUT;
 			*pincfg12 = CFG_OUT;
 			pin12->CNF[0] |= 0x00000080;
@@ -993,14 +1029,14 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			pin40->OE[0] |= 0x00000040;
 			break;
 		default:
-			status = -1;
+			status = -2;
 			printf("Only gpio numbers from 3 to 40 are accepted, this function will only read the level on the Jetson Nano header pins,\n");
 			printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
 		}
 		
 	}
 	else {printf("Only modes allowed are JET_INPUT and JET_OUTPUT\n");
-		status = -2;
+		status = -3;
 		}
 	return status;
 	
@@ -1029,7 +1065,7 @@ int gpioRead(unsigned gpio)
 		case 11:
 			level = (pin11->IN[0])>>2 & 1;
 			break;
-	    case 12:
+	        case 12:
 			level = (pin12->IN[0])>>7 & 1;
 			break;
 		case 13:
@@ -1127,7 +1163,7 @@ int gpioWrite(unsigned gpio, unsigned level)
 		case 11:
 			pin11->OUT[0] &= ~(0x00000004);
 			break;
-	    case 12:
+	        case 12:
 			pin12->OUT[0] &= ~(0x00000080);
 			break;
 		case 13:
@@ -1220,7 +1256,7 @@ int gpioWrite(unsigned gpio, unsigned level)
 		case 11:
 			pin11->OUT[0] |= level<<2;
 			break;
-	    case 12:
+	        case 12:
 			pin12->OUT[0] |= level<<7;
 			break;
 		case 13:
@@ -1287,7 +1323,7 @@ int gpioWrite(unsigned gpio, unsigned level)
 			pin40->OUT[0] |= level<<6;
 			break;
 		default:
-			status = -1;
+			status = -2;
 			printf("Only gpio numbers from 3 to 40 are accepted, this function will only read the level of the Jetson Nano header pins,\n");
 			printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
 		}
@@ -1312,13 +1348,13 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)
 			pinPWM->PWM_2[0] = PFM;
 			break;
 		default:
-			//status = -1;
-			printf("Only gpio numbers 32 and 33 are accepted,\n");
+			status = -1;
+			printf("Only gpio numbers 32 and 33 are accepted\n");
 		}
 		
 	}
 	else {printf("Only frequencies from 25 to 200000 Hz are allowed\n");
-		status =-1;}
+		status =-2;}
 	return status;
 }
 
@@ -1346,12 +1382,12 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 			break;
 		default:
 			status = -1;
-			printf("Only gpio numbers f32 and 33 are accepted,\n");
+			printf("Only gpio numbers 32 and 33 are accepted,\n");
 		}
 		
 	}
 	else {printf("Only a dutycycle from 0 to 256 is allowed\n");
-		status =-1;}
+		status =-2;}
 	return status;
 }
 
@@ -1372,14 +1408,19 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 	uint32_t funcs;
 	FILE *fptr;
 
-	if (i2cAddr > 0x7f){
-      	printf( "bad I2C address (%d)\n", i2cAddr);
-	return -1;
+    if (!(i2cBus == 0 || i2cBus == 1)){
+        printf( "bad i2c device (%d) only 0 or 1 are accepted\n", i2cBus);
+        return -1;
 	}
 
-	if (i2cFlags > 3){
-        printf( "Only flags 0 to 2 are supported to set up bus speed\n");
+	if (i2cAddr > 0x7f){
+      	printf( "bad I2C address (%d)\n", i2cAddr);
         return -2;
+	}
+
+	if (!(i2cFlags == 0 || i2cFlags == 1 || i2cFlags == 2)){
+        printf( "Only flags 0 to 2 are supported to set up bus speed\n");
+        return -3;
 	}
 	
 	switch(i2cFlags) {
@@ -1397,21 +1438,21 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 			i2cFlags = 3;
 	}
 	
-	slot = -3;
+	slot = -7;
 	
 	if (i2cInfo[i2cBus].state == I2C_CLOSED) {
-			slot = i2cBus;
-			i2cInfo[slot].state = I2C_RESERVED;
+		slot = i2cBus;
+		i2cInfo[slot].state = I2C_RESERVED;
 	}
 	else { printf("i2c bus already open\n");
-		return -3;
+        return -4;
 	}
 	
 	snprintf(buf, sizeof(buf), "/sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2cBus);
 	fptr = fopen(buf, "r");
 	
 	if (fptr == NULL) {
-	printf("not possible to read current bus speed\n");
+        printf("not possible to read current bus speed\n");
 	}
 	
 	fscanf(fptr, "%d", &i2c_speed[i2cBus]);
@@ -1425,27 +1466,27 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 	fd = open(dev, O_RDWR);
 	if (fd < 0) {
 		printf( "bad handle (%d)\n", fd);
-		return -4;	
+		return -5;	
 	}
 	
 	if (ioctl(fd, I2C_SLAVE, i2cAddr) < 0) {
       	close(fd);
       	i2cInfo[slot].state = 0;
-      	return -6;;
+      	return -6;
    	}
 
    	if (ioctl(fd, I2C_FUNCS, &funcs) < 0){
-      		funcs = -1; /* assume all smbus commands allowed */
-      		return -7;
+       funcs = -1; /* assume all smbus commands allowed */
+       return -7;
    	}
 
-   i2cInfo[slot].fd = fd;
-   i2cInfo[slot].addr = i2cAddr;
-   i2cInfo[slot].flags = i2cFlags;
-   i2cInfo[slot].funcs = funcs;
-   i2cInfo[slot].state = I2C_OPENED;
+	i2cInfo[slot].fd = fd;
+	i2cInfo[slot].addr = i2cAddr;
+	i2cInfo[slot].flags = i2cFlags;
+	i2cInfo[slot].funcs = funcs;
+	i2cInfo[slot].state = I2C_OPENED;
 
-   return slot;
+	return slot;
 }
 
 int i2cClose(unsigned handle)
@@ -1453,16 +1494,16 @@ int i2cClose(unsigned handle)
 	char buf[100];
 	
 	if (handle > 1) {
-      printf( "bad handle (%d)\n", handle);
+        printf( "bad handle (%d)", handle);
 		return -1;
 	}
 
 	if (i2cInfo[handle].state != I2C_OPENED) {
-	   printf( "i2c bus is already closed (%d)\n", handle);
-		return -1;	
+        printf( "i2c bus is already closed (%d)", handle);
+		return -2;	
 	}
      
-	if (i2cInfo[handle].fd >= 0) {close(i2cInfo[handle].fd);};
+	if (i2cInfo[handle].fd >= 0) {close(i2cInfo[handle].fd);}
 
 	i2cInfo[handle].fd = -1;
 	i2cInfo[handle].state = I2C_CLOSED;
@@ -1472,7 +1513,7 @@ int i2cClose(unsigned handle)
 		printf( "not possible to return bus speed to original value\n");
 	}
 
-   return 0;
+	return 0;
 }
 
 int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
@@ -1485,22 +1526,22 @@ int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 		status = -1;
 	}
 
-   if (i2cInfo[handle].state != I2C_OPENED){
+	if (i2cInfo[handle].state != I2C_OPENED){
 		printf( "i2c%d is not open\n", handle);
 		status = -2;
 	}
 
-   if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_WRITE_BYTE_DATA) == 0){
+	if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_WRITE_BYTE_DATA) == 0){
 		printf( "write byte data function not supported by device\n");
 		status = -3;
 	}
 	
-   if (reg > 0x7F){
+	if (reg > 0x7F){
 		printf( "register address on device bigger than 0x7F\n");
 		status = -4;
 	}
 
-   if (bVal > 0xFF){
+	if (bVal > 0xFF){
 		printf( "value to be written bigger than byte\n");
 		status = -5;
 	}
@@ -1514,33 +1555,205 @@ int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 
 int i2cReadByteData(unsigned handle, unsigned reg)
 {
-	int status;
-	union i2c_smbus_data data;
+    int status = 0;
+    union i2c_smbus_data data;
 	
-	if (handle >= 2) {
+    if (handle >= 2) {
+       printf( "bad handle (%d)\n", handle);
+       status = -1;
+	}
+
+    if (i2cInfo[handle].state != I2C_OPENED){
+       printf( "i2c%d is not open\n", handle);
+       status = -2;
+	}
+
+    if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA) == 0){
+      printf( "write byte data function not supported by device\n");
+      status = -3;
+	}
+	
+    if (reg > 0x7F){
+       printf( "register address on device bigger than 0x7F\n");
+       status = -4;
+	}
+	
+    if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ,reg, I2C_SMBUS_BYTE_DATA,&data)<0) {
+       printf( "not possible to read register\n");
+       status = -5;}
+    else
+       {status = 0x0FF & data.byte;}
+    return status;
+}
+
+int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)
+{
+    char dev[20], buf[100];
+    int fd, slot;
+    int ret = 0;
+
+    if (!(spiChan == 0 || spiChan == 1)){
+        printf( "bad spi device (%d) only 0 or 1 are accepted\n", spiChan);
+        return -1;
+	}
+
+    if (speed < 0 || speed > 50000000){
+        printf( "speed in bits/second (%d) shouldn't be bigger that 50 Mbit/s\n", speed);
+        return -2;
+	}
+
+    if (!(mode == 0 || mode == 1 || mode == 2 || mode == 3)){
+        printf( "mode (%d) should be a number between 0 and 3\n", mode);
+        return -3;
+	}
+
+    if (cs_delay < 0 || cs_delay > 1000){
+        printf( "cs_delay in us (%d) shouldn't be bigger that 1000 us\n", cs_delay);
+        return -5;
+	}
+
+    if (bits_word < 0 || bits_word > 32){
+        printf( "bits per word (%d) should be a number between 0 and 32\n", bits_word);
+        return -6;
+	}
+
+    if (!(lsb_first == 0 || lsb_first == 1)){
+        printf( "least significant bit first option (%d) should be 0 or 1\n", lsb_first);
+        return -7;
+	}
+
+    if (!(cs_change == 0 || cs_change == 1)){
+        printf( "cs_change option (%d) should be 0 or 1\n", cs_change);
+        return -10;
+	}
+    
+    slot = -20;    
+    
+    if (SpiInfo[spiChan].state == SPI_CLOSED) {
+        slot = spiChan;
+		SpiInfo[slot].state = SPI_RESERVED;
+	}
+	else { printf("spi bus already open\n");
+		return -11;
+	}
+
+    strcpy(buf, "modprobe spidev");
+    
+   	if (system(buf) == -1) { 
+		printf( "not possible to load the linux spidev module (driver) \n");
+        return -12;
+	}
+ 
+    snprintf(dev, 19, "/dev/spidev%d.0", spiChan);
+	fd = open(dev, O_RDWR);
+	if (fd < 0) {
+		printf( "bad handle (%d)\n", fd);
+		return -13;	
+	}
+    
+    ret = ioctl(fd, SPI_IOC_WR_MODE, &mode);
+	if (ret < 0){
+		printf("can't set spi mode\n");
+        return -14;
+    }
+    
+	ret = ioctl(fd, SPI_IOC_RD_MODE, &mode);
+	if (ret < 0){
+        printf("can't get spi mode\n");
+        return -15; 
+    }
+    
+    ret = ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &bits_word);
+	if (ret < 0){
+		printf("can't set bits per word\n");
+        return -16;
+    }
+    
+	ret = ioctl(fd, SPI_IOC_RD_BITS_PER_WORD, &bits_word);
+	if (ret < 0){
+		printf("can't get bits per word\n");
+        return -17;
+    }
+  
+    ret = ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed);
+	if (ret < 0){
+		printf("can't set max speed hz");
+        return -18;
+    }
+
+	ret = ioctl(fd, SPI_IOC_RD_MAX_SPEED_HZ, &speed);
+	if (ret < 0){
+        printf("can't get max speed\n");
+        return -19;
+    }
+
+    ret = ioctl(fd, SPI_IOC_WR_LSB_FIRST, &lsb_first);
+	if (ret < 0){
+		printf("can't set lsb first\n");
+        return -20;
+    }
+
+	ret = ioctl(fd, SPI_IOC_WR_LSB_FIRST, &lsb_first);
+	if (ret < 0){
+        printf("can't get lsb first\n");
+        return -21;
+    }
+
+    SpiInfo[slot].fd = fd;
+	SpiInfo[slot].mode = mode;
+	SpiInfo[slot].speed = speed;
+	SpiInfo[slot].cs_delay = cs_delay;
+    SpiInfo[slot].cs_change = cs_change;
+    SpiInfo[slot].bits_word = bits_word;
+	SpiInfo[slot].state = SPI_OPENED;
+    
+	return slot;
+}
+
+int spiClose(unsigned handle)
+{
+	if (handle > 1) {
+        printf( "bad handle (%d)", handle);
+		return -1;
+	}
+    
+	if (SpiInfo[handle].state != SPI_OPENED) {
+        printf( "spi bus is already closed (%d)", handle);
+		return -2;	
+	}
+     
+	if (SpiInfo[handle].fd >= 0) {close(SpiInfo[handle].fd);}
+
+	SpiInfo[handle].fd = -1;
+	SpiInfo[handle].state = SPI_CLOSED;
+
+    return 0;
+}
+
+int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)
+{
+	int ret;
+    struct spi_ioc_transfer tr;
+    
+	if (handle > 1) {
 		printf( "bad handle (%d)\n", handle);
-		status = -1;
+		return -1;
 	}
 
-   if (i2cInfo[handle].state != I2C_OPENED){
-		printf( "i2c%d is not open\n", handle);
-		status = -2;
-	}
-
-   if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA) == 0){
-		printf( "write byte data function not supported by device\n");
-		status = -3;
-	}
-	
-   if (reg > 0x7F){
-		printf( "register address on device bigger than 0x7F\n");
-		status = -4;
-	}
-	
-	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ,reg, I2C_SMBUS_BYTE_DATA,&data)<0) {
-		printf( "not possible to read register\n");
-		status = -5;}
-	else
-		{status = 0x0FF & data.byte;}
-	return status;
+    tr.tx_buf = (unsigned long)txBuf;
+	tr.rx_buf = (unsigned long)rxBuf;
+	tr.len = len;
+	tr.delay_usecs = SpiInfo[handle].cs_delay;
+	tr.speed_hz = SpiInfo[handle].speed;
+	tr.bits_per_word = SpiInfo[handle].bits_word;
+    tr.cs_change = SpiInfo[handle].cs_change;
+    //tr.tx_nbits = 2;
+    //tr.rx_nbits = 2;
+    
+    ret = ioctl(SpiInfo[handle].fd, SPI_IOC_MESSAGE(1), &tr);
+	if (ret < 1){
+		printf("can't send spi message\n");
+        return -2;
+    }
+    return tr.len;
 }

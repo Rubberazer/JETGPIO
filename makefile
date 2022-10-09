@@ -19,7 +19,10 @@ install:
 	ldconfig
 	ldconfig -p | grep libjetgpio.so
 
-	
+uninstall:
+	rm -rf /usr/lib/$(LIB)
+	rm -rf /usr/include/jetgpio.h
+	ldconfig	
 
 
 
