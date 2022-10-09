@@ -45,7 +45,7 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 - 'jetgpio_i2c_example.c' & 'jetgpio_i2c_example.cpp' show how to use the i2c comms to talk to a MPU6050 gyroscope connected to i2c0 (pins 27 & 28)
 
-- 'spi_loop.c' & 'spi_loop.cpp' show how to run a simple loop test on the SPI port(s) by conencting together pins 19 & 21 for port SPI1 and pins 22 7 37 
+- 'spi_loop.c' & 'spi_loop.cpp' show how to run a simple loop test on the SPI port(s) by connecting together pins 19 & 21 for port SPI1 and pins 22 & 37 
   for port SPI2
 
 The library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis). Learnt a lot from that one
