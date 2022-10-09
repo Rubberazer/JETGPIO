@@ -17,7 +17,7 @@ C library to manage the JETSON NANO GPIO version 0.2
 - No need of previous kernel configuration to use the pins as inputs or outputs, the device tree needs to be 
   configured properly to be able to use the I2C & SPI ports though. It is recommended to use the jetson-io.py tool like so:
 
-    sudo /opt/nvidia/jetson-io/jetson-io.py
+      sudo /opt/nvidia/jetson-io/jetson-io.py
   
   
 <h2 align="left">INSTALLATION:</h2>
