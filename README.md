@@ -18,6 +18,8 @@ C library to manage the JETSON NANO GPIO
   configured properly to be able to use the I2C & SPI ports though. It is recommended to use the jetson-io.py to enable the I2C and SPI ports:
 
       sudo /opt/nvidia/jetson-io/jetson-io.py
+      
+  You can also check this out: https://jetsonhacks.com/2020/05/04/spi-on-jetson-using-jetson-io/
   
   
 <h2 align="left">INSTALLATION:</h2>
