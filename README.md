@@ -23,6 +23,7 @@ Clone/download the content into any folder in your JETSON, cd to that folder and
     sudo make install                                             
   
 That's it, the library should be installed and ready to be used. 
+
 To uninstall the library:
 
     sudo make uninstall
