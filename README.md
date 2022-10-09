@@ -11,8 +11,13 @@ C library to manage the JETSON NANO GPIO version 0.2
 - PWM (hardware) control on header pins 32 & 33 
 
 - I2C serial communication over pins: 27 (GEN1_I2C_SDA) & 28 (GEN1_I2C_SCL)  and 3 (GEN2_I2C_SDA) & 5 (GEN2_I2C_SCL)
+
+- SPI serial communication over pins: 19 (SPI1_MOSI), 21 (SPI1_MISO), 23 (SPI1_SCK) & 24 (SPI_CS0) and 37 (SPI2_MOSI), 22 (SPI2_MISO), 13 (SPI1_SCK) & 18 (SPI_CS0)
   
-- No need of previous kernel configuration
+- No need of previous kernel configuration to use the pins as inputs or outputs, the device tree needs to be 
+- configured properly to be able to use the I2C & SPI ports though. It is recommended to use the jetson-io.py tool like so:
+
+    sudo /opt/nvidia/jetson-io/jetson-io.py
   
   
 <h2 align="left">INSTALLATION:</h2>
