@@ -1671,7 +1671,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
         pin18->CNF[0] &= ~(0x00000080); 
         *pinmux18 = 0x6200;
 		*pincfg18 = 0xf0000000;
-    }
+        }
 
     strcpy(buf, "modprobe spidev");
     

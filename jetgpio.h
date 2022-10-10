@@ -67,7 +67,7 @@ For more information, please refer to <http://unlicense.org/>
 #define CNF_18 0x004                    // Pin 18 SPI2_CS0
 #define CNF_19 0x008                    // Pin 19 SPI1_MOSI
 #define CNF_21 0x008                    // Pin 21 SPI1_MISO
-#define CNF_22 0x008                    // Pin 22 SPI2_MISO
+#define CNF_22 0x004                    // Pin 22 SPI2_MISO
 #define CNF_23 0x008                    // Pin 23 SPI1_SCK
 #define CNF_24 0x008                    // Pin 24 SPI1_CS0
 #define CNF_26 0x008                    // Pin 26 SPI1_CS1
@@ -97,7 +97,7 @@ For more information, please refer to <http://unlicense.org/>
 #define PINMUX_16 0x074                 // Pinmux 16 PINMUX_AUX_SPI2_CS1_0
 #define PINMUX_18 0x070                 // Pinmux 18 PINMUX_AUX_SPI2_CS0_0
 #define PINMUX_19 0x050                 // Pinmux 19 PINMUX_AUX_SPI1_MOSI_0
-#define PINMUX_21 0x050                 // Pinmux 21 PINMUX_AUX_SPI1_MISO_0
+#define PINMUX_21 0x054                 // Pinmux 21 PINMUX_AUX_SPI1_MISO_0
 #define PINMUX_22 0x068                 // Pinmux 22 PINMUX_AUX_SPI2_MISO_0
 #define PINMUX_23 0x058                 // Pinmux 23 PINMUX_AUX_SPI1_SCK_0
 #define PINMUX_24 0x05c                 // Pinmux 24 PINMUX_AUX_SPI1_CS0_0
