@@ -1065,7 +1065,7 @@ int gpioRead(unsigned gpio)
 		case 11:
 			level = (pin11->IN[0])>>2 & 1;
 			break;
-	        case 12:
+	    case 12:
 			level = (pin12->IN[0])>>7 & 1;
 			break;
 		case 13:
@@ -1163,7 +1163,7 @@ int gpioWrite(unsigned gpio, unsigned level)
 		case 11:
 			pin11->OUT[0] &= ~(0x00000004);
 			break;
-	        case 12:
+	    case 12:
 			pin12->OUT[0] &= ~(0x00000080);
 			break;
 		case 13:
@@ -1256,7 +1256,7 @@ int gpioWrite(unsigned gpio, unsigned level)
 		case 11:
 			pin11->OUT[0] |= level<<2;
 			break;
-	        case 12:
+	    case 12:
 			pin12->OUT[0] |= level<<7;
 			break;
 		case 13:
@@ -1461,7 +1461,13 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
    	if (system(buf) == -1) { 
 		printf( "not possible to change bus speed\n");
 	}
-	
+
+    strcpy(buf, "modprobe i2c_dev");
+    
+   	if (system(buf) == -1) { /* Ignore errors */
+	}
+
+    
 	snprintf(dev, 19, "/dev/i2c-%d", i2cBus);
 	fd = open(dev, O_RDWR);
 	if (fd < 0) {
@@ -1636,6 +1642,36 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 	else { printf("spi bus already open\n");
 		return -11;
 	}
+
+    if (spiChan == 0) {
+        pin19->CNF[0] &= ~(0x00000001);
+        *pinmux19 = 0x6200;
+		*pincfg19 = 0xf0000000;
+        pin21->CNF[0] &= ~(0x00000002);
+        *pinmux21 = 0x6240;
+		*pincfg21 = 0xf0000000;
+        pin23->CNF[0] &= ~(0x00000004);
+        *pinmux23 = 0x6200; 
+		*pincfg23 = 0xF0000000;
+        pin24->CNF[0] &= ~(0x00000008);
+        *pinmux24 = 0x6200;
+		*pincfg24 = 0xF0000000;
+    }
+
+    if (spiChan == 1) {
+        pin37->CNF[0] &= ~(0x00000010);
+        *pinmux37 = 0x6200;
+		*pincfg37 = 0xf0000000;
+        pin22->CNF[0] &= ~(0x00000020);
+        *pinmux22 = 0x6240;
+		*pincfg22 = 0xf0000000;
+        pin13->CNF[0] &= ~(0x00000040);
+        *pinmux13 = 0x6200;
+		*pincfg13 = 0xf0000000;
+        pin18->CNF[0] &= ~(0x00000080); 
+        *pinmux18 = 0x6200;
+		*pincfg18 = 0xf0000000;
+    }
 
     strcpy(buf, "modprobe spidev");
     
