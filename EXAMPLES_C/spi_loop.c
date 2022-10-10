@@ -42,13 +42,13 @@ else
 SPI_init = spiOpen(1, 5000000, 0, 0, 8, 1, 1);
 if (SPI_init < 0)
 {
-   /* Spi port 1 opening failed */
+   /* Port SPI2 opening failed */
    printf("Spi port 1 opening failed. Error code:  %d\n", SPI_init);
    exit(Init);
 }
 else
 {
-   /* Spi port 1 opened  okay*/
+   /* Port SPI2 opened  okay*/
    printf("Spi port 1 opened OK. Return code:  %d\n", SPI_init);
 }
 
