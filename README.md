@@ -14,7 +14,7 @@ C library to manage the JETSON NANO GPIO
 
 - SPI serial communication over pins: 19 (SPI1_MOSI), 21 (SPI1_MISO), 23 (SPI1_SCK) & 24 (SPI_CS0) and 37 (SPI2_MOSI), 22 (SPI2_MISO), 13 (SPI1_SCK) & 18 (SPI_CS0)
   
-- No need of previous kernel configuration  
+- No need of previous kernel configuration, no need to change the device tree, no need of reconfigure via /opt/nvidia/jetson-io/jetson-io.py or the like  
   
 <h2 align="left">INSTALLATION:</h2>
  
