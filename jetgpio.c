@@ -147,6 +147,8 @@ static volatile uint32_t *controller_rst_devices_h;
 static volatile uint32_t *clk_source_spi1;
 static volatile uint32_t *clk_source_spi2;
 
+static volatile uint32_t *apbdev_pmc_pwr_det_val;
+
 static void *baseCNF;
 
 static void *basePINMUX;
@@ -157,9 +159,11 @@ static void *basePWM;
 
 static void *baseCAR;
 
+static void *basePMC;
+
 int gpioInitialise(void)
 {
-    int status = 1;
+     int status = 1;
     //  Getting the page size
     int pagesize = sysconf(_SC_PAGESIZE);    //getpagesize();
 	
@@ -168,42 +172,43 @@ int gpioInitialise(void)
     if (fd_GPIO < 0) {
         perror("/dev/mem");
         fprintf(stderr, "please run this program as root (for example with sudo)\n");
-        status = -1;
+        return -1;
     }
     //  Mapping GPIO_CNF
     baseCNF = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CNF);
-    if (baseCNF == NULL) {
-        perror("mmap()");
-        status = -2;
+    if (baseCNF == MAP_FAILED) {
+        return -2;
     }
     
     //  Mapping GPIO_PINMUX
     basePINMUX = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PINMUX);
-    if (basePINMUX == NULL) {
-        perror("mmap()");
-        status = -3;
+    if (basePINMUX == MAP_FAILED) {
+        return -3;
     }
     
     //  Mapping GPIO_CFG
     baseCFG = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CFG);
-    if (baseCFG == NULL) {
-        perror("mmap()");
-        status = -4;
+    if (baseCFG == MAP_FAILED) {
+        return -4;
     }
     
     //  Mapping GPIO_PWM
     basePWM = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM);
-    if (basePWM == NULL) {
-        perror("mmap()");
-        status = -5;
+    if (basePWM == MAP_FAILED) {
+        return -5;
     }
     
     //  Mapping CAR
     baseCAR = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, CAR);
-    if (baseCAR == NULL) {
-        perror("mmap()");
-        status = -6;
+    if (baseCAR == MAP_FAILED) {
+        return -6;
     }
+
+    //  Mapping PMC
+    basePMC = mmap(NULL, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PMC);
+    if (basePMC == MAP_FAILED) {
+        return -7;
+    }  
     
     // Pointer to CNF3
     pin3 = (GPIO_CNF volatile *)((char *)baseCNF + CNF_3);
@@ -318,7 +323,7 @@ int gpioInitialise(void)
     pin_CNF.CNF16 = pin16->CNF[0];
     
     // Pointer to PINMUX16
-    pinmux16 = (uint32_t volatile *)((char *)basePINMUX + CNF_16);
+    pinmux16 = (uint32_t volatile *)((char *)basePINMUX + PINMUX_16);
     pin_MUX.PINMUX16 = *pinmux16;
    
     // Pointer to PINCFG16
@@ -545,6 +550,9 @@ int gpioInitialise(void)
     pinPWM = (GPIO_PWM volatile *)((char *)basePWM + PM3_PWM0);
     pinPWM_Init = *pinPWM;
 
+    // Pointer to APBDEV_PMC_PWR_DET_VAL_0
+    apbdev_pmc_pwr_det_val = (uint32_t volatile *)((char *)basePMC + APBDEV_PMC_PWR_DET_VAL_0 + 0x400);
+    
     // Pointer to controller_clk_out_enb_h
     controller_clk_out_enb_h = (uint32_t volatile *)((char *)baseCAR + CLK_RST_CONTROLLER_CLK_OUT_ENB_H_0);
 
@@ -672,6 +680,9 @@ void gpioTerminate(void)
 	
 	/* Ummapping CAR registers */
 	munmap(baseCAR, pagesize);
+
+    /* Ummapping PMC registers */
+	munmap(basePMC, pagesize);
   
 	/* close /dev/mem */
 	close(fd_GPIO);
@@ -903,8 +914,8 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			pin12->OE[0] |= 0x00000080;
 			break;
 		case 13:
-			*pinmux13 = PINMUX_OUT;
-			*pincfg13 = CFG_OUT;
+			*pinmux13 = PINMUX_OUT1;
+			*pincfg13 = CFG_OUT1;
 			pin13->CNF[0] |= 0x00000040;
 			pin13->OE[0] |= 0x00000040;
 			break;
@@ -915,50 +926,50 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			pin15->OE[0] |= 0x00000004;
 			break;
 		case 16:
-			*pinmux16 = PINMUX_OUT;
-			*pincfg16 = CFG_OUT;
+			*pinmux16 = PINMUX_OUT1;
+			*pincfg16 = CFG_OUT1;
 			pin16->CNF[0] |= 0x00000001;
 			pin16->OE[0] |= 0x00000001;
 			break;
 		case 18:
-			*pinmux18 = PINMUX_OUT;
-			*pincfg18 = CFG_OUT;
+			*pinmux18 = PINMUX_OUT1;
+			*pincfg18 = CFG_OUT1;
 			pin18->CNF[0] |= 0x00000080;
 			pin18->OE[0] |= 0x00000080;
 			break;
 		case 19:
-			*pinmux19 = PINMUX_OUT;
-			*pincfg19 = CFG_OUT;
+			*pinmux19 = PINMUX_OUT1;
+			*pincfg19 = CFG_OUT1;
 			pin19->CNF[0] |= 0x00000001;
 			pin19->OE[0] |= 0x00000001;
 			break;
 		case 21:
-			*pinmux21 = PINMUX_OUT;
-			*pincfg21 = CFG_OUT;
+			*pinmux21 = PINMUX_OUT1;
+			*pincfg21 = CFG_OUT1;
 			pin21->CNF[0] |= 0x00000002;
 			pin21->OE[0] |= 0x00000002;
 			break;
 		case 22:
-			*pinmux22 = PINMUX_OUT;
-			*pincfg22 = CFG_OUT;
+			*pinmux22 = PINMUX_OUT1;
+			*pincfg22 = CFG_OUT1;
 			pin22->CNF[0] |= 0x00000020;
 			pin22->OE[0] |= 0x00000020;
 			break;
 		case 23:
-			*pinmux23 = PINMUX_OUT;
-			*pincfg23 = CFG_OUT;
+			*pinmux23 = PINMUX_OUT1;
+			*pincfg23 = CFG_OUT1;
 			pin23->CNF[0] |= 0x00000004;
 			pin23->OE[0] |= 0x00000004;
 			break;
 		case 24:
-			*pinmux24 = PINMUX_OUT;
-			*pincfg24 = CFG_OUT;
+			*pinmux24 = PINMUX_OUT1;
+			*pincfg24 = CFG_OUT1;
 			pin24->CNF[0] |= 0x00000008;
 			pin24->OE[0] |= 0x00000008;
 			break;
 		case 26:
-			*pinmux26 = PINMUX_OUT;
-			*pincfg26 = CFG_OUT;
+			*pinmux26 = PINMUX_OUT1;
+			*pincfg26 = CFG_OUT1;
 			pin26->CNF[0] |= 0x00000010;
 			pin26->OE[0] |= 0x00000010;
 			break;
@@ -1011,8 +1022,8 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			pin36->OE[0] |= 0x00000008;
 			break;
 		case 37:
-			*pinmux37 = PINMUX_OUT;
-			*pincfg37 = CFG_OUT;
+			*pinmux37 = PINMUX_OUT1;
+			*pincfg37 = CFG_OUT1;
 			pin37->CNF[0] |= 0x00000010;
 			pin37->OE[0] |= 0x00000010;
 			break;
@@ -1038,8 +1049,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 	else {printf("Only modes allowed are JET_INPUT and JET_OUTPUT\n");
 		status = -3;
 		}
-	return status;
-	
+	return status;	
 }
 
 int gpioRead(unsigned gpio)
@@ -1633,7 +1643,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
         return -10;
 	}
     
-    slot = -20;    
+    slot = -22;    
     
     if (SpiInfo[spiChan].state == SPI_CLOSED) {
         slot = spiChan;
@@ -1643,19 +1653,21 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 		return -11;
 	}
 
+    //*apbdev_pmc_pwr_det_val = 0x007cbc2d;
+    
     if (spiChan == 0) {
         pin19->CNF[0] &= ~(0x00000001);
         *pinmux19 = 0x6200;
 		*pincfg19 = 0xf0000000;
         pin21->CNF[0] &= ~(0x00000002);
-        *pinmux21 = 0x6240;
-		*pincfg21 = 0xf0000000;
+        *pinmux21 = 0x0240;
+		*pincfg21 = 0x00000000;
         pin23->CNF[0] &= ~(0x00000004);
         *pinmux23 = 0x6200; 
-		*pincfg23 = 0xF0000000;
+		*pincfg23 = 0xf0000000;
         pin24->CNF[0] &= ~(0x00000008);
         *pinmux24 = 0x6200;
-		*pincfg24 = 0xF0000000;
+		*pincfg24 = 0xf0000000;
     }
 
     if (spiChan == 1) {
@@ -1663,8 +1675,8 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
         *pinmux37 = 0x6200;
 		*pincfg37 = 0xf0000000;
         pin22->CNF[0] &= ~(0x00000020);
-        *pinmux22 = 0x6240;
-		*pincfg22 = 0xf0000000;
+        *pinmux22 = 0x0240;
+		*pincfg22 = 0x00000000;
         pin13->CNF[0] &= ~(0x00000040);
         *pinmux13 = 0x6200;
 		*pincfg13 = 0xf0000000;
@@ -1759,7 +1771,9 @@ int spiClose(unsigned handle)
 	}
      
 	if (SpiInfo[handle].fd >= 0) {close(SpiInfo[handle].fd);}
-
+    
+    //*apbdev_pmc_pwr_det_val = 0x00fcbc2d;
+    
 	SpiInfo[handle].fd = -1;
 	SpiInfo[handle].state = SPI_CLOSED;
 
