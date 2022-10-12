@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.7 */
+/* jetgpio version 0.8 */
 
 #ifndef jetgpio_h__
 #define jetgpio_h__
