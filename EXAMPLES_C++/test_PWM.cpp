@@ -75,7 +75,7 @@ while (x>=0) {
 
     level = x;
 
-    printf("Setting level: %d",level);
+    printf("level: %d - ",level);
 
     status = gpioPWM(33, x);
 
