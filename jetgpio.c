@@ -836,7 +836,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			*pinmux35 = PINMUX_IN;
 			*pincfg35 = CFG_IN;
 			pin35->CNF[0] |= 0x00000010;
-			pin35->OE[0] &= ~(0x00000000);
+			pin35->OE[0] &= ~(0x00000010);
 			break;
 		case 36:
 			*pinmux36 = PINMUX_IN;
