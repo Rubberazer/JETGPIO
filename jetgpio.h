@@ -1,4 +1,5 @@
- /*
+
+/*
 This is free and unencumbered software released into the public domain.
 Anyone is free to copy, modify, publish, use, compile, sell, or
 distribute this software, either in source code form or as a compiled
@@ -46,10 +47,12 @@ For more information, please refer to <http://unlicense.org/>
 /* Clock and Reset Controller */
 
 #define CAR 0x60006000                  		    // Clock and Reset Controller (CAR) base address
+#define CLK_RST_CONTROLLER_CLK_OUT_ENB_L_0 0x10 	// CLK_RST_CONTROLLER_CLK_OUT_ENB_L_0 offset
 #define CLK_RST_CONTROLLER_CLK_OUT_ENB_H_0 0x14 	// CLK_RST_CONTROLLER_CLK_OUT_ENB offset
 #define CLK_RST_CONTROLLER_RST_DEVICES_H_0 0x8	   	// Reset the spi controllers
 #define CLK_RST_CONTROLLER_CLK_SOURCE_SPI2_0 0x118 	// CLK_RST_CONTROLLER_CLK_SOURCE_SPI2_0 source clock and divider spi2
 #define CLK_RST_CONTROLLER_CLK_SOURCE_SPI1_0 0x134 	// CLK_RST_CONTROLLER_CLK_SOURCE_SPI1_0 source clokc and divider spi1
+#define CLK_RST_CONTROLLER_CLK_ENB_L_SET_0 0x320 	// CLK_RST_CONTROLLER_CLK_ENB_L_SET_0 offset
 
 /* Power Management Controller */
 
@@ -165,6 +168,12 @@ For more information, please refer to <http://unlicense.org/>
 #define JET_INPUT 0
 #define JET_OUTPUT 1
 
+/* Define the typical interruption trigger */
+
+#define RISING_EDGE 1
+#define FALLING_EDGE 2
+#define EITHER_EDGE 3
+
 /* i2c definitions */
 
 #define I2C_CLOSED   0
@@ -195,97 +204,46 @@ typedef struct {
 } GPIO_CNF;
 
 typedef struct {
-    uint32_t CNF3;
-    uint32_t CNF5;
-    uint32_t CNF7;
-    uint32_t CNF8;
-    uint32_t CNF10;
-    uint32_t CNF11;
-    uint32_t CNF12;
-    uint32_t CNF13;
-    uint32_t CNF15;
-    uint32_t CNF16;
-    uint32_t CNF18;
-    uint32_t CNF19;
-    uint32_t CNF21;
-    uint32_t CNF22;
-    uint32_t CNF23;
-    uint32_t CNF24;
-    uint32_t CNF26;
-    uint32_t CNF27;
-    uint32_t CNF28;
-    uint32_t CNF29;
-    uint32_t CNF31;
-    uint32_t CNF32;
-    uint32_t CNF33;
-    uint32_t CNF35;
-    uint32_t CNF36;
-    uint32_t CNF37;
-    uint32_t CNF38;
-    uint32_t CNF40;
+    uint32_t pin3;
+    uint32_t pin5;
+    uint32_t pin7;
+    uint32_t pin8;
+    uint32_t pin10;
+    uint32_t pin11;
+    uint32_t pin12;
+    uint32_t pin13;
+    uint32_t pin15;
+    uint32_t pin16;
+    uint32_t pin18;
+    uint32_t pin19;
+    uint32_t pin21;
+    uint32_t pin22;
+    uint32_t pin23;
+    uint32_t pin24;
+    uint32_t pin26;
+    uint32_t pin27;
+    uint32_t pin28;
+    uint32_t pin29;
+    uint32_t pin31;
+    uint32_t pin32;
+    uint32_t pin33;
+    uint32_t pin35;
+    uint32_t pin36;
+    uint32_t pin37;
+    uint32_t pin38;
+    uint32_t pin40;
 } GPIO_CNF_Init;
 
 typedef struct {
-    uint32_t PINMUX3;
-    uint32_t PINMUX5;
-    uint32_t PINMUX7;
-    uint32_t PINMUX8;
-    uint32_t PINMUX10;
-    uint32_t PINMUX11;
-    uint32_t PINMUX12;
-    uint32_t PINMUX13;
-    uint32_t PINMUX15;
-    uint32_t PINMUX16;
-    uint32_t PINMUX18;
-    uint32_t PINMUX19;
-    uint32_t PINMUX21;
-    uint32_t PINMUX22;
-    uint32_t PINMUX23;
-    uint32_t PINMUX24;
-    uint32_t PINMUX26;
-    uint32_t PINMUX27;
-    uint32_t PINMUX28;
-    uint32_t PINMUX29;
-    uint32_t PINMUX31;
-    uint32_t PINMUX32;
-    uint32_t PINMUX33;
-    uint32_t PINMUX35;
-    uint32_t PINMUX36;
-    uint32_t PINMUX37;
-    uint32_t PINMUX38;
-    uint32_t PINMUX40;
-} GPIO_PINMUX_Init;
+    uint32_t stat_reg;
+    uint32_t gpio;
+    uint32_t edge;
+    uint32_t gpio_offset;
+    uint64_t *timestamp;
+    void (*f)();
+} ISRFunc;
 
-typedef struct {
-    uint32_t CFG3;
-    uint32_t CFG5;
-    uint32_t CFG7;
-    uint32_t CFG8;
-    uint32_t CFG10;
-    uint32_t CFG11;
-    uint32_t CFG12;
-    uint32_t CFG13;
-    uint32_t CFG15;
-    uint32_t CFG16;
-    uint32_t CFG18;
-    uint32_t CFG19;
-    uint32_t CFG21;
-    uint32_t CFG22;
-    uint32_t CFG23;
-    uint32_t CFG24;
-    uint32_t CFG26;
-    uint32_t CFG27;
-    uint32_t CFG28;
-    uint32_t CFG29;
-    uint32_t CFG31;
-    uint32_t CFG32;
-    uint32_t CFG33;
-    uint32_t CFG35;
-    uint32_t CFG36;
-    uint32_t CFG37;
-    uint32_t CFG38;
-    uint32_t CFG40;
-} GPIO_CFG_Init;
+typedef ISRFunc *PISRFunc;
 
 typedef struct {
     uint32_t PWM_0[4];
@@ -295,176 +253,163 @@ typedef struct {
 } GPIO_PWM;
 
 typedef struct {
-    int32_t state;
+    uint32_t state;
     int32_t fd;
-    int32_t addr;
-    int32_t flags;
-    int32_t funcs;
+    uint32_t addr;
+    uint32_t flags;
+    uint32_t funcs;
 } i2cInfo_t;
 
 typedef struct {
-    int32_t state;
+    uint32_t state;
     int32_t fd;
-    int32_t mode;
-    int32_t speed;
-    int32_t cs_delay;
-    int32_t cs_change;
-    int32_t bits_word;
+    uint32_t mode;
+    uint32_t speed;
+    uint32_t cs_delay;
+    uint32_t cs_change;
+    uint32_t bits_word;
 } SPIInfo_t;
 
 /* Functions */
 
 int gpioInitialise(void);
 /*
-Initialises the library.
-Returns 0 if OK, otherwise -1 or -2.
-gpioInitialise must be called before using the other library functions, 
-it stores the status of all the relevant registers before using/modifying them
-...
-if (gpioInitialise() < 0)
-{
-   // jetgpio initialisation failed.
-}
-else
-{
-   // jetgpio initialised okay.
-}
-
+ Initialises the library.
+ Returns 0 if OK, otherwise a negative number.
+ gpioInitialise must be called before using the other library functions, 
+ it stores the status of all the relevant registers before using/modifying them
+ 
+ if (gpioInitialise() < 0)
+ {
+    // jetgpio initialisation failed.
+ }
+ else
+ {
+    // jetgpio initialised okay.
+ }
 */
 
 void gpioTerminate(void);
 /*
-Terminates the library.
-Returns nothing.
-Call before program exit.
-This function restores the used registers and releases memory, 
-...
-gpioTerminate();
-...
+ Terminates the library.
+ Returns nothing.
+ This function restores the used registers and releases memory, 
+ 
+ gpioTerminate();
 */
 
 int gpioSetMode(unsigned gpio, unsigned mode);
-/*D
+/*
 Sets the GPIO mode, typically input or output.
-. .
 gpio: 3-40
 mode: JET_INPUT, JET_OUTPUT
-. .
 Returns 0 if OK, -1 otherwise.
 
-...
 gpioSetMode(17, JET_INPUT);  // Set GPIO17 as input.
 gpioSetMode(18, JET_OUTPUT); // Set GPIO18 as output.
-...
 */
 
 int gpioRead(unsigned gpio);
 /*
 Reads the GPIO level, on or off.
-. .
 gpio: 3-40
-. .
-Returns the GPIO level if OK, otherwise -1
+Returns the GPIO level if OK, otherwise a negative number.
 Arduino style: digitalRead.
-...
+
 printf("GPIO24 is level %d", gpioRead(24));
-...
 */
 
 int gpioWrite(unsigned gpio, unsigned level);
 /*
 Sets the GPIO level, on or off.
-. .
 gpio: 3-40
 level: 0-1
-. .
-Returns 0 if OK, otherwise -1.
+Returns 0 if OK, otherwise a negative number.
 Arduino style: digitalWrite
-...
+
 gpioWrite(24, 1); // Set GPIO24 high.
-...
+*/
+
+int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned long *timestamp, void (*f)());
+/*
+Registers a function to be called (a callback) whenever the specified
+GPIO interrupt occurs. this function will start a thread that will monitor the status of the interrupt.
+gpio: 3-40
+edge: RISING_EDGE, FALLING_EDGE, or EITHER_EDGE
+timestamp: timestamp of the detected edge in nanoseconds in EPOCH format
+f: the callback function, this will be execute if an edge is detected in the  
+selected GPIO
+Returns 0 if OK, otherwise a negative number.
+One function may be registered per GPIO.
+
+gpioSetISRFunc(3, RISING_EDGE,&timestamp, &callback); // Calls 'callback' function when a rising edge is detected on pin 3
 */
 
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency);
 /*
 Sets the frequency in hertz to be used for the GPIO.
-. .
 gpio: 32, 33
 frequency: 25Hz to 200 kHz
-. .
-Returns 1 if OK, otherwise -1.
-. .
+Returns 1 if OK, a negative number otherwise.
+
+gpioSetPWMfrequency(32, 10000); // Setting up PWM frequency=10kHz @ pin 32
 */
 
 int gpioPWM(unsigned gpio, unsigned dutycycle);
 /*
 Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on).
-. .
 gpio: 32, 33
 dutycycle: 0-256 (0 to 100%)
-. .
-Returns 0 if OK, otherwise -1.
+Returns 0 if OK, a negative number otherwise.
 Arduino style: analogWrite
-...
 gpioPWM(32, 256); // Sets pin 32 full on.
 gpioPWM(33, 128); // Sets pin 33 half on.
-...
 */
 
 int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags);
 /*
 This returns a handle for the device at the address on the I2C bus.
-. .
 i2cBus: 0 or 1, 0 are pins 27 (SDA) & 28 (SCL), 1 are pins 3(SDA) & 5(SCL)
 i2cAddr: 0-0x7F
-. .
 Flags allow you to change the bus speed:
 i2cFlags: 0 -> 100 kHz
 i2cFlags: 1 -> 400 kHz
 i2cFlags: 2 -> 1 MHz
-. .
-Returns a handle with the I2C bus number being opened (>=0) if OK, otherwise -1.
-. .
+Returns a handle with the I2C bus number being opened (>=0) if OK, otherwise a negative number.
+
+int MPU6050 = i2cOpen(0,0x68,0); //Opening the connection to the I2C slave 0x68, pins 27/28, speed 100kHz
 */
 
 int i2cClose(unsigned handle);
 /*
 This closes the I2C device associated with the handle.
-. .
 handle: >=0, as returned by a call to [*i2cOpen*]
-. .
-Returns 0 if OK, otherwise -1.
+Returns 0 if OK, otherwise a negative number.
+
+i2cClose(MPU6050); //Closing previously opened connection
 */
 
 int i2cWriteByteData(unsigned handle, unsigned i2cReg, unsigned bVal);
 /*
 This writes a single byte to the specified register of the device
 associated with handle.
-. .
 handle: >=0, as returned by a call to [*i2cOpen*]
 i2cReg: 0-255, the register to write
 bVal: 0-0xFF, the value to write
-. .
-Returns 0 if OK, otherwise -1.
-Write byte. SMBus 2.0 5.5.4
-. .
-S Addr Wr [A] i2cReg [A] bVal [A] P
-. .
+Returns 0 if OK, negative number otherwise.
+
+writestat = i2cWriteByteData(MPU6050, 0x1B, 0x00); // writing 0x00 to register address 0x1B on opened chanel MPU6050
 */
 
 int i2cReadByteData(unsigned handle, unsigned i2cReg);
 /*
 This reads a single byte from the specified register of the device
 associated with handle.
-. .
 handle: >=0, as returned by a call to [*i2cOpen*]
 i2cReg: 0-255, the register to read
-. .
-Returns the byte read (>=0) if OK, otherwise -1.
-Read byte. SMBus 2.0 5.5.5
-. .
-S Addr Wr [A] i2cReg [A] S Addr Rd [A] [Data] NA P
-. .
+Returns the byte read (>=0) if OK, otherwise a negative number.
+
+gyro_x_H = i2cReadByteData(MPU6050, 0x43); // getting register 0x43 out of opened connection MPU6050
 */
 
 int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change);
@@ -474,55 +419,51 @@ Data will be transferred at baud bits per second.  The flags may
 be used to modify the default behaviour of a 4-wire operation, mode 0,
 active low chip select.
 There are 2 SPI channels SPI1 & SPI2.
-
 The GPIO used are given in the following table.
          @ MISO @ MOSI @ SCLK @ CS0 @ CS1
 SPI0 	 @   21 @   19 @   23 @  24 @  26 
 SPI1 	 @   22 @   37 @   13 @  18 @  16 
-. .
 spiChan: 0-1 (0 stands for SPI1 and 1 for SPI2)
 speed: up to 50M (beyond that expect problems, actually we are not going beyond that)
- 
 mode defines the SPI mode.
-. .
 Mode POL PHA
  0    0   0
  1    0   1
  2    1   0
  3    1   1
-. .
+
 cs_delay: delay if nonzero, how long to delay after the last bit transfer in us
 before optionally deselecting the device before the next transfer
 bits_word: bits per word from 1 to 32 bits
 lsb_first: is 1 if least significant bit first 0 otherwise
 ready: is 1 for slave to pull low to pause otherwise 0
 cs_change: is 1 to deselect device before starting the next transfer otherwise 0
-. .
 Returns a handle (>=0) if OK, otherwise a negative number.
-. .
+
+SPI_init = spiOpen(1, 5000000, 0, 0, 8, 1, 1); // SPI2 (pins 22/37, 500 kHz, mode 0, cs delay 0, 8 bits/word,lsb first 1, cs change 1
 */
 
 int spiClose(unsigned handle);
 /*
 This functions closes the SPI device identified by the handle.
-. .
 handle: >=0, as returned by a call to [*spiOpen*]
-. .
-Returns 0 if OK, otherwise -1.
+Returns 0 if OK, otherwise a negative number.
+
+spiClose(SPI_init); //closiong prebiously opened spi port with handle SPI_init
 */
 
 int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len);
 /*
 This function transfers count bytes of data from txBuf to the SPI
-device associated with the handle.  Simultaneously count bytes of
+device associated with the handle.  Simultaneously len words of
 data are read from the device and placed in rxBuf.
-. .
 handle: >=0, as returned by a call to [*spiOpen*]
  txBuf: the data bytes to write
  rxBuf: the received data bytes
  len: the number of bytes to transfer
-. .
 Returns the number of bytes transferred if OK, otherwise a negative number.
+
+spiXfer(SPI_init, tx, rx, 7); //transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init
 */
 
 #ifdef __cplusplus
