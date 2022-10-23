@@ -703,13 +703,13 @@ void gpioTerminate(void)
     // Cancelling threads to avoid blocking on read()
     for(int i = 0;i < thread_n; i++) {
       pthread_cancel(callThd[i]);
-      printf("Thread number: %d cancelled\n",i);
+      //printf("Thread number: %d cancelled\n",i);
     }
     
     //Joining threads
      for(int j = 0;j < thread_n; j++) {
       pthread_join(callThd[j], &status_thread);
-      printf("Thread number: %d joined\n",j);
+      //printf("Thread number: %d joined\n",j);
     }
 
     // Free allocated memory 
