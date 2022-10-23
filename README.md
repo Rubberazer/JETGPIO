@@ -8,7 +8,7 @@ C library to manage the JETSON NANO GPIO
 
 - GPIO control of all the header pinout as input or output. Low latency is expected (it does not go through the kernel) writing directly to the CPU registers
 
-- Catching rising or falling edges in any pin working as input. Timestamp of the event in nanoseconds in epoch format is provided 
+- Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided 
 
 - PWM (hardware) control on header pins 32 & 33 
 
