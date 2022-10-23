@@ -62,7 +62,7 @@ else
    // gpio setting up okay
    printf("gpio setting up okay. Return code:  %d\n", stat);
 
-// Now setting up pin 3 to detect edges, rising edge and when event is detected calling func "calling"
+// Now setting up pin 3 to detect edges, rising & falling edge and when event is detected calling func "calling"
 }
 
 int stat2 = gpioSetISRFunc(3, EITHER_EDGE, &timestamp, &calling);
