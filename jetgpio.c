@@ -2257,7 +2257,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
         return -20;
     }
 
-	ret = ioctl(fd, SPI_IOC_WR_LSB_FIRST, &lsb_first);
+	ret = ioctl(fd, SPI_IOC_RD_LSB_FIRST, &lsb_first);
 	if (ret < 0){
         printf("can't get lsb first\n");
         return -21;
