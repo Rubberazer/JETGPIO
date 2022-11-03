@@ -1,4 +1,3 @@
-
 /*
 This is free and unencumbered software released into the public domain.
 Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -158,7 +157,7 @@ For more information, please refer to <http://unlicense.org/>
 
 #define PINMUX_IN 0x00000040            // Typical for pinmux register as input
 #define PINMUX_OUT 0x00000400           // Typical for pinmux register as output
-#define PINMUX_OUT1 0x00006200          // Typical for pinmux spi pins register as output 
+#define PINMUX_OUT1 0x0000e200          // Typical for pinmux spi pins register as output 
 #define CFG_IN 0x00000000               // Typical for config register as input
 #define CFG_OUT 0x01F1F000              // Typical for config register as output
 #define CFG_OUT1 0xF0000000             // Typical for config spi pins register as output

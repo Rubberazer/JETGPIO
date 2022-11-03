@@ -2173,31 +2173,31 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     
     if (spiChan == 0) {
         pin19->CNF[0] &= ~(0x00000001);
-        *pinmux19 = 0x6200;
+        *pinmux19 = 0xe200;
         *pincfg19 = 0xf0000000;
         pin21->CNF[0] &= ~(0x00000002);
         *pinmux21 = 0x0240;
         *pincfg21 = 0x00000000;
         pin23->CNF[0] &= ~(0x00000004);
-        *pinmux23 = 0x6200; 
+        *pinmux23 = 0xe200; 
         *pincfg23 = 0xf0000000;
         pin24->CNF[0] &= ~(0x00000008);
-        *pinmux24 = 0x6200;
+        *pinmux24 = 0xe200;
         *pincfg24 = 0xf0000000;
     }
 
     if (spiChan == 1) {
         pin37->CNF[0] &= ~(0x00000010);
-        *pinmux37 = 0x6200;
+        *pinmux37 = 0xe200;
         *pincfg37 = 0xf0000000;
         pin22->CNF[0] &= ~(0x00000020);
         *pinmux22 = 0x0240;
         *pincfg22 = 0x00000000;
         pin13->CNF[0] &= ~(0x00000040);
-        *pinmux13 = 0x6200;
+        *pinmux13 = 0xe200;
         *pincfg13 = 0xf0000000;
         pin18->CNF[0] &= ~(0x00000080); 
-        *pinmux18 = 0x6200;
+        *pinmux18 = 0xe200;
         *pincfg18 = 0xf0000000;
         }
 
@@ -2321,5 +2321,5 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)
 		printf("can't send spi message\n");
         return -2;
     }
-    return tr.len;
+    return ret;
 }
