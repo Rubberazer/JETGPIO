@@ -2319,7 +2319,7 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)
     ret = ioctl(SpiInfo[handle].fd, SPI_IOC_MESSAGE(1), &tr);
 	if (ret < 1){
 		printf("can't send spi message\n");
-        return -2;
+        	return -2;
     }
     return ret;
 }
