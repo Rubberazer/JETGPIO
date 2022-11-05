@@ -1,14 +1,15 @@
 CC=gcc
-CFLAGS=-c -Wall -Werror -fpic
+CFLAGS=-c -g -Wall -Werror -fpic
 LDFLAGS=-shared
 
 CFILES=jetgpio.c
 OBJ=jetgpio.o
 LIB=libjetgpio.so
+LIBS=-lpthread -lrt
 
 all:
 	$(CC) $(CFLAGS) $(CFILES)
-	$(CC) $(LDFLAGS) -o $(LIB) $(OBJ)
+	$(CC) $(LDFLAGS) -o $(LIB) $(OBJ) $(LIBS)
 
 clean:
 	rm -f *.o $(LIB)
