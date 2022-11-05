@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.9 */
+/* jetgpio version 0.91 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2201,7 +2201,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
         *pincfg18 = 0xf0000000;
         }
 
-    strcpy(buf, "modprobe spidev");
+    strcpy(buf, "modprobe spidev bufsiz=65535");
     
    	if (system(buf) == -1) { 
 		printf( "not possible to load the linux spidev module (driver) \n");
