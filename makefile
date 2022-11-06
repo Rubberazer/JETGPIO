@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -g -Wall -Werror -fpic
+CFLAGS=-c -Wall -Werror -fpic
 LDFLAGS=-shared
 
 CFILES=jetgpio.c
