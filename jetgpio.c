@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.91 */
+/* jetgpio version 0.92 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2313,13 +2313,13 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)
 	tr.speed_hz = SpiInfo[handle].speed;
 	tr.bits_per_word = SpiInfo[handle].bits_word;
     tr.cs_change = SpiInfo[handle].cs_change;
-    //tr.tx_nbits = 2;
-    //tr.rx_nbits = 2;
+    tr.tx_nbits = 1;
+    tr.rx_nbits = 1;
     
     ret = ioctl(SpiInfo[handle].fd, SPI_IOC_MESSAGE(1), &tr);
 	if (ret < 1){
 		printf("can't send spi message\n");
-        	return -2;
+        return -2;
     }
     return ret;
 }

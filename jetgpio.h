@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.91 */
+/* jetgpio version 0.92 */
 
 #ifndef jetgpio_h__
 #define jetgpio_h__
@@ -155,7 +155,7 @@ For more information, please refer to <http://unlicense.org/>
 
 /* Typical values Pinmux & Cfg registers */
 
-#define PINMUX_IN 0x00000040            // Typical for pinmux register as input
+#define PINMUX_IN 0x00000044            // Typical for pinmux register as input
 #define PINMUX_OUT 0x00000400           // Typical for pinmux register as output
 #define PINMUX_OUT1 0x0000e200          // Typical for pinmux spi pins register as output 
 #define CFG_IN 0x00000000               // Typical for config register as input
