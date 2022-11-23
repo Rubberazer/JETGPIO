@@ -35,17 +35,17 @@ To uninstall the library:
  
 You will find code examples to learn how to use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains all the C examples, the second one contains the same examples ready to compile in C++. To compile the examples you will find instructions in the comment section at the top of each of the example files
 
-- [jetgpio_example.c](../blob/main/EXAMPLES_C/jetgpio_example.c) & [jetgpio_example.cpp](../blob/main/EXAMPLES_C++/jetgpio_example.cpp) show how to setup and use any of the pins as Inputs/Outputs, this will allow you to toggle pins from 0V (logic 0) to 3.3V (logic 1) or read the pin as an input where 3.3V at the pin is a logic 1. Note that when reading inputs, floating pins will throw unreliable results (as there is no actual input)
+- [jetgpio_example.c](../main/EXAMPLES_C/jetgpio_example.c) & [jetgpio_example.cpp](../main/EXAMPLES_C++/jetgpio_example.cpp) show how to setup and use any of the pins as Inputs/Outputs, this will allow you to toggle pins from 0V (logic 0) to 3.3V (logic 1) or read the pin as an input where 3.3V at the pin is a logic 1. Note that when reading inputs, floating pins will throw unreliable results (as there is no actual input)
 
-- [jetgpio_edge.c](../blob/main/EXAMPLES_C/jetgpio_edge.c) & [jetgpio_edge.cpp](../blob/main/EXAMPLES_C++/jetgpio_edge.cpp) show how to catch rising or falling edges in any pin working as Input, timestamp in epoch format in nanoseconds is provided
+- [jetgpio_edge.c](../main/EXAMPLES_C/jetgpio_edge.c) & [jetgpio_edge.cpp](../main/EXAMPLES_C++/jetgpio_edge.cpp) show how to catch rising or falling edges in any pin working as Input, timestamp in epoch format in nanoseconds is provided
 
-- [jetgpio_PWM_example.c](../blob/main/EXAMPLES_C/jetgpio_PWM_example.c) & [jetgpio_PWM_example.cpp](../blob/main/EXAMPLES_C++/jetgpio_PWM_example.c) show how to use the PWM funcionality at pin 32
+- [jetgpio_PWM_example.c](../main/EXAMPLES_C/jetgpio_PWM_example.c) & [jetgpio_PWM_example.cpp](../main/EXAMPLES_C++/jetgpio_PWM_example.c) show how to use the PWM funcionality at pin 32
 
-- [test_PWM.c](../blob/main/EXAMPLES_C/test_PWM.c) & [test_PWM.cpp](../blob/main/EXAMPLES_C++/test_PWM.c) show again how to use the PWM funcionality with some LEDs connected and also capturing interruptions
+- [test_PWM.c](../main/EXAMPLES_C/test_PWM.c) & [test_PWM.cpp](../main/EXAMPLES_C++/test_PWM.c) show again how to use the PWM funcionality with some LEDs connected and also capturing interruptions
 
-- [jetgpio_i2c_example.c](../blob/main/EXAMPLES_C/jetgpio_i2c_example.c) & [jetgpio_i2c_example.cpp](../blob/main/EXAMPLES_C++/jetgpio_i2c_example.c) show how to use the i2c comms to talk to a MPU6050 gyroscope connected to i2c0 (pins 27 & 28)
+- [jetgpio_i2c_example.c](../main/EXAMPLES_C/jetgpio_i2c_example.c) & [jetgpio_i2c_example.cpp](../main/EXAMPLES_C++/jetgpio_i2c_example.c) show how to use the i2c comms to talk to a MPU6050 gyroscope connected to i2c0 (pins 27 & 28)
 
-- [spi_loop.c](../blob/main/EXAMPLES_C/spi_loop.c) & [spi_loop.cpp](../blob/main/EXAMPLES_C++/spi_loop.c) show how to run a simple loop test on the SPI port(s) by connecting together pins 19 & 21 for port SPI1 and pins 22 & 37 
+- [spi_loop.c](../main/EXAMPLES_C/spi_loop.c) & [spi_loop.cpp](../main/EXAMPLES_C++/spi_loop.c) show how to run a simple loop test on the SPI port(s) by connecting together pins 19 & 21 for port SPI1 and pins 22 & 37 
   for port SPI2
 
 The library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis). Learnt a lot from that one
