@@ -21,7 +21,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.92 */
+/* jetgpio version 0.94 */
+/** @file jetgpio.h */
 
 #ifndef jetgpio_h__
 #define jetgpio_h__
@@ -272,197 +273,198 @@ typedef struct {
 /* Functions */
 
 int gpioInitialise(void);
-/*
- Initialises the library.
- Returns 0 if OK, otherwise a negative number.
- gpioInitialise must be called before using the other library functions, 
- it stores the status of all the relevant registers before using/modifying them
- 
- if (gpioInitialise() < 0)
- {
-    // jetgpio initialisation failed.
- }
- else
- {
-    // jetgpio initialised okay.
- }
-*/
+/**<
+ * @brief Initialises the library.
+ * gpioInitialise must be called before using the other library functions, it stores the status of all the relevant registers before using/modifying them.
+ * 
+ * @return Returns 0 if OK, otherwise a negative number
+ *
+ * @code if (gpioInitialise() < 0)
+ * {
+ *   // jetgpio initialisation failed.
+ * }
+ * else
+ * {
+ *   // jetgpio initialised okay.
+ * } @endcode
+ */
 
 void gpioTerminate(void);
-/*
- Terminates the library.
- Returns nothing.
- This function restores the used registers and releases memory, 
- 
- gpioTerminate();
+/**<
+ * @brief Terminates the library.
+ * This function restores the used registers and releases memory.
+ *
+ * @return Returns nothing
+ *
+ * @code gpioTerminate(); @endcode
 */
 
 int gpioSetMode(unsigned gpio, unsigned mode);
-/*
-Sets the GPIO mode, typically input or output.
-gpio: 3-40
-mode: JET_INPUT, JET_OUTPUT
-Returns 0 if OK, -1 otherwise.
-
-gpioSetMode(17, JET_INPUT);  // Set GPIO17 as input.
-gpioSetMode(18, JET_OUTPUT); // Set GPIO18 as output.
+/**<
+ * @brief Sets the GPIO mode, typically input or output.
+ *
+ * @param gpio 3-40
+ * @param mode JET_INPUT, JET_OUTPUT
+ * @return Returns 0 if OK, -1 otherwise
+ *
+ * @code gpioSetMode(17, JET_INPUT);  // Sets pin 17 as input. @endcode
+ * @code gpioSetMode(18, JET_OUTPUT); // Sets pin 18 as output. @endcode
 */
 
 int gpioRead(unsigned gpio);
-/*
-Reads the GPIO level, on or off.
-gpio: 3-40
-Returns the GPIO level if OK, otherwise a negative number.
-Arduino style: digitalRead.
-
-printf("GPIO24 is level %d", gpioRead(24));
+/**<
+ * @brief Reads the GPIO level, on or off, 0 or 1.
+ * Arduino style: digitalRead.
+ * @param gpio 3-40
+ * @return Returns the GPIO level if OK, otherwise a negative number
+ *
+ * @code printf("pin 24 is level %d", gpioRead(24)); @endcode
 */
 
 int gpioWrite(unsigned gpio, unsigned level);
-/*
-Sets the GPIO level, on or off.
-gpio: 3-40
-level: 0-1
-Returns 0 if OK, otherwise a negative number.
-Arduino style: digitalWrite
-
-gpioWrite(24, 1); // Set GPIO24 high.
+/**<
+ * @brief Sets the GPIO level, on or off.
+ * Arduino style: digitalWrite
+ * @param gpio 3-40
+ * @param level 0-1
+ * @return Returns 0 if OK, otherwise a negative number
+ *
+ * @code gpioWrite(24, 1); // Sets pin 24 high. @endcode
 */
 
 int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned long *timestamp, void (*f)());
-/*
-Registers a function to be called (a callback) whenever the specified
-GPIO interrupt occurs. this function will start a thread that will monitor the status of the interrupt.
-gpio: 3-40
-edge: RISING_EDGE, FALLING_EDGE, or EITHER_EDGE
-timestamp: timestamp of the detected edge in nanoseconds in EPOCH format
-f: the callback function, this will be execute if an edge is detected in the  
-selected GPIO
-Returns 0 if OK, otherwise a negative number.
-One function may be registered per GPIO.
-
-gpioSetISRFunc(3, RISING_EDGE,&timestamp, &callback); // Calls 'callback' function when a rising edge is detected on pin 3
+/**<
+ * @brief Registers a function to be called (a callback) whenever the specified.
+ * @brief GPIO interrupt occurs.
+ * This function will start a thread that will monitor the status of the interrupt.One function may be registered per GPIO.
+ * @param gpio 3-40
+ * @param edge RISING_EDGE, FALLING_EDGE, or EITHER_EDGE
+ * @param timestamp: timestamp of the detected edge in nanoseconds in EPOCH format
+ * @param f the callback function, this will be execute if an edge is detected in the selected pin
+ * @return Returns 0 if OK, otherwise a negative number
+ *
+ * @code gpioSetISRFunc(3, RISING_EDGE,&timestamp, &callback); // Calls the 'callback' function when a rising edge is detected on pin 3,
+ *  it also delivers the event timestamp on the "timestamp" variable in EPOCH format (nanoseconds) @endcode
 */
 
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency);
-/*
-Sets the frequency in hertz to be used for the GPIO.
-gpio: 32, 33
-frequency: 25Hz to 200 kHz
-Returns 1 if OK, a negative number otherwise.
-
-gpioSetPWMfrequency(32, 10000); // Setting up PWM frequency=10kHz @ pin 32
+/**<
+ * @brief Sets the frequency in hertz to be used for the GPIO.
+ * @param gpio 32, 33
+ * @param frequency 25Hz to 200 kHz
+ * @return Returns 1 if OK, a negative number otherwise
+ *
+ * @code gpioSetPWMfrequency(32, 10000); // Setting up PWM frequency=10kHz @ pin 32 @endcode
 */
 
 int gpioPWM(unsigned gpio, unsigned dutycycle);
-/*
-Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on).
-gpio: 32, 33
-dutycycle: 0-256 (0 to 100%)
-Returns 0 if OK, a negative number otherwise.
-Arduino style: analogWrite
-gpioPWM(32, 256); // Sets pin 32 full on.
-gpioPWM(33, 128); // Sets pin 33 half on.
+/**<
+ * @brief Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on).
+ * Arduino style: analogWrite
+ * @param gpio 32, 33
+ * @param dutycycle: 0-256 (0 to 100%)
+ * @return Returns 0 if OK, a negative number otherwise
+ *
+ * @code gpioPWM(32, 256); // Sets pin 32 full on.
+ *  gpioPWM(33, 128); // Sets pin 33 half on. @endcode
 */
 
 int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags);
-/*
-This returns a handle for the device at the address on the I2C bus.
-i2cBus: 0 or 1, 0 are pins 27 (SDA) & 28 (SCL), 1 are pins 3(SDA) & 5(SCL)
-i2cAddr: 0-0x7F
-Flags allow you to change the bus speed:
-i2cFlags: 0 -> 100 kHz
-i2cFlags: 1 -> 400 kHz
-i2cFlags: 2 -> 1 MHz
-Returns a handle with the I2C bus number being opened (>=0) if OK, otherwise a negative number.
-
-int MPU6050 = i2cOpen(0,0x68,0); //Opening the connection to the I2C slave 0x68, pins 27/28, speed 100kHz
+/**<
+ * @brief This returns a handle for the device at the address on the I2C bus.
+ * @param i2cBus 0 or 1, 0 are pins 27 (SDA) & 28 (SCL), 1 are pins 3(SDA) & 5(SCL)
+ * @param i2cAddr 0-0x7F
+ * Flags allow you to change the bus speed:
+ * @param i2cFlags 0 -> 100 kHz
+ * @param i2cFlags 1 -> 400 kHz
+ * @param i2cFlags 2 -> 1 MHz
+ * @return Returns a handle with the I2C bus number being opened (>=0) if OK, otherwise a negative number
+ *
+ * @code int MPU6050 = i2cOpen(0,0x68,0); //Opening the connection to the I2C slave 0x68, pins 27/28, speed 100kHz @endcode
 */
 
 int i2cClose(unsigned handle);
-/*
-This closes the I2C device associated with the handle.
-handle: >=0, as returned by a call to [*i2cOpen*]
-Returns 0 if OK, otherwise a negative number.
-
-i2cClose(MPU6050); //Closing previously opened connection
+/**<
+ * @brief This closes the I2C device associated with the handle.
+ * @param handle >=0, as returned by a call to [*i2cOpen*]
+ * @return Returns 0 if OK, otherwise a negative number
+ *
+ * @code i2cClose(MPU6050); //Closing previously opened connection @endcode
 */
 
 int i2cWriteByteData(unsigned handle, unsigned i2cReg, unsigned bVal);
-/*
-This writes a single byte to the specified register of the device
-associated with handle.
-handle: >=0, as returned by a call to [*i2cOpen*]
-i2cReg: 0-255, the register to write
-bVal: 0-0xFF, the value to write
-Returns 0 if OK, negative number otherwise.
-
-writestat = i2cWriteByteData(MPU6050, 0x1B, 0x00); // writing 0x00 to register address 0x1B on opened chanel MPU6050
+/**<
+ * @brief This writes a single byte to the specified register of the device associated with handle.
+ *
+ * @param handle >=0, as returned by a call to [*i2cOpen*]
+ * @param i2cReg 0-255, the register to write
+ * @param bVal 0-0xFF, the value to write
+ * @return Returns 0 if OK, negative number otherwise
+ *
+ * @code writestat = i2cWriteByteData(MPU6050, 0x1B, 0x00); // writing 0x00 to register address 0x1B on opened chanel MPU6050 @endcode
 */
 
 int i2cReadByteData(unsigned handle, unsigned i2cReg);
-/*
-This reads a single byte from the specified register of the device
-associated with handle.
-handle: >=0, as returned by a call to [*i2cOpen*]
-i2cReg: 0-255, the register to read
-Returns the byte read (>=0) if OK, otherwise a negative number.
-
-gyro_x_H = i2cReadByteData(MPU6050, 0x43); // getting register 0x43 out of opened connection MPU6050
+/**<
+ * @brief This reads a single byte from the specified register of the device associated with handle.
+ * @param handle >=0, as returned by a call to [*i2cOpen*]
+ * @param i2cReg 0-255, the register to read
+ * @return Returns the byte read (>=0) if OK, otherwise a negative number
+ *
+ * @code gyro_x_H = i2cReadByteData(MPU6050, 0x43); // getting register 0x43 out of opened connection MPU6050 @endcode
 */
 
 int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change);
-/*
-This function returns a handle for the SPI device on the channel.
-Data will be transferred at baud bits per second.  The flags may
-be used to modify the default behaviour of a 4-wire operation, mode 0,
-active low chip select.
-There are 2 SPI channels SPI1 & SPI2.
-The GPIO used are given in the following table.
-         @ MISO @ MOSI @ SCLK @ CS0 @ CS1
-SPI0 	 @   21 @   19 @   23 @  24 @  26 
-SPI1 	 @   22 @   37 @   13 @  18 @  16 
-spiChan: 0-1 (0 stands for SPI1 and 1 for SPI2)
-speed: up to 50M (beyond that expect problems, actually we are not going beyond that)
-mode defines the SPI mode.
-Mode POL PHA
- 0    0   0
- 1    0   1
- 2    1   0
- 3    1   1
-
-cs_delay: delay if nonzero, how long to delay after the last bit transfer in us
-before optionally deselecting the device before the next transfer
-bits_word: bits per word from 1 to 32 bits
-lsb_first: is 1 if least significant bit first 0 otherwise
-ready: is 1 for slave to pull low to pause otherwise 0
-cs_change: is 1 to deselect device before starting the next transfer otherwise 0
-Returns a handle (>=0) if OK, otherwise a negative number.
-
-SPI_init = spiOpen(1, 5000000, 0, 0, 8, 1, 1); // SPI2 (pins 22/37, 500 kHz, mode 0, cs delay 0, 8 bits/word,lsb first 1, cs change 1
+/**<
+ * @brief This function returns a handle for the SPI device on the channel.
+ * Data will be transferred at baud bits per second.  The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select.
+ * There are 2 SPI channels SPI1 & SPI2.
+ * The pins used are given in the following table.
+ * 
+ * |Port |MISO |MOSI |SCLK |CS0 |CS1 |
+ * |-----|-----|-----|-----|----|----|
+ * |SPI1 |21   |19   |23   |24  |26  |
+ * |SPI2 |22   |37   |13   |18  |16  |
+ * 
+ * @param spiChan 0-1 (0 stands for SPI1 and 1 for SPI2)
+ * @param speed up to 50M (beyond that expect problems, actually we are not going beyond that)
+ * @param mode defines the SPI mode
+ * 
+ * |Mode |POL |PHA |
+ * |-----|----|----|
+ * |0    |0   |0   |
+ * |1    |0   |1   |
+ * |2    |1   |0   |
+ * |3    |1   |1   |
+ *
+ * @param cs_delay delay if nonzero, how long to delay after the last bit transfer in us before optionally deselecting the device before the next transfer
+ * @param bits_word bits per word from 1 to 32 bits
+ * @param lsb_first is 1 if least significant bit first 0 otherwise
+ * @param cs_change is 1 to deselect device before starting the next transfer otherwise 0
+ * @return Returns a handle (>=0) if OK, otherwise a negative number
+ *
+ * @code SPI_init = spiOpen(1, 5000000, 0, 0, 8, 1, 1); // SPI2 (pins 22/37, 500 kHz, mode 0, cs delay 0, 8 bits/word,lsb first 1, cs change 1 @endcode
 */
 
 int spiClose(unsigned handle);
-/*
-This functions closes the SPI device identified by the handle.
-handle: >=0, as returned by a call to [*spiOpen*]
-Returns 0 if OK, otherwise a negative number.
-
-spiClose(SPI_init); //closiong prebiously opened spi port with handle SPI_init
+/**<
+ * @brief This functions closes the SPI device identified by the handle.
+ * @param handle >=0, as returned by a call to [*spiOpen*]
+ * @return Returns 0 if OK, otherwise a negative number
+ *
+ * @code spiClose(SPI_init); //closing previously opened spi port with handle SPI_init @endcode
 */
 
 int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len);
-/*
-This function transfers count bytes of data from txBuf to the SPI
-device associated with the handle.  Simultaneously len words of
-data are read from the device and placed in rxBuf.
-handle: >=0, as returned by a call to [*spiOpen*]
- txBuf: the data bytes to write
- rxBuf: the received data bytes
- len: the number of bytes to transfer
-Returns the number of bytes transferred if OK, otherwise a negative number.
-
-spiXfer(SPI_init, tx, rx, 7); //transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init
+/**<
+ * @brief This function transfers count bytes of data from txBuf to the SPI device associated with the handle. Simultaneously len words of data are read from the device and placed in rxBuf.
+ * @param handle >=0, as returned by a call to [*spiOpen*]
+ * @param txBuf the data bytes to write
+ * @param rxBuf the received data bytes
+ * @param len the number of bytes to transfer
+ * @return Returns the number of bytes transferred if OK, otherwise a negative number.
+ *
+ * @code spiXfer(SPI_init, tx, rx, 7); //transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init @endcode
 */
 
 #ifdef __cplusplus

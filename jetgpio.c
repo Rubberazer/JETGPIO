@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.92 */
+/* jetgpio version 0.94 */
 
 #include <stdio.h>
 #include <stdlib.h>
