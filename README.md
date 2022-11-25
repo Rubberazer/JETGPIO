@@ -49,6 +49,10 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
   for port SPI2
 
 The library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis). Learnt a lot from that one
+
+<h2 align="left">DOCUMENTATION:</h2>
+
+Some doxygen documentation [here](https://github.com/Rubberazer/JETGPIO/blob/main/doc/html) 
     
 <h2 align="left">JETSON NANO PINOUT:</h2>
 
