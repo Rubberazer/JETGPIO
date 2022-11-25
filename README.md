@@ -50,7 +50,7 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 <h2 align="left">DOCUMENTATION:</h2>
 
-[Some doxygen documentation](https://rubberazer.github.io/JETGPIO/docs/html/index.html). As a rule of thumb, the library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis). Learnt a lot from that one
+[Some doxygen documentation here](https://rubberazer.github.io/JETGPIO/docs/html/index.html). As a rule of thumb, the library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis). Learnt a lot from that one
     
 <h2 align="left">JETSON NANO PINOUT:</h2>
 
