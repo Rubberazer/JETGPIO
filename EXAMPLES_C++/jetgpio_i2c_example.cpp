@@ -21,6 +21,7 @@ int gyro_z_L = 0;
 float gyro_z = 0;
 
 /* MPU-6050 Registers */
+const int MPU6050_SLAVE_ADDRESS = 0x68;
 const int PWR_MGMT_1 = 0x6B;
 const int ACCEL_CONFIG = 0x1C;
 const int ACCEL_RANGE_4G = 0x08;
@@ -46,42 +47,42 @@ else
 }	
 
 /* Opening the connection to the I2C slave MPU6050 */
-int MPU6050 = i2cOpen(0,0x68,0);
+int MPU6050 = i2cOpen(0,0);
   
     if (MPU6050 >=  0)
     {
-      /* Connection to I2C slave 0x68 OK*/
-      printf("Open I2C to slave 0x68 OK. Return code:  %d\n", MPU6050);
+      /* Opening I2C port OK*/
+      printf("Open I2C port OK. Return code:  %d\n", MPU6050);
       printf("MPU6050 number handler:  %d\n", MPU6050);
     }
   else
     {
-      /* No connection to I2C slave 0x68 */
-      printf("Open I2C to slave 0x68 failed. Quitting MPU6050 thread Error code:  %d\n", MPU6050);
+      /* Problems opening I2C port*/
+      printf("Open I2C port failed. Quitting MPU6050 Error code:  %d\n", MPU6050);
     }
     
-/* Wake up the MPU-6050 since it starts in sleep mode */
-int writestat = i2cWriteByteData(MPU6050, PWR_MGMT_1, 0x00); 
+/* Wake up the MPU-6050 with slave address 0x68 since it starts in sleep mode */
+int writestat = i2cWriteByteData(MPU6050, MPU6050_SLAVE_ADDRESS, PWR_MGMT_1, 0x00); 
 printf("write return: %d\n",writestat);
 usleep(100000);  
   
 /* Now set up the accelerator  range to 4G */
-writestat = i2cWriteByteData(MPU6050, ACCEL_CONFIG, ACCEL_RANGE_4G); 
+writestat = i2cWriteByteData(MPU6050, MPU6050_SLAVE_ADDRESS, ACCEL_CONFIG, ACCEL_RANGE_4G); 
 printf("write return: %d\n",writestat);
 usleep(100000);
   
 /* Now set up the gyroscope  range to 250 deg/second */
-writestat = i2cWriteByteData(MPU6050, GYRO_CONFIG, GYRO_RANGE_250DEG);
+writestat = i2cWriteByteData(MPU6050, MPU6050_SLAVE_ADDRESS, GYRO_CONFIG, GYRO_RANGE_250DEG);
 printf("write return: %d\n",writestat);
 usleep(100000);
 
 int x = 0;
 
-while (x<10) {
+while (x<1000) {
 	
     // Reading gyroscope values
-    gyro_x_H = i2cReadByteData(MPU6050, GYRO_XOUT0); /* getting the H register 15:8 */
-    gyro_x_L = i2cReadByteData(MPU6050, GYRO_XOUT0+1); /* getting the L register 7:0 */
+    gyro_x_H = i2cReadByteData(MPU6050, MPU6050_SLAVE_ADDRESS, GYRO_XOUT0); /* getting the H register 15:8 */
+    gyro_x_L = i2cReadByteData(MPU6050, MPU6050_SLAVE_ADDRESS, GYRO_XOUT0+1); /* getting the L register 7:0 */
     gyro_x = (gyro_x_H << 8) + gyro_x_L;
     if (gyro_x >= 0x8000)
     {
@@ -91,8 +92,8 @@ while (x<10) {
     printf("gyro_x: %f\n",gyro_x);
     
     
-    gyro_y_H = i2cReadByteData(MPU6050, GYRO_YOUT0); /* getting the H register 15:8 */
-    gyro_y_L = i2cReadByteData(MPU6050, GYRO_YOUT0+1); /* getting the L register 7:0 */
+    gyro_y_H = i2cReadByteData(MPU6050, MPU6050_SLAVE_ADDRESS, GYRO_YOUT0); /* getting the H register 15:8 */
+    gyro_y_L = i2cReadByteData(MPU6050, MPU6050_SLAVE_ADDRESS, GYRO_YOUT0+1); /* getting the L register 7:0 */
     gyro_y = (gyro_y_H << 8) + gyro_y_L;
     if (gyro_y >= 0x8000)
     {
@@ -102,8 +103,8 @@ while (x<10) {
     printf("gyro_y: %f\n",gyro_y);
     
     
-    gyro_z_H = i2cReadByteData(MPU6050, GYRO_ZOUT0); /* getting the H register 15:8 */
-    gyro_z_L = i2cReadByteData(MPU6050, GYRO_ZOUT0+1); /* getting the L register 7:0 */
+    gyro_z_H = i2cReadByteData(MPU6050, MPU6050_SLAVE_ADDRESS, GYRO_ZOUT0); /* getting the H register 15:8 */
+    gyro_z_L = i2cReadByteData(MPU6050, MPU6050_SLAVE_ADDRESS, GYRO_ZOUT0+1); /* getting the L register 7:0 */
     gyro_z = (gyro_z_H << 8) + gyro_z_L;
     if (gyro_z >= 0x8000)
     {
@@ -112,7 +113,7 @@ while (x<10) {
     gyro_z = gyro_z/GYRO_SCALE_MODIFIER_250DEG;
 	printf("gyro_z: %f\n",gyro_z);
     
-    usleep(100000);
+    usleep(10000);
     x++;
 }
 
@@ -121,13 +122,13 @@ int i2cstat = i2cClose(MPU6050);
 
     if (i2cstat >=  0)
     {
-      /* Connection to I2C slave 0x68 closd OK*/
-      printf("Closing I2C to slave 0x68 OK. Return code:  %d\n", i2cstat);
+      /* I2C port closed OK*/
+      printf("Closing I2C port OK. Return code:  %d\n", i2cstat);
     }
   else
     {
-      /* Not possible to close connection to the I2C slave 0x68 */
-      printf("Closing I2C to slave 0x68 failed. Quitting MPU6050 thread Error code:  %d\n", i2cstat);
+      /* Not possible to close I2C port */
+      printf("Closing I2C port failed. Quitting MPU6050 thread Error code:  %d\n", i2cstat);
     }
 
 /* Terminating library */
