@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.94 */
+/* jetgpio version 0.95 */
 /** @file jetgpio.h */
 
 #ifndef jetgpio_h__
@@ -157,8 +157,8 @@ For more information, please refer to <http://unlicense.org/>
 /* Typical values Pinmux & Cfg registers */
 
 #define PINMUX_IN 0x00000040            // Typical for pinmux register as input
-#define PINMUX_OUT 0x00000400           // Typical for pinmux register as output
-#define PINMUX_OUT1 0x0000e200          // Typical for pinmux spi pins register as output 
+#define PINMUX_OUT 0x00000440           // Typical for pinmux register as output
+#define PINMUX_OUT1 0x0000e240          // Typical for pinmux spi pins register as output 
 #define CFG_IN 0x00000000               // Typical for config register as input
 #define CFG_OUT 0x01F1F000              // Typical for config register as output
 #define CFG_OUT1 0xF0000000             // Typical for config spi pins register as output
@@ -314,7 +314,7 @@ int gpioSetMode(unsigned gpio, unsigned mode);
 int gpioRead(unsigned gpio);
 /**<
  * @brief Reads the GPIO level, on or off, 0 or 1.
- * Arduino style: digitalRead.
+ * Arduino style: digitalRead. Wheter a pin has been set as input or output it can be read with this function.
  * @param gpio 3-40
  * @return Returns the GPIO level if OK, otherwise a negative number
  *
@@ -369,18 +369,17 @@ int gpioPWM(unsigned gpio, unsigned dutycycle);
  *  gpioPWM(33, 128); // Sets pin 33 half on. @endcode
 */
 
-int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags);
+int i2cOpen(unsigned i2cBus, unsigned i2cFlags);
 /**<
  * @brief This returns a handle for the device at the address on the I2C bus.
- * @param i2cBus 0 or 1, 0 are pins 27 (SDA) & 28 (SCL), 1 are pins 3(SDA) & 5(SCL)
- * @param i2cAddr 0-0x7F
+ * @param i2c Bus 0 or 1, 0 are pins 27 (SDA) & 28 (SCL), 1 are pins 3(SDA) & 5(SCL)
  * Flags allow you to change the bus speed:
  * @param i2cFlags 0 -> 100 kHz
  * @param i2cFlags 1 -> 400 kHz
  * @param i2cFlags 2 -> 1 MHz
  * @return Returns a handle with the I2C bus number being opened (>=0) if OK, otherwise a negative number
  *
- * @code int MPU6050 = i2cOpen(0,0x68,0); //Opening the connection to the I2C slave 0x68, pins 27/28, speed 100kHz @endcode
+ * @code int MPU6050 = i2cOpen(0,0); //Opening a connection on pins 27/28 at speed 100kHz @endcode
 */
 
 int i2cClose(unsigned handle);
@@ -392,26 +391,28 @@ int i2cClose(unsigned handle);
  * @code i2cClose(MPU6050); //Closing previously opened connection @endcode
 */
 
-int i2cWriteByteData(unsigned handle, unsigned i2cReg, unsigned bVal);
+int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned bVal);
 /**<
  * @brief This writes a single byte to the specified register of the device associated with handle.
  *
  * @param handle >=0, as returned by a call to [*i2cOpen*]
+ * @param i2cAddr 0-0x7F, the I2C slave address
  * @param i2cReg 0-255, the register to write
  * @param bVal 0-0xFF, the value to write
  * @return Returns 0 if OK, negative number otherwise
  *
- * @code writestat = i2cWriteByteData(MPU6050, 0x1B, 0x00); // writing 0x00 to register address 0x1B on opened chanel MPU6050 @endcode
+ * @code writestat = i2cWriteByteData(MPU6050, 0x68, 0x1B, 0x00); // writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 @endcode
 */
 
-int i2cReadByteData(unsigned handle, unsigned i2cReg);
+int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg);
 /**<
  * @brief This reads a single byte from the specified register of the device associated with handle.
  * @param handle >=0, as returned by a call to [*i2cOpen*]
+ * @param i2cAddr 0-0x7F, the I2C slave address
  * @param i2cReg 0-255, the register to read
  * @return Returns the byte read (>=0) if OK, otherwise a negative number
  *
- * @code gyro_x_H = i2cReadByteData(MPU6050, 0x43); // getting register 0x43 out of opened connection MPU6050 @endcode
+ * @code gyro_x_H = i2cReadByteData(MPU6050, 0x68, 0x43); // getting register 0x43 out of opened connection MPU6050 with i2C address 0x68 @endcode
 */
 
 int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change);

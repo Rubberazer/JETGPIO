@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.94 */
+/* jetgpio version 0.95 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1927,7 +1927,7 @@ int i2c_smbus_access(int file, char read_write, __u8 command, int size, union i2
 	return ioctl(file,I2C_SMBUS,&args);
 }
 
-int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
+int i2cOpen(unsigned i2cBus, unsigned i2cFlags)
 {
 	char dev[20], buf[100];
 	int fd, slot, speed;
@@ -1939,14 +1939,9 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
         return -1;
 	}
 
-	if (i2cAddr > 0x7f){
-      	printf( "bad I2C address (%d)\n", i2cAddr);
-        return -2;
-	}
-
 	if (!(i2cFlags == 0 || i2cFlags == 1 || i2cFlags == 2)){
         printf( "Only flags 0 to 2 are supported to set up bus speed\n");
-        return -3;
+        return -2;
 	}
 	
 	switch(i2cFlags) {
@@ -1964,14 +1959,14 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
 			i2cFlags = 3;
 	}
 	
-	slot = -7;
+	slot = -5;
 	
 	if (i2cInfo[i2cBus].state == I2C_CLOSED) {
 		slot = i2cBus;
 		i2cInfo[slot].state = I2C_RESERVED;
 	}
 	else { printf("i2c bus already open\n");
-        return -4;
+        return -3;
 	}
 	
 	snprintf(buf, sizeof(buf), "/sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2cBus);
@@ -1993,27 +1988,19 @@ int i2cOpen(unsigned i2cBus, unsigned i2cAddr, unsigned i2cFlags)
    	if (system(buf) == -1) { /* Ignore errors */
 	}
 
-    
 	snprintf(dev, 19, "/dev/i2c-%d", i2cBus);
 	fd = open(dev, O_RDWR);
 	if (fd < 0) {
 		printf( "bad handle (%d)\n", fd);
-		return -5;	
+		return -4;	
 	}
-	
-	if (ioctl(fd, I2C_SLAVE, i2cAddr) < 0) {
-      	close(fd);
-      	i2cInfo[slot].state = 0;
-      	return -6;
-   	}
 
    	if (ioctl(fd, I2C_FUNCS, &funcs) < 0){
        funcs = -1; /* assume all smbus commands allowed */
-       return -7;
+       return -6;
    	}
 
 	i2cInfo[slot].fd = fd;
-	i2cInfo[slot].addr = i2cAddr;
 	i2cInfo[slot].flags = i2cFlags;
 	i2cInfo[slot].funcs = funcs;
 	i2cInfo[slot].state = I2C_OPENED;
@@ -2048,7 +2035,7 @@ int i2cClose(unsigned handle)
 	return 0;
 }
 
-int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
+int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned bVal)
 {	
 	union i2c_smbus_data data;
 	int status = 0;
@@ -2063,13 +2050,13 @@ int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 		status = -2;
 	}
 
-	if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_WRITE_BYTE_DATA) == 0){
-		printf( "write byte data function not supported by device\n");
-		status = -3;
+    if (i2cAddr > 0x7f){
+      	printf( "bad I2C address (%d)\n", i2cAddr);
+        status = -3;
 	}
 	
-	if (reg > 0x7F){
-		printf( "register address on device bigger than 0x7F\n");
+	if (reg > 0xFF){
+		printf( "register address on device bigger than 0xFF\n");
 		status = -4;
 	}
 
@@ -2077,15 +2064,28 @@ int i2cWriteByteData(unsigned handle, unsigned reg, unsigned bVal)
 		printf( "value to be written bigger than byte\n");
 		status = -5;
 	}
+
+    i2cInfo[handle].addr = i2cAddr;
+
+    if (ioctl(i2cInfo[handle].fd, I2C_SLAVE, i2cAddr) < 0) {
+        printf( "I2C slave address not found on bus\n");
+      	status = -6;
+   	}
+
+    if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_WRITE_BYTE_DATA) == 0){
+		printf( "write byte data function not supported by device\n");
+		status = -7;
+	}
 	
 	data.byte = bVal;
-	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE,reg, I2C_SMBUS_BYTE_DATA, &data)<0) {
+    
+	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE, reg, I2C_SMBUS_BYTE_DATA, &data)<0) {
 		printf( "not possible to write register\n");
-		status = -6;}
+		status = -8;}
 	return status;
 }
 
-int i2cReadByteData(unsigned handle, unsigned reg)
+int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg)
 {
     int status = 0;
     union i2c_smbus_data data;
@@ -2099,20 +2099,32 @@ int i2cReadByteData(unsigned handle, unsigned reg)
        printf( "i2c%d is not open\n", handle);
        status = -2;
 	}
-
-    if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA) == 0){
-      printf( "write byte data function not supported by device\n");
-      status = -3;
+    
+    if (i2cAddr > 0x7f){
+      	printf( "bad I2C address (%d)\n", i2cAddr);
+        status = -3;
 	}
-	
-    if (reg > 0x7F){
-       printf( "register address on device bigger than 0x7F\n");
+
+    if (reg > 0xFF){
+       printf( "register address on device bigger than 0xFF\n");
        status = -4;
 	}
+
+     i2cInfo[handle].addr = i2cAddr;
+
+    if (ioctl(i2cInfo[handle].fd, I2C_SLAVE, i2cAddr) < 0) {
+        printf( "I2C slave address not found on bus\n");
+      	status = -5;
+   	}
+    
+    if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA) == 0){
+      printf( "write byte data function not supported by device\n");
+      status = -6;
+	}
 	
-    if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ,reg, I2C_SMBUS_BYTE_DATA,&data)<0) {
+    if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE_DATA,&data)<0) {
        printf( "not possible to read register\n");
-       status = -5;}
+       status = -7;}
     else
        {status = 0x0FF & data.byte;}
     return status;
