@@ -1,13 +1,13 @@
 /* Usage example of the JETGPIO library
- * Compile with: g++ -Wall -g -o catching_edge catching_edge.cpp -ljetgpio
+ * Compile with: g++ -Wall -g -o jetgpio_edge jetgpio_edge.cpp -ljetgpio
  * Execute with: sudo ./catching_edge
 */
 
-
 #include <iostream>
 #include <unistd.h>
-#include <signal.h>	/* for catching exceptions e.g. control-C*/
+#include <signal.h>     /* for catching exceptions e.g. control-C*/
 #include <jetgpio.h>
+
 
 /* Global variable to interrupt the loop later on*/
 static volatile int interrupt = 1;
@@ -25,7 +25,7 @@ void inthandler(int signum)
 void calling()
 {
     printf("edge detected with EPOCH timestamp: %lu\n", timestamp);
-    //terminating while loop
+    // terminating while loop
     //interrupt = 0;
 }
 
@@ -62,10 +62,10 @@ else
    // gpio setting up okay
    printf("gpio setting up okay. Return code:  %d\n", stat);
 
-// Now setting up pin 3 to detect edges, rising & falling edge and when event is detected calling func "calling"
+// Now setting up pin 3 to detect edges, rising & falling edge with a 1000 useconds debouncing and when event is detected calling func "calling"
 }
 
-int stat2 = gpioSetISRFunc(3, EITHER_EDGE, &timestamp, &calling);
+int stat2 = gpioSetISRFunc(3, EITHER_EDGE, 1000, &timestamp, &calling);
 if (stat2 < 0)
 {
    /* gpio setting up failed */
