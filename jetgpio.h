@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.95 */
+/* jetgpio version 0.96 */
 /** @file jetgpio.h */
 
 #ifndef jetgpio_h__
@@ -241,6 +241,7 @@ typedef struct {
     uint32_t gpio_offset;
     uint64_t *timestamp;
     void (*f)();
+    uint32_t debounce;
 } ISRFunc;
 
 typedef ISRFunc *PISRFunc;
@@ -292,7 +293,7 @@ int gpioInitialise(void);
 void gpioTerminate(void);
 /**<
  * @brief Terminates the library.
- * This function restores the used registers and releases memory.
+ * This function restores the used registers to their previous state and releases memory.
  *
  * @return Returns nothing
  *
@@ -332,18 +333,19 @@ int gpioWrite(unsigned gpio, unsigned level);
  * @code gpioWrite(24, 1); // Sets pin 24 high. @endcode
 */
 
-int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned long *timestamp, void (*f)());
+int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void (*f)());
 /**<
  * @brief Registers a function to be called (a callback) whenever the specified.
  * @brief GPIO interrupt occurs.
  * This function will start a thread that will monitor the status of the interrupt.One function may be registered per GPIO.
  * @param gpio 3-40
  * @param edge RISING_EDGE, FALLING_EDGE, or EITHER_EDGE
+ * @param debounce 0-1000 useconds, to avoid bouncing specially on mechanical inputs
  * @param timestamp: timestamp of the detected edge in nanoseconds in EPOCH format
  * @param f the callback function, this will be execute if an edge is detected in the selected pin
  * @return Returns 0 if OK, otherwise a negative number
  *
- * @code gpioSetISRFunc(3, RISING_EDGE,&timestamp, &callback); // Calls the 'callback' function when a rising edge is detected on pin 3,
+ * @code gpioSetISRFunc(3, RISING_EDGE, 1000, &timestamp, &callback); // Calls the 'callback' function when a rising edge is detected on pin 3, with a debouncing time of 1000 useconds
  *  it also delivers the event timestamp on the "timestamp" variable in EPOCH format (nanoseconds) @endcode
 */
 

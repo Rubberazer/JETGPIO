@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.95 */
+/* jetgpio version 0.96 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -178,6 +178,7 @@ static pthread_attr_t attr;
 static int pth_err;
 static void *status_thread;
 static int thread_n = 0;
+static unsigned pin_tracker = 0;
 
 int gpioInitialise(void)
 {
@@ -702,13 +703,13 @@ void gpioTerminate(void)
 
     // Cancelling threads to avoid blocking on read()
     for(int i = 0;i < thread_n; i++) {
-      pthread_cancel(callThd[i]);
+        pthread_cancel(callThd[i]);
       //printf("Thread number: %d cancelled\n",i);
     }
     
     //Joining threads
      for(int j = 0;j < thread_n; j++) {
-      pthread_join(callThd[j], &status_thread);
+         pthread_join(callThd[j], &status_thread);
       //printf("Thread number: %d joined\n",j);
     }
 
@@ -719,175 +720,262 @@ void gpioTerminate(void)
     
 	int pagesize = sysconf(_SC_PAGESIZE);
 	// Restoring registers to their previous state
+
+    if ((pin_tracker >> 28) & 1){
 	*pinPWM = pinPWM_Init;
+    }
+    
+    if (pin_tracker & 1){ 
     pin3->CNF[0] = pin_CNF.pin3;
     pin3->OE[0] = pin_OE.pin3;
     pin3->INT_ENB[0] = pin_ENB.pin3;
     pin3->INT_LVL[0] = pin_LVL.pin3;
 	*pinmux3 = pin_MUX.pin3;
 	*pincfg3 = pin_CFG.pin3;
+    }
+    
+    if ((pin_tracker >> 1) & 1){
 	pin5->CNF[0] = pin_CNF.pin5;
     pin5->OE[0] = pin_OE.pin5;
     pin5->INT_ENB[0] = pin_ENB.pin5;
     pin5->INT_LVL[0] = pin_LVL.pin5;
 	*pinmux5 = pin_MUX.pin5;
 	*pincfg5 = pin_CFG.pin5;
+    }
+    
+    if ((pin_tracker >> 2) & 1){
 	pin7->CNF[0] = pin_CNF.pin7;
     pin7->OE[0] = pin_OE.pin7;
     pin7->INT_ENB[0] = pin_ENB.pin7;
     pin7->INT_LVL[0] = pin_LVL.pin7;
 	*pinmux7 = pin_MUX.pin7;
 	*pincfg7 = pin_CFG.pin7;
+    }
+    
+    if ((pin_tracker >> 3) & 1){
 	pin8->CNF[0] = pin_CNF.pin8;
     pin8->OE[0] = pin_OE.pin8;
     pin8->INT_ENB[0] = pin_ENB.pin8;
     pin8->INT_LVL[0] = pin_LVL.pin8;
 	*pinmux8 = pin_MUX.pin8;
 	*pincfg8 = pin_CFG.pin8;
+    }
+    
+    if ((pin_tracker >> 4) & 1){
 	pin10->CNF[0] = pin_CNF.pin10;
     pin10->OE[0] = pin_OE.pin10;
     pin10->INT_ENB[0] = pin_ENB.pin10;
     pin10->INT_LVL[0] = pin_LVL.pin10;
 	*pinmux10 = pin_MUX.pin10;
 	*pincfg10 = pin_CFG.pin10;
+    }
+    
+    if ((pin_tracker >> 5) & 1){
 	pin11->CNF[0] = pin_CNF.pin11;
     pin11->OE[0] = pin_OE.pin11;
     pin11->INT_ENB[0] = pin_ENB.pin11;
     pin11->INT_LVL[0] = pin_LVL.pin11;
 	*pinmux11 = pin_MUX.pin11;
 	*pincfg11 = pin_CFG.pin11;
+    }
+    
+    if ((pin_tracker >> 6) & 1){
 	pin12->CNF[0] = pin_CNF.pin12;
     pin12->OE[0] = pin_OE.pin12;
     pin12->INT_ENB[0] = pin_ENB.pin12;
     pin12->INT_LVL[0] = pin_LVL.pin12;
 	*pinmux12 = pin_MUX.pin12;
 	*pincfg12 = pin_CFG.pin12;
+    }
+
+    if (((pin_tracker >> 7) & 1) || ((pin_tracker >> 30) & 1)){
 	pin13->CNF[0] = pin_CNF.pin13;
     pin13->OE[0] = pin_OE.pin13;
     pin13->INT_ENB[0] = pin_ENB.pin13;
     pin13->INT_LVL[0] = pin_LVL.pin13;
 	*pinmux13 = pin_MUX.pin13;
 	*pincfg13 = pin_CFG.pin13;
+    }
+
+    if ((pin_tracker >> 8) & 1){
 	pin15->CNF[0] = pin_CNF.pin15;
     pin15->OE[0] = pin_OE.pin15;
     pin15->INT_ENB[0] = pin_ENB.pin15;
     pin15->INT_LVL[0] = pin_LVL.pin15;
 	*pinmux15 = pin_MUX.pin15;
 	*pincfg15 = pin_CFG.pin15;
+    }
+
+    if ((pin_tracker >> 9) & 1){
 	pin16->CNF[0] = pin_CNF.pin16;
     pin16->OE[0] = pin_OE.pin16;
     pin16->INT_ENB[0] = pin_ENB.pin16;
     pin16->INT_LVL[0] = pin_LVL.pin16;
 	*pinmux16 = pin_MUX.pin16;
 	*pincfg16 = pin_CFG.pin16;
+    }
+
+    if (((pin_tracker >> 10) & 1) || ((pin_tracker >> 30) & 1)){
 	pin18->CNF[0] = pin_CNF.pin18;
     pin18->OE[0] = pin_OE.pin18;
     pin18->INT_ENB[0] = pin_ENB.pin18;
     pin18->INT_LVL[0] = pin_LVL.pin18;
 	*pinmux18 = pin_MUX.pin18;
 	*pincfg18 = pin_CFG.pin18;
+    }
+
+    if (((pin_tracker >> 11) & 1) || ((pin_tracker >> 29) & 1)){
 	pin19->CNF[0] = pin_CNF.pin19;
     pin19->OE[0] = pin_OE.pin19;
     pin19->INT_ENB[0] = pin_ENB.pin19;
     pin19->INT_LVL[0] = pin_LVL.pin19;
 	*pinmux19 = pin_MUX.pin19;
 	*pincfg19 = pin_CFG.pin19;
+    }
+
+    if (((pin_tracker >> 12) & 1) || ((pin_tracker >> 29) & 1)){
 	pin21->CNF[0] = pin_CNF.pin21;
     pin21->OE[0] = pin_OE.pin21;
     pin21->INT_ENB[0] = pin_ENB.pin21;
     pin21->INT_LVL[0] = pin_LVL.pin21;
 	*pinmux21 = pin_MUX.pin21;
 	*pincfg21 = pin_CFG.pin21;
+    }
+
+    if (((pin_tracker >> 13) & 1) || ((pin_tracker >> 30) & 1)){
 	pin22->CNF[0] = pin_CNF.pin22;
     pin22->OE[0] = pin_OE.pin22;
     pin22->INT_ENB[0] = pin_ENB.pin22;
     pin22->INT_LVL[0] = pin_LVL.pin22;
 	*pinmux22 = pin_MUX.pin22;
 	*pincfg22 = pin_CFG.pin22;
+    }
+
+    if (((pin_tracker >> 14) & 1) || ((pin_tracker >> 29) & 1)){
 	pin23->CNF[0] = pin_CNF.pin23;
     pin23->OE[0] = pin_OE.pin23;
     pin23->INT_ENB[0] = pin_ENB.pin23;
     pin23->INT_LVL[0] = pin_LVL.pin23;
 	*pinmux23 = pin_MUX.pin23;
 	*pincfg23 = pin_CFG.pin23;
+    }
+
+    if (((pin_tracker >> 15) & 1) || ((pin_tracker >> 29) & 1)){
 	pin24->CNF[0] = pin_CNF.pin24;
     pin24->OE[0] = pin_OE.pin24;
     pin24->INT_ENB[0] = pin_ENB.pin24;
     pin24->INT_LVL[0] = pin_LVL.pin24;
 	*pinmux24 = pin_MUX.pin24;
 	*pincfg24 = pin_CFG.pin24;
+    }
+
+    if ((pin_tracker >> 16) & 1){
 	pin26->CNF[0] = pin_CNF.pin26;
     pin26->OE[0] = pin_OE.pin26;
     pin26->INT_ENB[0] = pin_ENB.pin26;
     pin26->INT_LVL[0] = pin_LVL.pin26;
 	*pinmux26 = pin_MUX.pin26;
 	*pincfg26 = pin_CFG.pin26;
+    }
+
+    if ((pin_tracker >> 17) & 1){
 	pin27->CNF[0] = pin_CNF.pin27;
     pin27->OE[0] = pin_OE.pin27;
     pin27->INT_ENB[0] = pin_ENB.pin27;
     pin27->INT_LVL[0] = pin_LVL.pin27;
 	*pinmux27 = pin_MUX.pin27;
 	*pincfg27 = pin_CFG.pin27;
+    }
+
+    if ((pin_tracker >> 18) & 1){
 	pin28->CNF[0] = pin_CNF.pin28;
     pin28->OE[0] = pin_OE.pin28;
     pin28->INT_ENB[0] = pin_ENB.pin28;
     pin28->INT_LVL[0] = pin_LVL.pin28;
 	*pinmux28 = pin_MUX.pin28;
 	*pincfg28 = pin_CFG.pin28;
+    }
+
+    if ((pin_tracker >> 19) & 1){
 	pin29->CNF[0] = pin_CNF.pin29;
     pin29->OE[0] = pin_OE.pin29;
     pin29->INT_ENB[0] = pin_ENB.pin29;
     pin29->INT_LVL[0] = pin_LVL.pin29;
 	*pinmux29 = pin_MUX.pin29;
 	*pincfg29 = pin_CFG.pin29;
+    }
+
+    if ((pin_tracker >> 20) & 1){
 	pin31->CNF[0] = pin_CNF.pin31;
     pin31->OE[0] = pin_OE.pin31;
     pin31->INT_ENB[0] = pin_ENB.pin31;
     pin31->INT_LVL[0] = pin_LVL.pin31;
 	*pinmux31 = pin_MUX.pin31;
 	*pincfg31 = pin_CFG.pin31;
+    }
+
+    if (((pin_tracker >> 21) & 1) || ((pin_tracker >> 28) & 1)){
 	pin32->CNF[0] = pin_CNF.pin32;
     pin32->OE[0] = pin_OE.pin32;
     pin32->INT_ENB[0] = pin_ENB.pin32;
     pin32->INT_LVL[0] = pin_LVL.pin32;
 	*pinmux32 = pin_MUX.pin32;
 	*pincfg32 = pin_CFG.pin32;
+    }
+
+    if (((pin_tracker >> 22) & 1) || ((pin_tracker >> 28) & 1)){
 	pin33->CNF[0] = pin_CNF.pin33;
     pin33->OE[0] = pin_OE.pin33;
     pin33->INT_ENB[0] = pin_ENB.pin33;
     pin33->INT_LVL[0] = pin_LVL.pin33;
 	*pinmux33 = pin_MUX.pin33;
 	*pincfg33 = pin_CFG.pin33;
+    }
+
+    if ((pin_tracker >> 23) & 1){
 	pin35->CNF[0] = pin_CNF.pin35;
     pin35->OE[0] = pin_OE.pin35;
     pin35->INT_ENB[0] = pin_ENB.pin35;
     pin35->INT_LVL[0] = pin_LVL.pin35;
 	*pinmux35 = pin_MUX.pin35;
 	*pincfg35 = pin_CFG.pin35;
+    }
+
+    if ((pin_tracker >> 24) & 1){
 	pin36->CNF[0] = pin_CNF.pin36;
     pin36->OE[0] = pin_OE.pin36;
     pin36->INT_ENB[0] = pin_ENB.pin36;
     pin36->INT_LVL[0] = pin_LVL.pin36;
 	*pinmux36 = pin_MUX.pin36;
 	*pincfg36 = pin_CFG.pin36;
+    }
+
+    if (((pin_tracker >> 25) & 1) || ((pin_tracker >> 30) & 1)){
 	pin37->CNF[0] = pin_CNF.pin37;
     pin37->OE[0] = pin_OE.pin37;
     pin37->INT_ENB[0] = pin_ENB.pin37;
     pin37->INT_LVL[0] = pin_LVL.pin37;
 	*pinmux37 = pin_MUX.pin37;
 	*pincfg37 = pin_CFG.pin37;
+    }
+
+    if ((pin_tracker >> 26) & 1){
 	pin38->CNF[0] = pin_CNF.pin38;
     pin38->OE[0] = pin_OE.pin38;
     pin38->INT_ENB[0] = pin_ENB.pin38;
     pin38->INT_LVL[0] = pin_LVL.pin38;
 	*pinmux38 = pin_MUX.pin38;
 	*pincfg38 = pin_CFG.pin38;
+    }
+
+    if ((pin_tracker >> 27) & 1){
 	pin40->CNF[0] = pin_CNF.pin40;
     pin40->OE[0] = pin_OE.pin40;
     pin40->INT_ENB[0] = pin_ENB.pin40;
     pin40->INT_LVL[0] = pin_LVL.pin40;
 	*pinmux40 = pin_MUX.pin40;
 	*pincfg40 = pin_CFG.pin40;
+    }
 	
 	// Ummapping CNF registers
 	munmap(baseCNF, pagesize);
@@ -922,168 +1010,196 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			*pincfg3 = CFG_IN;
 			pin3->CNF[0] |= 0x00000008;
 			pin3->OE[0] &= ~(0x00000008);
+            pin_tracker |= 1;
 			break;
 		case 5:
 			*pinmux5 = PINMUX_IN;
 			*pincfg5 = CFG_IN;
 			pin5->CNF[0] |= 0x00000004;
 			pin5->OE[0] &= ~(0x00000004);
+            pin_tracker |= (1 << 1);
 			break;
 		case 7:
 			*pinmux7 = PINMUX_IN;
 			*pincfg7 = CFG_IN;
 			pin7->CNF[0] |= 0x00000001;
 			pin7->OE[0] &= ~(0x00000001);
+            pin_tracker |= (1 << 2);
 			break;
 		case 8:
 			*pinmux8 = PINMUX_IN;
 			*pincfg8 = CFG_IN;
 			pin8->CNF[0] |= 0x00000001;
 			pin8->OE[0] &= ~(0x00000001);
+            pin_tracker |= (1 << 3);
 			break;
 		case 10:
 			*pinmux10 = PINMUX_IN;
 			*pincfg10 = CFG_IN;
 			pin10->CNF[0] |= 0x00000002;
 			pin10->OE[0] &= ~(0x00000002);
+            pin_tracker |= (1 << 4);
 			break;
 		case 11:
 			*pinmux11 = PINMUX_IN;
 			*pincfg11 = CFG_IN;
 			pin11->CNF[0] |= 0x00000004;
 			pin11->OE[0] &= ~(0x00000004);
+            pin_tracker |= (1 << 5);
 			break;
 	    case 12:
 			*pinmux12 = PINMUX_IN;
 			*pincfg12 = CFG_IN;
 			pin12->CNF[0] |= 0x00000080;
 			pin12->OE[0] &= ~(0x00000080);
+            pin_tracker |= (1 << 6);
 			break;
 		case 13:
 			*pinmux13 = PINMUX_IN;
 			*pincfg13 = CFG_IN;
 			pin13->CNF[0] |= 0x00000040;
 			pin13->OE[0] &= ~(0x00000040);
+            pin_tracker |= (1 << 7);
 			break;
 		case 15:
 			*pinmux15 = PINMUX_IN;
 			*pincfg15 = CFG_IN;
 			pin15->CNF[0] |= 0x00000004;
 			pin15->OE[0] &= ~(0x00000004);
+            pin_tracker |= (1 << 8);
 			break;
 		case 16:
 			*pinmux16 = PINMUX_IN;
 			*pincfg16 = CFG_IN;
 			pin16->CNF[0] |= 0x00000001;
 			pin16->OE[0] &= ~(0x00000001);
+            pin_tracker |= (1 << 9);
 			break;
 		case 18:
 			*pinmux18 = PINMUX_IN;
 			*pincfg18 = CFG_IN;
 			pin18->CNF[0] |= 0x00000080;
 			pin18->OE[0] &= ~(0x00000080);
+            pin_tracker |= (1 << 10);
 			break;
 		case 19:
 			*pinmux19 = PINMUX_IN;
 			*pincfg19 = CFG_IN;
 			pin19->CNF[0] |= 0x00000001;
 			pin19->OE[0] &= ~(0x00000001);
+            pin_tracker |= (1 << 11);
 			break;
 		case 21:
 			*pinmux21 = PINMUX_IN;
 			*pincfg21 = CFG_IN;
 			pin21->CNF[0] |= 0x00000002;
 			pin21->OE[0] &= ~(0x00000002);
+            pin_tracker |= (1 << 12);
 			break;
 		case 22:
 			*pinmux22 = PINMUX_IN;
 			*pincfg22 = CFG_IN;
 			pin22->CNF[0] |= 0x00000020;
 			pin22->OE[0] &= ~(0x00000020);
+            pin_tracker |= (1 << 13);
 			break;
 		case 23:
 			*pinmux23 = PINMUX_IN;
 			*pincfg23 = CFG_IN;
 			pin23->CNF[0] |= 0x00000004;
 			pin23->OE[0] &= ~(0x00000004);
+            pin_tracker |= (1 << 14);
 			break;
 		case 24:
 			*pinmux24 = PINMUX_IN;
 			*pincfg24 = CFG_IN;
 			pin24->CNF[0] |= 0x00000008;
 			pin24->OE[0] &= ~(0x00000008);
+            pin_tracker |= (1 << 15);
 			break;
 		case 26:
 			*pinmux26 = PINMUX_IN;
 			*pincfg26 = CFG_IN;
 			pin26->CNF[0] |= 0x00000010;
 			pin26->OE[0] &= ~(0x00000010);
+            pin_tracker |= (1 << 16);
 			break;
 		case 27:
 			*pinmux27 = PINMUX_IN;
 			*pincfg27 = CFG_IN;
 			pin27->CNF[0] |= 0x00000001;
 			pin27->OE[0] &= ~(0x00000001);
+            pin_tracker |= (1 << 17);
 			break;
 		case 28:
 			*pinmux28 = PINMUX_IN;
 			*pincfg28 = CFG_IN;
 			pin28->CNF[0] |= 0x00000002;
 			pin28->OE[0] &= ~(0x00000002);
+            pin_tracker |= (1 << 18);
 			break;
 		case 29:
 			*pinmux29 = PINMUX_IN;
 			*pincfg29 = CFG_IN;
 			pin29->CNF[0] |= 0x00000020;
 			pin29->OE[0] &= ~(0x00000020);
+            pin_tracker |= (1 << 19);
 			break;
 		case 31:
 			*pinmux31 = PINMUX_IN;
 			*pincfg31 = CFG_IN;
 			pin31->CNF[0] |= 0x00000001;
 			pin31->OE[0] &= ~(0x00000001);
+            pin_tracker |= (1 << 20);
 			break;
 		case 32:
 			*pinmux32 = PINMUX_IN;
 			*pincfg32 = CFG_IN;
 			pin32->CNF[0] |= 0x00000001;
 			pin32->OE[0] &= ~(0x00000001);
+            pin_tracker |= (1 << 21);
 			break;
 		case 33:
 			*pinmux33 = PINMUX_IN;
 			*pincfg33 = CFG_IN;
 			pin33->CNF[0] |= 0x00000040;
 			pin33->OE[0] &= ~(0x00000040);
+            pin_tracker |= (1 << 22);
 			break;
 		case 35:
 			*pinmux35 = PINMUX_IN;
 			*pincfg35 = CFG_IN;
 			pin35->CNF[0] |= 0x00000010;
 			pin35->OE[0] &= ~(0x00000010);
+            pin_tracker |= (1 << 23);
 			break;
 		case 36:
 			*pinmux36 = PINMUX_IN;
 			*pincfg36 = CFG_IN;
 			pin36->CNF[0] |= 0x00000008;
 			pin36->OE[0] &= ~(0x00000008);
+            pin_tracker |= (1 << 24);
 			break;
 		case 37:
 			*pinmux37 = PINMUX_IN;
 			*pincfg37 = CFG_IN;
 			pin37->CNF[0] |= 0x00000010;
 			pin37->OE[0] &= ~(0x00000010);
+            pin_tracker |= (1 << 25);
 			break;
 		case 38:
 			*pinmux38 = PINMUX_IN;
 			*pincfg38 = CFG_IN;
 			pin38->CNF[0] |= 0x00000020;
 			pin38->OE[0] &= ~(0x00000020);
+            pin_tracker |= (1 << 26);
 			break;
 		case 40:
 			*pinmux40 = PINMUX_IN;
 			*pincfg40 = CFG_IN;
 			pin40->CNF[0] |= 0x00000040;
 			pin40->OE[0] &= ~(0x00000040);
+            pin_tracker |= (1 << 27);
 			break;
 		default:
 			status = -1;
@@ -1099,172 +1215,200 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 			*pincfg3 = CFG_OUT;
 			pin3->CNF[0] |= 0x00000008;
 			pin3->OE[0] |= 0x00000008;
+            pin_tracker |= 1;
 			break;
 		case 5:
 			*pinmux5 = PINMUX_OUT;
 			*pincfg5 = CFG_OUT;
 			pin5->CNF[0] |= 0x00000004;
 			pin5->OE[0] |= 0x00000004;
+            pin_tracker |= (1 << 1);
 			break;
 		case 7:
 			*pinmux7 = PINMUX_OUT;
 			*pincfg7 = CFG_OUT;
 			pin7->CNF[0] |= 0x00000001;
 			pin7->OE[0] |= 0x00000001;
+            pin_tracker |= (1 << 2);
 			break;
 		case 8:
 			*pinmux8 = PINMUX_OUT;
 			*pincfg8 = CFG_OUT;
 			pin8->CNF[0] |= 0x00000001;
 			pin8->OE[0] |= 0x00000001;
+            pin_tracker |= (1 << 3);
 			break;
 		case 10:
 			*pinmux10 = PINMUX_OUT;
 			*pincfg10 = CFG_OUT;
 			pin10->CNF[0] |= 0x00000002;
 			pin10->OE[0] |= 0x00000002;
+            pin_tracker |= (1 << 4);
 			break;
 		case 11:
 			*pinmux11 = PINMUX_OUT;
 			*pincfg11 = CFG_OUT;
 			pin11->CNF[0] |= 0x00000004;
 			pin11->OE[0] |= 0x00000004;
+            pin_tracker |= (1 << 5);
 			break;
 		case 12:
 			*pinmux12 = PINMUX_OUT;
 			*pincfg12 = CFG_OUT;
 			pin12->CNF[0] |= 0x00000080;
 			pin12->OE[0] |= 0x00000080;
+            pin_tracker |= (1 << 6);
 			break;
 		case 13:
 			*pinmux13 = PINMUX_OUT1;
 			*pincfg13 = CFG_OUT1;
 			pin13->CNF[0] |= 0x00000040;
 			pin13->OE[0] |= 0x00000040;
+            pin_tracker |= (1 << 7);
 			break;
 		case 15:
 			*pinmux15 = PINMUX_OUT;
 			*pincfg15 = CFG_OUT;
 			pin15->CNF[0] |= 0x00000004;
 			pin15->OE[0] |= 0x00000004;
+            pin_tracker |= (1 << 8);
 			break;
 		case 16:
 			*pinmux16 = PINMUX_OUT1;
 			*pincfg16 = CFG_OUT1;
 			pin16->CNF[0] |= 0x00000001;
 			pin16->OE[0] |= 0x00000001;
+            pin_tracker |= (1 << 9);
 			break;
 		case 18:
 			*pinmux18 = PINMUX_OUT1;
 			*pincfg18 = CFG_OUT1;
 			pin18->CNF[0] |= 0x00000080;
 			pin18->OE[0] |= 0x00000080;
+            pin_tracker |= (1 << 10);
 			break;
 		case 19:
 			*pinmux19 = PINMUX_OUT1;
 			*pincfg19 = CFG_OUT1;
 			pin19->CNF[0] |= 0x00000001;
 			pin19->OE[0] |= 0x00000001;
+            pin_tracker |= (1 << 11);
 			break;
 		case 21:
 			*pinmux21 = PINMUX_OUT1;
 			*pincfg21 = CFG_OUT1;
 			pin21->CNF[0] |= 0x00000002;
 			pin21->OE[0] |= 0x00000002;
+            pin_tracker |= (1 << 12);
 			break;
 		case 22:
 			*pinmux22 = PINMUX_OUT1;
 			*pincfg22 = CFG_OUT1;
 			pin22->CNF[0] |= 0x00000020;
 			pin22->OE[0] |= 0x00000020;
+            pin_tracker |= (1 << 13);
 			break;
 		case 23:
 			*pinmux23 = PINMUX_OUT1;
 			*pincfg23 = CFG_OUT1;
 			pin23->CNF[0] |= 0x00000004;
 			pin23->OE[0] |= 0x00000004;
+            pin_tracker |= (1 << 14);
 			break;
 		case 24:
 			*pinmux24 = PINMUX_OUT1;
 			*pincfg24 = CFG_OUT1;
 			pin24->CNF[0] |= 0x00000008;
 			pin24->OE[0] |= 0x00000008;
+            pin_tracker |= (1 << 15);
 			break;
 		case 26:
 			*pinmux26 = PINMUX_OUT1;
 			*pincfg26 = CFG_OUT1;
 			pin26->CNF[0] |= 0x00000010;
 			pin26->OE[0] |= 0x00000010;
+            pin_tracker |= (1 << 16);
 			break;
 		case 27:
 			*pinmux27 = PINMUX_OUT;
 			*pincfg27 = CFG_OUT;
 			pin27->CNF[0] |= 0x00000001;
 			pin27->OE[0] |= 0x00000001;
+            pin_tracker |= (1 << 17);
 			break;
 		case 28:
 			*pinmux28 = PINMUX_OUT;
 			*pincfg28 = CFG_OUT;
 			pin28->CNF[0] |= 0x00000002;
 			pin28->OE[0] |= 0x00000002;
+            pin_tracker |= (1 << 18);
 			break;
 		case 29:
 			*pinmux29 = PINMUX_OUT;
 			*pincfg29 = CFG_OUT;
 			pin29->CNF[0] |= 0x00000020;
 			pin29->OE[0] |= 0x00000020;
+            pin_tracker |= (1 << 19);
 			break;
 		case 31:
 			*pinmux31 = PINMUX_OUT;
 			*pincfg31 = CFG_OUT;
 			pin31->CNF[0] |= 0x00000001;
 			pin31->OE[0] |= 0x00000001;
+            pin_tracker |= (1 << 20);
 			break;
 		case 32:
 			*pinmux32 = PINMUX_OUT;
 			*pincfg32 = CFG_OUT;
 			pin32->CNF[0] |= 0x00000001;
 			pin32->OE[0] |= 0x00000001;
+            pin_tracker |= (1 << 21);
 			break;
 		case 33:
 			*pinmux33 = PINMUX_OUT;
 			*pincfg33 = CFG_OUT;
 			pin33->CNF[0] |= 0x00000040;
 			pin33->OE[0] |= 0x00000040;
+            pin_tracker |= (1 << 22);
 			break;
 		case 35:
 			*pinmux35 = PINMUX_OUT;
 			*pincfg35 = CFG_OUT;
 			pin35->CNF[0] |= 0x00000010;
 			pin35->OE[0] |= 0x00000010;
+            pin_tracker |= (1 << 23);
 			break;
 		case 36:
 			*pinmux36 = PINMUX_OUT;
 			*pincfg36 = CFG_OUT;
 			pin36->CNF[0] |= 0x00000008;
 			pin36->OE[0] |= 0x00000008;
+            pin_tracker |= (1 << 24);
 			break;
 		case 37:
 			*pinmux37 = PINMUX_OUT1;
 			*pincfg37 = CFG_OUT1;
 			pin37->CNF[0] |= 0x00000010;
 			pin37->OE[0] |= 0x00000010;
+            pin_tracker |= (1 << 25);
 			break;
 		case 38:
 			*pinmux38 = PINMUX_OUT;
 			*pincfg38 = CFG_OUT;
 			pin38->CNF[0] |= 0x00000020;
 			pin38->OE[0] |= 0x00000020;
+            pin_tracker |= (1 << 26);
 			break;
 		case 40:
 			*pinmux40 = PINMUX_OUT;
 			*pincfg40 = CFG_OUT;
 			pin40->CNF[0] |= 0x00000040;
 			pin40->OE[0] |= 0x00000040;
+            pin_tracker |= (1 << 27);
 			break;
 		default:
 			status = -2;
-			printf("Only gpio numbers from 3 to 40 are accepted, this function will only read the level on the Jetson Nano header pins,\n");
+			printf("Only gpio numbers from 3 to 40 are accepted, this function will only write the level on the Jetson Nano header pins,\n");
 			printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
 		}
 		
@@ -1573,6 +1717,8 @@ void *callback(void *arg)
     int edge = int_struct->edge;
     unsigned gpio_offset = int_struct->gpio_offset;
     uint64_t *timestamp =  int_struct->timestamp;
+    *timestamp = 0;
+    unsigned debounce = int_struct->debounce;
     int fd;
 	int ret;
     struct gpioevent_request req;
@@ -1604,27 +1750,39 @@ void *callback(void *arg)
             printf("Failed to read event (%d)\n", ret);
             break;
         }
-        *timestamp = event.timestamp;     
-      switch (event.id) {
-      case GPIOEVENT_EVENT_RISING_EDGE:
-          int_struct->f();
-          break;
-      case GPIOEVENT_EVENT_FALLING_EDGE:
-          int_struct->f();
-          break;
-      default:
-          //Do nothing, this shouldn't be happening
-          pthread_exit(NULL);
-      }
+        
+        if ((event.timestamp - *timestamp) > (debounce*100)){
+            *timestamp = event.timestamp;
+        }
+        else{
+            event.id = 0x00;
+        }
+        
+        switch (event.id) {
+        case GPIOEVENT_EVENT_RISING_EDGE:
+            int_struct->f();
+            break;
+        case GPIOEVENT_EVENT_FALLING_EDGE:
+            int_struct->f();
+            break;
+        default:
+            //Do nothing
+            break;
+        }
     }
     pthread_exit(NULL);
     }
     
-int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned long *timestamp, void (*f)())
+int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void (*f)())
 {
     int status = 1;
     unsigned x = 0;
     unsigned gpio_offset = 0;
+
+    if (debounce < 0 || debounce > 1000){
+         printf( "debounce setting should be a number between 0 and 1000 useconds\n");
+        status = -1;
+    }
 
     if (edge == RISING_EDGE || edge == FALLING_EDGE || edge == EITHER_EDGE){
 
@@ -1827,7 +1985,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned long *timestamp, void 
             gpio_offset = 78;
 			break;
 		default:
-			status = -1;
+			status = -2;
 			printf("Only gpio numbers from 3 to 40 are accepted\n");
 		}
     }
@@ -1846,6 +2004,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned long *timestamp, void 
         ISRFunc_CFG[gpio]->gpio_offset = gpio_offset;
         ISRFunc_CFG[gpio]->stat_reg = x;
         ISRFunc_CFG[gpio]->timestamp = timestamp;
+        ISRFunc_CFG[gpio]->debounce = debounce;
         pthread_attr_init(&attr);
         pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
         pth_err = pthread_create(&callThd[thread_n], &attr, callback, (void *)ISRFunc_CFG[gpio]); 
@@ -1877,7 +2036,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)
 			status = -1;
 			printf("Only gpio numbers 32 and 33 are accepted\n");
 		}
-		
+    pin_tracker |= (1 << 28);		
 	}
 	else {printf("Only frequencies from 25 to 200000 Hz are allowed\n");
 		status =-2;}
@@ -2196,6 +2355,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
         pin24->CNF[0] &= ~(0x00000008);
         *pinmux24 = 0xe200;
         *pincfg24 = 0xf0000000;
+        pin_tracker |= (1 << 29);
     }
 
     if (spiChan == 1) {
@@ -2211,6 +2371,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
         pin18->CNF[0] &= ~(0x00000080); 
         *pinmux18 = 0xe200;
         *pincfg18 = 0xf0000000;
+        pin_tracker |= (1 << 30);
         }
 
     strcpy(buf, "modprobe spidev bufsiz=65535");
