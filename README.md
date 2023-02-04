@@ -1,4 +1,4 @@
-# JETGPIO library
+# JETGPIO library  [ANOUNCEMENT: LOOKING FOR HARDWARE DONORS](https://github.com/Rubberazer/JETGPIO/discussions/12) & [ANOUNCEMENT: LOOKING FOR HARDWARE DONORS]
 
 C library to manage the JETSON NANO GPIO
 
