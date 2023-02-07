@@ -3,6 +3,9 @@
 C library to manage the JETSON NANO GPIO 
 
 
+[ANNOUNCEMENT: LOOKING FOR HARDWARE DONORS TO KEEEP EXPANDING THE LIBRARY](https://github.com/Rubberazer/JETGPIO/discussions/12)
+
+
 <h2 align="left">FUNCTIONALITY:</h2>
 
 - JETSON NANO (TX1) family only, so far it does not support other models such as Xavier or Orin
