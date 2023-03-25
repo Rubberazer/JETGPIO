@@ -10,7 +10,7 @@ C library to manage the JETSON NANO GPIO
 
 - JETSON NANO (TX1) family only, so far it does not support other models such as Xavier or Orin
 
-- GPIO control of all the header pinout as input or output. Low latency, see also The need for speed below for some information on measurements
+- GPIO control of all the header pinout as input or output. Low latency, see also [The need for speed below](https://github.com/Rubberazer/JETGPIO/blob/main/README.md#the-need-for-speed) for some information on measurements
 
 - Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided 
 
