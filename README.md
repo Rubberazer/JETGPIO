@@ -10,7 +10,7 @@ C library to manage the JETSON NANO GPIO
 
 - JETSON NANO (TX1) family only, so far it does not support other models such as Xavier or Orin
 
-- GPIO control of all the header pinout as input or output. Low latency is expected (it does not go through the kernel) writing directly to the CPU registers
+- GPIO control of all the header pinout as input or output. Low latency, see also The need for speed below for some information on measurements
 
 - Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided 
 
@@ -55,6 +55,23 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 <h2 align="left">DOCUMENTATION:</h2>
 
 [Some doxygen documentation here](https://rubberazer.github.io/JETGPIO/html/index.html). As a rule of thumb, the library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis). Learnt a lot from that one
+
+<h2 align="left">THE NEED FOR SPEED:</h2>
+
+I created a bunch of little programs to measure reaction time e.g. how fast an output pin turns from 0 to 1 (3.3v), or how fast a change to an input pin is detected by the library, the diagram of the physical setup is shown below, basically I set up pin 38 as an output and pin 40 as an input and connect both through a resistor to observe the interaction:
+
+![jetson_speed](https://user-images.githubusercontent.com/47650457/227725735-0edb04d1-0d8f-465f-9212-18e41e2cc364.png)
+
+Compiling and running [jetgpio_round_trip.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_round_trip.c) I am measuring the time from before executing the function that writes a logic 1 (3.3v) to pin 38 until the point when this is detected (by voltage level not edge interrupt) at pin 40. Here the intention is to measure the worst case scenario of a combination of 2 different actions: 
+
+- a pin changes state from 0 to 1 (output)
+- a second pin detects a change on its state from 0 to 1 (input) being this change produced by the output pin
+
+The average result that I am getting by running this program is an average 1500 nano seconds (1.5 us) for the round trip (total time to execute both actions) with minimum values around 1300 nano seconds (1.3 us) and maximum values around 1800 nano seconds (1.8 us). Note that this doesn't measure individual actions but the total time to execute both (round trip)
+
+Compiling and running [jetgpio_speed_edge_trip.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_speed_edge_trip.c) I am trying to measure the time using a similar setup as per points above, the difference here is that I am using the library function: gpioSetISRFunc() which basically goes through the linux gpio driver in order to catch rising and falling edges, reasons to use the linux driver for this has to do with the fact that catching interrupts from user space (this is a library after all) is basically 'problematic' for a number of reasons, in short, if driver performance and/or device tree stuff got in my way I would basically replace the current driver by my own, but that is beyond the scope of my library, and yes this is intentional
+
+The average result that I am getting by running this program is an average 500000 nano seconds (0.5 ms) for the round trip (total time to execute both actions) with minimum values around 250000 nano seconds (0.25 ms) and maximum values around 700000 nano seconds (0.7 ms). Note that this doesn't measure individual actions but the total time to execute both (round trip). It is clear that the timestamp produced by the linux driver is the one to blame for the slow reaction on detecting a change on the input pin, still interesting as there is pretty much no meaningful cpu waste as the hardware is producing the interrupt for us (no polling)
     
 <h2 align="left">JETSON NANO PINOUT:</h2>
 
