@@ -72,6 +72,8 @@ The average result that I am getting by running this program is an average 1500 
 Compiling and running [jetgpio_speed_edge.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_speed_edge.c) I am trying to measure the time using a similar setup as described above, the difference here is that I am using the library function: gpioSetISRFunc() which basically goes through the linux gpio driver in order to catch rising and falling edges, the reason to use the linux driver for this has to do with the fact that catching interrupts from user space (this is a library after all) is basically 'problematic' for a number of reasons, in short, if driver performance and/or device tree stuff got in my way I would basically replace the current driver by my own, but that is beyond the scope of my library, and yes this is intentional
 
 The average result that I am getting by running this program is an average 500000 nano seconds (0.5 ms) for the round trip (total time to execute both actions) with minimum values around 250000 nano seconds (0.25 ms) and maximum values around 700000 nano seconds (0.7 ms). Note that this doesn't measure individual actions but the total time to execute both (round trip). It is clear that the timestamp produced by the linux driver is the one to blame for the slow reaction on detecting a change on the input pin, still interesting as there is no meaningful cpu waste as the hardware is producing the interrupt for us (no polling)
+
+NOTES: important to mention that I didn't perform 1 million t
     
 <h2 align="left">JETSON NANO PINOUT:</h2>
 
