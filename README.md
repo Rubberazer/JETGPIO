@@ -58,7 +58,7 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 <h2 align="left">THE NEED FOR SPEED:</h2>
 
-I created a bunch of little programs to measure reaction time e.g. how fast an output pin turns from 0 to 1 (3.3v), or how fast a change to an input pin is detected by the library, a diagram of the physical setup is shown below, basically I set up pin 38 as an output and pin 40 as an input and connect both through a resistor to observe the interaction:
+I created a couple of little programs to measure reaction time e.g. how fast an output pin turns from 0 to 1 (3.3v), or how fast a change to an input pin is detected by the library, a diagram of the physical setup is shown below, basically I set up pin 38 as an output and pin 40 as an input and connect both through a resistor to observe the interaction:
 
 ![jetson_speed](https://user-images.githubusercontent.com/47650457/227725735-0edb04d1-0d8f-465f-9212-18e41e2cc364.png)
 
