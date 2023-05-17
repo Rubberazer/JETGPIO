@@ -86,9 +86,6 @@ https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
 The library has been tested on a Jetson nano SCO family: tegra210 (TX1), Board: P3449-0000
 
 
-![image](https://user-images.githubusercontent.com/47650457/164944765-998ca31c-d72c-4d2b-8cbc-7bea594ce8d5.png)
-
-
 
 
 
