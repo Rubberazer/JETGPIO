@@ -73,7 +73,9 @@ Compiling and running [jetgpio_speed_edge.c](https://github.com/Rubberazer/JETGP
 
 The average result that I am getting by running this program is an average 500000 nano seconds (0.5 ms) for the round trip (total time to execute both actions) with minimum values around 250000 nano seconds (0.25 ms) and maximum values around 700000 nano seconds (0.7 ms). Note that this doesn't measure individual actions but the total time to execute both (round trip). It is clear that the timestamp produced by the linux driver is the one to blame for the slow reaction on detecting a change on the input pin, still interesting as there is no meaningful cpu waste as the hardware is producing the interrupt for us (no polling)
 
-NOTE: I haven't run this a gazillion times (looping through) so the actual average value might differ, also to measure properly the output latency a fancy oscilloscope is a good idea, maybe in the future I will come back to this
+Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_output.c) on a continuous loop I am getting that the output is switching high/low every 550 nano seconds, so that's the output speed that can be expected (see below). If we put everything together an output is going to switch ON/OFF in 0.5 us and a change of level in an input is going to take approximately 1us to be detected by polling hte input level.
+
+![oscillo_output](https://github.com/Rubberazer/JETGPIO/assets/47650457/7f42ef1d-17f6-45bd-a4ce-68e6481ab7a8)
     
 <h2 align="left">JETSON NANO PINOUT:</h2>
 
