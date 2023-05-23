@@ -1,6 +1,6 @@
 /* Usage example of the JETGPIO library
  * Compile with: g++ -Wall -g -o jetgpio_edge jetgpio_edge.cpp -ljetgpio
- * Execute with: sudo ./catching_edge
+ * Execute with: sudo ./jetgpio_edge
 */
 
 #include <iostream>
