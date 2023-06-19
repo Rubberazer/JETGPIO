@@ -1,5 +1,5 @@
 /* Usage example of the JETGPIO library
- * Compile with: gcc -Wall -g -o jetgpio_i2c_example jetgpio_i2c_example.c -ljetgpio
+ * Compile with: gcc -Wall -o jetgpio_i2c_example jetgpio_i2c_example.c -ljetgpio
  * Execute with: sudo ./jetgpio_i2c_example
 */
 

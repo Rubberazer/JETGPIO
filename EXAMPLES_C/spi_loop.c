@@ -1,5 +1,5 @@
 /* Usage example of the JETGPIO library
- * Compile with: gcc -Wall -g -o spi_loop spi_loop.c -ljetgpio
+ * Compile with: gcc -Wall -o spi_loop spi_loop.c -ljetgpio
  * Execute with: sudo ./spi_loop
 */
 

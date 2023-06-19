@@ -1,5 +1,5 @@
 /* Usage example of the JETGPIO library
- * Compile with: gcc -Wall -g -o jetgpio_edge jetgpio_edge.c -ljetgpio
+ * Compile with: gcc -Wall -o jetgpio_edge jetgpio_edge.c -ljetgpio
  * Execute with: sudo ./jetgpio_edge
 */
 

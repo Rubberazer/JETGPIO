@@ -1,5 +1,5 @@
 /* Usage example of the JETGPIO library
- * Compile with: g++ -Wall -g -o jetgpio_PWM_example jetgpio_PWM_example.cpp -ljetgpio
+ * Compile with: g++ -Wall -o jetgpio_PWM_example jetgpio_PWM_example.cpp -ljetgpio
  * Execute with: sudo ./jetgpio_PWM_example
 */
 
