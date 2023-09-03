@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.96 */
+/* jetgpio version 0.97 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -182,7 +182,7 @@ static unsigned pin_tracker = 0;
 
 int gpioInitialise(void)
 {
-     int status = 1;
+    int status = 1;
     //  Getting the page size
     int pagesize = sysconf(_SC_PAGESIZE);    //getpagesize();
 	
@@ -190,7 +190,7 @@ int gpioInitialise(void)
     fd_GPIO = open("/dev/mem", O_RDWR | O_SYNC);
     if (fd_GPIO < 0) {
         perror("/dev/mem");
-        fprintf(stderr, "please run this program as root (for example with sudo)\n");
+        fprintf(stderr, "Please run this program as root (for example with sudo)\n");
         return -1;
     }
     //  Mapping GPIO_CNF
@@ -691,7 +691,7 @@ int gpioInitialise(void)
 
     // Allocating memory for the struct
     for (int j = 0; j < 41; j++) {
-    ISRFunc_CFG[j] = malloc (sizeof(ISRFunc));
+        ISRFunc_CFG[j] = malloc (sizeof(ISRFunc));
     }
 	return status;
 }
@@ -704,13 +704,13 @@ void gpioTerminate(void)
     // Cancelling threads to avoid blocking on read()
     for(int i = 0;i < thread_n; i++) {
         pthread_cancel(callThd[i]);
-      //printf("Thread number: %d cancelled\n",i);
+        //printf("Thread number: %d cancelled\n",i);
     }
     
     //Joining threads
-     for(int j = 0;j < thread_n; j++) {
-         pthread_join(callThd[j], &status_thread);
-      //printf("Thread number: %d joined\n",j);
+    for(int j = 0;j < thread_n; j++) {
+        pthread_join(callThd[j], &status_thread);
+        //printf("Thread number: %d joined\n",j);
     }
 
     // Free allocated memory 
@@ -722,259 +722,259 @@ void gpioTerminate(void)
 	// Restoring registers to their previous state
 
     if ((pin_tracker >> 28) & 1){
-	*pinPWM = pinPWM_Init;
+        *pinPWM = pinPWM_Init;
     }
     
     if (pin_tracker & 1){ 
-    pin3->CNF[0] = pin_CNF.pin3;
-    pin3->OE[0] = pin_OE.pin3;
-    pin3->INT_ENB[0] = pin_ENB.pin3;
-    pin3->INT_LVL[0] = pin_LVL.pin3;
-	*pinmux3 = pin_MUX.pin3;
-	*pincfg3 = pin_CFG.pin3;
+        pin3->CNF[0] = pin_CNF.pin3;
+        pin3->OE[0] = pin_OE.pin3;
+        pin3->INT_ENB[0] = pin_ENB.pin3;
+        pin3->INT_LVL[0] = pin_LVL.pin3;
+        *pinmux3 = pin_MUX.pin3;
+        *pincfg3 = pin_CFG.pin3;
     }
     
     if ((pin_tracker >> 1) & 1){
-	pin5->CNF[0] = pin_CNF.pin5;
-    pin5->OE[0] = pin_OE.pin5;
-    pin5->INT_ENB[0] = pin_ENB.pin5;
-    pin5->INT_LVL[0] = pin_LVL.pin5;
-	*pinmux5 = pin_MUX.pin5;
-	*pincfg5 = pin_CFG.pin5;
+        pin5->CNF[0] = pin_CNF.pin5;
+        pin5->OE[0] = pin_OE.pin5;
+        pin5->INT_ENB[0] = pin_ENB.pin5;
+        pin5->INT_LVL[0] = pin_LVL.pin5;
+        *pinmux5 = pin_MUX.pin5;
+        *pincfg5 = pin_CFG.pin5;
     }
     
     if ((pin_tracker >> 2) & 1){
-	pin7->CNF[0] = pin_CNF.pin7;
-    pin7->OE[0] = pin_OE.pin7;
-    pin7->INT_ENB[0] = pin_ENB.pin7;
-    pin7->INT_LVL[0] = pin_LVL.pin7;
-	*pinmux7 = pin_MUX.pin7;
-	*pincfg7 = pin_CFG.pin7;
+        pin7->CNF[0] = pin_CNF.pin7;
+        pin7->OE[0] = pin_OE.pin7;
+        pin7->INT_ENB[0] = pin_ENB.pin7;
+        pin7->INT_LVL[0] = pin_LVL.pin7;
+        *pinmux7 = pin_MUX.pin7;
+        *pincfg7 = pin_CFG.pin7;
     }
     
     if ((pin_tracker >> 3) & 1){
-	pin8->CNF[0] = pin_CNF.pin8;
-    pin8->OE[0] = pin_OE.pin8;
-    pin8->INT_ENB[0] = pin_ENB.pin8;
-    pin8->INT_LVL[0] = pin_LVL.pin8;
-	*pinmux8 = pin_MUX.pin8;
-	*pincfg8 = pin_CFG.pin8;
+        pin8->CNF[0] = pin_CNF.pin8;
+        pin8->OE[0] = pin_OE.pin8;
+        pin8->INT_ENB[0] = pin_ENB.pin8;
+        pin8->INT_LVL[0] = pin_LVL.pin8;
+        *pinmux8 = pin_MUX.pin8;
+        *pincfg8 = pin_CFG.pin8;
     }
     
     if ((pin_tracker >> 4) & 1){
-	pin10->CNF[0] = pin_CNF.pin10;
-    pin10->OE[0] = pin_OE.pin10;
-    pin10->INT_ENB[0] = pin_ENB.pin10;
-    pin10->INT_LVL[0] = pin_LVL.pin10;
-	*pinmux10 = pin_MUX.pin10;
-	*pincfg10 = pin_CFG.pin10;
+        pin10->CNF[0] = pin_CNF.pin10;
+        pin10->OE[0] = pin_OE.pin10;
+        pin10->INT_ENB[0] = pin_ENB.pin10;
+        pin10->INT_LVL[0] = pin_LVL.pin10;
+        *pinmux10 = pin_MUX.pin10;
+        *pincfg10 = pin_CFG.pin10;
     }
     
     if ((pin_tracker >> 5) & 1){
-	pin11->CNF[0] = pin_CNF.pin11;
-    pin11->OE[0] = pin_OE.pin11;
-    pin11->INT_ENB[0] = pin_ENB.pin11;
-    pin11->INT_LVL[0] = pin_LVL.pin11;
-	*pinmux11 = pin_MUX.pin11;
-	*pincfg11 = pin_CFG.pin11;
+        pin11->CNF[0] = pin_CNF.pin11;
+        pin11->OE[0] = pin_OE.pin11;
+        pin11->INT_ENB[0] = pin_ENB.pin11;
+        pin11->INT_LVL[0] = pin_LVL.pin11;
+        *pinmux11 = pin_MUX.pin11;
+        *pincfg11 = pin_CFG.pin11;
     }
     
     if ((pin_tracker >> 6) & 1){
-	pin12->CNF[0] = pin_CNF.pin12;
-    pin12->OE[0] = pin_OE.pin12;
-    pin12->INT_ENB[0] = pin_ENB.pin12;
-    pin12->INT_LVL[0] = pin_LVL.pin12;
-	*pinmux12 = pin_MUX.pin12;
-	*pincfg12 = pin_CFG.pin12;
+        pin12->CNF[0] = pin_CNF.pin12;
+        pin12->OE[0] = pin_OE.pin12;
+        pin12->INT_ENB[0] = pin_ENB.pin12;
+        pin12->INT_LVL[0] = pin_LVL.pin12;
+        *pinmux12 = pin_MUX.pin12;
+        *pincfg12 = pin_CFG.pin12;
     }
 
     if (((pin_tracker >> 7) & 1) || ((pin_tracker >> 30) & 1)){
-	pin13->CNF[0] = pin_CNF.pin13;
-    pin13->OE[0] = pin_OE.pin13;
-    pin13->INT_ENB[0] = pin_ENB.pin13;
-    pin13->INT_LVL[0] = pin_LVL.pin13;
-	*pinmux13 = pin_MUX.pin13;
-	*pincfg13 = pin_CFG.pin13;
+        pin13->CNF[0] = pin_CNF.pin13;
+        pin13->OE[0] = pin_OE.pin13;
+        pin13->INT_ENB[0] = pin_ENB.pin13;
+        pin13->INT_LVL[0] = pin_LVL.pin13;
+        *pinmux13 = pin_MUX.pin13;
+        *pincfg13 = pin_CFG.pin13;
     }
 
     if ((pin_tracker >> 8) & 1){
-	pin15->CNF[0] = pin_CNF.pin15;
-    pin15->OE[0] = pin_OE.pin15;
-    pin15->INT_ENB[0] = pin_ENB.pin15;
-    pin15->INT_LVL[0] = pin_LVL.pin15;
-	*pinmux15 = pin_MUX.pin15;
-	*pincfg15 = pin_CFG.pin15;
+        pin15->CNF[0] = pin_CNF.pin15;
+        pin15->OE[0] = pin_OE.pin15;
+        pin15->INT_ENB[0] = pin_ENB.pin15;
+        pin15->INT_LVL[0] = pin_LVL.pin15;
+        *pinmux15 = pin_MUX.pin15;
+        *pincfg15 = pin_CFG.pin15;
     }
 
     if ((pin_tracker >> 9) & 1){
-	pin16->CNF[0] = pin_CNF.pin16;
-    pin16->OE[0] = pin_OE.pin16;
-    pin16->INT_ENB[0] = pin_ENB.pin16;
-    pin16->INT_LVL[0] = pin_LVL.pin16;
-	*pinmux16 = pin_MUX.pin16;
-	*pincfg16 = pin_CFG.pin16;
+        pin16->CNF[0] = pin_CNF.pin16;
+        pin16->OE[0] = pin_OE.pin16;
+        pin16->INT_ENB[0] = pin_ENB.pin16;
+        pin16->INT_LVL[0] = pin_LVL.pin16;
+        *pinmux16 = pin_MUX.pin16;
+        *pincfg16 = pin_CFG.pin16;
     }
 
     if (((pin_tracker >> 10) & 1) || ((pin_tracker >> 30) & 1)){
-	pin18->CNF[0] = pin_CNF.pin18;
-    pin18->OE[0] = pin_OE.pin18;
-    pin18->INT_ENB[0] = pin_ENB.pin18;
-    pin18->INT_LVL[0] = pin_LVL.pin18;
-	*pinmux18 = pin_MUX.pin18;
-	*pincfg18 = pin_CFG.pin18;
+        pin18->CNF[0] = pin_CNF.pin18;
+        pin18->OE[0] = pin_OE.pin18;
+        pin18->INT_ENB[0] = pin_ENB.pin18;
+        pin18->INT_LVL[0] = pin_LVL.pin18;
+        *pinmux18 = pin_MUX.pin18;
+        *pincfg18 = pin_CFG.pin18;
     }
 
     if (((pin_tracker >> 11) & 1) || ((pin_tracker >> 29) & 1)){
-	pin19->CNF[0] = pin_CNF.pin19;
-    pin19->OE[0] = pin_OE.pin19;
-    pin19->INT_ENB[0] = pin_ENB.pin19;
-    pin19->INT_LVL[0] = pin_LVL.pin19;
-	*pinmux19 = pin_MUX.pin19;
-	*pincfg19 = pin_CFG.pin19;
+        pin19->CNF[0] = pin_CNF.pin19;
+        pin19->OE[0] = pin_OE.pin19;
+        pin19->INT_ENB[0] = pin_ENB.pin19;
+        pin19->INT_LVL[0] = pin_LVL.pin19;
+        *pinmux19 = pin_MUX.pin19;
+        *pincfg19 = pin_CFG.pin19;
     }
 
     if (((pin_tracker >> 12) & 1) || ((pin_tracker >> 29) & 1)){
-	pin21->CNF[0] = pin_CNF.pin21;
-    pin21->OE[0] = pin_OE.pin21;
-    pin21->INT_ENB[0] = pin_ENB.pin21;
-    pin21->INT_LVL[0] = pin_LVL.pin21;
-	*pinmux21 = pin_MUX.pin21;
-	*pincfg21 = pin_CFG.pin21;
+        pin21->CNF[0] = pin_CNF.pin21;
+        pin21->OE[0] = pin_OE.pin21;
+        pin21->INT_ENB[0] = pin_ENB.pin21;
+        pin21->INT_LVL[0] = pin_LVL.pin21;
+        *pinmux21 = pin_MUX.pin21;
+        *pincfg21 = pin_CFG.pin21;
     }
 
     if (((pin_tracker >> 13) & 1) || ((pin_tracker >> 30) & 1)){
-	pin22->CNF[0] = pin_CNF.pin22;
-    pin22->OE[0] = pin_OE.pin22;
-    pin22->INT_ENB[0] = pin_ENB.pin22;
-    pin22->INT_LVL[0] = pin_LVL.pin22;
-	*pinmux22 = pin_MUX.pin22;
-	*pincfg22 = pin_CFG.pin22;
+        pin22->CNF[0] = pin_CNF.pin22;
+        pin22->OE[0] = pin_OE.pin22;
+        pin22->INT_ENB[0] = pin_ENB.pin22;
+        pin22->INT_LVL[0] = pin_LVL.pin22;
+        *pinmux22 = pin_MUX.pin22;
+        *pincfg22 = pin_CFG.pin22;
     }
 
     if (((pin_tracker >> 14) & 1) || ((pin_tracker >> 29) & 1)){
-	pin23->CNF[0] = pin_CNF.pin23;
-    pin23->OE[0] = pin_OE.pin23;
-    pin23->INT_ENB[0] = pin_ENB.pin23;
-    pin23->INT_LVL[0] = pin_LVL.pin23;
-	*pinmux23 = pin_MUX.pin23;
-	*pincfg23 = pin_CFG.pin23;
+        pin23->CNF[0] = pin_CNF.pin23;
+        pin23->OE[0] = pin_OE.pin23;
+        pin23->INT_ENB[0] = pin_ENB.pin23;
+        pin23->INT_LVL[0] = pin_LVL.pin23;
+        *pinmux23 = pin_MUX.pin23;
+        *pincfg23 = pin_CFG.pin23;
     }
 
     if (((pin_tracker >> 15) & 1) || ((pin_tracker >> 29) & 1)){
-	pin24->CNF[0] = pin_CNF.pin24;
-    pin24->OE[0] = pin_OE.pin24;
-    pin24->INT_ENB[0] = pin_ENB.pin24;
-    pin24->INT_LVL[0] = pin_LVL.pin24;
-	*pinmux24 = pin_MUX.pin24;
-	*pincfg24 = pin_CFG.pin24;
+        pin24->CNF[0] = pin_CNF.pin24;
+        pin24->OE[0] = pin_OE.pin24;
+        pin24->INT_ENB[0] = pin_ENB.pin24;
+        pin24->INT_LVL[0] = pin_LVL.pin24;
+        *pinmux24 = pin_MUX.pin24;
+        *pincfg24 = pin_CFG.pin24;
     }
 
     if ((pin_tracker >> 16) & 1){
-	pin26->CNF[0] = pin_CNF.pin26;
-    pin26->OE[0] = pin_OE.pin26;
-    pin26->INT_ENB[0] = pin_ENB.pin26;
-    pin26->INT_LVL[0] = pin_LVL.pin26;
-	*pinmux26 = pin_MUX.pin26;
-	*pincfg26 = pin_CFG.pin26;
+        pin26->CNF[0] = pin_CNF.pin26;
+        pin26->OE[0] = pin_OE.pin26;
+        pin26->INT_ENB[0] = pin_ENB.pin26;
+        pin26->INT_LVL[0] = pin_LVL.pin26;
+        *pinmux26 = pin_MUX.pin26;
+        *pincfg26 = pin_CFG.pin26;
     }
 
     if ((pin_tracker >> 17) & 1){
-	pin27->CNF[0] = pin_CNF.pin27;
-    pin27->OE[0] = pin_OE.pin27;
-    pin27->INT_ENB[0] = pin_ENB.pin27;
-    pin27->INT_LVL[0] = pin_LVL.pin27;
-	*pinmux27 = pin_MUX.pin27;
-	*pincfg27 = pin_CFG.pin27;
+        pin27->CNF[0] = pin_CNF.pin27;
+        pin27->OE[0] = pin_OE.pin27;
+        pin27->INT_ENB[0] = pin_ENB.pin27;
+        pin27->INT_LVL[0] = pin_LVL.pin27;
+        *pinmux27 = pin_MUX.pin27;
+        *pincfg27 = pin_CFG.pin27;
     }
 
     if ((pin_tracker >> 18) & 1){
-	pin28->CNF[0] = pin_CNF.pin28;
-    pin28->OE[0] = pin_OE.pin28;
-    pin28->INT_ENB[0] = pin_ENB.pin28;
-    pin28->INT_LVL[0] = pin_LVL.pin28;
-	*pinmux28 = pin_MUX.pin28;
-	*pincfg28 = pin_CFG.pin28;
+        pin28->CNF[0] = pin_CNF.pin28;
+        pin28->OE[0] = pin_OE.pin28;
+        pin28->INT_ENB[0] = pin_ENB.pin28;
+        pin28->INT_LVL[0] = pin_LVL.pin28;
+        *pinmux28 = pin_MUX.pin28;
+        *pincfg28 = pin_CFG.pin28;
     }
 
     if ((pin_tracker >> 19) & 1){
-	pin29->CNF[0] = pin_CNF.pin29;
-    pin29->OE[0] = pin_OE.pin29;
-    pin29->INT_ENB[0] = pin_ENB.pin29;
-    pin29->INT_LVL[0] = pin_LVL.pin29;
-	*pinmux29 = pin_MUX.pin29;
-	*pincfg29 = pin_CFG.pin29;
+        pin29->CNF[0] = pin_CNF.pin29;
+        pin29->OE[0] = pin_OE.pin29;
+        pin29->INT_ENB[0] = pin_ENB.pin29;
+        pin29->INT_LVL[0] = pin_LVL.pin29;
+        *pinmux29 = pin_MUX.pin29;
+        *pincfg29 = pin_CFG.pin29;
     }
 
     if ((pin_tracker >> 20) & 1){
-	pin31->CNF[0] = pin_CNF.pin31;
-    pin31->OE[0] = pin_OE.pin31;
-    pin31->INT_ENB[0] = pin_ENB.pin31;
-    pin31->INT_LVL[0] = pin_LVL.pin31;
-	*pinmux31 = pin_MUX.pin31;
-	*pincfg31 = pin_CFG.pin31;
+        pin31->CNF[0] = pin_CNF.pin31;
+        pin31->OE[0] = pin_OE.pin31;
+        pin31->INT_ENB[0] = pin_ENB.pin31;
+        pin31->INT_LVL[0] = pin_LVL.pin31;
+        *pinmux31 = pin_MUX.pin31;
+        *pincfg31 = pin_CFG.pin31;
     }
 
     if (((pin_tracker >> 21) & 1) || ((pin_tracker >> 28) & 1)){
-	pin32->CNF[0] = pin_CNF.pin32;
-    pin32->OE[0] = pin_OE.pin32;
-    pin32->INT_ENB[0] = pin_ENB.pin32;
-    pin32->INT_LVL[0] = pin_LVL.pin32;
-	*pinmux32 = pin_MUX.pin32;
-	*pincfg32 = pin_CFG.pin32;
+        pin32->CNF[0] = pin_CNF.pin32;
+        pin32->OE[0] = pin_OE.pin32;
+        pin32->INT_ENB[0] = pin_ENB.pin32;
+        pin32->INT_LVL[0] = pin_LVL.pin32;
+        *pinmux32 = pin_MUX.pin32;
+        *pincfg32 = pin_CFG.pin32;
     }
 
     if (((pin_tracker >> 22) & 1) || ((pin_tracker >> 28) & 1)){
-	pin33->CNF[0] = pin_CNF.pin33;
-    pin33->OE[0] = pin_OE.pin33;
-    pin33->INT_ENB[0] = pin_ENB.pin33;
-    pin33->INT_LVL[0] = pin_LVL.pin33;
-	*pinmux33 = pin_MUX.pin33;
-	*pincfg33 = pin_CFG.pin33;
+        pin33->CNF[0] = pin_CNF.pin33;
+        pin33->OE[0] = pin_OE.pin33;
+        pin33->INT_ENB[0] = pin_ENB.pin33;
+        pin33->INT_LVL[0] = pin_LVL.pin33;
+        *pinmux33 = pin_MUX.pin33;
+        *pincfg33 = pin_CFG.pin33;
     }
 
     if ((pin_tracker >> 23) & 1){
-	pin35->CNF[0] = pin_CNF.pin35;
-    pin35->OE[0] = pin_OE.pin35;
-    pin35->INT_ENB[0] = pin_ENB.pin35;
-    pin35->INT_LVL[0] = pin_LVL.pin35;
-	*pinmux35 = pin_MUX.pin35;
-	*pincfg35 = pin_CFG.pin35;
+        pin35->CNF[0] = pin_CNF.pin35;
+        pin35->OE[0] = pin_OE.pin35;
+        pin35->INT_ENB[0] = pin_ENB.pin35;
+        pin35->INT_LVL[0] = pin_LVL.pin35;
+        *pinmux35 = pin_MUX.pin35;
+        *pincfg35 = pin_CFG.pin35;
     }
 
     if ((pin_tracker >> 24) & 1){
-	pin36->CNF[0] = pin_CNF.pin36;
-    pin36->OE[0] = pin_OE.pin36;
-    pin36->INT_ENB[0] = pin_ENB.pin36;
-    pin36->INT_LVL[0] = pin_LVL.pin36;
-	*pinmux36 = pin_MUX.pin36;
-	*pincfg36 = pin_CFG.pin36;
+        pin36->CNF[0] = pin_CNF.pin36;
+        pin36->OE[0] = pin_OE.pin36;
+        pin36->INT_ENB[0] = pin_ENB.pin36;
+        pin36->INT_LVL[0] = pin_LVL.pin36;
+        *pinmux36 = pin_MUX.pin36;
+        *pincfg36 = pin_CFG.pin36;
     }
 
     if (((pin_tracker >> 25) & 1) || ((pin_tracker >> 30) & 1)){
-	pin37->CNF[0] = pin_CNF.pin37;
-    pin37->OE[0] = pin_OE.pin37;
-    pin37->INT_ENB[0] = pin_ENB.pin37;
-    pin37->INT_LVL[0] = pin_LVL.pin37;
-	*pinmux37 = pin_MUX.pin37;
-	*pincfg37 = pin_CFG.pin37;
+        pin37->CNF[0] = pin_CNF.pin37;
+        pin37->OE[0] = pin_OE.pin37;
+        pin37->INT_ENB[0] = pin_ENB.pin37;
+        pin37->INT_LVL[0] = pin_LVL.pin37;
+        *pinmux37 = pin_MUX.pin37;
+        *pincfg37 = pin_CFG.pin37;
     }
 
     if ((pin_tracker >> 26) & 1){
-	pin38->CNF[0] = pin_CNF.pin38;
-    pin38->OE[0] = pin_OE.pin38;
-    pin38->INT_ENB[0] = pin_ENB.pin38;
-    pin38->INT_LVL[0] = pin_LVL.pin38;
-	*pinmux38 = pin_MUX.pin38;
-	*pincfg38 = pin_CFG.pin38;
+        pin38->CNF[0] = pin_CNF.pin38;
+        pin38->OE[0] = pin_OE.pin38;
+        pin38->INT_ENB[0] = pin_ENB.pin38;
+        pin38->INT_LVL[0] = pin_LVL.pin38;
+        *pinmux38 = pin_MUX.pin38;
+        *pincfg38 = pin_CFG.pin38;
     }
 
     if ((pin_tracker >> 27) & 1){
-	pin40->CNF[0] = pin_CNF.pin40;
-    pin40->OE[0] = pin_OE.pin40;
-    pin40->INT_ENB[0] = pin_ENB.pin40;
-    pin40->INT_LVL[0] = pin_LVL.pin40;
-	*pinmux40 = pin_MUX.pin40;
-	*pincfg40 = pin_CFG.pin40;
+        pin40->CNF[0] = pin_CNF.pin40;
+        pin40->OE[0] = pin_OE.pin40;
+        pin40->INT_ENB[0] = pin_ENB.pin40;
+        pin40->INT_LVL[0] = pin_LVL.pin40;
+        *pinmux40 = pin_MUX.pin40;
+        *pincfg40 = pin_CFG.pin40;
     }
 	
 	// Ummapping CNF registers
@@ -1003,7 +1003,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 {
 	int status = 1;
 	if (mode == 0) {
-	switch (gpio){
+        switch (gpio){
 		
 		case 3:
 			*pinmux3 = PINMUX_IN;
@@ -1415,7 +1415,7 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 	}
 	else {printf("Only modes allowed are JET_INPUT and JET_OUTPUT\n");
 		status = -3;
-		}
+    }
 	return status;	
 }
 
@@ -1424,94 +1424,94 @@ int gpioRead(unsigned gpio)
 	int level = 0;
 	switch (gpio){
 		
-		case 3:
-			level = (pin3->IN[0])>>3 & 1;
-			break;
-		case 5:
-			level = (pin5->IN[0])>>2 & 1;
-			break;
-		case 7:
-			level = pin7->IN[0] & 1;
-			break;
-		case 8:
-			level = pin8->IN[0] & 1;
-			break;
-		case 10:
-			level = (pin10->IN[0])>>1 & 1;
-			break;
-		case 11:
-			level = (pin11->IN[0])>>2 & 1;
-			break;
-	    case 12:
-			level = (pin12->IN[0])>>7 & 1;
-			break;
-		case 13:
-			level = (pin13->IN[0])>>6 & 1;
-			break;
-		case 15:
-			level = (pin15->IN[0])>>2 & 1;
-			break;
-		case 16:
-			level = pin16->IN[0] & 1;
-			break;
-		case 18:
-			level = (pin18->IN[0])>>7 & 1;
-			break;
-		case 19:
-			level = pin19->IN[0] & 1;
-			break;
-		case 21:
-			level = (pin21->IN[0])>>1 & 1;
-			break;
-		case 22:
-			level = (pin22->IN[0])>>5 & 1;
-			break;
-		case 23:
-			level = (pin23->IN[0])>>2 & 1;
-			break;
-		case 24:
-			level = (pin24->IN[0])>>3 & 1;
-			break;
-		case 26:
-			level = (pin26->IN[0])>>4 & 1;
-			break;
-		case 27:
-			level = pin27->IN[0] & 1;
-			break;
-		case 28:
-			level = (pin28->IN[0])>>1 & 1;
-			break;
-		case 29:
-			level = (pin29->IN[0])>>5 & 1;
-			break;
-		case 31:
-			level = pin31->IN[0] & 1;
-			break;
-		case 32:
-			level = pin32->IN[0] & 1;
-			break;
-		case 33:
-			level = (pin33->IN[0])>>6 & 1;
-			break;
-		case 35:
-			level = (pin35->IN[0])>>4 & 1;
-			break;
-		case 36:
-			level = (pin36->IN[0])>>3 & 1;
-			break;
-		case 37:
-			level = (pin37->IN[0])>>4 & 1;
-			break;
-		case 38:
-			level = (pin38->IN[0])>>5 & 1;
-			break;
-		case 40:
-			level = (pin40->IN[0])>>6 & 1;
-			break;
-		default:
-			level = -1;
-			printf("Only gpio numbers from 3 to 40 are accepted, this function will only read the level of the Jetson Nano header pins,\n");
-			printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
+    case 3:
+        level = (pin3->IN[0])>>3 & 1;
+        break;
+    case 5:
+        level = (pin5->IN[0])>>2 & 1;
+        break;
+    case 7:
+        level = pin7->IN[0] & 1;
+        break;
+    case 8:
+        level = pin8->IN[0] & 1;
+        break;
+    case 10:
+        level = (pin10->IN[0])>>1 & 1;
+        break;
+    case 11:
+        level = (pin11->IN[0])>>2 & 1;
+        break;
+    case 12:
+        level = (pin12->IN[0])>>7 & 1;
+        break;
+    case 13:
+        level = (pin13->IN[0])>>6 & 1;
+        break;
+    case 15:
+        level = (pin15->IN[0])>>2 & 1;
+        break;
+    case 16:
+        level = pin16->IN[0] & 1;
+        break;
+    case 18:
+        level = (pin18->IN[0])>>7 & 1;
+        break;
+    case 19:
+        level = pin19->IN[0] & 1;
+        break;
+    case 21:
+        level = (pin21->IN[0])>>1 & 1;
+        break;
+    case 22:
+        level = (pin22->IN[0])>>5 & 1;
+        break;
+    case 23:
+        level = (pin23->IN[0])>>2 & 1;
+        break;
+    case 24:
+        level = (pin24->IN[0])>>3 & 1;
+        break;
+    case 26:
+        level = (pin26->IN[0])>>4 & 1;
+        break;
+    case 27:
+        level = pin27->IN[0] & 1;
+        break;
+    case 28:
+        level = (pin28->IN[0])>>1 & 1;
+        break;
+    case 29:
+        level = (pin29->IN[0])>>5 & 1;
+        break;
+    case 31:
+        level = pin31->IN[0] & 1;
+        break;
+    case 32:
+        level = pin32->IN[0] & 1;
+        break;
+    case 33:
+        level = (pin33->IN[0])>>6 & 1;
+        break;
+    case 35:
+        level = (pin35->IN[0])>>4 & 1;
+        break;
+    case 36:
+        level = (pin36->IN[0])>>3 & 1;
+        break;
+    case 37:
+        level = (pin37->IN[0])>>4 & 1;
+        break;
+    case 38:
+        level = (pin38->IN[0])>>5 & 1;
+        break;
+    case 40:
+        level = (pin40->IN[0])>>6 & 1;
+        break;
+    default:
+        level = -1;
+        printf("Only gpio numbers from 3 to 40 are accepted, this function will only read the level of the Jetson Nano header pins,\n");
+        printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
 	}
 	return level;
 }
@@ -1520,7 +1520,7 @@ int gpioWrite(unsigned gpio, unsigned level)
 {
 	int status = 1;
 	if (level == 0) {
-	switch (gpio){
+        switch (gpio){
 		
 		case 3:
 			pin3->OUT[0] &= ~(0x00000008);
@@ -1613,7 +1613,7 @@ int gpioWrite(unsigned gpio, unsigned level)
 		}
 	}
 	else if (level == 1) {
-	switch (gpio){
+        switch (gpio){
 		
 		case 3:
 			pin3->OUT[0] |= level<<3;
@@ -1726,7 +1726,7 @@ void *callback(void *arg)
     
     fd = open("/dev/gpiochip0", 0);
     if (fd < 0) {
-        printf( "bad handle (%d)\n", fd);
+        printf( "Bad handle (%d)\n", fd);
         pthread_exit(NULL);	
     }
 
@@ -1736,12 +1736,12 @@ void *callback(void *arg)
     //strncpy(req.consumer_label, "gpio_event", sizeof(req.consumer_label) - 1);
     
     ret = ioctl(fd, GPIO_GET_LINEEVENT_IOCTL, &req);
-        if (ret == -1) {
-                ret = -errno;
-                printf("Failed to issue GET EVENT ""IOCTL (%d)\n",ret);
-                close(fd);
-                pthread_exit(NULL);
-        }
+    if (ret == -1) {
+        ret = -errno;
+        printf("Failed to issue GET EVENT ""IOCTL (%d)\n",ret);
+        close(fd);
+        pthread_exit(NULL);
+    }
     close(fd);
     while (global_int){
         ret = read(req.fd, &event, sizeof(event));
@@ -1771,7 +1771,7 @@ void *callback(void *arg)
         }
     }
     pthread_exit(NULL);
-    }
+}
     
 int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void (*f)())
 {
@@ -1780,13 +1780,13 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
     unsigned gpio_offset = 0;
 
     if (debounce < 0 || debounce > 1000){
-         printf( "debounce setting should be a number between 0 and 1000 useconds\n");
+        printf( "Debounce setting should be a number between 0 and 1000 useconds\n");
         status = -1;
     }
 
     if (edge == RISING_EDGE || edge == FALLING_EDGE || edge == EITHER_EDGE){
 
-    switch (gpio){
+        switch (gpio){
 		
 		case 3:
             x = 0x00000008;
@@ -1990,7 +1990,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 		}
     }
   
-    else {printf("edge should be: RISING_EDGE,FALLING_EDGE or EITHER_EDGE\n");
+    else {printf("Edge should be: RISING_EDGE,FALLING_EDGE or EITHER_EDGE\n");
         status = -3;
     }
     if (ISRFunc_CFG[gpio]->gpio != 0){
@@ -2023,7 +2023,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)
 	int PFM =0;
 	if ((frequency >= 25) && (frequency <=200000)){
 		PFM = (204800/frequency)-1;
-	switch (gpio){
+        switch (gpio){
 		case 32:
 			pinPWM->PWM_0[0] = 0x0;
 			pinPWM->PWM_0[0] = PFM;
@@ -2036,7 +2036,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)
 			status = -1;
 			printf("Only gpio numbers 32 and 33 are accepted\n");
 		}
-    pin_tracker |= (1 << 28);		
+        pin_tracker |= (1 << 28);		
 	}
 	else {printf("Only frequencies from 25 to 200000 Hz are allowed\n");
 		status =-2;}
@@ -2047,7 +2047,7 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 {
 	int status = 1;
 	if ((dutycycle >= 0) && (dutycycle <=256)){
-	switch (gpio){
+        switch (gpio){
 		
 		case 32:
 			*pinmux32 = 0x00000001;
@@ -2094,7 +2094,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags)
 	FILE *fptr;
 
     if (!(i2cBus == 0 || i2cBus == 1)){
-        printf( "bad i2c device (%d) only 0 or 1 are accepted\n", i2cBus);
+        printf( "Bad i2c device (%d) only 0 or 1 are accepted\n", i2cBus);
         return -1;
 	}
 
@@ -2105,17 +2105,17 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags)
 	
 	switch(i2cFlags) {
 		
-		case 0: 
-			speed = 100000;
-			break;
-		case 1:
-			speed = 400000;
-			break;
-		case 2: 
-			speed = 1000000;
-			break;
-		default:
-			i2cFlags = 3;
+    case 0: 
+        speed = 100000;
+        break;
+    case 1:
+        speed = 400000;
+        break;
+    case 2: 
+        speed = 1000000;
+        break;
+    default:
+        i2cFlags = 3;
 	}
 	
 	slot = -5;
@@ -2132,14 +2132,14 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags)
 	fptr = fopen(buf, "r");
 	
 	if (fptr == NULL) {
-        printf("not possible to read current bus speed\n");
+        printf("Not possible to read current bus speed\n");
 	}
 	
 	fscanf(fptr, "%d", &i2c_speed[i2cBus]);
    	
    	snprintf(buf, sizeof(buf), "echo %d > /sys/bus/i2c/devices/i2c-%d/bus_clk_rate", speed, i2cBus);
    	if (system(buf) == -1) { 
-		printf( "not possible to change bus speed\n");
+		printf( "Not possible to change bus speed\n");
 	}
 
     strcpy(buf, "modprobe i2c_dev");
@@ -2150,13 +2150,13 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags)
 	snprintf(dev, 19, "/dev/i2c-%d", i2cBus);
 	fd = open(dev, O_RDWR);
 	if (fd < 0) {
-		printf( "bad handle (%d)\n", fd);
+		printf( "Bad handle (%d)\n", fd);
 		return -4;	
 	}
 
    	if (ioctl(fd, I2C_FUNCS, &funcs) < 0){
-       funcs = -1; /* assume all smbus commands allowed */
-       return -6;
+        funcs = -1; /* assume all smbus commands allowed */
+        return -6;
    	}
 
 	i2cInfo[slot].fd = fd;
@@ -2188,7 +2188,7 @@ int i2cClose(unsigned handle)
    
 	snprintf(buf, sizeof(buf), "echo %d > /sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2c_speed[handle], handle);
    	if (system(buf) == -1) { 
-		printf( "not possible to return bus speed to original value\n");
+		printf( "Not possible to return bus speed to original value\n");
 	}
 
 	return 0;
@@ -2200,7 +2200,7 @@ int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned b
 	int status = 0;
 	
 	if (handle >= 2) {
-		printf( "bad handle (%d)\n", handle);
+		printf( "Bad handle (%d)\n", handle);
 		status = -1;
 	}
 
@@ -2210,17 +2210,17 @@ int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned b
 	}
 
     if (i2cAddr > 0x7f){
-      	printf( "bad I2C address (%d)\n", i2cAddr);
+      	printf( "Bad I2C address (%d)\n", i2cAddr);
         status = -3;
 	}
 	
 	if (reg > 0xFF){
-		printf( "register address on device bigger than 0xFF\n");
+		printf( "Register address on device bigger than 0xFF\n");
 		status = -4;
 	}
 
 	if (bVal > 0xFF){
-		printf( "value to be written bigger than byte\n");
+		printf( "Value to be written bigger than byte\n");
 		status = -5;
 	}
 
@@ -2232,14 +2232,14 @@ int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned b
    	}
 
     if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_WRITE_BYTE_DATA) == 0){
-		printf( "write byte data function not supported by device\n");
+		printf( "Write byte data function not supported by device\n");
 		status = -7;
 	}
 	
 	data.byte = bVal;
     
 	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE, reg, I2C_SMBUS_BYTE_DATA, &data)<0) {
-		printf( "not possible to write register\n");
+		printf( "Not possible to write register\n");
 		status = -8;}
 	return status;
 }
@@ -2250,26 +2250,26 @@ int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg)
     union i2c_smbus_data data;
 	
     if (handle >= 2) {
-       printf( "bad handle (%d)\n", handle);
-       status = -1;
+        printf( "Bad handle (%d)\n", handle);
+        status = -1;
 	}
 
     if (i2cInfo[handle].state != I2C_OPENED){
-       printf( "i2c%d is not open\n", handle);
-       status = -2;
+        printf( "i2c%d is not open\n", handle);
+        status = -2;
 	}
     
     if (i2cAddr > 0x7f){
-      	printf( "bad I2C address (%d)\n", i2cAddr);
+      	printf( "Bad I2C address (%d)\n", i2cAddr);
         status = -3;
 	}
 
     if (reg > 0xFF){
-       printf( "register address on device bigger than 0xFF\n");
-       status = -4;
+        printf( "Register address on device bigger than 0xFF\n");
+        status = -4;
 	}
 
-     i2cInfo[handle].addr = i2cAddr;
+    i2cInfo[handle].addr = i2cAddr;
 
     if (ioctl(i2cInfo[handle].fd, I2C_SLAVE, i2cAddr) < 0) {
         printf( "I2C slave address not found on bus\n");
@@ -2277,17 +2277,113 @@ int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg)
    	}
     
     if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA) == 0){
-      printf( "write byte data function not supported by device\n");
-      status = -6;
+        printf( "Write byte data function not supported by device\n");
+        status = -6;
 	}
 	
     if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE_DATA,&data)<0) {
-       printf( "not possible to read register\n");
-       status = -7;}
+        printf( "Not possible to read register\n");
+        status = -7;}
     else
-       {status = 0x0FF & data.byte;}
+    {status = 0x0FF & data.byte;}
     return status;
 }
+
+int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned wVal)
+{	
+	union i2c_smbus_data data;
+	int status = 0;
+	
+	if (handle >= 2) {
+		printf( "Bad handle (%d)\n", handle);
+		status = -1;
+	}
+
+	if (i2cInfo[handle].state != I2C_OPENED){
+		printf( "i2c%d is not open\n", handle);
+		status = -2;
+	}
+
+    if (i2cAddr > 0x7f){
+      	printf( "Bad I2C address (%d)\n", i2cAddr);
+        status = -3;
+	}
+	
+	if (reg > 0xFF){
+		printf( "Register address on device bigger than 0xFF\n");
+		status = -4;
+	}
+
+	if (wVal > 0xFFFF){
+		printf( "Value to be written bigger than word\n");
+		status = -5;
+	}
+
+    i2cInfo[handle].addr = i2cAddr;
+
+    if (ioctl(i2cInfo[handle].fd, I2C_SLAVE, i2cAddr) < 0) {
+        printf( "I2C slave address not found on bus\n");
+      	status = -6;
+   	}
+
+    if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_WRITE_WORD_DATA) == 0){
+		printf( "Write word data function not supported by device\n");
+		status = -7;
+	}
+	
+	data.word = wVal;
+    
+	if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_WRITE, reg, I2C_SMBUS_WORD_DATA, &data)<0) {
+		printf( "Not possible to write register\n");
+		status = -8;}
+	return status;
+}
+
+int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg)
+{
+    int status = 0;
+    union i2c_smbus_data data;
+	
+    if (handle >= 2) {
+        printf( "Bad handle (%d)\n", handle);
+        status = -1;
+	}
+
+    if (i2cInfo[handle].state != I2C_OPENED){
+        printf( "i2c%d is not open\n", handle);
+        status = -2;
+	}
+    
+    if (i2cAddr > 0x7f){
+      	printf( "Bad I2C address (%d)\n", i2cAddr);
+        status = -3;
+	}
+
+    if (reg > 0xFF){
+        printf( "Register address on device bigger than 0xFF\n");
+        status = -4;
+	}
+
+    i2cInfo[handle].addr = i2cAddr;
+
+    if (ioctl(i2cInfo[handle].fd, I2C_SLAVE, i2cAddr) < 0) {
+        printf( "I2C slave address not found on bus\n");
+      	status = -5;
+   	}
+    
+    if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_WORD_DATA) == 0){
+        printf( "Write word data function not supported by device\n");
+        status = -6;
+	}
+	
+    if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ, reg, I2C_SMBUS_WORD_DATA,&data)<0) {
+        printf( "Not possible to read register\n");
+        status = -7;}
+    else
+    {status = 0x0FFFF & data.word;}
+    return status;
+}
+
 
 int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)
 {
@@ -2296,17 +2392,17 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     int ret = 0;
 
     if (!(spiChan == 0 || spiChan == 1)){
-        printf( "bad spi device (%d) only 0 or 1 are accepted\n", spiChan);
+        printf( "Bad spi device (%d) only 0 or 1 are accepted\n", spiChan);
         return -1;
 	}
 
     if (speed < 0 || speed > 50000000){
-        printf( "speed in bits/second (%d) shouldn't be bigger that 50 Mbit/s\n", speed);
+        printf( "Speed in bits/second (%d) shouldn't be bigger that 50 Mbit/s\n", speed);
         return -2;
 	}
 
     if (!(mode == 0 || mode == 1 || mode == 2 || mode == 3)){
-        printf( "mode (%d) should be a number between 0 and 3\n", mode);
+        printf( "Mode (%d) should be a number between 0 and 3\n", mode);
         return -3;
 	}
 
@@ -2316,12 +2412,12 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 	}
 
     if (bits_word < 0 || bits_word > 32){
-        printf( "bits per word (%d) should be a number between 0 and 32\n", bits_word);
+        printf( "Bits per word (%d) should be a number between 0 and 32\n", bits_word);
         return -6;
 	}
 
     if (!(lsb_first == 0 || lsb_first == 1)){
-        printf( "least significant bit first option (%d) should be 0 or 1\n", lsb_first);
+        printf( "Least significant bit first option (%d) should be 0 or 1\n", lsb_first);
         return -7;
 	}
 
@@ -2336,7 +2432,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
         slot = spiChan;
 		SpiInfo[slot].state = SPI_RESERVED;
 	}
-	else { printf("spi bus already open\n");
+	else { printf("Spi bus already open\n");
 		return -11;
 	}
 
@@ -2372,67 +2468,67 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
         *pinmux18 = 0xe200;
         *pincfg18 = 0xf0000000;
         pin_tracker |= (1 << 30);
-        }
+    }
 
     strcpy(buf, "modprobe spidev bufsiz=65535");
     
    	if (system(buf) == -1) { 
-		printf( "not possible to load the linux spidev module (driver) \n");
+		printf( "Not possible to load the linux spidev module (driver) \n");
         return -12;
 	}
  
     snprintf(dev, 19, "/dev/spidev%d.0", spiChan);
 	fd = open(dev, O_RDWR);
 	if (fd < 0) {
-		printf( "bad handle (%d)\n", fd);
+		printf( "Bad handle (%d)\n", fd);
 		return -13;	
 	}
     
     ret = ioctl(fd, SPI_IOC_WR_MODE, &mode);
 	if (ret < 0){
-		printf("can't set spi mode\n");
+		printf("Can't set spi mode\n");
         return -14;
     }
     
 	ret = ioctl(fd, SPI_IOC_RD_MODE, &mode);
 	if (ret < 0){
-        printf("can't get spi mode\n");
+        printf("Can't get spi mode\n");
         return -15; 
     }
     
     ret = ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &bits_word);
 	if (ret < 0){
-		printf("can't set bits per word\n");
+		printf("Can't set bits per word\n");
         return -16;
     }
     
 	ret = ioctl(fd, SPI_IOC_RD_BITS_PER_WORD, &bits_word);
 	if (ret < 0){
-		printf("can't get bits per word\n");
+		printf("Can't get bits per word\n");
         return -17;
     }
   
     ret = ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed);
 	if (ret < 0){
-		printf("can't set max speed hz");
+		printf("Can't set max speed hz");
         return -18;
     }
 
 	ret = ioctl(fd, SPI_IOC_RD_MAX_SPEED_HZ, &speed);
 	if (ret < 0){
-        printf("can't get max speed\n");
+        printf("Can't get max speed\n");
         return -19;
     }
 
     ret = ioctl(fd, SPI_IOC_WR_LSB_FIRST, &lsb_first);
 	if (ret < 0){
-		printf("can't set lsb first\n");
+		printf("Can't set lsb first\n");
         return -20;
     }
 
 	ret = ioctl(fd, SPI_IOC_RD_LSB_FIRST, &lsb_first);
 	if (ret < 0){
-        printf("can't get lsb first\n");
+        printf("Can't get lsb first\n");
         return -21;
     }
 
@@ -2450,12 +2546,12 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 int spiClose(unsigned handle)
 {
 	if (handle > 1) {
-        printf( "bad handle (%d)", handle);
+        printf( "Bad handle (%d)", handle);
 		return -1;
 	}
     
 	if (SpiInfo[handle].state != SPI_OPENED) {
-        printf( "spi bus is already closed (%d)", handle);
+        printf( "Spi bus is already closed (%d)", handle);
 		return -2;	
 	}
      
@@ -2475,7 +2571,7 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)
     struct spi_ioc_transfer tr;
     
 	if (handle > 1) {
-		printf( "bad handle (%d)\n", handle);
+		printf( "Bad handle (%d)\n", handle);
 		return -1;
 	}
 
@@ -2491,7 +2587,7 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)
     
     ret = ioctl(SpiInfo[handle].fd, SPI_IOC_MESSAGE(1), &tr);
 	if (ret < 1){
-		printf("can't send spi message\n");
+		printf("Can't send spi message\n");
         return -2;
     }
     return ret;

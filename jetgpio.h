@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.96 */
+/* jetgpio version 0.97 */
 /** @file jetgpio.h */
 
 #ifndef jetgpio_h__
@@ -415,6 +415,30 @@ int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg);
  * @return Returns the byte read (>=0) if OK, otherwise a negative number
  *
  * @code gyro_x_H = i2cReadByteData(MPU6050, 0x68, 0x43); // getting register 0x43 out of opened connection MPU6050 with i2C address 0x68 @endcode
+*/
+
+int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned wVal);
+/**<
+ * @brief This writes two bytes to the specified consecutive register(s) of the device associated with handle.
+ *
+ * @param handle >=0, as returned by a call to [*i2cOpen*]
+ * @param i2cAddr 0-0x7F, the I2C slave address
+ * @param i2cReg 0-255, the register to write
+ * @param wVal 0-0xFFFF, the value to write
+ * @return Returns 0 if OK, negative number otherwise
+ *
+ * @code writestat = i2cWriteByteData(MPU6050, 0x68, 0x1B, 0x0000); // writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 @endcode
+*/
+
+int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg);
+/**<
+ * @brief This reads two bytes from the specified consecutive register(s) of the device associated with handle.
+ * @param handle >=0, as returned by a call to [*i2cOpen*]
+ * @param i2cAddr 0-0x7F, the I2C slave address
+ * @param i2cReg 0-255, the register to read
+ * @return Returns the byte read (>=0) if OK, otherwise a negative number
+ *
+ * @code gyro_x_H = i2cReadByteData(MPU6050, 0x68, 0x43); // getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 @endcode
 */
 
 int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change);

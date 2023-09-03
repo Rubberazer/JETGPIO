@@ -29,7 +29,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Jetgpio
-   &#160;<span id="projectnumber">0.96</span>
+   &#160;<span id="projectnumber">0.97</span>
    </div>
    <div id="projectbrief">Library to manage the Jetson Nano gpio</div>
   </td>
@@ -407,6 +407,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ae76dd5363acd174d24526f54c665c629"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a> (unsigned handle, unsigned i2cAddr, unsigned i2cReg)</td></tr>
 <tr class="memdesc:ae76dd5363acd174d24526f54c665c629"><td class="mdescLeft">&#160;</td><td class="mdescRight">This reads a single byte from the specified register of the device associated with handle.  <a href="#ae76dd5363acd174d24526f54c665c629">More...</a><br /></td></tr>
 <tr class="separator:ae76dd5363acd174d24526f54c665c629"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a4e911447c30f1c74727334668535e2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a9a4e911447c30f1c74727334668535e2">i2cWriteWordData</a> (unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned wVal)</td></tr>
+<tr class="memdesc:a9a4e911447c30f1c74727334668535e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This writes two bytes to the specified consecutive register(s) of the device associated with handle.  <a href="#a9a4e911447c30f1c74727334668535e2">More...</a><br /></td></tr>
+<tr class="separator:a9a4e911447c30f1c74727334668535e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54bb3be857e985a527e91e55a1315c21"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a54bb3be857e985a527e91e55a1315c21">i2cReadWordData</a> (unsigned handle, unsigned i2cAddr, unsigned i2cReg)</td></tr>
+<tr class="memdesc:a54bb3be857e985a527e91e55a1315c21"><td class="mdescLeft">&#160;</td><td class="mdescRight">This reads two bytes from the specified consecutive register(s) of the device associated with handle.  <a href="#a54bb3be857e985a527e91e55a1315c21">More...</a><br /></td></tr>
+<tr class="separator:a54bb3be857e985a527e91e55a1315c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2532ad45eb33d8d476c4d6036f694702"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a> (unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</td></tr>
 <tr class="memdesc:a2532ad45eb33d8d476c4d6036f694702"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bits per second. The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select. There are 2 SPI channels SPI1 &amp; SPI2. The pins used are given in the following table.  <a href="#a2532ad45eb33d8d476c4d6036f694702">More...</a><br /></td></tr>
 <tr class="separator:a2532ad45eb33d8d476c4d6036f694702"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2478,6 +2484,51 @@ Functions</h2></td></tr>
 <div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 out of opened connection MPU6050 with i2C address 0x68 </span></div></div><!-- fragment --> 
 </div>
 </div>
+<a id="a54bb3be857e985a527e91e55a1315c21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54bb3be857e985a527e91e55a1315c21">&#9670;&nbsp;</a></span>i2cReadWordData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int i2cReadWordData </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>i2cAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>i2cReg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This reads two bytes from the specified consecutive register(s) of the device associated with handle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>&gt;=0, as returned by a call to [<em>i2cOpen</em>] </td></tr>
+    <tr><td class="paramname">i2cAddr</td><td>0-0x7F, the I2C slave address </td></tr>
+    <tr><td class="paramname">i2cReg</td><td>0-255, the register to read </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the byte read (&gt;=0) if OK, otherwise a negative number</dd></dl>
+<div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 </span></div></div><!-- fragment --> 
+</div>
+</div>
 <a id="a642db3078905bf982f784fb7b428bda4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a642db3078905bf982f784fb7b428bda4">&#9670;&nbsp;</a></span>i2cWriteByteData()</h2>
 
@@ -2528,6 +2579,58 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, negative number otherwise</dd></dl>
 <div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x00); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div></div><!-- fragment --> 
+</div>
+</div>
+<a id="a9a4e911447c30f1c74727334668535e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a4e911447c30f1c74727334668535e2">&#9670;&nbsp;</a></span>i2cWriteWordData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int i2cWriteWordData </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>i2cAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>i2cReg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>wVal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This writes two bytes to the specified consecutive register(s) of the device associated with handle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>&gt;=0, as returned by a call to [<em>i2cOpen</em>] </td></tr>
+    <tr><td class="paramname">i2cAddr</td><td>0-0x7F, the I2C slave address </td></tr>
+    <tr><td class="paramname">i2cReg</td><td>0-255, the register to write </td></tr>
+    <tr><td class="paramname">wVal</td><td>0-0xFFFF, the value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, negative number otherwise</dd></dl>
+<div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x0000); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div></div><!-- fragment --> 
 </div>
 </div>
 <a id="a9fb213bb27196cab00718d2fdfb33688"></a>
