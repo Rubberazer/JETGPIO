@@ -180,8 +180,8 @@ static void *status_thread;
 static int thread_n = 0;
 static unsigned pin_tracker = 0;
 
-int gpioInitialise(void)
-{
+int gpioInitialise(void){
+    
     int status = 1;
     //  Getting the page size
     int pagesize = sysconf(_SC_PAGESIZE);    //getpagesize();
@@ -696,8 +696,8 @@ int gpioInitialise(void)
 	return status;
 }
 
-void gpioTerminate(void)
-{
+void gpioTerminate(void){
+    
     // Stopping threads
     global_int = 0;
 
@@ -999,8 +999,8 @@ void gpioTerminate(void)
 	close(fd_GPIO);
 }
 
-int gpioSetMode(unsigned gpio, unsigned mode)
-{
+int gpioSetMode(unsigned gpio, unsigned mode){
+    
 	int status = 1;
 	if (mode == 0) {
         switch (gpio){
@@ -1419,8 +1419,8 @@ int gpioSetMode(unsigned gpio, unsigned mode)
 	return status;	
 }
 
-int gpioRead(unsigned gpio)
-{
+int gpioRead(unsigned gpio){
+    
 	int level = 0;
 	switch (gpio){
 		
@@ -1516,8 +1516,8 @@ int gpioRead(unsigned gpio)
 	return level;
 }
 
-int gpioWrite(unsigned gpio, unsigned level)
-{
+int gpioWrite(unsigned gpio, unsigned level){
+    
 	int status = 1;
 	if (level == 0) {
         switch (gpio){
@@ -1711,8 +1711,8 @@ int gpioWrite(unsigned gpio, unsigned level)
 	return status;
 }
 
-void *callback(void *arg)
-{
+void *callback(void *arg){
+    
     ISRFunc *int_struct = (ISRFunc *) arg;
     int edge = int_struct->edge;
     unsigned gpio_offset = int_struct->gpio_offset;
@@ -1773,8 +1773,8 @@ void *callback(void *arg)
     pthread_exit(NULL);
 }
     
-int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void (*f)())
-{
+int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void (*f)()){
+    
     int status = 1;
     unsigned x = 0;
     unsigned gpio_offset = 0;
@@ -2017,8 +2017,8 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
     return status;
 }
 
-int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)
-{
+int gpioSetPWMfrequency(unsigned gpio, unsigned frequency){
+    
 	int status = 1;
 	int PFM =0;
 	if ((frequency >= 25) && (frequency <=200000)){
@@ -2043,8 +2043,8 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)
 	return status;
 }
 
-int gpioPWM(unsigned gpio, unsigned dutycycle)
-{
+int gpioPWM(unsigned gpio, unsigned dutycycle){
+    
 	int status = 1;
 	if ((dutycycle >= 0) && (dutycycle <=256)){
         switch (gpio){
@@ -2076,8 +2076,8 @@ int gpioPWM(unsigned gpio, unsigned dutycycle)
 	return status;
 }
 
-int i2c_smbus_access(int file, char read_write, __u8 command, int size, union i2c_smbus_data *data)
-{
+int i2c_smbus_access(int file, char read_write, __u8 command, int size, union i2c_smbus_data *data){
+    
 	struct i2c_smbus_ioctl_data args;
 	args.read_write = read_write;
 	args.command = command;
@@ -2086,8 +2086,8 @@ int i2c_smbus_access(int file, char read_write, __u8 command, int size, union i2
 	return ioctl(file,I2C_SMBUS,&args);
 }
 
-int i2cOpen(unsigned i2cBus, unsigned i2cFlags)
-{
+int i2cOpen(unsigned i2cBus, unsigned i2cFlags){
+    
 	char dev[20], buf[100];
 	int fd, slot, speed;
 	uint32_t funcs;
@@ -2167,8 +2167,8 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags)
 	return slot;
 }
 
-int i2cClose(unsigned handle)
-{
+int i2cClose(unsigned handle){
+    
 	char buf[100];
 	
 	if (handle > 1) {
@@ -2194,8 +2194,8 @@ int i2cClose(unsigned handle)
 	return 0;
 }
 
-int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned bVal)
-{	
+int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned bVal){
+    
 	union i2c_smbus_data data;
 	int status = 0;
 	
@@ -2244,8 +2244,8 @@ int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned b
 	return status;
 }
 
-int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg)
-{
+int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg){
+    
     int status = 0;
     union i2c_smbus_data data;
 	
@@ -2289,8 +2289,8 @@ int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg)
     return status;
 }
 
-int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned wVal)
-{	
+int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned wVal){
+    
 	union i2c_smbus_data data;
 	int status = 0;
 	
@@ -2339,8 +2339,8 @@ int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned w
 	return status;
 }
 
-int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg)
-{
+int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg){
+    
     int status = 0;
     union i2c_smbus_data data;
 	
@@ -2385,8 +2385,8 @@ int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg)
 }
 
 
-int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)
-{
+int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change){
+    
     char dev[20], buf[100];
     int fd, slot;
     int ret = 0;
@@ -2543,8 +2543,8 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 	return slot;
 }
 
-int spiClose(unsigned handle)
-{
+int spiClose(unsigned handle){
+    
 	if (handle > 1) {
         printf( "Bad handle (%d)", handle);
 		return -1;
@@ -2565,8 +2565,8 @@ int spiClose(unsigned handle)
     return 0;
 }
 
-int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)
-{
+int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len){
+    
 	int ret;
     struct spi_ioc_transfer tr;
     
