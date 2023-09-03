@@ -3,7 +3,6 @@
 C library to manage the JETSON NANO GPIO 
 
 
-[ANNOUNCEMENT: Looking for hardware donors to keep expanding the library](https://github.com/Rubberazer/JETGPIO/discussions/12)
 
 
 <h2 align="left">FUNCTIONALITY:</h2>
