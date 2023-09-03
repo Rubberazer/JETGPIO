@@ -2277,7 +2277,7 @@ int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg)
    	}
     
     if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA) == 0){
-        printf( "Write byte data function not supported by device\n");
+        printf( "Read byte data function not supported by device\n");
         status = -6;
 	}
 	
@@ -2372,7 +2372,7 @@ int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg)
    	}
     
     if ((i2cInfo[handle].funcs & I2C_FUNC_SMBUS_READ_WORD_DATA) == 0){
-        printf( "Write word data function not supported by device\n");
+        printf( "Read word data function not supported by device\n");
         status = -6;
 	}
 	
