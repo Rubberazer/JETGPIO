@@ -2281,7 +2281,7 @@ int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg)
         status = -6;
 	}
 	
-    if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE_DATA,&data)<0) {
+    if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ, reg, I2C_SMBUS_BYTE_DATA, &data)<0) {
         printf( "Not possible to read register\n");
         status = -7;}
     else
@@ -2376,7 +2376,7 @@ int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg)
         status = -6;
 	}
 	
-    if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ, reg, I2C_SMBUS_WORD_DATA,&data)<0) {
+    if (i2c_smbus_access(i2cInfo[handle].fd,I2C_SMBUS_READ, reg, I2C_SMBUS_WORD_DATA, &data)<0) {
         printf( "Not possible to read register\n");
         status = -7;}
     else
