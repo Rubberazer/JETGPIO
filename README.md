@@ -91,9 +91,10 @@ Note that this doesn't measure individual actions but the total time to execute 
 
 Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_output.c) I am writing high/low to pin 38 on a continuous loop, what I am getting on the oscilloscope are the following results:
 
- 	|  Nano Classic    |	Orin Nano  |	
-    	|----------------------------------|
-Average	|	0.6 us	   |	2 us	   |	
+|              | Nano Classic   | Orin Nano     |
+| :---         |     :---:      |          ---: |
+| Average      |  0.6 us        |  2 us         |
+
 
 
 ![oscillo_output](https://github.com/Rubberazer/JETGPIO/assets/47650457/7f42ef1d-17f6-45bd-a4ce-68e6481ab7a8)
