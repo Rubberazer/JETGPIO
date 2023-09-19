@@ -87,7 +87,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="title">JETGPIO library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>C library to manage the GPIO header of the Nvidia JETSON Family</p>
+<div class="textblock"><p>C library to manage the GPIO header of the Nvidia JETSONs</p>
 <h2 align="left">FUNCTIONALITY:</h2>
 <ul>
 <li>Supported models:<ul>
@@ -106,8 +106,11 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <h2 align="left">INSTALLATION:</h2>
 <p>Clone/download the content into any folder in your JETSON, cd to that folder and type: </p><pre class="fragment">sudo make   
 sudo make install                                             
-</pre><p>That's it, the library should be installed and ready to be used.</p>
-<p>To uninstall the library: </p><pre class="fragment">sudo make uninstall
+</pre><p>That's it, the library should be installed and ready to be used. Make will detect your model automatically but if that does not happen and you are completely sure about the family your machine belongs to, you can always force compilation for an specific model, see below.</p>
+<p>For Orin Nano/NX: </p><pre class="fragment">sudo make orin
+</pre><p>For Nano: </p><pre class="fragment">sudo make nano
+</pre><p>Finally install: </p><pre class="fragment">sudo make install   
+</pre><p>To uninstall the library: </p><pre class="fragment">sudo make uninstall
 </pre><h2 align="left">HOW TO:</h2>
 <p>You will find code examples to learn how to use the library in both: EXAMPLES_C &amp; EXAMPLES_C++ folders, the first one contains all the C examples, the second one contains the same examples ready to compile in C++. To compile the examples you will find instructions in the comment section at the top of each of the example files</p>
 <ul>

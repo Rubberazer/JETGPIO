@@ -1,6 +1,6 @@
 # JETGPIO library  
 
-C library to manage the GPIO header of the Nvidia JETSON Family
+C library to manage the GPIO header of the Nvidia JETSONs
 
 
 
