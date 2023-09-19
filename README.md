@@ -9,9 +9,9 @@ C library to manage the GPIO header of the Nvidia JETSON Family
 
 - Supported models:
 
-  	    - JETSON NANO (TX1) family
+  - JETSON NANO (TX1) family
 
-	    - JETSON ORIN NANO and ORIN NX (BETA)
+  - (BETA) JETSON ORIN NANO and ORIN NX 
 
 - GPIO control of all the header pinout as input or output. Low latency, see also [The need for speed](#the-need-for-speed) below for some more information on this
 
@@ -72,37 +72,42 @@ Compiling and running [jetgpio_round_trip.c](https://github.com/Rubberazer/JETGP
 
 The results that I am getting for the round trip (total time to execute both actions) by running this program are:
 
-    	    	|  Nano Classic    |	Orin Nano  |	
-	    	|----------------------------------|
-	Average	|	1.5 us	   |	3.6 us	   |	
-	Minimum	|	1.3 us	   |	3.1 us	   |
-	Maximium|	1.8 us	   |	4.2 us	   |
+|              | Nano Classic   | Orin Nano     |
+| :---         |     :---:      |          ---: |
+| Minimum      |  1.3 us        |  3.1 us       |
+| Maximum      |  1.8 us        |  4.2 us       |
 
-Compiling and running [jetgpio_speed_edge.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_speed_edge.c) I am trying to measure the time using a similar setup as described above, the difference here is that I am using the library function: gpioSetISRFunc() which basically goes through the linux gpio driver in order to catch rising and falling edges, the reason to use the linux driver for this has to do with the fact that catching interrupts from user space (this is a library after all) is basically 'problematic' for a number of reasons, in short, if driver performance and/or device tree stuff got in my way I would basically replace the current driver by my own, but that is beyond the scope of this library
 
-	     	|  Nano Classic    |	Orin Nano  |	
-	    	|----------------------------------|
-	Average	|	500 us	   |	-	   |	
-	Minimum	|	250 us	   |	200 us	   |
-	Maximium|	700 us	   |	1000 us	   |
+Compiling and running [jetgpio_speed_edge.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_speed_edge.c) I am trying to measure the time using a similar setup as described above, the difference here is that I am using the library function: gpioSetISRFunc() which basically goes through the linux gpio driver in order to catch rising and falling edges, the reason to use the linux driver for this has to do with the fact that catching interrupts from user space (this is a library after all) is basically 'problematic' for a number of reasons, in short, if driver performance and/or device tree stuff got in my way I would basically replace the current driver by my own, but that is beyond the scope of this library.
+
+
+|              | Nano Classic   | Orin Nano     |
+| :---         |     :---:      |          ---: |
+| Minimum      |  250 us        |  200 us       |
+| Maximum      |  700 us        |  1000 us      |
 
 
 Note that this doesn't measure individual actions but the total time to execute both (round trip). It is clear that the timestamp produced by the linux driver is the one to blame for the slow reaction on detecting a change on the input pin, still interesting as there is no meaningful cpu waste as the hardware is producing the interrupt for us (no polling)
 
 Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_output.c) I am writing high/low to pin 38 on a continuous loop, what I am getting on the oscilloscope are the following results:
 
-	  	|  Nano Classic    |	Orin Nano  |	
-	    	|----------------------------------|
-	Average	|	0.6 us	   |	2 us	   |	
+|              | Nano Classic   | Orin Nano     |
+| :---         |     :---:      |          ---: |
+| Average      |  0.6 us        |  2 us         |
+
+
+
 
 
 ![oscillo_output](https://github.com/Rubberazer/JETGPIO/assets/47650457/7f42ef1d-17f6-45bd-a4ce-68e6481ab7a8)
     
-<h2 align="left">JETSON NANO PINOUT:</h2>
+<h2 align="left">JETSON NANO AND ORIN PINOUT:</h2>
 
-The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use this one below:
+The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use the ones below:
 
 https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
+
+https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/
 
 The library has been tested on a Jetson nano: tegra210 (TX1) and Jetson Orin Nano: tegra234
 
