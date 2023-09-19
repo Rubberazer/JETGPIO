@@ -9,9 +9,9 @@ C library to manage the GPIO header of the Nvidia JETSON Family
 
 - Supported models:
 
-  	    - JETSON NANO (TX1) family
+  - JETSON NANO (TX1) family
 
-	    - JETSON ORIN NANO and ORIN NX (BETA)
+  - JETSON ORIN NANO and ORIN NX (BETA)
 
 - GPIO control of all the header pinout as input or output. Low latency, see also [The need for speed](#the-need-for-speed) below for some more information on this
 
