@@ -2,6 +2,7 @@ var annotated_dup =
 [
     [ "GPIO_CNF", "structGPIO__CNF.html", "structGPIO__CNF" ],
     [ "GPIO_CNF_Init", "structGPIO__CNF__Init.html", "structGPIO__CNF__Init" ],
+    [ "GPIO_CNFO", "structGPIO__CNFO.html", "structGPIO__CNFO" ],
     [ "GPIO_PWM", "structGPIO__PWM.html", "structGPIO__PWM" ],
     [ "i2cInfo_t", "structi2cInfo__t.html", "structi2cInfo__t" ],
     [ "ISRFunc", "structISRFunc.html", "structISRFunc" ],

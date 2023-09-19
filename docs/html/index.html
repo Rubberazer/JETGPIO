@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Jetgpio
-   &#160;<span id="projectnumber">0.97</span>
+   &#160;<span id="projectnumber">0.98</span>
    </div>
    <div id="projectbrief">Library to manage the Jetson Nano gpio</div>
   </td>
@@ -87,20 +87,23 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="title">JETGPIO library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>C library to manage the JETSON NANO GPIO</p>
+<div class="textblock"><p>C library to manage the GPIO header of the Nvidia JETSON Family</p>
 <h2 align="left">FUNCTIONALITY:</h2>
 <ul>
-<li>JETSON NANO (TX1) family only, so far it does not support other models such as Xavier or Orin</li>
+<li>Supported models: <pre class="fragment">  - JETSON NANO (TX1) family
+
+  - JETSON ORIN NANO and ORIN NX (BETA)
+</pre></li>
 <li>GPIO control of all the header pinout as input or output. Low latency, see also <a href="#the-need-for-speed">The need for speed</a> below for some more information on this</li>
 <li>Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided</li>
-<li>PWM (hardware) control on header pins 32 &amp; 33</li>
+<li>PWM (hardware) control on header pins 15 (Orin only) 32 &amp; 33</li>
 <li>I2C serial communication over pins: 27 (GEN1_I2C_SDA) &amp; 28 (GEN1_I2C_SCL) and 3 (GEN2_I2C_SDA) &amp; 5 (GEN2_I2C_SCL)</li>
 <li>SPI serial communication over pins: 19 (SPI1_MOSI), 21 (SPI1_MISO), 23 (SPI1_SCK) &amp; 24 (SPI1_CS0) and 37 (SPI2_MOSI), 22 (SPI2_MISO), 13 (SPI2_SCK) &amp; 18 (SPI2_CS0)</li>
 <li>No need of previous kernel configuration, no need to change the device tree, no need to reconfigure via /opt/nvidia/jetson-io/jetson-io.py or the like <br  />
 </li>
 </ul>
 <h2 align="left">INSTALLATION:</h2>
-<p>Clone/download the content into any folder in your JETSON, cd to that folder and type: </p><pre class="fragment">make   
+<p>Clone/download the content into any folder in your JETSON, cd to that folder and type: </p><pre class="fragment">sudo make   
 sudo make install                                             
 </pre><p>That's it, the library should be installed and ready to be used.</p>
 <p>To uninstall the library: </p><pre class="fragment">sudo make uninstall
@@ -124,15 +127,25 @@ sudo make install
 <li>a pin changes state from 0 to 1 (output)</li>
 <li>a second pin detects a change on its state from 0 to 1 (input) being this change produced by the output pin</li>
 </ul>
-<p>The average result that I am getting by running this program is an average 1500 nano seconds (1.5 us) for the round trip (total time to execute both actions) with minimum values around 1300 nano seconds (1.3 us) and maximum values around 1800 nano seconds (1.8 us). Note that this doesn't measure individual actions but the total time to execute both (round trip)</p>
-<p>Compiling and running <a href="https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_speed_edge.c">jetgpio_speed_edge.c</a> I am trying to measure the time using a similar setup as described above, the difference here is that I am using the library function: <a class="el" href="jetgpio_8c.html#ac0fe13b9811377a2f2fec9921795fb8f" title="Registers a function to be called (a callback) whenever the specified.">gpioSetISRFunc()</a> which basically goes through the linux gpio driver in order to catch rising and falling edges, the reason to use the linux driver for this has to do with the fact that catching interrupts from user space (this is a library after all) is basically 'problematic' for a number of reasons, in short, if driver performance and/or device tree stuff got in my way I would basically replace the current driver by my own, but that is beyond the scope of this library</p>
-<p>The average result that I am getting by running this program is an average 500000 nano seconds (0.5 ms) for the round trip (total time to execute both actions) with minimum values around 250000 nano seconds (0.25 ms) and maximum values around 700000 nano seconds (0.7 ms). Note that this doesn't measure individual actions but the total time to execute both (round trip). It is clear that the timestamp produced by the linux driver is the one to blame for the slow reaction on detecting a change on the input pin, still interesting as there is no meaningful cpu waste as the hardware is producing the interrupt for us (no polling)</p>
-<p>Compiling and running <a href="https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_output.c">jetgpio_output.c</a> I am writing high/low to pin 38 on a continuous loop, what I am getting on the oscilloscope is that the output is switching high/low every 550 nano seconds approximately, so that's the output speed that can be expected (see below). If we put everything together an output is going to switch ON/OFF in 0.5 us and a change of level on an input is going to take approximately 1us to be detected by polling the input level.</p>
-<p><img src="https://github.com/Rubberazer/JETGPIO/assets/47650457/7f42ef1d-17f6-45bd-a4ce-68e6481ab7a8" alt="oscillo_output" class="inline"/></p>
+<p>The results that I am getting for the round trip (total time to execute both actions) by running this program are: </p><pre class="fragment">            |  Nano Classic    |    Orin Nano  |    
+        |----------------------------------|
+Average |   1.5 us     |    3.6 us     |    
+Minimum |   1.3 us     |    3.1 us     |
+Maximium|   1.8 us     |    4.2 us     |
+</pre><p>Compiling and running <a href="https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_speed_edge.c">jetgpio_speed_edge.c</a> I am trying to measure the time using a similar setup as described above, the difference here is that I am using the library function: <a class="el" href="jetgpio_8h.html#ac0fe13b9811377a2f2fec9921795fb8f" title="Registers a function to be called (a callback) whenever the specified.">gpioSetISRFunc()</a> which basically goes through the linux gpio driver in order to catch rising and falling edges, the reason to use the linux driver for this has to do with the fact that catching interrupts from user space (this is a library after all) is basically 'problematic' for a number of reasons, in short, if driver performance and/or device tree stuff got in my way I would basically replace the current driver by my own, but that is beyond the scope of this library </p><pre class="fragment">        |  Nano Classic    |    Orin Nano  |    
+        |----------------------------------|
+Average |   500 us     |    -      |    
+Minimum |   250 us     |    200 us     |
+Maximium|   700 us     |    1000 us    |
+</pre><p>Note that this doesn't measure individual actions but the total time to execute both (round trip). It is clear that the timestamp produced by the linux driver is the one to blame for the slow reaction on detecting a change on the input pin, still interesting as there is no meaningful cpu waste as the hardware is producing the interrupt for us (no polling)</p>
+<p>Compiling and running <a href="https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_output.c">jetgpio_output.c</a> I am writing high/low to pin 38 on a continuous loop, what I am getting on the oscilloscope are the following results: </p><pre class="fragment">    |  Nano Classic    |    Orin Nano  |    
+        |----------------------------------|
+Average |   0.6 us     |    2 us       |    
+</pre><p><img src="https://github.com/Rubberazer/JETGPIO/assets/47650457/7f42ef1d-17f6-45bd-a4ce-68e6481ab7a8" alt="oscillo_output" class="inline"/></p>
 <h2 align="left">JETSON NANO PINOUT:</h2>
 <p>The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use this one below:</p>
 <p><a href="https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/">https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/</a></p>
-<p>The library has been tested on a Jetson nano SCO family: tegra210 (TX1), Board: P3449-0000 </p>
+<p>The library has been tested on a Jetson nano: tegra210 (TX1) and Jetson Orin Nano: tegra234 </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

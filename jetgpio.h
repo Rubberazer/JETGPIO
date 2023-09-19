@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.97 */
+/* jetgpio version 0.98 */
 /** @file jetgpio.h */
 
 #ifndef jetgpio_h__
@@ -32,21 +32,28 @@ For more information, please refer to <http://unlicense.org/>
 
 /* Definitions */
 
-/* GPIO base address */
+/* Chip id for Nano Classic & Orin */
+
+#define APB_MISC_BASE 0x70000000  	//Base Nano already defined as baseCFG
+#define MISC 0x00100000			//Base Orin
+#define APB_MISC_GP_HIDREV_0 0x804 	//Offset Nano
+#define MISCREG_HIDREV_0 0x4		//Offset Orin
+
+/* GPIO base address Nano Classic */
 
 #define base_CNF 0x6000d000
 #define base_PINMUX 0x70003000
 #define base_CFG 0x70000000
 
-/* PWM Control */
+/* PWM Control Nano Classic */
 
 #define base_PWM 0x7000a000             // PWM Controller base address
 #define PM3_PWM0 0x00                   // PWM0 pin 32 LCD_BL_PWM 
 #define PM3_PWM2 0x20                   // PWM2 pin 33 GPIO_PE6
 
-/* Clock and Reset Controller */
+/* Clock and Reset Controller Nano Classic */
 
-#define CAR 0x60006000                  		    // Clock and Reset Controller (CAR) base address
+#define CAR 0x60006000                  		// Clock and Reset Controller (CAR) base address
 #define CLK_RST_CONTROLLER_CLK_OUT_ENB_L_0 0x10 	// CLK_RST_CONTROLLER_CLK_OUT_ENB_L_0 offset
 #define CLK_RST_CONTROLLER_CLK_OUT_ENB_H_0 0x14 	// CLK_RST_CONTROLLER_CLK_OUT_ENB offset
 #define CLK_RST_CONTROLLER_RST_DEVICES_H_0 0x8	   	// Reset the spi controllers
@@ -54,14 +61,14 @@ For more information, please refer to <http://unlicense.org/>
 #define CLK_RST_CONTROLLER_CLK_SOURCE_SPI1_0 0x134 	// CLK_RST_CONTROLLER_CLK_SOURCE_SPI1_0 source clokc and divider spi1
 #define CLK_RST_CONTROLLER_CLK_ENB_L_SET_0 0x320 	// CLK_RST_CONTROLLER_CLK_ENB_L_SET_0 offset
 
-/* Power Management Controller */
+/* Power Management Controller Nano Classic */
 
 #define base_PMC 0x7000e000                  	    // Power Management Controller (PMC) base address
 #define APBDEV_PMC_PWR_DET_VAL_0 0xe4               // APBDEV_PMC_PWR_DET_VAL_0
 #define APBDEV_PMC_PWR_DET_0 0x48                   // APBDEV_PMC_PWR_DET_0
 #define APBDEV_PMC_PWR_DET_LATCH_0 0x4c             // APBDEV_PMC_PWR_DET_LATCH_0
 
-/* GPIO CNF registers */
+/* GPIO CNF registers Nano Classic */
 
 #define CNF_3 0x204                     // Pin 3 GEN2_I2C_SDA 0x6000d204
 #define CNF_5 0x204                     // Pin 5 GEN2_I2C_SCL
@@ -92,7 +99,7 @@ For more information, please refer to <http://unlicense.org/>
 #define CNF_38 0x204                    // Pin 38 DAP4_DIN
 #define CNF_40 0x204                    // Pin 40 DAP4_DOUT
 
-/* GPIO Pinmux registers */
+/* GPIO Pinmux registers Nano Classic */
 
 #define PINMUX_3 0x0c8                  // Pinmux 3 PINMUX_AUX_GEN2_I2C_SDA_0 0x700030c8
 #define PINMUX_5 0x0c4                  // Pinmux 5 PINMUX_AUX_GEN2_I2C_SCL_0
@@ -123,7 +130,7 @@ For more information, please refer to <http://unlicense.org/>
 #define PINMUX_38 0x148                 // Pinmux 38 PINMUX_AUX_DAP4_DIN_0
 #define PINMUX_40 0x14c                 // Pinmux 40 PINMUX_AUX_DAP4_DOUT_0
 
-/* GPIO Cfg registers */
+/* GPIO Cfg registers Nano Classic */
 
 #define CFG_3 0x9b4                     // Config 3 GEN2_I2C_SDA_CFG 0x700009b4
 #define CFG_5 0x9b0                     // Config 5 GEN2_I2C_SCL_CFG
@@ -154,7 +161,7 @@ For more information, please refer to <http://unlicense.org/>
 #define CFG_38 0x974                    // Config 38 DAP4_DIN_CFG
 #define CFG_40 0x978                    // Config 40 DAP4_DOUT_CFG
 
-/* Typical values Pinmux & Cfg registers */
+/* Typical values Pinmux & Cfg registers Nano Classic */
 
 #define PINMUX_IN 0x00000040            // Typical for pinmux register as input
 #define PINMUX_OUT 0x00000440           // Typical for pinmux register as output
@@ -162,6 +169,132 @@ For more information, please refer to <http://unlicense.org/>
 #define CFG_IN 0x00000000               // Typical for config register as input
 #define CFG_OUT 0x01F1F000              // Typical for config register as output
 #define CFG_OUT1 0xF0000000             // Typical for config spi pins register as output
+
+/* GPIO base address Orin */
+
+#define base_CNF_AON 0x0c2f1000         // Base address Orin AON: 3,5,27,28
+#define base_CNF_NAON 0x02210000        // Base address  Orin Non AON: 7,8,10,11,29,31,36,15,12,32,33,35,38,40,13,16,18,19,21,22,23,24,26,37
+#define Pinmux_AON 0x0c302000           // Pinmux + config GPIO Orin PADCTL_A14 pad: 3,5,27,28
+#define Pinmux_G7 0x02448000            // Pinmux + config GPIO Orin PADCTL_A24 pad: 7
+#define Pinmux_G3 0x02430000            // Pinmux + config GPIO Orin PADCTL_A0 pad: 8,10,11,29,31,36
+#define Pinmux_EDP 0x02440000           // Pinmux + config GPIO Orin PADCTL_A16 pad: 15
+#define Pinmux_G4 0x02434000            // Pinmux + config GPIO Orin PADCTL_A4 pad: 12,32,33,35,38,40
+#define Pinmux_G2 0x0243d000            // Pinmux + config GPIO Orin PADCTL_A13 pad: 13,16,18,19,21,22,23,24,26,37
+
+/* PWM Control Orin */
+
+#define base_PWM1 0x03280000            // PWM1 Controller base address pin 15
+#define base_PWM5 0x032c0000            // PWM5 Controller base address pin 33
+#define base_PWM7 0x032e0000            // PWM7 Controller base address pin 32 
+
+/* GPIO CNF registers Orin */
+
+#define CNFO_3 0x0640     		// Pin 3  AO_GEN8_I2C_SDA_0
+#define CNFO_5 0x0620     		// Pin 5  AO_GEN8_I2C_SCL_0
+#define CNFO_7 0x002c0    		// Pin 7  G7_SOC_GPIO59_0
+#define CNFO_8 0x02840    		// Pin 8  G3_UART1_TX_0
+#define CNFO_10 0x02860   		// Pin 10 G3_UART1_RX_0
+#define CNFO_11 0x02880   		// Pin 11 G3_UART1_RTS_0
+#define CNFO_12 0x042e0   		// Pin 12 G4_SOC_GPIO41_0
+#define CNFO_13 0x01200   		// Pin 13 G2_SPI3_SCK_0
+#define CNFO_15 0x02220   		// Pin 15 EDP_SOC_GPIO39_0
+#define CNFO_16 0x01280   		// Pin 16 G2_SPI3_CS1_0
+#define CNFO_18 0x01260   		// Pin 18 G2_SPI3_CS0_0
+#define CNFO_19 0x014a0   		// Pin 19 G2_SPI1_MOSI_0
+#define CNFO_21 0x01480   		// Pin 21 G2_SPI1_MISO_0
+#define CNFO_22 0x01220   		// Pin 22 G2_SPI3_MISO_0
+#define CNFO_23 0x01460   		// Pin 23 G2_SPI1_SCK_0
+#define CNFO_24 0x014c0   		// Pin 24 G2_SPI1_CS0_0
+#define CNFO_26 0x014e0   		// Pin 26 G2_SPI1_CS1_0
+#define CNFO_27 0x0600    		// Pin 27 AO_GEN2_I2C_SDA_0
+#define CNFO_28 0x04e0    		// Pin 28 AO_GEN2_I2C_SCL_0
+#define CNFO_29 0x026a0   		// Pin 29 G3_SOC_GPIO32_0
+#define CNFO_31 0x026c0   		// Pin 31 G3_SOC_GPIO33_0
+#define CNFO_32 0x040c0   		// Pin 32 G4_SOC_GPIO19_0
+#define CNFO_33 0x04200   		// Pin 33 G4_SOC_GPIO21_0
+#define CNFO_35 0x04440   		// Pin 35 G4_SOC_GPIO44_0
+#define CNFO_36 0x028a0   		// Pin 36 G3_UART1_CTS_0
+#define CNFO_37 0x01240   		// Pin 37 G2_SPI3_MOSI_0
+#define CNFO_38 0x04420   		// Pin 38 G4_SOC_GPIO43_0
+#define CNFO_40 0x04400   		// Pin 40 G4_SOC_GPIO42_0
+
+/* GPIO Pinmux registers Orin */
+
+#define PINMUXO_3 0x18    		// Pinmux 3  AO_GEN8_I2C_SDA_0 
+#define PINMUXO_5 0x20    		// Pinmux 5  AO_GEN8_I2C_SCL_0 
+#define PINMUXO_7 0x30    		// Pinmux 7  G7_SOC_GPIO59_0 
+#define PINMUXO_8 0xa8    		// Pinmux 8  G3_UART1_TX_0 
+#define PINMUXO_10 0xa0   		// Pinmux 10 G3_UART1_RX_0
+#define PINMUXO_11 0x98   		// Pinmux 11 G3_UART1_RTS_0
+#define PINMUXO_12 0x88   		// Pinmux 12 G4_SOC_GPIO41_0
+#define PINMUXO_13 0x30   		// Pinmux 13 G2_SPI3_SCK_0
+#define PINMUXO_15 0x20   		// Pinmux 15 EDP_SOC_GPIO39_0
+#define PINMUXO_16 0x20   		// Pinmux 16 G2_SPI3_CS1_0
+#define PINMUXO_18 0x10   		// Pinmux 18 G2_SPI3_CS0_0
+#define PINMUXO_19 0x40   		// Pinmux 19 G2_SPI1_MOSI_0
+#define PINMUXO_21 0x18   		// Pinmux 21 G2_SPI1_MISO_0
+#define PINMUXO_22 0x0    		// Pinmux 22 G2_SPI3_MISO_0
+#define PINMUXO_23 0x28   		// Pinmux 23 G2_SPI1_SCK_0
+#define PINMUXO_24 0x8    		// Pinmux 24 G2_SPI1_CS0_0
+#define PINMUXO_26 0x38   		// Pinmux 26 G2_SPI1_CS1_0
+#define PINMUXO_27 0x40   		// Pinmux 27 AO_GEN2_I2C_SDA_0
+#define PINMUXO_28 0x30   		// Pinmux 28 AO_GEN2_I2C_SCL_0
+#define PINMUXO_29 0x68   		// Pinmux 29 G3_SOC_GPIO32_0
+#define PINMUXO_31 0x70   		// Pinmux 31 G3_SOC_GPIO33_0
+#define PINMUXO_32 0x80   		// Pinmux 32 G4_SOC_GPIO19_0
+#define PINMUXO_33 0X40   		// Pinmux 33 G4_SOC_GPIO21_0
+#define PINMUXO_35 0xa0   		// Pinmux 35 G4_SOC_GPIO44_0
+#define PINMUXO_36 0x90   		// Pinmux 36 G3_UART1_CTS_0
+#define PINMUXO_37 0x48   		// Pinmux 37 G2_SPI3_MOSI_0
+#define PINMUXO_38 0x98   		// Pinmux 38 G4_SOC_GPIO43_0
+#define PINMUXO_40 0x90   		// Pinmux 40 G4_SOC_GPIO42_0
+
+/* GPIO Cfg registers Orin */
+
+#define CFGO_3 0x1c   			// Config 3  AO_CFG2TMC_GEN8_I2C_SDA_0 
+#define CFGO_5 0X24   			// Config 5  AO_CFG2TMC_GEN8_I2C_SCL_0 
+#define CFGO_7 0x34   			// Config 7  G7_CFG2TMC_SOC_GPIO59_0 
+#define CFGO_8 0xac   			// Config 8  G3_CFG2TMC_UART1_TX_0
+#define CFGO_10 0xa4  			// Config 10 G3_CFG2TMC_UART1_RX_0
+#define CFGO_11 0x9c  			// Config 11 G3_CFG2TMC_UART1_RTS_0
+#define CFGO_12 0x8c  			// Config 12 G4_CFG2TMC_SOC_GPIO41_0
+#define CFGO_13 0x34  			// Config 13 G2_CFG2TMC_SPI3_SCK_0
+#define CFGO_15 0x24  			// Config 15 EDP_CFG2TMC_SOC_GPIO39_0
+#define CFGO_16 0x24  			// Config 16 G2_CFG2TMC_SPI3_CS1_0
+#define CFGO_18 0x14  			// Config 18 G2_CFG2TMC_SPI3_CS0_0
+#define CFGO_19 0x44  			// Config 19 G2_CFG2TMC_SPI1_MOSI_0
+#define CFGO_21 0x1c  			// Config 21 G2_CFG2TMC_SPI1_MISO_0
+#define CFGO_22 0x4   			// Config 22 G2_CFG2TMC_SPI3_MISO_0
+#define CFGO_23 0x2c  			// Config 23 G2_CFG2TMC_SPI1_SCK_0
+#define CFGO_24 0xc   			// Config 24 G2_CFG2TMC_SPI1_CS0_0
+#define CFGO_26 0x3c  			// Config 26 G2_CFG2TMC_SPI1_CS1_0
+#define CFGO_27 0x44  			// Config 27 AO_CFG2TMC_GEN2_I2C_SDA_0
+#define CFGO_28 0x34  			// Config 28 AO_CFG2TMC_GEN2_I2C_SCL_0
+#define CFGO_29 0x6c  			// Config 29 G3_CFG2TMC_SOC_GPIO32_0
+#define CFGO_31 0x74  			// Config 31 G3_CFG2TMC_SOC_GPIO33_0
+#define CFGO_32 0x84  			// Config 32 G4_CFG2TMC_SOC_GPIO19_0
+#define CFGO_33 0x44  			// Config 33 G4_CFG2TMC_SOC_GPIO21_0
+#define CFGO_35 0xa4  			// Config 35 G4_CFG2TMC_SOC_GPIO44_0
+#define CFGO_36 0x94  			// Config 36 G3_CFG2TMC_UART1_CTS_0
+#define CFGO_37 0x4c  			// Config 37 G2_CFG2TMC_SPI3_MOSI_0
+#define CFGO_38 0x9c  			// Config 38 G4_CFG2TMC_SOC_GPIO43_0
+#define CFGO_40 0x94  			// Config 40 G4_CFG2TMC_SOC_GPIO42_0
+
+/* Typical values Pinmux & Cfg registers Orin */
+
+#define CNFO_IN 0x00000001               // Typical for CNF register as input
+#define CNFO_OUT 0x00000003              // Typical for CNF register as output
+#define PINMUXO_IN 0x00000040            // Typical for pinmux register as input
+#define PINMUXO_IN1 0x00000041
+#define PINMUXO_OUT 0x00000040           // Typical for pinmux register as output
+#define PINMUXO_OUT1 0x00000060          // Pinmux register as output for I2C pins
+#define CFGO_IN 0x00000000               // Typical for config register as input
+#define CFGO_OUT 0x01f1f000              // Typical for config register as output
+
+/* Define outputs get_chip_id */
+
+#define NANO 210
+#define ORIN 234
 
 /* Define typical input/output */
 
@@ -193,85 +326,101 @@ extern "C" {
 /* Variables */
 
 typedef struct {
-    uint32_t CNF[4];
-    uint32_t OE[4];
-    uint32_t OUT[4];
-    uint32_t IN[4];
-    uint32_t INT_STA[4];
-    uint32_t INT_ENB[4];
-    uint32_t INT_LVL[4];
-    uint32_t INT_CLR[4];
+  uint32_t CNF[4];
+  uint32_t OE[4];
+  uint32_t OUT[4];
+  uint32_t IN[4];
+  uint32_t INT_STA[4];
+  uint32_t INT_ENB[4];
+  uint32_t INT_LVL[4];
+  uint32_t INT_CLR[4];
 } GPIO_CNF;
 
 typedef struct {
-    uint32_t pin3;
-    uint32_t pin5;
-    uint32_t pin7;
-    uint32_t pin8;
-    uint32_t pin10;
-    uint32_t pin11;
-    uint32_t pin12;
-    uint32_t pin13;
-    uint32_t pin15;
-    uint32_t pin16;
-    uint32_t pin18;
-    uint32_t pin19;
-    uint32_t pin21;
-    uint32_t pin22;
-    uint32_t pin23;
-    uint32_t pin24;
-    uint32_t pin26;
-    uint32_t pin27;
-    uint32_t pin28;
-    uint32_t pin29;
-    uint32_t pin31;
-    uint32_t pin32;
-    uint32_t pin33;
-    uint32_t pin35;
-    uint32_t pin36;
-    uint32_t pin37;
-    uint32_t pin38;
-    uint32_t pin40;
+  uint32_t CNF[1];
+  uint32_t DEB[1];
+  uint32_t IN[1];
+  uint32_t OUT[1];
+  uint32_t OUT_VLE[1];
+  uint32_t INT_CLR[1];
+} GPIO_CNFO;
+
+  
+typedef struct {
+  uint32_t pin3;
+  uint32_t pin5;
+  uint32_t pin7;
+  uint32_t pin8;
+  uint32_t pin10;
+  uint32_t pin11;
+  uint32_t pin12;
+  uint32_t pin13;
+  uint32_t pin15;
+  uint32_t pin16;
+  uint32_t pin18;
+  uint32_t pin19;
+  uint32_t pin21;
+  uint32_t pin22;
+  uint32_t pin23;
+  uint32_t pin24;
+  uint32_t pin26;
+  uint32_t pin27;
+  uint32_t pin28;
+  uint32_t pin29;
+  uint32_t pin31;
+  uint32_t pin32;
+  uint32_t pin33;
+  uint32_t pin35;
+  uint32_t pin36;
+  uint32_t pin37;
+  uint32_t pin38;
+  uint32_t pin40;
 } GPIO_CNF_Init;
 
 typedef struct {
-    uint32_t stat_reg;
-    uint32_t gpio;
-    uint32_t edge;
-    uint32_t gpio_offset;
-    uint64_t *timestamp;
-    void (*f)();
-    uint32_t debounce;
+  uint32_t stat_reg;
+  uint32_t gpio;
+  uint32_t edge;
+  uint32_t gpio_offset;
+  uint64_t *timestamp;
+  void (*f)();
+  uint32_t debounce;
 } ISRFunc;
 
 typedef ISRFunc *PISRFunc;
 
 typedef struct {
-    uint32_t PWM_0[4];
-    uint32_t PWM_1[4];
-    uint32_t PWM_2[4];
-    uint32_t PWM_3[4];
+  uint32_t PWM_0[4];
+  uint32_t PWM_1[4];
+  uint32_t PWM_2[4];
+  uint32_t PWM_3[4];
 } GPIO_PWM;
 
 typedef struct {
-    uint32_t state;
-    int32_t fd;
-    uint32_t addr;
-    uint32_t flags;
-    uint32_t funcs;
+  uint32_t state;
+  int32_t fd;
+  uint32_t addr;
+  uint32_t flags;
+  uint32_t funcs;
 } i2cInfo_t;
 
 typedef struct {
-    uint32_t state;
-    int32_t fd;
-    uint32_t mode;
-    uint32_t speed;
-    uint32_t cs_delay;
-    uint32_t cs_change;
-    uint32_t bits_word;
+  uint32_t state;
+  int32_t fd;
+  uint32_t mode;
+  uint32_t speed;
+  uint32_t cs_delay;
+  uint32_t cs_change;
+  uint32_t bits_word;
 } SPIInfo_t;
 
 /* Functions */
+
+int chip_get_id(void);
+/**<
+ * @brief Auxiliary function used by gpioInitialise() to find out whether the hardware is supported by the library
+ * @return Returns the Jetson model if supported, otherwise will exit with an error message.
+*/
 
 int gpioInitialise(void);
 /**<
@@ -363,7 +512,7 @@ int gpioPWM(unsigned gpio, unsigned dutycycle);
 /**<
  * @brief Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on).
  * Arduino style: analogWrite
- * @param gpio 32, 33
+ * @param gpio (15 Orin only), 32, 33
  * @param dutycycle: 0-256 (0 to 100%)
  * @return Returns 0 if OK, a negative number otherwise
  *

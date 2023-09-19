@@ -1,19 +1,23 @@
 # JETGPIO library  
 
-C library to manage the JETSON NANO GPIO 
+C library to manage the GPIO header of the Nvidia JETSON Family
 
 
 
 
 <h2 align="left">FUNCTIONALITY:</h2>
 
-- JETSON NANO (TX1) family only, so far it does not support other models such as Xavier or Orin
+- Supported models:
+
+  	    - JETSON NANO (TX1) family
+
+	    - JETSON ORIN NANO and ORIN NX (BETA)
 
 - GPIO control of all the header pinout as input or output. Low latency, see also [The need for speed](#the-need-for-speed) below for some more information on this
 
 - Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided 
 
-- PWM (hardware) control on header pins 32 & 33 
+- PWM (hardware) control on header pins 15 (Orin only) 32 & 33 
 
 - I2C serial communication over pins: 27 (GEN1_I2C_SDA) & 28 (GEN1_I2C_SCL)  and 3 (GEN2_I2C_SDA) & 5 (GEN2_I2C_SCL)
 
@@ -25,7 +29,7 @@ C library to manage the JETSON NANO GPIO
  
 Clone/download the content into any folder in your JETSON, cd to that folder and type:
   
-    make   
+    sudo make   
     sudo make install                                             
   
 That's it, the library should be installed and ready to be used. 
@@ -66,13 +70,31 @@ Compiling and running [jetgpio_round_trip.c](https://github.com/Rubberazer/JETGP
 - a pin changes state from 0 to 1 (output)
 - a second pin detects a change on its state from 0 to 1 (input) being this change produced by the output pin
 
-The average result that I am getting by running this program is an average 1500 nano seconds (1.5 us) for the round trip (total time to execute both actions) with minimum values around 1300 nano seconds (1.3 us) and maximum values around 1800 nano seconds (1.8 us). Note that this doesn't measure individual actions but the total time to execute both (round trip)
+The results that I am getting for the round trip (total time to execute both actions) by running this program are:
+
+    	    	|  Nano Classic    |	Orin Nano  |	
+	    	|----------------------------------|
+	Average	|	1.5 us	   |	3.6 us	   |	
+	Minimum	|	1.3 us	   |	3.1 us	   |
+	Maximium|	1.8 us	   |	4.2 us	   |
 
 Compiling and running [jetgpio_speed_edge.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_speed_edge.c) I am trying to measure the time using a similar setup as described above, the difference here is that I am using the library function: gpioSetISRFunc() which basically goes through the linux gpio driver in order to catch rising and falling edges, the reason to use the linux driver for this has to do with the fact that catching interrupts from user space (this is a library after all) is basically 'problematic' for a number of reasons, in short, if driver performance and/or device tree stuff got in my way I would basically replace the current driver by my own, but that is beyond the scope of this library
 
-The average result that I am getting by running this program is an average 500000 nano seconds (0.5 ms) for the round trip (total time to execute both actions) with minimum values around 250000 nano seconds (0.25 ms) and maximum values around 700000 nano seconds (0.7 ms). Note that this doesn't measure individual actions but the total time to execute both (round trip). It is clear that the timestamp produced by the linux driver is the one to blame for the slow reaction on detecting a change on the input pin, still interesting as there is no meaningful cpu waste as the hardware is producing the interrupt for us (no polling)
+	     	|  Nano Classic    |	Orin Nano  |	
+	    	|----------------------------------|
+	Average	|	500 us	   |	-	   |	
+	Minimum	|	250 us	   |	200 us	   |
+	Maximium|	700 us	   |	1000 us	   |
 
-Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_output.c) I am writing high/low to pin 38 on a continuous loop, what I am getting on the oscilloscope is that the output is switching high/low every 550 nano seconds approximately, so that's the output speed that can be expected (see below). If we put everything together an output is going to switch ON/OFF in 0.5 us and a change of level on an input is going to take approximately 1us to be detected by polling the input level.
+
+Note that this doesn't measure individual actions but the total time to execute both (round trip). It is clear that the timestamp produced by the linux driver is the one to blame for the slow reaction on detecting a change on the input pin, still interesting as there is no meaningful cpu waste as the hardware is producing the interrupt for us (no polling)
+
+Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_output.c) I am writing high/low to pin 38 on a continuous loop, what I am getting on the oscilloscope are the following results:
+
+	  	|  Nano Classic    |	Orin Nano  |	
+	    	|----------------------------------|
+	Average	|	0.6 us	   |	2 us	   |	
+
 
 ![oscillo_output](https://github.com/Rubberazer/JETGPIO/assets/47650457/7f42ef1d-17f6-45bd-a4ce-68e6481ab7a8)
     
@@ -82,7 +104,7 @@ The library uses the typical 40 pin header numbering, taking the dev kit as refe
 
 https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
 
-The library has been tested on a Jetson nano SCO family: tegra210 (TX1), Board: P3449-0000
+The library has been tested on a Jetson nano: tegra210 (TX1) and Jetson Orin Nano: tegra234
 
 
 

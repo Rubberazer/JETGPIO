@@ -21,7 +21,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 0.97 */
+/* jetgpio version 0.98 */
+/* Nano classic extension */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -2383,7 +2384,6 @@ int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg){
     {status = 0x0FFFF & data.word;}
   return status;
 }
-
 
 int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change){
     

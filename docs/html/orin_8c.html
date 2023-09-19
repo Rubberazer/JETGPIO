@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Jetgpio: jetgpio.c File Reference</title>
+<title>Jetgpio: orin.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Jetgpio
-   &#160;<span id="projectnumber">0.97</span>
+   &#160;<span id="projectnumber">0.98</span>
    </div>
    <div id="projectbrief">Library to manage the Jetson Nano gpio</div>
   </td>
@@ -64,7 +64,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('jetgpio_8c.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('orin_8c.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -84,10 +84,11 @@ $(document).ready(function(){initNavTree('jetgpio_8c.html',''); initResizable();
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">jetgpio.c File Reference</div>  </div>
+<div class="title">orin.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
@@ -111,11 +112,11 @@ $(document).ready(function(){initNavTree('jetgpio_8c.html',''); initResizable();
 <code>#include &lt;pthread.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="jetgpio_8h_source.html">jetgpio.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for jetgpio.c:</div>
+Include dependency graph for orin.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="jetgpio_8c__incl.png" border="0" usemap="#jetgpio_8c" alt=""/></div>
-<map name="jetgpio_8c" id="jetgpio_8c">
-<area shape="rect" title=" " alt="" coords="939,5,1018,32"/>
+<div class="center"><img src="orin_8c__incl.png" border="0" usemap="#orin_8c" alt=""/></div>
+<map name="orin_8c" id="orin_8c">
+<area shape="rect" title=" " alt="" coords="949,5,1008,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,72,107"/>
 <area shape="rect" title=" " alt="" coords="97,80,167,107"/>
 <area shape="rect" title=" " alt="" coords="191,80,262,107"/>
@@ -140,69 +141,89 @@ Include dependency graph for jetgpio.c:</div>
 </map>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a31f99d9c502b52b5f36dc7e2028c2e80"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a31f99d9c502b52b5f36dc7e2028c2e80">BILLION</a>&#160;&#160;&#160;1000000000L</td></tr>
+<tr class="separator:a31f99d9c502b52b5f36dc7e2028c2e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a80d84e5dd32fd8ec04cb0370eab0a5b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a> (void)</td></tr>
-<tr class="memdesc:a80d84e5dd32fd8ec04cb0370eab0a5b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialises the library. gpioInitialise must be called before using the other library functions, it stores the status of all the relevant registers before using/modifying them.  <a href="jetgpio_8c.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">More...</a><br /></td></tr>
+<tr class="memitem:a80d84e5dd32fd8ec04cb0370eab0a5b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a> (void)</td></tr>
+<tr class="memdesc:a80d84e5dd32fd8ec04cb0370eab0a5b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialises the library. gpioInitialise must be called before using the other library functions, it stores the status of all the relevant registers before using/modifying them.  <a href="orin_8c.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">More...</a><br /></td></tr>
 <tr class="separator:a80d84e5dd32fd8ec04cb0370eab0a5b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a404d80a9a9292869c1a2b86f183b3774"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a> (void)</td></tr>
-<tr class="memdesc:a404d80a9a9292869c1a2b86f183b3774"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates the library. This function restores the used registers to their previous state and releases memory.  <a href="jetgpio_8c.html#a404d80a9a9292869c1a2b86f183b3774">More...</a><br /></td></tr>
+<tr class="memitem:a404d80a9a9292869c1a2b86f183b3774"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a> (void)</td></tr>
+<tr class="memdesc:a404d80a9a9292869c1a2b86f183b3774"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates the library. This function restores the used registers to their previous state and releases memory.  <a href="orin_8c.html#a404d80a9a9292869c1a2b86f183b3774">More...</a><br /></td></tr>
 <tr class="separator:a404d80a9a9292869c1a2b86f183b3774"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab343b74f5cb62baaaded18e4ff1ed939"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a> (unsigned gpio, unsigned mode)</td></tr>
-<tr class="memdesc:ab343b74f5cb62baaaded18e4ff1ed939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the GPIO mode, typically input or output.  <a href="jetgpio_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">More...</a><br /></td></tr>
+<tr class="memitem:ab343b74f5cb62baaaded18e4ff1ed939"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a> (unsigned gpio, unsigned mode)</td></tr>
+<tr class="memdesc:ab343b74f5cb62baaaded18e4ff1ed939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the GPIO mode, typically input or output.  <a href="orin_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">More...</a><br /></td></tr>
 <tr class="separator:ab343b74f5cb62baaaded18e4ff1ed939"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a754d22c52d797f32f02c86863496b0ec"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a> (unsigned gpio)</td></tr>
-<tr class="memdesc:a754d22c52d797f32f02c86863496b0ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the GPIO level, on or off, 0 or 1. Arduino style: digitalRead. Wheter a pin has been set as input or output it can be read with this function.  <a href="jetgpio_8c.html#a754d22c52d797f32f02c86863496b0ec">More...</a><br /></td></tr>
+<tr class="memitem:a754d22c52d797f32f02c86863496b0ec"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a> (unsigned gpio)</td></tr>
+<tr class="memdesc:a754d22c52d797f32f02c86863496b0ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the GPIO level, on or off, 0 or 1. Arduino style: digitalRead. Wheter a pin has been set as input or output it can be read with this function.  <a href="orin_8c.html#a754d22c52d797f32f02c86863496b0ec">More...</a><br /></td></tr>
 <tr class="separator:a754d22c52d797f32f02c86863496b0ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15ec7e76572f925b9e206018fd5d22e9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a> (unsigned gpio, unsigned level)</td></tr>
-<tr class="memdesc:a15ec7e76572f925b9e206018fd5d22e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the GPIO level, on or off. Arduino style: digitalWrite.  <a href="jetgpio_8c.html#a15ec7e76572f925b9e206018fd5d22e9">More...</a><br /></td></tr>
+<tr class="memitem:a15ec7e76572f925b9e206018fd5d22e9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a> (unsigned gpio, unsigned level)</td></tr>
+<tr class="memdesc:a15ec7e76572f925b9e206018fd5d22e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the GPIO level, on or off. Arduino style: digitalWrite.  <a href="orin_8c.html#a15ec7e76572f925b9e206018fd5d22e9">More...</a><br /></td></tr>
 <tr class="separator:a15ec7e76572f925b9e206018fd5d22e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbdda01d8935cc2c2826747200b369cf"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a> (void *arg)</td></tr>
+<tr class="memitem:afbdda01d8935cc2c2826747200b369cf"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a> (void *arg)</td></tr>
 <tr class="separator:afbdda01d8935cc2c2826747200b369cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0fe13b9811377a2f2fec9921795fb8f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a> (unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void(*f)())</td></tr>
-<tr class="memdesc:ac0fe13b9811377a2f2fec9921795fb8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a function to be called (a callback) whenever the specified.  <a href="jetgpio_8c.html#ac0fe13b9811377a2f2fec9921795fb8f">More...</a><br /></td></tr>
+<tr class="memitem:ac0fe13b9811377a2f2fec9921795fb8f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a> (unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void(*f)())</td></tr>
+<tr class="memdesc:ac0fe13b9811377a2f2fec9921795fb8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a function to be called (a callback) whenever the specified.  <a href="orin_8c.html#ac0fe13b9811377a2f2fec9921795fb8f">More...</a><br /></td></tr>
 <tr class="separator:ac0fe13b9811377a2f2fec9921795fb8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a982f8292ecf78abc5bdeeb330a2e0a05"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a> (unsigned gpio, unsigned frequency)</td></tr>
-<tr class="memdesc:a982f8292ecf78abc5bdeeb330a2e0a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the frequency in hertz to be used for the GPIO.  <a href="jetgpio_8c.html#a982f8292ecf78abc5bdeeb330a2e0a05">More...</a><br /></td></tr>
+<tr class="memitem:a982f8292ecf78abc5bdeeb330a2e0a05"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a> (unsigned gpio, unsigned frequency)</td></tr>
+<tr class="memdesc:a982f8292ecf78abc5bdeeb330a2e0a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the frequency in hertz to be used for the GPIO.  <a href="orin_8c.html#a982f8292ecf78abc5bdeeb330a2e0a05">More...</a><br /></td></tr>
 <tr class="separator:a982f8292ecf78abc5bdeeb330a2e0a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81675c68b04f3c19be1f743eae7f2136"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a> (unsigned gpio, unsigned dutycycle)</td></tr>
-<tr class="memdesc:a81675c68b04f3c19be1f743eae7f2136"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite.  <a href="jetgpio_8c.html#a81675c68b04f3c19be1f743eae7f2136">More...</a><br /></td></tr>
+<tr class="memitem:a81675c68b04f3c19be1f743eae7f2136"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a> (unsigned gpio, unsigned dutycycle)</td></tr>
+<tr class="memdesc:a81675c68b04f3c19be1f743eae7f2136"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite.  <a href="orin_8c.html#a81675c68b04f3c19be1f743eae7f2136">More...</a><br /></td></tr>
 <tr class="separator:a81675c68b04f3c19be1f743eae7f2136"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a570ae32260ca8caf96370deae3c39e24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a570ae32260ca8caf96370deae3c39e24">i2c_smbus_access</a> (int file, char read_write, __u8 command, int size, union i2c_smbus_data *data)</td></tr>
+<tr class="memitem:a570ae32260ca8caf96370deae3c39e24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a570ae32260ca8caf96370deae3c39e24">i2c_smbus_access</a> (int file, char read_write, __u8 command, int size, union i2c_smbus_data *data)</td></tr>
 <tr class="separator:a570ae32260ca8caf96370deae3c39e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf4b600818f342b2723043fb9fd594c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a> (unsigned i2cBus, unsigned i2cFlags)</td></tr>
-<tr class="memdesc:aaf4b600818f342b2723043fb9fd594c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This returns a handle for the device at the address on the I2C bus.  <a href="jetgpio_8c.html#aaf4b600818f342b2723043fb9fd594c0">More...</a><br /></td></tr>
+<tr class="memitem:aaf4b600818f342b2723043fb9fd594c0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a> (unsigned i2cBus, unsigned i2cFlags)</td></tr>
+<tr class="memdesc:aaf4b600818f342b2723043fb9fd594c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This returns a handle for the device at the address on the I2C bus.  <a href="orin_8c.html#aaf4b600818f342b2723043fb9fd594c0">More...</a><br /></td></tr>
 <tr class="separator:aaf4b600818f342b2723043fb9fd594c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac119696ea99a19576c6fe858bb8a031"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a> (unsigned handle)</td></tr>
-<tr class="memdesc:aac119696ea99a19576c6fe858bb8a031"><td class="mdescLeft">&#160;</td><td class="mdescRight">This closes the I2C device associated with the handle.  <a href="jetgpio_8c.html#aac119696ea99a19576c6fe858bb8a031">More...</a><br /></td></tr>
+<tr class="memitem:aac119696ea99a19576c6fe858bb8a031"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a> (unsigned handle)</td></tr>
+<tr class="memdesc:aac119696ea99a19576c6fe858bb8a031"><td class="mdescLeft">&#160;</td><td class="mdescRight">This closes the I2C device associated with the handle.  <a href="orin_8c.html#aac119696ea99a19576c6fe858bb8a031">More...</a><br /></td></tr>
 <tr class="separator:aac119696ea99a19576c6fe858bb8a031"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cec2380fb349274d58e661e3d14fb5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a> (unsigned handle, unsigned i2cAddr, unsigned reg, unsigned bVal)</td></tr>
-<tr class="memdesc:a7cec2380fb349274d58e661e3d14fb5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This writes a single byte to the specified register of the device associated with handle.  <a href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">More...</a><br /></td></tr>
+<tr class="memitem:a7cec2380fb349274d58e661e3d14fb5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a> (unsigned handle, unsigned i2cAddr, unsigned reg, unsigned bVal)</td></tr>
+<tr class="memdesc:a7cec2380fb349274d58e661e3d14fb5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This writes a single byte to the specified register of the device associated with handle.  <a href="orin_8c.html#a7cec2380fb349274d58e661e3d14fb5c">More...</a><br /></td></tr>
 <tr class="separator:a7cec2380fb349274d58e661e3d14fb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9895d7a018d90a9d16b404731debd6d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a> (unsigned handle, unsigned i2cAddr, unsigned reg)</td></tr>
-<tr class="memdesc:a9895d7a018d90a9d16b404731debd6d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This reads a single byte from the specified register of the device associated with handle.  <a href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">More...</a><br /></td></tr>
+<tr class="memitem:a9895d7a018d90a9d16b404731debd6d6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a> (unsigned handle, unsigned i2cAddr, unsigned reg)</td></tr>
+<tr class="memdesc:a9895d7a018d90a9d16b404731debd6d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This reads a single byte from the specified register of the device associated with handle.  <a href="orin_8c.html#a9895d7a018d90a9d16b404731debd6d6">More...</a><br /></td></tr>
 <tr class="separator:a9895d7a018d90a9d16b404731debd6d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30afde672005bb5592a894ff04e0541a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a30afde672005bb5592a894ff04e0541a">i2cWriteWordData</a> (unsigned handle, unsigned i2cAddr, unsigned reg, unsigned wVal)</td></tr>
-<tr class="memdesc:a30afde672005bb5592a894ff04e0541a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This writes two bytes to the specified consecutive register(s) of the device associated with handle.  <a href="jetgpio_8c.html#a30afde672005bb5592a894ff04e0541a">More...</a><br /></td></tr>
+<tr class="memitem:a30afde672005bb5592a894ff04e0541a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a30afde672005bb5592a894ff04e0541a">i2cWriteWordData</a> (unsigned handle, unsigned i2cAddr, unsigned reg, unsigned wVal)</td></tr>
+<tr class="memdesc:a30afde672005bb5592a894ff04e0541a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This writes two bytes to the specified consecutive register(s) of the device associated with handle.  <a href="orin_8c.html#a30afde672005bb5592a894ff04e0541a">More...</a><br /></td></tr>
 <tr class="separator:a30afde672005bb5592a894ff04e0541a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4088a186656875b960343cef126bad81"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a4088a186656875b960343cef126bad81">i2cReadWordData</a> (unsigned handle, unsigned i2cAddr, unsigned reg)</td></tr>
-<tr class="memdesc:a4088a186656875b960343cef126bad81"><td class="mdescLeft">&#160;</td><td class="mdescRight">This reads two bytes from the specified consecutive register(s) of the device associated with handle.  <a href="jetgpio_8c.html#a4088a186656875b960343cef126bad81">More...</a><br /></td></tr>
+<tr class="memitem:a4088a186656875b960343cef126bad81"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a4088a186656875b960343cef126bad81">i2cReadWordData</a> (unsigned handle, unsigned i2cAddr, unsigned reg)</td></tr>
+<tr class="memdesc:a4088a186656875b960343cef126bad81"><td class="mdescLeft">&#160;</td><td class="mdescRight">This reads two bytes from the specified consecutive register(s) of the device associated with handle.  <a href="orin_8c.html#a4088a186656875b960343cef126bad81">More...</a><br /></td></tr>
 <tr class="separator:a4088a186656875b960343cef126bad81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2532ad45eb33d8d476c4d6036f694702"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a> (unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</td></tr>
-<tr class="memdesc:a2532ad45eb33d8d476c4d6036f694702"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bits per second. The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select. There are 2 SPI channels SPI1 &amp; SPI2. The pins used are given in the following table.  <a href="jetgpio_8c.html#a2532ad45eb33d8d476c4d6036f694702">More...</a><br /></td></tr>
+<tr class="memitem:a2532ad45eb33d8d476c4d6036f694702"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a> (unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</td></tr>
+<tr class="memdesc:a2532ad45eb33d8d476c4d6036f694702"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bits per second. The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select. There are 2 SPI channels SPI1 &amp; SPI2. The pins used are given in the following table.  <a href="orin_8c.html#a2532ad45eb33d8d476c4d6036f694702">More...</a><br /></td></tr>
 <tr class="separator:a2532ad45eb33d8d476c4d6036f694702"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fb213bb27196cab00718d2fdfb33688"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a> (unsigned handle)</td></tr>
-<tr class="memdesc:a9fb213bb27196cab00718d2fdfb33688"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions closes the SPI device identified by the handle.  <a href="jetgpio_8c.html#a9fb213bb27196cab00718d2fdfb33688">More...</a><br /></td></tr>
+<tr class="memitem:a9fb213bb27196cab00718d2fdfb33688"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a> (unsigned handle)</td></tr>
+<tr class="memdesc:a9fb213bb27196cab00718d2fdfb33688"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions closes the SPI device identified by the handle.  <a href="orin_8c.html#a9fb213bb27196cab00718d2fdfb33688">More...</a><br /></td></tr>
 <tr class="separator:a9fb213bb27196cab00718d2fdfb33688"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96e92eb729c89f2a9a893adf83251dc8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a> (unsigned handle, char *txBuf, char *rxBuf, unsigned len)</td></tr>
-<tr class="memdesc:a96e92eb729c89f2a9a893adf83251dc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function transfers count bytes of data from txBuf to the SPI device associated with the handle. Simultaneously len words of data are read from the device and placed in rxBuf.  <a href="jetgpio_8c.html#a96e92eb729c89f2a9a893adf83251dc8">More...</a><br /></td></tr>
+<tr class="memitem:a96e92eb729c89f2a9a893adf83251dc8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a> (unsigned handle, char *txBuf, char *rxBuf, unsigned len)</td></tr>
+<tr class="memdesc:a96e92eb729c89f2a9a893adf83251dc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function transfers count bytes of data from txBuf to the SPI device associated with the handle. Simultaneously len words of data are read from the device and placed in rxBuf.  <a href="orin_8c.html#a96e92eb729c89f2a9a893adf83251dc8">More...</a><br /></td></tr>
 <tr class="separator:a96e92eb729c89f2a9a893adf83251dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a95f895054e244bb1e5e38f2864512e81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="jetgpio_8h.html#acd0adad7b2c999c658b5032d131b9268">PISRFunc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8c.html#a95f895054e244bb1e5e38f2864512e81">ISRFunc_CFG</a> [41]</td></tr>
+<tr class="memitem:a95f895054e244bb1e5e38f2864512e81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="jetgpio_8h.html#acd0adad7b2c999c658b5032d131b9268">PISRFunc</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a95f895054e244bb1e5e38f2864512e81">ISRFunc_CFG</a> [41]</td></tr>
 <tr class="separator:a95f895054e244bb1e5e38f2864512e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a31f99d9c502b52b5f36dc7e2028c2e80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31f99d9c502b52b5f36dc7e2028c2e80">&#9670;&nbsp;</a></span>BILLION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BILLION&#160;&#160;&#160;1000000000L</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="afbdda01d8935cc2c2826747200b369cf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afbdda01d8935cc2c2826747200b369cf">&#9670;&nbsp;</a></span>callback()</h2>
@@ -240,7 +261,7 @@ Variables</h2></td></tr>
 
 <p>Initialises the library. gpioInitialise must be called before using the other library functions, it stores the status of all the relevant registers before using/modifying them. </p>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"> <span class="keywordflow">if</span> (<a class="code" href="jetgpio_8c.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a>() &lt; 0)</div>
+<div class="fragment"><div class="line"> <span class="keywordflow">if</span> (<a class="code" href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a>() &lt; 0)</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// jetgpio initialisation failed.</span></div>
 <div class="line">}</div>
@@ -280,14 +301,14 @@ Variables</h2></td></tr>
 <p>Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gpio</td><td>32, 33 </td></tr>
+    <tr><td class="paramname">gpio</td><td>(15 Orin only), 32, 33 </td></tr>
     <tr><td class="paramname">dutycycle</td><td>0-256 (0 to 100%) </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, a negative number otherwise</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(32, 256); <span class="comment">// Sets pin 32 full on.</span></div>
-<div class="line"><a class="code" href="jetgpio_8c.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(33, 128); <span class="comment">// Sets pin 33 half on. </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(32, 256); <span class="comment">// Sets pin 32 full on.</span></div>
+<div class="line"><a class="code" href="jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(33, 128); <span class="comment">// Sets pin 33 half on. </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -315,7 +336,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the GPIO level if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line">printf(<span class="stringliteral">&quot;pin 24 is level %d&quot;</span>, <a class="code" href="jetgpio_8c.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a>(24)); </div>
+<div class="fragment"><div class="line">printf(<span class="stringliteral">&quot;pin 24 is level %d&quot;</span>, <a class="code" href="jetgpio_8h.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a>(24)); </div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -375,7 +396,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a>(3, <a class="code" href="jetgpio_8h.html#af13ff90bb3a97b9d46ae59f02c515b67">RISING_EDGE</a>, 1000, &amp;timestamp, &amp;<a class="code" href="jetgpio_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a>); <span class="comment">// Calls the &#39;callback&#39; function when a rising edge is detected on pin 3, with a debouncing time of 1000 useconds</span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a>(3, <a class="code" href="jetgpio_8h.html#af13ff90bb3a97b9d46ae59f02c515b67">RISING_EDGE</a>, 1000, &amp;timestamp, &amp;<a class="code" href="nano_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a>); <span class="comment">// Calls the &#39;callback&#39; function when a rising edge is detected on pin 3, with a debouncing time of 1000 useconds</span></div>
 <div class="line">it also delivers the <span class="keyword">event</span> timestamp on the <span class="stringliteral">&quot;timestamp&quot;</span> variable in EPOCH format (nanoseconds) </div>
 </div><!-- fragment --> 
 </div>
@@ -415,8 +436,8 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, -1 otherwise</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(17, <a class="code" href="jetgpio_8h.html#aa5456a9b82ea8b5dc5e79c069dc29a7b">JET_INPUT</a>);  <span class="comment">// Sets pin 17 as input. </span></div>
-</div><!-- fragment --> <div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(18, <a class="code" href="jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159">JET_OUTPUT</a>); <span class="comment">// Sets pin 18 as output. </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(17, <a class="code" href="jetgpio_8h.html#aa5456a9b82ea8b5dc5e79c069dc29a7b">JET_INPUT</a>);  <span class="comment">// Sets pin 17 as input. </span></div>
+</div><!-- fragment --> <div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(18, <a class="code" href="jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159">JET_OUTPUT</a>); <span class="comment">// Sets pin 18 as output. </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -455,7 +476,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 1 if OK, a negative number otherwise</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a>(32, 10000); <span class="comment">// Setting up PWM frequency=10kHz @ pin 32 </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a>(32, 10000); <span class="comment">// Setting up PWM frequency=10kHz @ pin 32 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -477,7 +498,7 @@ Variables</h2></td></tr>
 
 <p>Terminates the library. This function restores the used registers to their previous state and releases memory. </p>
 <dl class="section return"><dt>Returns</dt><dd>Returns nothing</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a>(); </div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a>(); </div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -516,7 +537,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a>(24, 1); <span class="comment">// Sets pin 24 high. </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a>(24, 1); <span class="comment">// Sets pin 24 high. </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -590,7 +611,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a>(MPU6050); <span class="comment">//Closing previously opened connection </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a>(MPU6050); <span class="comment">//Closing previously opened connection </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -631,7 +652,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a handle with the I2C bus number being opened (&gt;=0) if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><span class="keywordtype">int</span> MPU6050 = <a class="code" href="jetgpio_8c.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a>(0,0); <span class="comment">//Opening a connection on pins 27/28 at speed 100kHz </span></div>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> MPU6050 = <a class="code" href="jetgpio_8h.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a>(0,0); <span class="comment">//Opening a connection on pins 27/28 at speed 100kHz </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -677,7 +698,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the byte read (&gt;=0) if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 out of opened connection MPU6050 with i2C address 0x68 </span></div>
+<div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 out of opened connection MPU6050 with i2C address 0x68 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -723,7 +744,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the byte read (&gt;=0) if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 </span></div>
+<div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -776,7 +797,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, negative number otherwise</dd></dl>
-<div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x00); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
+<div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8h.html#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x00); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -829,7 +850,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, negative number otherwise</dd></dl>
-<div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x0000); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
+<div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8h.html#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x0000); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -857,7 +878,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a>(SPI_init); <span class="comment">//closing previously opened spi port with handle SPI_init </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a>(SPI_init); <span class="comment">//closing previously opened spi port with handle SPI_init </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -956,7 +977,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a handle (&gt;=0) if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line">SPI_init = <a class="code" href="jetgpio_8c.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a>(1, 5000000, 0, 0, 8, 1, 1); <span class="comment">// SPI2 (pins 22/37, 500 kHz, mode 0, cs delay 0, 8 bits/word,lsb first 1, cs change 1 </span></div>
+<div class="fragment"><div class="line">SPI_init = <a class="code" href="jetgpio_8h.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a>(1, 5000000, 0, 0, 8, 1, 1); <span class="comment">// SPI2 (pins 22/37, 500 kHz, mode 0, cs delay 0, 8 bits/word,lsb first 1, cs change 1 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -1009,7 +1030,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the number of bytes transferred if OK, otherwise a negative number.</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a>(SPI_init, tx, rx, 7); <span class="comment">//transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a>(SPI_init, tx, rx, 7); <span class="comment">//transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -1030,29 +1051,29 @@ Variables</h2></td></tr>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="ajetgpio_8c_html_a9895d7a018d90a9d16b404731debd6d6"><div class="ttname"><a href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a></div><div class="ttdeci">int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg)</div><div class="ttdoc">This reads a single byte from the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2247</div></div>
-<div class="ttc" id="ajetgpio_8h_html_ad589cca7b5afd4362dede39fc9af7159"><div class="ttname"><a href="jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159">JET_OUTPUT</a></div><div class="ttdeci">#define JET_OUTPUT</div><div class="ttdef"><b>Definition:</b> jetgpio.h:169</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a404d80a9a9292869c1a2b86f183b3774"><div class="ttname"><a href="jetgpio_8c.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a></div><div class="ttdeci">void gpioTerminate(void)</div><div class="ttdoc">Terminates the library. This function restores the used registers to their previous state and release...</div><div class="ttdef"><b>Definition:</b> jetgpio.c:699</div></div>
-<div class="ttc" id="ajetgpio_8c_html_afbdda01d8935cc2c2826747200b369cf"><div class="ttname"><a href="jetgpio_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a></div><div class="ttdeci">void * callback(void *arg)</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1714</div></div>
-<div class="ttc" id="ajetgpio_8c_html_ac0fe13b9811377a2f2fec9921795fb8f"><div class="ttname"><a href="jetgpio_8c.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a></div><div class="ttdeci">int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void(*f)())</div><div class="ttdoc">Registers a function to be called (a callback) whenever the specified.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1776</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a2532ad45eb33d8d476c4d6036f694702"><div class="ttname"><a href="jetgpio_8c.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a></div><div class="ttdeci">int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</div><div class="ttdoc">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bi...</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2388</div></div>
-<div class="ttc" id="ajetgpio_8h_html_af13ff90bb3a97b9d46ae59f02c515b67"><div class="ttname"><a href="jetgpio_8h.html#af13ff90bb3a97b9d46ae59f02c515b67">RISING_EDGE</a></div><div class="ttdeci">#define RISING_EDGE</div><div class="ttdef"><b>Definition:</b> jetgpio.h:173</div></div>
-<div class="ttc" id="ajetgpio_8c_html_aaf4b600818f342b2723043fb9fd594c0"><div class="ttname"><a href="jetgpio_8c.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a></div><div class="ttdeci">int i2cOpen(unsigned i2cBus, unsigned i2cFlags)</div><div class="ttdoc">This returns a handle for the device at the address on the I2C bus.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2089</div></div>
-<div class="ttc" id="ajetgpio_8c_html_ab343b74f5cb62baaaded18e4ff1ed939"><div class="ttname"><a href="jetgpio_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a></div><div class="ttdeci">int gpioSetMode(unsigned gpio, unsigned mode)</div><div class="ttdoc">Sets the GPIO mode, typically input or output.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1002</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a9fb213bb27196cab00718d2fdfb33688"><div class="ttname"><a href="jetgpio_8c.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a></div><div class="ttdeci">int spiClose(unsigned handle)</div><div class="ttdoc">This functions closes the SPI device identified by the handle.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2546</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a982f8292ecf78abc5bdeeb330a2e0a05"><div class="ttname"><a href="jetgpio_8c.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a></div><div class="ttdeci">int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)</div><div class="ttdoc">Sets the frequency in hertz to be used for the GPIO.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2020</div></div>
-<div class="ttc" id="ajetgpio_8h_html_aa5456a9b82ea8b5dc5e79c069dc29a7b"><div class="ttname"><a href="jetgpio_8h.html#aa5456a9b82ea8b5dc5e79c069dc29a7b">JET_INPUT</a></div><div class="ttdeci">#define JET_INPUT</div><div class="ttdef"><b>Definition:</b> jetgpio.h:168</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a81675c68b04f3c19be1f743eae7f2136"><div class="ttname"><a href="jetgpio_8c.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a></div><div class="ttdeci">int gpioPWM(unsigned gpio, unsigned dutycycle)</div><div class="ttdoc">Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2046</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a7cec2380fb349274d58e661e3d14fb5c"><div class="ttname"><a href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a></div><div class="ttdeci">int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned bVal)</div><div class="ttdoc">This writes a single byte to the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2197</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a96e92eb729c89f2a9a893adf83251dc8"><div class="ttname"><a href="jetgpio_8c.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a></div><div class="ttdeci">int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)</div><div class="ttdoc">This function transfers count bytes of data from txBuf to the SPI device associated with the handle....</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2568</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a80d84e5dd32fd8ec04cb0370eab0a5b0"><div class="ttname"><a href="jetgpio_8c.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a></div><div class="ttdeci">int gpioInitialise(void)</div><div class="ttdoc">Initialises the library. gpioInitialise must be called before using the other library functions,...</div><div class="ttdef"><b>Definition:</b> jetgpio.c:183</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a15ec7e76572f925b9e206018fd5d22e9"><div class="ttname"><a href="jetgpio_8c.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a></div><div class="ttdeci">int gpioWrite(unsigned gpio, unsigned level)</div><div class="ttdoc">Sets the GPIO level, on or off. Arduino style: digitalWrite.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1519</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a754d22c52d797f32f02c86863496b0ec"><div class="ttname"><a href="jetgpio_8c.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a></div><div class="ttdeci">int gpioRead(unsigned gpio)</div><div class="ttdoc">Reads the GPIO level, on or off, 0 or 1. Arduino style: digitalRead. Wheter a pin has been set as inp...</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1422</div></div>
-<div class="ttc" id="ajetgpio_8c_html_aac119696ea99a19576c6fe858bb8a031"><div class="ttname"><a href="jetgpio_8c.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a></div><div class="ttdeci">int i2cClose(unsigned handle)</div><div class="ttdoc">This closes the I2C device associated with the handle.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2170</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ad589cca7b5afd4362dede39fc9af7159"><div class="ttname"><a href="jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159">JET_OUTPUT</a></div><div class="ttdeci">#define JET_OUTPUT</div><div class="ttdef"><b>Definition:</b> jetgpio.h:302</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a9fb213bb27196cab00718d2fdfb33688"><div class="ttname"><a href="jetgpio_8h.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a></div><div class="ttdeci">int spiClose(unsigned handle)</div><div class="ttdoc">This functions closes the SPI device identified by the handle.</div><div class="ttdef"><b>Definition:</b> nano.c:2546</div></div>
+<div class="ttc" id="ajetgpio_8h_html_af13ff90bb3a97b9d46ae59f02c515b67"><div class="ttname"><a href="jetgpio_8h.html#af13ff90bb3a97b9d46ae59f02c515b67">RISING_EDGE</a></div><div class="ttdeci">#define RISING_EDGE</div><div class="ttdef"><b>Definition:</b> jetgpio.h:306</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a642db3078905bf982f784fb7b428bda4"><div class="ttname"><a href="jetgpio_8h.html#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a></div><div class="ttdeci">int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned bVal)</div><div class="ttdoc">This writes a single byte to the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition:</b> nano.c:2198</div></div>
+<div class="ttc" id="anano_8c_html_afbdda01d8935cc2c2826747200b369cf"><div class="ttname"><a href="nano_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a></div><div class="ttdeci">void * callback(void *arg)</div><div class="ttdef"><b>Definition:</b> nano.c:1715</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a982f8292ecf78abc5bdeeb330a2e0a05"><div class="ttname"><a href="jetgpio_8h.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a></div><div class="ttdeci">int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)</div><div class="ttdoc">Sets the frequency in hertz to be used for the GPIO.</div><div class="ttdef"><b>Definition:</b> nano.c:2021</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a80d84e5dd32fd8ec04cb0370eab0a5b0"><div class="ttname"><a href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a></div><div class="ttdeci">int gpioInitialise(void)</div><div class="ttdoc">Initialises the library. gpioInitialise must be called before using the other library functions,...</div><div class="ttdef"><b>Definition:</b> nano.c:184</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a15ec7e76572f925b9e206018fd5d22e9"><div class="ttname"><a href="jetgpio_8h.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a></div><div class="ttdeci">int gpioWrite(unsigned gpio, unsigned level)</div><div class="ttdoc">Sets the GPIO level, on or off. Arduino style: digitalWrite.</div><div class="ttdef"><b>Definition:</b> nano.c:1520</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a404d80a9a9292869c1a2b86f183b3774"><div class="ttname"><a href="jetgpio_8h.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a></div><div class="ttdeci">void gpioTerminate(void)</div><div class="ttdoc">Terminates the library. This function restores the used registers to their previous state and release...</div><div class="ttdef"><b>Definition:</b> nano.c:700</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a96e92eb729c89f2a9a893adf83251dc8"><div class="ttname"><a href="jetgpio_8h.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a></div><div class="ttdeci">int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)</div><div class="ttdoc">This function transfers count bytes of data from txBuf to the SPI device associated with the handle....</div><div class="ttdef"><b>Definition:</b> nano.c:2568</div></div>
+<div class="ttc" id="ajetgpio_8h_html_aaf4b600818f342b2723043fb9fd594c0"><div class="ttname"><a href="jetgpio_8h.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a></div><div class="ttdeci">int i2cOpen(unsigned i2cBus, unsigned i2cFlags)</div><div class="ttdoc">This returns a handle for the device at the address on the I2C bus.</div><div class="ttdef"><b>Definition:</b> nano.c:2090</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ae76dd5363acd174d24526f54c665c629"><div class="ttname"><a href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a></div><div class="ttdeci">int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg)</div><div class="ttdoc">This reads a single byte from the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition:</b> nano.c:2248</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a81675c68b04f3c19be1f743eae7f2136"><div class="ttname"><a href="jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a></div><div class="ttdeci">int gpioPWM(unsigned gpio, unsigned dutycycle)</div><div class="ttdoc">Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite.</div><div class="ttdef"><b>Definition:</b> nano.c:2047</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a754d22c52d797f32f02c86863496b0ec"><div class="ttname"><a href="jetgpio_8h.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a></div><div class="ttdeci">int gpioRead(unsigned gpio)</div><div class="ttdoc">Reads the GPIO level, on or off, 0 or 1. Arduino style: digitalRead. Wheter a pin has been set as inp...</div><div class="ttdef"><b>Definition:</b> nano.c:1423</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a2532ad45eb33d8d476c4d6036f694702"><div class="ttname"><a href="jetgpio_8h.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a></div><div class="ttdeci">int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</div><div class="ttdoc">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bi...</div><div class="ttdef"><b>Definition:</b> nano.c:2388</div></div>
+<div class="ttc" id="ajetgpio_8h_html_aa5456a9b82ea8b5dc5e79c069dc29a7b"><div class="ttname"><a href="jetgpio_8h.html#aa5456a9b82ea8b5dc5e79c069dc29a7b">JET_INPUT</a></div><div class="ttdeci">#define JET_INPUT</div><div class="ttdef"><b>Definition:</b> jetgpio.h:301</div></div>
+<div class="ttc" id="ajetgpio_8h_html_aac119696ea99a19576c6fe858bb8a031"><div class="ttname"><a href="jetgpio_8h.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a></div><div class="ttdeci">int i2cClose(unsigned handle)</div><div class="ttdoc">This closes the I2C device associated with the handle.</div><div class="ttdef"><b>Definition:</b> nano.c:2171</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ab343b74f5cb62baaaded18e4ff1ed939"><div class="ttname"><a href="jetgpio_8h.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a></div><div class="ttdeci">int gpioSetMode(unsigned gpio, unsigned mode)</div><div class="ttdoc">Sets the GPIO mode, typically input or output.</div><div class="ttdef"><b>Definition:</b> nano.c:1003</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ac0fe13b9811377a2f2fec9921795fb8f"><div class="ttname"><a href="jetgpio_8h.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a></div><div class="ttdeci">int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void(*f)())</div><div class="ttdoc">Registers a function to be called (a callback) whenever the specified.</div><div class="ttdef"><b>Definition:</b> nano.c:1777</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="jetgpio_8c.html">jetgpio.c</a></li>
+    <li class="navelem"><a class="el" href="orin_8c.html">orin.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>

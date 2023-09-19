@@ -1,4 +1,6 @@
 <map id="jetgpio.h" name="jetgpio.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,84,32"/>
-<area shape="rect" id="node2" href="$jetgpio_8c.html" title=" " alt="" coords="5,80,84,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="130,5,209,32"/>
+<area shape="rect" id="node2" href="$get__chip__id_8c.html" title=" " alt="" coords="5,80,112,107"/>
+<area shape="rect" id="node3" href="$nano_8c.html" title=" " alt="" coords="137,80,202,107"/>
+<area shape="rect" id="node4" href="$orin_8c.html" title=" " alt="" coords="227,80,285,107"/>
 </map>

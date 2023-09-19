@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Jetgpio
-   &#160;<span id="projectnumber">0.97</span>
+   &#160;<span id="projectnumber">0.98</span>
    </div>
    <div id="projectbrief">Library to manage the Jetson Nano gpio</div>
   </td>
@@ -109,8 +109,10 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="jetgpio_8h__dep__incl.png" border="0" usemap="#jetgpio_8hdep" alt=""/></div>
 <map name="jetgpio_8hdep" id="jetgpio_8hdep">
-<area shape="rect" title=" " alt="" coords="5,5,84,32"/>
-<area shape="rect" href="jetgpio_8c.html" title=" " alt="" coords="5,80,84,107"/>
+<area shape="rect" title=" " alt="" coords="130,5,209,32"/>
+<area shape="rect" href="get__chip__id_8c.html" title=" " alt="" coords="5,80,112,107"/>
+<area shape="rect" href="nano_8c.html" title=" " alt="" coords="137,80,202,107"/>
+<area shape="rect" href="orin_8c.html" title=" " alt="" coords="227,80,285,107"/>
 </map>
 </div>
 </div>
@@ -119,6 +121,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGPIO__CNF.html">GPIO_CNF</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGPIO__CNFO.html">GPIO_CNFO</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGPIO__CNF__Init.html">GPIO_CNF_Init</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,6 +137,14 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a31931c80a94203e29c4e8f0ee6e2605a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a31931c80a94203e29c4e8f0ee6e2605a">APB_MISC_BASE</a>&#160;&#160;&#160;0x70000000</td></tr>
+<tr class="separator:a31931c80a94203e29c4e8f0ee6e2605a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aead8ec46f12a4aabf8975cf1b6c0c24c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aead8ec46f12a4aabf8975cf1b6c0c24c">MISC</a>&#160;&#160;&#160;0x00100000</td></tr>
+<tr class="separator:aead8ec46f12a4aabf8975cf1b6c0c24c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3dc343e7d08185198b33d85202f6b1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ab3dc343e7d08185198b33d85202f6b1c">APB_MISC_GP_HIDREV_0</a>&#160;&#160;&#160;0x804</td></tr>
+<tr class="separator:ab3dc343e7d08185198b33d85202f6b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a805d53ba3db75348c63deeb227746733"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a805d53ba3db75348c63deeb227746733">MISCREG_HIDREV_0</a>&#160;&#160;&#160;0x4</td></tr>
+<tr class="separator:a805d53ba3db75348c63deeb227746733"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf1de99fd5cd66ae47cbb15d638bc55f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aaf1de99fd5cd66ae47cbb15d638bc55f">base_CNF</a>&#160;&#160;&#160;0x6000d000</td></tr>
 <tr class="separator:aaf1de99fd5cd66ae47cbb15d638bc55f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae730c13ad5bccf5040dd60f479ca51e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ae730c13ad5bccf5040dd60f479ca51e4">base_PINMUX</a>&#160;&#160;&#160;0x70003000</td></tr>
@@ -347,6 +359,216 @@ Macros</h2></td></tr>
 <tr class="separator:a52f28a013c7adf7608391e78251d0e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26b070bfcf09ba2a38288ecd0a7c7583"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a26b070bfcf09ba2a38288ecd0a7c7583">CFG_OUT1</a>&#160;&#160;&#160;0xF0000000</td></tr>
 <tr class="separator:a26b070bfcf09ba2a38288ecd0a7c7583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53194b06a1870efd4bf3ced6a96d408e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a53194b06a1870efd4bf3ced6a96d408e">base_CNF_AON</a>&#160;&#160;&#160;0x0c2f1000</td></tr>
+<tr class="separator:a53194b06a1870efd4bf3ced6a96d408e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a576657363338f98cac53552d8fe5d1b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a576657363338f98cac53552d8fe5d1b0">base_CNF_NAON</a>&#160;&#160;&#160;0x02210000</td></tr>
+<tr class="separator:a576657363338f98cac53552d8fe5d1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a936787ee1b6027169996711eb1d8aa81"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a936787ee1b6027169996711eb1d8aa81">Pinmux_AON</a>&#160;&#160;&#160;0x0c302000</td></tr>
+<tr class="separator:a936787ee1b6027169996711eb1d8aa81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6aba18ef328568b872211a86eb62e72"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#af6aba18ef328568b872211a86eb62e72">Pinmux_G7</a>&#160;&#160;&#160;0x02448000</td></tr>
+<tr class="separator:af6aba18ef328568b872211a86eb62e72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab348776d42de8d6809fc732287b040c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ab348776d42de8d6809fc732287b040c5">Pinmux_G3</a>&#160;&#160;&#160;0x02430000</td></tr>
+<tr class="separator:ab348776d42de8d6809fc732287b040c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7571d1c98223ae7b12fd038a207d2ac8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a7571d1c98223ae7b12fd038a207d2ac8">Pinmux_EDP</a>&#160;&#160;&#160;0x02440000</td></tr>
+<tr class="separator:a7571d1c98223ae7b12fd038a207d2ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67c81a740eac3d00d7f7003c8dc6b898"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a67c81a740eac3d00d7f7003c8dc6b898">Pinmux_G4</a>&#160;&#160;&#160;0x02434000</td></tr>
+<tr class="separator:a67c81a740eac3d00d7f7003c8dc6b898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ed82342bf56333e64a11bd5898e7dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a43ed82342bf56333e64a11bd5898e7dc">Pinmux_G2</a>&#160;&#160;&#160;0x0243d000</td></tr>
+<tr class="separator:a43ed82342bf56333e64a11bd5898e7dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab007e29f175d2a70ac449e6b71f504dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ab007e29f175d2a70ac449e6b71f504dc">base_PWM1</a>&#160;&#160;&#160;0x03280000</td></tr>
+<tr class="separator:ab007e29f175d2a70ac449e6b71f504dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a065d6fee58e3046152d099c04418c0bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a065d6fee58e3046152d099c04418c0bd">base_PWM5</a>&#160;&#160;&#160;0x032c0000</td></tr>
+<tr class="separator:a065d6fee58e3046152d099c04418c0bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e7dd36289b5d83c3d906b55337b16b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a0e7dd36289b5d83c3d906b55337b16b3">base_PWM7</a>&#160;&#160;&#160;0x032e0000</td></tr>
+<tr class="separator:a0e7dd36289b5d83c3d906b55337b16b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e4446ce4cb5867e0195ae5dcb7ba7c2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a0e4446ce4cb5867e0195ae5dcb7ba7c2">CNFO_3</a>&#160;&#160;&#160;0x0640</td></tr>
+<tr class="separator:a0e4446ce4cb5867e0195ae5dcb7ba7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf6b5a7c183e9ed9b8e753e071b44f17"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#abf6b5a7c183e9ed9b8e753e071b44f17">CNFO_5</a>&#160;&#160;&#160;0x0620</td></tr>
+<tr class="separator:abf6b5a7c183e9ed9b8e753e071b44f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abede335140278cf1667c5ed37ed4971c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#abede335140278cf1667c5ed37ed4971c">CNFO_7</a>&#160;&#160;&#160;0x002c0</td></tr>
+<tr class="separator:abede335140278cf1667c5ed37ed4971c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac26aa841e9d28308e41a7ed599761cef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ac26aa841e9d28308e41a7ed599761cef">CNFO_8</a>&#160;&#160;&#160;0x02840</td></tr>
+<tr class="separator:ac26aa841e9d28308e41a7ed599761cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a376d0c0670c28724697893f997aeea5f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a376d0c0670c28724697893f997aeea5f">CNFO_10</a>&#160;&#160;&#160;0x02860</td></tr>
+<tr class="separator:a376d0c0670c28724697893f997aeea5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a68b49c3099f39a6fc41b903513916d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a8a68b49c3099f39a6fc41b903513916d">CNFO_11</a>&#160;&#160;&#160;0x02880</td></tr>
+<tr class="separator:a8a68b49c3099f39a6fc41b903513916d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acafa21467551f7931186803ab221991f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#acafa21467551f7931186803ab221991f">CNFO_12</a>&#160;&#160;&#160;0x042e0</td></tr>
+<tr class="separator:acafa21467551f7931186803ab221991f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6f5a24632943c51e51c07a9ca19aed0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ab6f5a24632943c51e51c07a9ca19aed0">CNFO_13</a>&#160;&#160;&#160;0x01200</td></tr>
+<tr class="separator:ab6f5a24632943c51e51c07a9ca19aed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01a1194db69d2b1ad626d3b87196622f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a01a1194db69d2b1ad626d3b87196622f">CNFO_15</a>&#160;&#160;&#160;0x02220</td></tr>
+<tr class="separator:a01a1194db69d2b1ad626d3b87196622f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a4421ee5ddb8ee8bd2dfe12e21f651d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a2a4421ee5ddb8ee8bd2dfe12e21f651d">CNFO_16</a>&#160;&#160;&#160;0x01280</td></tr>
+<tr class="separator:a2a4421ee5ddb8ee8bd2dfe12e21f651d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bc0abce1cbcc801478d76513dd89ecd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a1bc0abce1cbcc801478d76513dd89ecd">CNFO_18</a>&#160;&#160;&#160;0x01260</td></tr>
+<tr class="separator:a1bc0abce1cbcc801478d76513dd89ecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7862e9f6419b316b68a1e8cd2d2f379e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a7862e9f6419b316b68a1e8cd2d2f379e">CNFO_19</a>&#160;&#160;&#160;0x014a0</td></tr>
+<tr class="separator:a7862e9f6419b316b68a1e8cd2d2f379e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ec5e9c7465da8cd9f56990bb8228c1f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a8ec5e9c7465da8cd9f56990bb8228c1f">CNFO_21</a>&#160;&#160;&#160;0x01480</td></tr>
+<tr class="separator:a8ec5e9c7465da8cd9f56990bb8228c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ec289a0b5713272a1accecac3712f5a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a4ec289a0b5713272a1accecac3712f5a">CNFO_22</a>&#160;&#160;&#160;0x01220</td></tr>
+<tr class="separator:a4ec289a0b5713272a1accecac3712f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac80911462ff042183125902d04308524"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ac80911462ff042183125902d04308524">CNFO_23</a>&#160;&#160;&#160;0x01460</td></tr>
+<tr class="separator:ac80911462ff042183125902d04308524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d71404d63ec8e89c635c3c27334eb80"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a6d71404d63ec8e89c635c3c27334eb80">CNFO_24</a>&#160;&#160;&#160;0x014c0</td></tr>
+<tr class="separator:a6d71404d63ec8e89c635c3c27334eb80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49a8bf96ccfb95f0485f9b14425b6e96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a49a8bf96ccfb95f0485f9b14425b6e96">CNFO_26</a>&#160;&#160;&#160;0x014e0</td></tr>
+<tr class="separator:a49a8bf96ccfb95f0485f9b14425b6e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6224f144b6d885bc506d609f52ffc2b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a6224f144b6d885bc506d609f52ffc2b5">CNFO_27</a>&#160;&#160;&#160;0x0600</td></tr>
+<tr class="separator:a6224f144b6d885bc506d609f52ffc2b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af49d99d223eef1132e53b8ecaed5143b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#af49d99d223eef1132e53b8ecaed5143b">CNFO_28</a>&#160;&#160;&#160;0x04e0</td></tr>
+<tr class="separator:af49d99d223eef1132e53b8ecaed5143b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87edcdd873742153983c59b5b42d16d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a87edcdd873742153983c59b5b42d16d0">CNFO_29</a>&#160;&#160;&#160;0x026a0</td></tr>
+<tr class="separator:a87edcdd873742153983c59b5b42d16d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6784a8ca2d77115f2c3f86176f22eb20"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a6784a8ca2d77115f2c3f86176f22eb20">CNFO_31</a>&#160;&#160;&#160;0x026c0</td></tr>
+<tr class="separator:a6784a8ca2d77115f2c3f86176f22eb20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b5045f8303011fd360c30ca911c25e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a1b5045f8303011fd360c30ca911c25e6">CNFO_32</a>&#160;&#160;&#160;0x040c0</td></tr>
+<tr class="separator:a1b5045f8303011fd360c30ca911c25e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb8965beba1f0201a1e670d91014b936"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#adb8965beba1f0201a1e670d91014b936">CNFO_33</a>&#160;&#160;&#160;0x04200</td></tr>
+<tr class="separator:adb8965beba1f0201a1e670d91014b936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accf721698dab91110fa6d6a62a1c16eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#accf721698dab91110fa6d6a62a1c16eb">CNFO_35</a>&#160;&#160;&#160;0x04440</td></tr>
+<tr class="separator:accf721698dab91110fa6d6a62a1c16eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53a88e8eff869d82cf12a7413be46698"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a53a88e8eff869d82cf12a7413be46698">CNFO_36</a>&#160;&#160;&#160;0x028a0</td></tr>
+<tr class="separator:a53a88e8eff869d82cf12a7413be46698"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dd6ff1efad9d432ca1add6bc37108f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a4dd6ff1efad9d432ca1add6bc37108f7">CNFO_37</a>&#160;&#160;&#160;0x01240</td></tr>
+<tr class="separator:a4dd6ff1efad9d432ca1add6bc37108f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91d8a65a76107d12ca7f70e989be14e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a91d8a65a76107d12ca7f70e989be14e4">CNFO_38</a>&#160;&#160;&#160;0x04420</td></tr>
+<tr class="separator:a91d8a65a76107d12ca7f70e989be14e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4db957ff482b73f851e3d93c4677b4b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ad4db957ff482b73f851e3d93c4677b4b">CNFO_40</a>&#160;&#160;&#160;0x04400</td></tr>
+<tr class="separator:ad4db957ff482b73f851e3d93c4677b4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a553256fe48ffbadcfffd93497949e97a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a553256fe48ffbadcfffd93497949e97a">PINMUXO_3</a>&#160;&#160;&#160;0x18</td></tr>
+<tr class="separator:a553256fe48ffbadcfffd93497949e97a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50679d9bd83e1a0ca2174a7e92d3d08b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a50679d9bd83e1a0ca2174a7e92d3d08b">PINMUXO_5</a>&#160;&#160;&#160;0x20</td></tr>
+<tr class="separator:a50679d9bd83e1a0ca2174a7e92d3d08b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afba513bedd39ab6de678b82114768fc2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#afba513bedd39ab6de678b82114768fc2">PINMUXO_7</a>&#160;&#160;&#160;0x30</td></tr>
+<tr class="separator:afba513bedd39ab6de678b82114768fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47abc31ef931ce0088dbfb79ab78ca21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a47abc31ef931ce0088dbfb79ab78ca21">PINMUXO_8</a>&#160;&#160;&#160;0xa8</td></tr>
+<tr class="separator:a47abc31ef931ce0088dbfb79ab78ca21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff4d8448f6a54b62ab46b5e439ff20e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aff4d8448f6a54b62ab46b5e439ff20e1">PINMUXO_10</a>&#160;&#160;&#160;0xa0</td></tr>
+<tr class="separator:aff4d8448f6a54b62ab46b5e439ff20e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3400124ef794679731972ed847e723f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a3400124ef794679731972ed847e723f2">PINMUXO_11</a>&#160;&#160;&#160;0x98</td></tr>
+<tr class="separator:a3400124ef794679731972ed847e723f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff4dbb9238fafd70652dc4822735d76c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aff4dbb9238fafd70652dc4822735d76c">PINMUXO_12</a>&#160;&#160;&#160;0x88</td></tr>
+<tr class="separator:aff4dbb9238fafd70652dc4822735d76c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03eef9a340c57fff0ce8d42c44aede5b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a03eef9a340c57fff0ce8d42c44aede5b">PINMUXO_13</a>&#160;&#160;&#160;0x30</td></tr>
+<tr class="separator:a03eef9a340c57fff0ce8d42c44aede5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac61634b840f8f24fd320d696b1517bd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ac61634b840f8f24fd320d696b1517bd4">PINMUXO_15</a>&#160;&#160;&#160;0x20</td></tr>
+<tr class="separator:ac61634b840f8f24fd320d696b1517bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e8f393cd93faa33ef67d69ecf2d846a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a3e8f393cd93faa33ef67d69ecf2d846a">PINMUXO_16</a>&#160;&#160;&#160;0x20</td></tr>
+<tr class="separator:a3e8f393cd93faa33ef67d69ecf2d846a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa662975e5c723b073324ec0da4333482"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aa662975e5c723b073324ec0da4333482">PINMUXO_18</a>&#160;&#160;&#160;0x10</td></tr>
+<tr class="separator:aa662975e5c723b073324ec0da4333482"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6093b4e50475bb13ecdce42ed7b12d1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ad6093b4e50475bb13ecdce42ed7b12d1">PINMUXO_19</a>&#160;&#160;&#160;0x40</td></tr>
+<tr class="separator:ad6093b4e50475bb13ecdce42ed7b12d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fce67ded53a1fedd8b638bf4ad8493b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a0fce67ded53a1fedd8b638bf4ad8493b">PINMUXO_21</a>&#160;&#160;&#160;0x18</td></tr>
+<tr class="separator:a0fce67ded53a1fedd8b638bf4ad8493b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89a6e14991ba08d0608fed8e1642f8b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a89a6e14991ba08d0608fed8e1642f8b8">PINMUXO_22</a>&#160;&#160;&#160;0x0</td></tr>
+<tr class="separator:a89a6e14991ba08d0608fed8e1642f8b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac4dd08d7f23344b7298cf2b4863f5f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aac4dd08d7f23344b7298cf2b4863f5f0">PINMUXO_23</a>&#160;&#160;&#160;0x28</td></tr>
+<tr class="separator:aac4dd08d7f23344b7298cf2b4863f5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c5db52224c5792fb2bc7c7da3c378f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a4c5db52224c5792fb2bc7c7da3c378f3">PINMUXO_24</a>&#160;&#160;&#160;0x8</td></tr>
+<tr class="separator:a4c5db52224c5792fb2bc7c7da3c378f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad074911960e0ddb84ea889092aa82bf0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ad074911960e0ddb84ea889092aa82bf0">PINMUXO_26</a>&#160;&#160;&#160;0x38</td></tr>
+<tr class="separator:ad074911960e0ddb84ea889092aa82bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34af9f9ebd00a093a50cb8ff95746458"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a34af9f9ebd00a093a50cb8ff95746458">PINMUXO_27</a>&#160;&#160;&#160;0x40</td></tr>
+<tr class="separator:a34af9f9ebd00a093a50cb8ff95746458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa83427decc21c767e7273f203a99aabb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aa83427decc21c767e7273f203a99aabb">PINMUXO_28</a>&#160;&#160;&#160;0x30</td></tr>
+<tr class="separator:aa83427decc21c767e7273f203a99aabb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce2f025b912beb014f4d27892c8cdbd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a6ce2f025b912beb014f4d27892c8cdbd">PINMUXO_29</a>&#160;&#160;&#160;0x68</td></tr>
+<tr class="separator:a6ce2f025b912beb014f4d27892c8cdbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed118cc041434b566a7a1ae20cc9122f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aed118cc041434b566a7a1ae20cc9122f">PINMUXO_31</a>&#160;&#160;&#160;0x70</td></tr>
+<tr class="separator:aed118cc041434b566a7a1ae20cc9122f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1ee8b5c426f1e80f55da5d01e33ebf5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ae1ee8b5c426f1e80f55da5d01e33ebf5">PINMUXO_32</a>&#160;&#160;&#160;0x80</td></tr>
+<tr class="separator:ae1ee8b5c426f1e80f55da5d01e33ebf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8bb1759f0de4b9082b7416962216ae9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aa8bb1759f0de4b9082b7416962216ae9">PINMUXO_33</a>&#160;&#160;&#160;0X40</td></tr>
+<tr class="separator:aa8bb1759f0de4b9082b7416962216ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72d33fdde8f8077bda2608ce19ca8ed3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a72d33fdde8f8077bda2608ce19ca8ed3">PINMUXO_35</a>&#160;&#160;&#160;0xa0</td></tr>
+<tr class="separator:a72d33fdde8f8077bda2608ce19ca8ed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85332aaeb50b89fd83af0d6d0a116b95"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a85332aaeb50b89fd83af0d6d0a116b95">PINMUXO_36</a>&#160;&#160;&#160;0x90</td></tr>
+<tr class="separator:a85332aaeb50b89fd83af0d6d0a116b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afad9b977d0464587d55006b22c5d4c90"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#afad9b977d0464587d55006b22c5d4c90">PINMUXO_37</a>&#160;&#160;&#160;0x48</td></tr>
+<tr class="separator:afad9b977d0464587d55006b22c5d4c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3980a286b5ad5fcd2f015194b77336fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a3980a286b5ad5fcd2f015194b77336fa">PINMUXO_38</a>&#160;&#160;&#160;0x98</td></tr>
+<tr class="separator:a3980a286b5ad5fcd2f015194b77336fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ae3f588a5fe5f67b00951899550d795"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a8ae3f588a5fe5f67b00951899550d795">PINMUXO_40</a>&#160;&#160;&#160;0x90</td></tr>
+<tr class="separator:a8ae3f588a5fe5f67b00951899550d795"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa298bfa820509426f7e41c93f08a05b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aa298bfa820509426f7e41c93f08a05b4">CFGO_3</a>&#160;&#160;&#160;0x1c</td></tr>
+<tr class="separator:aa298bfa820509426f7e41c93f08a05b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d4e27dab20a1ee044bf1d4ebf2398fd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a9d4e27dab20a1ee044bf1d4ebf2398fd">CFGO_5</a>&#160;&#160;&#160;0X24</td></tr>
+<tr class="separator:a9d4e27dab20a1ee044bf1d4ebf2398fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a170a72c88f7f8cbc42c73baead20886a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a170a72c88f7f8cbc42c73baead20886a">CFGO_7</a>&#160;&#160;&#160;0x34</td></tr>
+<tr class="separator:a170a72c88f7f8cbc42c73baead20886a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6080577593dcc8454cbc7facfbc4afa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ae6080577593dcc8454cbc7facfbc4afa">CFGO_8</a>&#160;&#160;&#160;0xac</td></tr>
+<tr class="separator:ae6080577593dcc8454cbc7facfbc4afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16612db849886ed63bf9c86da377d6f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a16612db849886ed63bf9c86da377d6f5">CFGO_10</a>&#160;&#160;&#160;0xa4</td></tr>
+<tr class="separator:a16612db849886ed63bf9c86da377d6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58f704a18ffde4cf7da4943b06b4946c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a58f704a18ffde4cf7da4943b06b4946c">CFGO_11</a>&#160;&#160;&#160;0x9c</td></tr>
+<tr class="separator:a58f704a18ffde4cf7da4943b06b4946c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12a39a4fc20125f87f70bf67d86839b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a12a39a4fc20125f87f70bf67d86839b2">CFGO_12</a>&#160;&#160;&#160;0x8c</td></tr>
+<tr class="separator:a12a39a4fc20125f87f70bf67d86839b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a103f2ba9a343a62aab66dae10e9ff24e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a103f2ba9a343a62aab66dae10e9ff24e">CFGO_13</a>&#160;&#160;&#160;0x34</td></tr>
+<tr class="separator:a103f2ba9a343a62aab66dae10e9ff24e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5827717afdef90f487931ded4074a1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#af5827717afdef90f487931ded4074a1c">CFGO_15</a>&#160;&#160;&#160;0x24</td></tr>
+<tr class="separator:af5827717afdef90f487931ded4074a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada77d6f883d8a47fd6dbc2d9016b91ef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ada77d6f883d8a47fd6dbc2d9016b91ef">CFGO_16</a>&#160;&#160;&#160;0x24</td></tr>
+<tr class="separator:ada77d6f883d8a47fd6dbc2d9016b91ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8618cc6efbaf8170bfab3f094f36efbc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a8618cc6efbaf8170bfab3f094f36efbc">CFGO_18</a>&#160;&#160;&#160;0x14</td></tr>
+<tr class="separator:a8618cc6efbaf8170bfab3f094f36efbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22372faeddc8d7a94214d2cc7f05625a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a22372faeddc8d7a94214d2cc7f05625a">CFGO_19</a>&#160;&#160;&#160;0x44</td></tr>
+<tr class="separator:a22372faeddc8d7a94214d2cc7f05625a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c25c0d0330fcc1a0e263a9ba6e140d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a7c25c0d0330fcc1a0e263a9ba6e140d7">CFGO_21</a>&#160;&#160;&#160;0x1c</td></tr>
+<tr class="separator:a7c25c0d0330fcc1a0e263a9ba6e140d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d393655dfb39acf59dca6f8835ad4ae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a6d393655dfb39acf59dca6f8835ad4ae">CFGO_22</a>&#160;&#160;&#160;0x4</td></tr>
+<tr class="separator:a6d393655dfb39acf59dca6f8835ad4ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50bed4d8cac7e6116f26da42a1388e42"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a50bed4d8cac7e6116f26da42a1388e42">CFGO_23</a>&#160;&#160;&#160;0x2c</td></tr>
+<tr class="separator:a50bed4d8cac7e6116f26da42a1388e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8458e373b82c68577fc94624090f4a70"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a8458e373b82c68577fc94624090f4a70">CFGO_24</a>&#160;&#160;&#160;0xc</td></tr>
+<tr class="separator:a8458e373b82c68577fc94624090f4a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac00a30d35606e66d237987e6c0c223bc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ac00a30d35606e66d237987e6c0c223bc">CFGO_26</a>&#160;&#160;&#160;0x3c</td></tr>
+<tr class="separator:ac00a30d35606e66d237987e6c0c223bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ada56ab0f3a12f908c176a3c20f7041"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a1ada56ab0f3a12f908c176a3c20f7041">CFGO_27</a>&#160;&#160;&#160;0x44</td></tr>
+<tr class="separator:a1ada56ab0f3a12f908c176a3c20f7041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a9efba96806ee8e86315f34ae4c3f77"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a9a9efba96806ee8e86315f34ae4c3f77">CFGO_28</a>&#160;&#160;&#160;0x34</td></tr>
+<tr class="separator:a9a9efba96806ee8e86315f34ae4c3f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40dc2c3214d5ec550bbc42a89d9d2681"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a40dc2c3214d5ec550bbc42a89d9d2681">CFGO_29</a>&#160;&#160;&#160;0x6c</td></tr>
+<tr class="separator:a40dc2c3214d5ec550bbc42a89d9d2681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57d19cad6f55e3168ab3f3a7d11e4c4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a57d19cad6f55e3168ab3f3a7d11e4c4e">CFGO_31</a>&#160;&#160;&#160;0x74</td></tr>
+<tr class="separator:a57d19cad6f55e3168ab3f3a7d11e4c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a786bbf2fb25e06a9e71e958d31235626"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a786bbf2fb25e06a9e71e958d31235626">CFGO_32</a>&#160;&#160;&#160;0x84</td></tr>
+<tr class="separator:a786bbf2fb25e06a9e71e958d31235626"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3d84503c6add12cc92396b5659fb5c9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ab3d84503c6add12cc92396b5659fb5c9">CFGO_33</a>&#160;&#160;&#160;0x44</td></tr>
+<tr class="separator:ab3d84503c6add12cc92396b5659fb5c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc6dbd73568be5bf552bf8794f062730"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#afc6dbd73568be5bf552bf8794f062730">CFGO_35</a>&#160;&#160;&#160;0xa4</td></tr>
+<tr class="separator:afc6dbd73568be5bf552bf8794f062730"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10b006dd0db45c9610fbb53d0c653c20"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a10b006dd0db45c9610fbb53d0c653c20">CFGO_36</a>&#160;&#160;&#160;0x94</td></tr>
+<tr class="separator:a10b006dd0db45c9610fbb53d0c653c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae68ecfc994512974bd84e6a4657f5616"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ae68ecfc994512974bd84e6a4657f5616">CFGO_37</a>&#160;&#160;&#160;0x4c</td></tr>
+<tr class="separator:ae68ecfc994512974bd84e6a4657f5616"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4260630b1bb6d86b2f0293c503760390"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a4260630b1bb6d86b2f0293c503760390">CFGO_38</a>&#160;&#160;&#160;0x9c</td></tr>
+<tr class="separator:a4260630b1bb6d86b2f0293c503760390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a123d42ca5aa6dbd7eec1f93983ad7bcb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a123d42ca5aa6dbd7eec1f93983ad7bcb">CFGO_40</a>&#160;&#160;&#160;0x94</td></tr>
+<tr class="separator:a123d42ca5aa6dbd7eec1f93983ad7bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acccbc78133d50df6dc49d9d9ab0c9729"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#acccbc78133d50df6dc49d9d9ab0c9729">CNFO_IN</a>&#160;&#160;&#160;0x00000001</td></tr>
+<tr class="separator:acccbc78133d50df6dc49d9d9ab0c9729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a693b77a6e04592394498b942a13dedb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a693b77a6e04592394498b942a13dedb2">CNFO_OUT</a>&#160;&#160;&#160;0x00000003</td></tr>
+<tr class="separator:a693b77a6e04592394498b942a13dedb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab46e343b689bc4b623233111aee718e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ab46e343b689bc4b623233111aee718e2">PINMUXO_IN</a>&#160;&#160;&#160;0x00000040</td></tr>
+<tr class="separator:ab46e343b689bc4b623233111aee718e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1e75b9381760721cddfb30582a660a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aa1e75b9381760721cddfb30582a660a8">PINMUXO_IN1</a>&#160;&#160;&#160;0x00000041</td></tr>
+<tr class="separator:aa1e75b9381760721cddfb30582a660a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac40e66425637f32c1a5257b755d71e30"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ac40e66425637f32c1a5257b755d71e30">PINMUXO_OUT</a>&#160;&#160;&#160;0x00000040</td></tr>
+<tr class="separator:ac40e66425637f32c1a5257b755d71e30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a740a3056970b31bfe34218b4c51b3c60"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a740a3056970b31bfe34218b4c51b3c60">PINMUXO_OUT1</a>&#160;&#160;&#160;0x00000060</td></tr>
+<tr class="separator:a740a3056970b31bfe34218b4c51b3c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a923aeecf46fb0ddd5b0dff4603fa28e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a923aeecf46fb0ddd5b0dff4603fa28e8">CFGO_IN</a>&#160;&#160;&#160;0x00000000</td></tr>
+<tr class="separator:a923aeecf46fb0ddd5b0dff4603fa28e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ebe193043bfbf6bdc19f67c611389f1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a5ebe193043bfbf6bdc19f67c611389f1">CFGO_OUT</a>&#160;&#160;&#160;0x01f1f000</td></tr>
+<tr class="separator:a5ebe193043bfbf6bdc19f67c611389f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa45f3f33a4532dd600449668c704c045"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aa45f3f33a4532dd600449668c704c045">NANO</a>&#160;&#160;&#160;210</td></tr>
+<tr class="separator:aa45f3f33a4532dd600449668c704c045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42d2374228e5f889fc0cd024c0bab29d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a42d2374228e5f889fc0cd024c0bab29d">ORIN</a>&#160;&#160;&#160;234</td></tr>
+<tr class="separator:a42d2374228e5f889fc0cd024c0bab29d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5456a9b82ea8b5dc5e79c069dc29a7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#aa5456a9b82ea8b5dc5e79c069dc29a7b">JET_INPUT</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:aa5456a9b82ea8b5dc5e79c069dc29a7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad589cca7b5afd4362dede39fc9af7159"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159">JET_OUTPUT</a>&#160;&#160;&#160;1</td></tr>
@@ -377,6 +599,9 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:abc4a0f7f1eb1b595b6c129c036731334"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#abc4a0f7f1eb1b595b6c129c036731334">chip_get_id</a> (void)</td></tr>
+<tr class="memdesc:abc4a0f7f1eb1b595b6c129c036731334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Auxiliary function used by <a class="el" href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0" title="Initialises the library. gpioInitialise must be called before using the other library functions,...">gpioInitialise()</a> to find out whether the hardware is supported by the library.  <a href="jetgpio_8h.html#abc4a0f7f1eb1b595b6c129c036731334">More...</a><br /></td></tr>
+<tr class="separator:abc4a0f7f1eb1b595b6c129c036731334"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80d84e5dd32fd8ec04cb0370eab0a5b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a> (void)</td></tr>
 <tr class="memdesc:a80d84e5dd32fd8ec04cb0370eab0a5b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialises the library. gpioInitialise must be called before using the other library functions, it stores the status of all the relevant registers before using/modifying them.  <a href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">More...</a><br /></td></tr>
 <tr class="separator:a80d84e5dd32fd8ec04cb0370eab0a5b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -430,6 +655,34 @@ Functions</h2></td></tr>
 <tr class="separator:a96e92eb729c89f2a9a893adf83251dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a31931c80a94203e29c4e8f0ee6e2605a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31931c80a94203e29c4e8f0ee6e2605a">&#9670;&nbsp;</a></span>APB_MISC_BASE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APB_MISC_BASE&#160;&#160;&#160;0x70000000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab3dc343e7d08185198b33d85202f6b1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3dc343e7d08185198b33d85202f6b1c">&#9670;&nbsp;</a></span>APB_MISC_GP_HIDREV_0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APB_MISC_GP_HIDREV_0&#160;&#160;&#160;0x804</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aa1486d76ab06cf6f2ff2c1ea55fbe7bd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa1486d76ab06cf6f2ff2c1ea55fbe7bd">&#9670;&nbsp;</a></span>APBDEV_PMC_PWR_DET_0</h2>
 
@@ -500,6 +753,34 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a53194b06a1870efd4bf3ced6a96d408e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53194b06a1870efd4bf3ced6a96d408e">&#9670;&nbsp;</a></span>base_CNF_AON</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define base_CNF_AON&#160;&#160;&#160;0x0c2f1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a576657363338f98cac53552d8fe5d1b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a576657363338f98cac53552d8fe5d1b0">&#9670;&nbsp;</a></span>base_CNF_NAON</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define base_CNF_NAON&#160;&#160;&#160;0x02210000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ae730c13ad5bccf5040dd60f479ca51e4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae730c13ad5bccf5040dd60f479ca51e4">&#9670;&nbsp;</a></span>base_PINMUX</h2>
 
@@ -536,6 +817,48 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define base_PWM&#160;&#160;&#160;0x7000a000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab007e29f175d2a70ac449e6b71f504dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab007e29f175d2a70ac449e6b71f504dc">&#9670;&nbsp;</a></span>base_PWM1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define base_PWM1&#160;&#160;&#160;0x03280000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a065d6fee58e3046152d099c04418c0bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a065d6fee58e3046152d099c04418c0bd">&#9670;&nbsp;</a></span>base_PWM5</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define base_PWM5&#160;&#160;&#160;0x032c0000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0e7dd36289b5d83c3d906b55337b16b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e7dd36289b5d83c3d906b55337b16b3">&#9670;&nbsp;</a></span>base_PWM7</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define base_PWM7&#160;&#160;&#160;0x032e0000</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -984,6 +1307,426 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define CFG_OUT1&#160;&#160;&#160;0xF0000000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a16612db849886ed63bf9c86da377d6f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16612db849886ed63bf9c86da377d6f5">&#9670;&nbsp;</a></span>CFGO_10</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_10&#160;&#160;&#160;0xa4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a58f704a18ffde4cf7da4943b06b4946c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58f704a18ffde4cf7da4943b06b4946c">&#9670;&nbsp;</a></span>CFGO_11</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_11&#160;&#160;&#160;0x9c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a12a39a4fc20125f87f70bf67d86839b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12a39a4fc20125f87f70bf67d86839b2">&#9670;&nbsp;</a></span>CFGO_12</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_12&#160;&#160;&#160;0x8c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a103f2ba9a343a62aab66dae10e9ff24e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a103f2ba9a343a62aab66dae10e9ff24e">&#9670;&nbsp;</a></span>CFGO_13</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_13&#160;&#160;&#160;0x34</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af5827717afdef90f487931ded4074a1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5827717afdef90f487931ded4074a1c">&#9670;&nbsp;</a></span>CFGO_15</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_15&#160;&#160;&#160;0x24</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ada77d6f883d8a47fd6dbc2d9016b91ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada77d6f883d8a47fd6dbc2d9016b91ef">&#9670;&nbsp;</a></span>CFGO_16</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_16&#160;&#160;&#160;0x24</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8618cc6efbaf8170bfab3f094f36efbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8618cc6efbaf8170bfab3f094f36efbc">&#9670;&nbsp;</a></span>CFGO_18</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_18&#160;&#160;&#160;0x14</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a22372faeddc8d7a94214d2cc7f05625a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22372faeddc8d7a94214d2cc7f05625a">&#9670;&nbsp;</a></span>CFGO_19</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_19&#160;&#160;&#160;0x44</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7c25c0d0330fcc1a0e263a9ba6e140d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c25c0d0330fcc1a0e263a9ba6e140d7">&#9670;&nbsp;</a></span>CFGO_21</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_21&#160;&#160;&#160;0x1c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6d393655dfb39acf59dca6f8835ad4ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d393655dfb39acf59dca6f8835ad4ae">&#9670;&nbsp;</a></span>CFGO_22</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_22&#160;&#160;&#160;0x4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a50bed4d8cac7e6116f26da42a1388e42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50bed4d8cac7e6116f26da42a1388e42">&#9670;&nbsp;</a></span>CFGO_23</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_23&#160;&#160;&#160;0x2c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8458e373b82c68577fc94624090f4a70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8458e373b82c68577fc94624090f4a70">&#9670;&nbsp;</a></span>CFGO_24</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_24&#160;&#160;&#160;0xc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac00a30d35606e66d237987e6c0c223bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac00a30d35606e66d237987e6c0c223bc">&#9670;&nbsp;</a></span>CFGO_26</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_26&#160;&#160;&#160;0x3c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1ada56ab0f3a12f908c176a3c20f7041"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ada56ab0f3a12f908c176a3c20f7041">&#9670;&nbsp;</a></span>CFGO_27</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_27&#160;&#160;&#160;0x44</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9a9efba96806ee8e86315f34ae4c3f77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a9efba96806ee8e86315f34ae4c3f77">&#9670;&nbsp;</a></span>CFGO_28</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_28&#160;&#160;&#160;0x34</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a40dc2c3214d5ec550bbc42a89d9d2681"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40dc2c3214d5ec550bbc42a89d9d2681">&#9670;&nbsp;</a></span>CFGO_29</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_29&#160;&#160;&#160;0x6c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa298bfa820509426f7e41c93f08a05b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa298bfa820509426f7e41c93f08a05b4">&#9670;&nbsp;</a></span>CFGO_3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_3&#160;&#160;&#160;0x1c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a57d19cad6f55e3168ab3f3a7d11e4c4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57d19cad6f55e3168ab3f3a7d11e4c4e">&#9670;&nbsp;</a></span>CFGO_31</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_31&#160;&#160;&#160;0x74</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a786bbf2fb25e06a9e71e958d31235626"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a786bbf2fb25e06a9e71e958d31235626">&#9670;&nbsp;</a></span>CFGO_32</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_32&#160;&#160;&#160;0x84</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab3d84503c6add12cc92396b5659fb5c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3d84503c6add12cc92396b5659fb5c9">&#9670;&nbsp;</a></span>CFGO_33</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_33&#160;&#160;&#160;0x44</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afc6dbd73568be5bf552bf8794f062730"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc6dbd73568be5bf552bf8794f062730">&#9670;&nbsp;</a></span>CFGO_35</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_35&#160;&#160;&#160;0xa4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a10b006dd0db45c9610fbb53d0c653c20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10b006dd0db45c9610fbb53d0c653c20">&#9670;&nbsp;</a></span>CFGO_36</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_36&#160;&#160;&#160;0x94</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae68ecfc994512974bd84e6a4657f5616"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae68ecfc994512974bd84e6a4657f5616">&#9670;&nbsp;</a></span>CFGO_37</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_37&#160;&#160;&#160;0x4c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4260630b1bb6d86b2f0293c503760390"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4260630b1bb6d86b2f0293c503760390">&#9670;&nbsp;</a></span>CFGO_38</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_38&#160;&#160;&#160;0x9c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a123d42ca5aa6dbd7eec1f93983ad7bcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a123d42ca5aa6dbd7eec1f93983ad7bcb">&#9670;&nbsp;</a></span>CFGO_40</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_40&#160;&#160;&#160;0x94</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9d4e27dab20a1ee044bf1d4ebf2398fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d4e27dab20a1ee044bf1d4ebf2398fd">&#9670;&nbsp;</a></span>CFGO_5</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_5&#160;&#160;&#160;0X24</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a170a72c88f7f8cbc42c73baead20886a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a170a72c88f7f8cbc42c73baead20886a">&#9670;&nbsp;</a></span>CFGO_7</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_7&#160;&#160;&#160;0x34</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae6080577593dcc8454cbc7facfbc4afa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6080577593dcc8454cbc7facfbc4afa">&#9670;&nbsp;</a></span>CFGO_8</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_8&#160;&#160;&#160;0xac</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a923aeecf46fb0ddd5b0dff4603fa28e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a923aeecf46fb0ddd5b0dff4603fa28e8">&#9670;&nbsp;</a></span>CFGO_IN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_IN&#160;&#160;&#160;0x00000000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5ebe193043bfbf6bdc19f67c611389f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ebe193043bfbf6bdc19f67c611389f1">&#9670;&nbsp;</a></span>CFGO_OUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CFGO_OUT&#160;&#160;&#160;0x01f1f000</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1466,6 +2209,426 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a376d0c0670c28724697893f997aeea5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a376d0c0670c28724697893f997aeea5f">&#9670;&nbsp;</a></span>CNFO_10</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_10&#160;&#160;&#160;0x02860</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8a68b49c3099f39a6fc41b903513916d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a68b49c3099f39a6fc41b903513916d">&#9670;&nbsp;</a></span>CNFO_11</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_11&#160;&#160;&#160;0x02880</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acafa21467551f7931186803ab221991f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acafa21467551f7931186803ab221991f">&#9670;&nbsp;</a></span>CNFO_12</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_12&#160;&#160;&#160;0x042e0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab6f5a24632943c51e51c07a9ca19aed0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6f5a24632943c51e51c07a9ca19aed0">&#9670;&nbsp;</a></span>CNFO_13</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_13&#160;&#160;&#160;0x01200</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a01a1194db69d2b1ad626d3b87196622f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01a1194db69d2b1ad626d3b87196622f">&#9670;&nbsp;</a></span>CNFO_15</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_15&#160;&#160;&#160;0x02220</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2a4421ee5ddb8ee8bd2dfe12e21f651d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a4421ee5ddb8ee8bd2dfe12e21f651d">&#9670;&nbsp;</a></span>CNFO_16</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_16&#160;&#160;&#160;0x01280</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1bc0abce1cbcc801478d76513dd89ecd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bc0abce1cbcc801478d76513dd89ecd">&#9670;&nbsp;</a></span>CNFO_18</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_18&#160;&#160;&#160;0x01260</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7862e9f6419b316b68a1e8cd2d2f379e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7862e9f6419b316b68a1e8cd2d2f379e">&#9670;&nbsp;</a></span>CNFO_19</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_19&#160;&#160;&#160;0x014a0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8ec5e9c7465da8cd9f56990bb8228c1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ec5e9c7465da8cd9f56990bb8228c1f">&#9670;&nbsp;</a></span>CNFO_21</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_21&#160;&#160;&#160;0x01480</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4ec289a0b5713272a1accecac3712f5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ec289a0b5713272a1accecac3712f5a">&#9670;&nbsp;</a></span>CNFO_22</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_22&#160;&#160;&#160;0x01220</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac80911462ff042183125902d04308524"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac80911462ff042183125902d04308524">&#9670;&nbsp;</a></span>CNFO_23</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_23&#160;&#160;&#160;0x01460</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6d71404d63ec8e89c635c3c27334eb80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d71404d63ec8e89c635c3c27334eb80">&#9670;&nbsp;</a></span>CNFO_24</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_24&#160;&#160;&#160;0x014c0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a49a8bf96ccfb95f0485f9b14425b6e96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49a8bf96ccfb95f0485f9b14425b6e96">&#9670;&nbsp;</a></span>CNFO_26</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_26&#160;&#160;&#160;0x014e0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6224f144b6d885bc506d609f52ffc2b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6224f144b6d885bc506d609f52ffc2b5">&#9670;&nbsp;</a></span>CNFO_27</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_27&#160;&#160;&#160;0x0600</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af49d99d223eef1132e53b8ecaed5143b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af49d99d223eef1132e53b8ecaed5143b">&#9670;&nbsp;</a></span>CNFO_28</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_28&#160;&#160;&#160;0x04e0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a87edcdd873742153983c59b5b42d16d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87edcdd873742153983c59b5b42d16d0">&#9670;&nbsp;</a></span>CNFO_29</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_29&#160;&#160;&#160;0x026a0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0e4446ce4cb5867e0195ae5dcb7ba7c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e4446ce4cb5867e0195ae5dcb7ba7c2">&#9670;&nbsp;</a></span>CNFO_3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_3&#160;&#160;&#160;0x0640</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6784a8ca2d77115f2c3f86176f22eb20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6784a8ca2d77115f2c3f86176f22eb20">&#9670;&nbsp;</a></span>CNFO_31</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_31&#160;&#160;&#160;0x026c0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1b5045f8303011fd360c30ca911c25e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b5045f8303011fd360c30ca911c25e6">&#9670;&nbsp;</a></span>CNFO_32</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_32&#160;&#160;&#160;0x040c0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adb8965beba1f0201a1e670d91014b936"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb8965beba1f0201a1e670d91014b936">&#9670;&nbsp;</a></span>CNFO_33</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_33&#160;&#160;&#160;0x04200</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="accf721698dab91110fa6d6a62a1c16eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accf721698dab91110fa6d6a62a1c16eb">&#9670;&nbsp;</a></span>CNFO_35</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_35&#160;&#160;&#160;0x04440</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a53a88e8eff869d82cf12a7413be46698"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53a88e8eff869d82cf12a7413be46698">&#9670;&nbsp;</a></span>CNFO_36</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_36&#160;&#160;&#160;0x028a0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4dd6ff1efad9d432ca1add6bc37108f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dd6ff1efad9d432ca1add6bc37108f7">&#9670;&nbsp;</a></span>CNFO_37</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_37&#160;&#160;&#160;0x01240</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a91d8a65a76107d12ca7f70e989be14e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d8a65a76107d12ca7f70e989be14e4">&#9670;&nbsp;</a></span>CNFO_38</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_38&#160;&#160;&#160;0x04420</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad4db957ff482b73f851e3d93c4677b4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4db957ff482b73f851e3d93c4677b4b">&#9670;&nbsp;</a></span>CNFO_40</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_40&#160;&#160;&#160;0x04400</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abf6b5a7c183e9ed9b8e753e071b44f17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf6b5a7c183e9ed9b8e753e071b44f17">&#9670;&nbsp;</a></span>CNFO_5</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_5&#160;&#160;&#160;0x0620</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abede335140278cf1667c5ed37ed4971c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abede335140278cf1667c5ed37ed4971c">&#9670;&nbsp;</a></span>CNFO_7</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_7&#160;&#160;&#160;0x002c0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac26aa841e9d28308e41a7ed599761cef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac26aa841e9d28308e41a7ed599761cef">&#9670;&nbsp;</a></span>CNFO_8</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_8&#160;&#160;&#160;0x02840</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acccbc78133d50df6dc49d9d9ab0c9729"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acccbc78133d50df6dc49d9d9ab0c9729">&#9670;&nbsp;</a></span>CNFO_IN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_IN&#160;&#160;&#160;0x00000001</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a693b77a6e04592394498b942a13dedb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a693b77a6e04592394498b942a13dedb2">&#9670;&nbsp;</a></span>CNFO_OUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CNFO_OUT&#160;&#160;&#160;0x00000003</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aff4e22f0a6c14fdc9ca8e6ce97e803de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aff4e22f0a6c14fdc9ca8e6ce97e803de">&#9670;&nbsp;</a></span>EITHER_EDGE</h2>
 
@@ -1558,6 +2721,62 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define JET_OUTPUT&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aead8ec46f12a4aabf8975cf1b6c0c24c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aead8ec46f12a4aabf8975cf1b6c0c24c">&#9670;&nbsp;</a></span>MISC</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MISC&#160;&#160;&#160;0x00100000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a805d53ba3db75348c63deeb227746733"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a805d53ba3db75348c63deeb227746733">&#9670;&nbsp;</a></span>MISCREG_HIDREV_0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MISCREG_HIDREV_0&#160;&#160;&#160;0x4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa45f3f33a4532dd600449668c704c045"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa45f3f33a4532dd600449668c704c045">&#9670;&nbsp;</a></span>NANO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NANO&#160;&#160;&#160;210</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a42d2374228e5f889fc0cd024c0bab29d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42d2374228e5f889fc0cd024c0bab29d">&#9670;&nbsp;</a></span>ORIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ORIN&#160;&#160;&#160;234</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1956,6 +3175,90 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a936787ee1b6027169996711eb1d8aa81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a936787ee1b6027169996711eb1d8aa81">&#9670;&nbsp;</a></span>Pinmux_AON</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define Pinmux_AON&#160;&#160;&#160;0x0c302000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7571d1c98223ae7b12fd038a207d2ac8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7571d1c98223ae7b12fd038a207d2ac8">&#9670;&nbsp;</a></span>Pinmux_EDP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define Pinmux_EDP&#160;&#160;&#160;0x02440000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a43ed82342bf56333e64a11bd5898e7dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43ed82342bf56333e64a11bd5898e7dc">&#9670;&nbsp;</a></span>Pinmux_G2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define Pinmux_G2&#160;&#160;&#160;0x0243d000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab348776d42de8d6809fc732287b040c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab348776d42de8d6809fc732287b040c5">&#9670;&nbsp;</a></span>Pinmux_G3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define Pinmux_G3&#160;&#160;&#160;0x02430000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a67c81a740eac3d00d7f7003c8dc6b898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67c81a740eac3d00d7f7003c8dc6b898">&#9670;&nbsp;</a></span>Pinmux_G4</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define Pinmux_G4&#160;&#160;&#160;0x02434000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af6aba18ef328568b872211a86eb62e72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6aba18ef328568b872211a86eb62e72">&#9670;&nbsp;</a></span>Pinmux_G7</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define Pinmux_G7&#160;&#160;&#160;0x02448000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a0da9ab6900f1417e6d0ce9324dee512d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0da9ab6900f1417e6d0ce9324dee512d">&#9670;&nbsp;</a></span>PINMUX_IN</h2>
 
@@ -1992,6 +3295,454 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define PINMUX_OUT1&#160;&#160;&#160;0x0000e240</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aff4d8448f6a54b62ab46b5e439ff20e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff4d8448f6a54b62ab46b5e439ff20e1">&#9670;&nbsp;</a></span>PINMUXO_10</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_10&#160;&#160;&#160;0xa0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3400124ef794679731972ed847e723f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3400124ef794679731972ed847e723f2">&#9670;&nbsp;</a></span>PINMUXO_11</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_11&#160;&#160;&#160;0x98</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aff4dbb9238fafd70652dc4822735d76c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff4dbb9238fafd70652dc4822735d76c">&#9670;&nbsp;</a></span>PINMUXO_12</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_12&#160;&#160;&#160;0x88</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a03eef9a340c57fff0ce8d42c44aede5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03eef9a340c57fff0ce8d42c44aede5b">&#9670;&nbsp;</a></span>PINMUXO_13</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_13&#160;&#160;&#160;0x30</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac61634b840f8f24fd320d696b1517bd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac61634b840f8f24fd320d696b1517bd4">&#9670;&nbsp;</a></span>PINMUXO_15</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_15&#160;&#160;&#160;0x20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3e8f393cd93faa33ef67d69ecf2d846a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e8f393cd93faa33ef67d69ecf2d846a">&#9670;&nbsp;</a></span>PINMUXO_16</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_16&#160;&#160;&#160;0x20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa662975e5c723b073324ec0da4333482"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa662975e5c723b073324ec0da4333482">&#9670;&nbsp;</a></span>PINMUXO_18</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_18&#160;&#160;&#160;0x10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad6093b4e50475bb13ecdce42ed7b12d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6093b4e50475bb13ecdce42ed7b12d1">&#9670;&nbsp;</a></span>PINMUXO_19</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_19&#160;&#160;&#160;0x40</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0fce67ded53a1fedd8b638bf4ad8493b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fce67ded53a1fedd8b638bf4ad8493b">&#9670;&nbsp;</a></span>PINMUXO_21</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_21&#160;&#160;&#160;0x18</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a89a6e14991ba08d0608fed8e1642f8b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89a6e14991ba08d0608fed8e1642f8b8">&#9670;&nbsp;</a></span>PINMUXO_22</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_22&#160;&#160;&#160;0x0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aac4dd08d7f23344b7298cf2b4863f5f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac4dd08d7f23344b7298cf2b4863f5f0">&#9670;&nbsp;</a></span>PINMUXO_23</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_23&#160;&#160;&#160;0x28</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4c5db52224c5792fb2bc7c7da3c378f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c5db52224c5792fb2bc7c7da3c378f3">&#9670;&nbsp;</a></span>PINMUXO_24</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_24&#160;&#160;&#160;0x8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad074911960e0ddb84ea889092aa82bf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad074911960e0ddb84ea889092aa82bf0">&#9670;&nbsp;</a></span>PINMUXO_26</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_26&#160;&#160;&#160;0x38</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a34af9f9ebd00a093a50cb8ff95746458"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34af9f9ebd00a093a50cb8ff95746458">&#9670;&nbsp;</a></span>PINMUXO_27</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_27&#160;&#160;&#160;0x40</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa83427decc21c767e7273f203a99aabb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa83427decc21c767e7273f203a99aabb">&#9670;&nbsp;</a></span>PINMUXO_28</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_28&#160;&#160;&#160;0x30</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6ce2f025b912beb014f4d27892c8cdbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ce2f025b912beb014f4d27892c8cdbd">&#9670;&nbsp;</a></span>PINMUXO_29</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_29&#160;&#160;&#160;0x68</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a553256fe48ffbadcfffd93497949e97a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a553256fe48ffbadcfffd93497949e97a">&#9670;&nbsp;</a></span>PINMUXO_3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_3&#160;&#160;&#160;0x18</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aed118cc041434b566a7a1ae20cc9122f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed118cc041434b566a7a1ae20cc9122f">&#9670;&nbsp;</a></span>PINMUXO_31</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_31&#160;&#160;&#160;0x70</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae1ee8b5c426f1e80f55da5d01e33ebf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1ee8b5c426f1e80f55da5d01e33ebf5">&#9670;&nbsp;</a></span>PINMUXO_32</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_32&#160;&#160;&#160;0x80</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa8bb1759f0de4b9082b7416962216ae9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8bb1759f0de4b9082b7416962216ae9">&#9670;&nbsp;</a></span>PINMUXO_33</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_33&#160;&#160;&#160;0X40</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a72d33fdde8f8077bda2608ce19ca8ed3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72d33fdde8f8077bda2608ce19ca8ed3">&#9670;&nbsp;</a></span>PINMUXO_35</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_35&#160;&#160;&#160;0xa0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a85332aaeb50b89fd83af0d6d0a116b95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85332aaeb50b89fd83af0d6d0a116b95">&#9670;&nbsp;</a></span>PINMUXO_36</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_36&#160;&#160;&#160;0x90</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afad9b977d0464587d55006b22c5d4c90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afad9b977d0464587d55006b22c5d4c90">&#9670;&nbsp;</a></span>PINMUXO_37</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_37&#160;&#160;&#160;0x48</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3980a286b5ad5fcd2f015194b77336fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3980a286b5ad5fcd2f015194b77336fa">&#9670;&nbsp;</a></span>PINMUXO_38</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_38&#160;&#160;&#160;0x98</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8ae3f588a5fe5f67b00951899550d795"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ae3f588a5fe5f67b00951899550d795">&#9670;&nbsp;</a></span>PINMUXO_40</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_40&#160;&#160;&#160;0x90</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a50679d9bd83e1a0ca2174a7e92d3d08b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50679d9bd83e1a0ca2174a7e92d3d08b">&#9670;&nbsp;</a></span>PINMUXO_5</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_5&#160;&#160;&#160;0x20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afba513bedd39ab6de678b82114768fc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afba513bedd39ab6de678b82114768fc2">&#9670;&nbsp;</a></span>PINMUXO_7</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_7&#160;&#160;&#160;0x30</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a47abc31ef931ce0088dbfb79ab78ca21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47abc31ef931ce0088dbfb79ab78ca21">&#9670;&nbsp;</a></span>PINMUXO_8</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_8&#160;&#160;&#160;0xa8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab46e343b689bc4b623233111aee718e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab46e343b689bc4b623233111aee718e2">&#9670;&nbsp;</a></span>PINMUXO_IN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_IN&#160;&#160;&#160;0x00000040</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa1e75b9381760721cddfb30582a660a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1e75b9381760721cddfb30582a660a8">&#9670;&nbsp;</a></span>PINMUXO_IN1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_IN1&#160;&#160;&#160;0x00000041</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac40e66425637f32c1a5257b755d71e30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac40e66425637f32c1a5257b755d71e30">&#9670;&nbsp;</a></span>PINMUXO_OUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_OUT&#160;&#160;&#160;0x00000040</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a740a3056970b31bfe34218b4c51b3c60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a740a3056970b31bfe34218b4c51b3c60">&#9670;&nbsp;</a></span>PINMUXO_OUT1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PINMUXO_OUT1&#160;&#160;&#160;0x00000060</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2098,6 +3849,27 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="abc4a0f7f1eb1b595b6c129c036731334"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc4a0f7f1eb1b595b6c129c036731334">&#9670;&nbsp;</a></span>chip_get_id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int chip_get_id </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Auxiliary function used by <a class="el" href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0" title="Initialises the library. gpioInitialise must be called before using the other library functions,...">gpioInitialise()</a> to find out whether the hardware is supported by the library. </p>
+<dl class="section return"><dt>Returns</dt><dd>Returns the Jetson model if supported, otherwise will exit with an error message. </dd></dl>
+
+</div>
+</div>
 <a id="a80d84e5dd32fd8ec04cb0370eab0a5b0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a80d84e5dd32fd8ec04cb0370eab0a5b0">&#9670;&nbsp;</a></span>gpioInitialise()</h2>
 
@@ -2116,7 +3888,7 @@ Functions</h2></td></tr>
 
 <p>Initialises the library. gpioInitialise must be called before using the other library functions, it stores the status of all the relevant registers before using/modifying them. </p>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"> <span class="keywordflow">if</span> (<a class="code" href="jetgpio_8c.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a>() &lt; 0)</div>
+<div class="fragment"><div class="line"> <span class="keywordflow">if</span> (<a class="code" href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a>() &lt; 0)</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// jetgpio initialisation failed.</span></div>
 <div class="line">}</div>
@@ -2156,14 +3928,14 @@ Functions</h2></td></tr>
 <p>Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">gpio</td><td>32, 33 </td></tr>
+    <tr><td class="paramname">gpio</td><td>(15 Orin only), 32, 33 </td></tr>
     <tr><td class="paramname">dutycycle</td><td>0-256 (0 to 100%) </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, a negative number otherwise</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(32, 256); <span class="comment">// Sets pin 32 full on.</span></div>
-<div class="line"><a class="code" href="jetgpio_8c.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(33, 128); <span class="comment">// Sets pin 33 half on. </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(32, 256); <span class="comment">// Sets pin 32 full on.</span></div>
+<div class="line"><a class="code" href="jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(33, 128); <span class="comment">// Sets pin 33 half on. </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2191,7 +3963,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the GPIO level if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line">printf(<span class="stringliteral">&quot;pin 24 is level %d&quot;</span>, <a class="code" href="jetgpio_8c.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a>(24)); </div>
+<div class="fragment"><div class="line">printf(<span class="stringliteral">&quot;pin 24 is level %d&quot;</span>, <a class="code" href="jetgpio_8h.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a>(24)); </div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2251,7 +4023,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a>(3, <a class="code" href="jetgpio_8h.html#af13ff90bb3a97b9d46ae59f02c515b67">RISING_EDGE</a>, 1000, &amp;timestamp, &amp;<a class="code" href="jetgpio_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a>); <span class="comment">// Calls the &#39;callback&#39; function when a rising edge is detected on pin 3, with a debouncing time of 1000 useconds</span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a>(3, <a class="code" href="jetgpio_8h.html#af13ff90bb3a97b9d46ae59f02c515b67">RISING_EDGE</a>, 1000, &amp;timestamp, &amp;<a class="code" href="nano_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a>); <span class="comment">// Calls the &#39;callback&#39; function when a rising edge is detected on pin 3, with a debouncing time of 1000 useconds</span></div>
 <div class="line">it also delivers the <span class="keyword">event</span> timestamp on the <span class="stringliteral">&quot;timestamp&quot;</span> variable in EPOCH format (nanoseconds) </div>
 </div><!-- fragment --> 
 </div>
@@ -2291,8 +4063,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, -1 otherwise</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(17, <a class="code" href="jetgpio_8h.html#aa5456a9b82ea8b5dc5e79c069dc29a7b">JET_INPUT</a>);  <span class="comment">// Sets pin 17 as input. </span></div>
-</div><!-- fragment --> <div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(18, <a class="code" href="jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159">JET_OUTPUT</a>); <span class="comment">// Sets pin 18 as output. </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(17, <a class="code" href="jetgpio_8h.html#aa5456a9b82ea8b5dc5e79c069dc29a7b">JET_INPUT</a>);  <span class="comment">// Sets pin 17 as input. </span></div>
+</div><!-- fragment --> <div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(18, <a class="code" href="jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159">JET_OUTPUT</a>); <span class="comment">// Sets pin 18 as output. </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2331,7 +4103,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 1 if OK, a negative number otherwise</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a>(32, 10000); <span class="comment">// Setting up PWM frequency=10kHz @ pin 32 </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a>(32, 10000); <span class="comment">// Setting up PWM frequency=10kHz @ pin 32 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2353,7 +4125,7 @@ Functions</h2></td></tr>
 
 <p>Terminates the library. This function restores the used registers to their previous state and releases memory. </p>
 <dl class="section return"><dt>Returns</dt><dd>Returns nothing</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a>(); </div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a>(); </div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2392,7 +4164,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a>(24, 1); <span class="comment">// Sets pin 24 high. </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a>(24, 1); <span class="comment">// Sets pin 24 high. </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2420,7 +4192,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a>(MPU6050); <span class="comment">//Closing previously opened connection </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a>(MPU6050); <span class="comment">//Closing previously opened connection </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2461,7 +4233,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a handle with the I2C bus number being opened (&gt;=0) if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><span class="keywordtype">int</span> MPU6050 = <a class="code" href="jetgpio_8c.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a>(0,0); <span class="comment">//Opening a connection on pins 27/28 at speed 100kHz </span></div>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> MPU6050 = <a class="code" href="jetgpio_8h.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a>(0,0); <span class="comment">//Opening a connection on pins 27/28 at speed 100kHz </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2507,7 +4279,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the byte read (&gt;=0) if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 out of opened connection MPU6050 with i2C address 0x68 </span></div>
+<div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 out of opened connection MPU6050 with i2C address 0x68 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2553,7 +4325,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the byte read (&gt;=0) if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 </span></div>
+<div class="fragment"><div class="line">gyro_x_H = <a class="code" href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2606,7 +4378,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, negative number otherwise</dd></dl>
-<div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x00); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
+<div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8h.html#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x00); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2659,7 +4431,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, negative number otherwise</dd></dl>
-<div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x0000); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
+<div class="fragment"><div class="line">writestat = <a class="code" href="jetgpio_8h.html#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x0000); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2687,7 +4459,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a>(SPI_init); <span class="comment">//closing previously opened spi port with handle SPI_init </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a>(SPI_init); <span class="comment">//closing previously opened spi port with handle SPI_init </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2786,7 +4558,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a handle (&gt;=0) if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line">SPI_init = <a class="code" href="jetgpio_8c.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a>(1, 5000000, 0, 0, 8, 1, 1); <span class="comment">// SPI2 (pins 22/37, 500 kHz, mode 0, cs delay 0, 8 bits/word,lsb first 1, cs change 1 </span></div>
+<div class="fragment"><div class="line">SPI_init = <a class="code" href="jetgpio_8h.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a>(1, 5000000, 0, 0, 8, 1, 1); <span class="comment">// SPI2 (pins 22/37, 500 kHz, mode 0, cs delay 0, 8 bits/word,lsb first 1, cs change 1 </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -2839,31 +4611,31 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the number of bytes transferred if OK, otherwise a negative number.</dd></dl>
-<div class="fragment"><div class="line"><a class="code" href="jetgpio_8c.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a>(SPI_init, tx, rx, 7); <span class="comment">//transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init </span></div>
+<div class="fragment"><div class="line"><a class="code" href="jetgpio_8h.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a>(SPI_init, tx, rx, 7); <span class="comment">//transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init </span></div>
 </div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="ajetgpio_8c_html_a9895d7a018d90a9d16b404731debd6d6"><div class="ttname"><a href="jetgpio_8c.html#a9895d7a018d90a9d16b404731debd6d6">i2cReadByteData</a></div><div class="ttdeci">int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg)</div><div class="ttdoc">This reads a single byte from the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2247</div></div>
-<div class="ttc" id="ajetgpio_8h_html_ad589cca7b5afd4362dede39fc9af7159"><div class="ttname"><a href="jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159">JET_OUTPUT</a></div><div class="ttdeci">#define JET_OUTPUT</div><div class="ttdef"><b>Definition:</b> jetgpio.h:169</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a404d80a9a9292869c1a2b86f183b3774"><div class="ttname"><a href="jetgpio_8c.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a></div><div class="ttdeci">void gpioTerminate(void)</div><div class="ttdoc">Terminates the library. This function restores the used registers to their previous state and release...</div><div class="ttdef"><b>Definition:</b> jetgpio.c:699</div></div>
-<div class="ttc" id="ajetgpio_8c_html_afbdda01d8935cc2c2826747200b369cf"><div class="ttname"><a href="jetgpio_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a></div><div class="ttdeci">void * callback(void *arg)</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1714</div></div>
-<div class="ttc" id="ajetgpio_8c_html_ac0fe13b9811377a2f2fec9921795fb8f"><div class="ttname"><a href="jetgpio_8c.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a></div><div class="ttdeci">int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void(*f)())</div><div class="ttdoc">Registers a function to be called (a callback) whenever the specified.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1776</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a2532ad45eb33d8d476c4d6036f694702"><div class="ttname"><a href="jetgpio_8c.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a></div><div class="ttdeci">int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</div><div class="ttdoc">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bi...</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2388</div></div>
-<div class="ttc" id="ajetgpio_8h_html_af13ff90bb3a97b9d46ae59f02c515b67"><div class="ttname"><a href="jetgpio_8h.html#af13ff90bb3a97b9d46ae59f02c515b67">RISING_EDGE</a></div><div class="ttdeci">#define RISING_EDGE</div><div class="ttdef"><b>Definition:</b> jetgpio.h:173</div></div>
-<div class="ttc" id="ajetgpio_8c_html_aaf4b600818f342b2723043fb9fd594c0"><div class="ttname"><a href="jetgpio_8c.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a></div><div class="ttdeci">int i2cOpen(unsigned i2cBus, unsigned i2cFlags)</div><div class="ttdoc">This returns a handle for the device at the address on the I2C bus.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2089</div></div>
-<div class="ttc" id="ajetgpio_8c_html_ab343b74f5cb62baaaded18e4ff1ed939"><div class="ttname"><a href="jetgpio_8c.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a></div><div class="ttdeci">int gpioSetMode(unsigned gpio, unsigned mode)</div><div class="ttdoc">Sets the GPIO mode, typically input or output.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1002</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a9fb213bb27196cab00718d2fdfb33688"><div class="ttname"><a href="jetgpio_8c.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a></div><div class="ttdeci">int spiClose(unsigned handle)</div><div class="ttdoc">This functions closes the SPI device identified by the handle.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2546</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a982f8292ecf78abc5bdeeb330a2e0a05"><div class="ttname"><a href="jetgpio_8c.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a></div><div class="ttdeci">int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)</div><div class="ttdoc">Sets the frequency in hertz to be used for the GPIO.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2020</div></div>
-<div class="ttc" id="ajetgpio_8h_html_aa5456a9b82ea8b5dc5e79c069dc29a7b"><div class="ttname"><a href="jetgpio_8h.html#aa5456a9b82ea8b5dc5e79c069dc29a7b">JET_INPUT</a></div><div class="ttdeci">#define JET_INPUT</div><div class="ttdef"><b>Definition:</b> jetgpio.h:168</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a81675c68b04f3c19be1f743eae7f2136"><div class="ttname"><a href="jetgpio_8c.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a></div><div class="ttdeci">int gpioPWM(unsigned gpio, unsigned dutycycle)</div><div class="ttdoc">Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2046</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a7cec2380fb349274d58e661e3d14fb5c"><div class="ttname"><a href="jetgpio_8c.html#a7cec2380fb349274d58e661e3d14fb5c">i2cWriteByteData</a></div><div class="ttdeci">int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned bVal)</div><div class="ttdoc">This writes a single byte to the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2197</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a96e92eb729c89f2a9a893adf83251dc8"><div class="ttname"><a href="jetgpio_8c.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a></div><div class="ttdeci">int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)</div><div class="ttdoc">This function transfers count bytes of data from txBuf to the SPI device associated with the handle....</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2568</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a80d84e5dd32fd8ec04cb0370eab0a5b0"><div class="ttname"><a href="jetgpio_8c.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a></div><div class="ttdeci">int gpioInitialise(void)</div><div class="ttdoc">Initialises the library. gpioInitialise must be called before using the other library functions,...</div><div class="ttdef"><b>Definition:</b> jetgpio.c:183</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a15ec7e76572f925b9e206018fd5d22e9"><div class="ttname"><a href="jetgpio_8c.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a></div><div class="ttdeci">int gpioWrite(unsigned gpio, unsigned level)</div><div class="ttdoc">Sets the GPIO level, on or off. Arduino style: digitalWrite.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1519</div></div>
-<div class="ttc" id="ajetgpio_8c_html_a754d22c52d797f32f02c86863496b0ec"><div class="ttname"><a href="jetgpio_8c.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a></div><div class="ttdeci">int gpioRead(unsigned gpio)</div><div class="ttdoc">Reads the GPIO level, on or off, 0 or 1. Arduino style: digitalRead. Wheter a pin has been set as inp...</div><div class="ttdef"><b>Definition:</b> jetgpio.c:1422</div></div>
-<div class="ttc" id="ajetgpio_8c_html_aac119696ea99a19576c6fe858bb8a031"><div class="ttname"><a href="jetgpio_8c.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a></div><div class="ttdeci">int i2cClose(unsigned handle)</div><div class="ttdoc">This closes the I2C device associated with the handle.</div><div class="ttdef"><b>Definition:</b> jetgpio.c:2170</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ad589cca7b5afd4362dede39fc9af7159"><div class="ttname"><a href="jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159">JET_OUTPUT</a></div><div class="ttdeci">#define JET_OUTPUT</div><div class="ttdef"><b>Definition:</b> jetgpio.h:302</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a9fb213bb27196cab00718d2fdfb33688"><div class="ttname"><a href="jetgpio_8h.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a></div><div class="ttdeci">int spiClose(unsigned handle)</div><div class="ttdoc">This functions closes the SPI device identified by the handle.</div><div class="ttdef"><b>Definition:</b> nano.c:2546</div></div>
+<div class="ttc" id="ajetgpio_8h_html_af13ff90bb3a97b9d46ae59f02c515b67"><div class="ttname"><a href="jetgpio_8h.html#af13ff90bb3a97b9d46ae59f02c515b67">RISING_EDGE</a></div><div class="ttdeci">#define RISING_EDGE</div><div class="ttdef"><b>Definition:</b> jetgpio.h:306</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a642db3078905bf982f784fb7b428bda4"><div class="ttname"><a href="jetgpio_8h.html#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a></div><div class="ttdeci">int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned bVal)</div><div class="ttdoc">This writes a single byte to the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition:</b> nano.c:2198</div></div>
+<div class="ttc" id="anano_8c_html_afbdda01d8935cc2c2826747200b369cf"><div class="ttname"><a href="nano_8c.html#afbdda01d8935cc2c2826747200b369cf">callback</a></div><div class="ttdeci">void * callback(void *arg)</div><div class="ttdef"><b>Definition:</b> nano.c:1715</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a982f8292ecf78abc5bdeeb330a2e0a05"><div class="ttname"><a href="jetgpio_8h.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a></div><div class="ttdeci">int gpioSetPWMfrequency(unsigned gpio, unsigned frequency)</div><div class="ttdoc">Sets the frequency in hertz to be used for the GPIO.</div><div class="ttdef"><b>Definition:</b> nano.c:2021</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a80d84e5dd32fd8ec04cb0370eab0a5b0"><div class="ttname"><a href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a></div><div class="ttdeci">int gpioInitialise(void)</div><div class="ttdoc">Initialises the library. gpioInitialise must be called before using the other library functions,...</div><div class="ttdef"><b>Definition:</b> nano.c:184</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a15ec7e76572f925b9e206018fd5d22e9"><div class="ttname"><a href="jetgpio_8h.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a></div><div class="ttdeci">int gpioWrite(unsigned gpio, unsigned level)</div><div class="ttdoc">Sets the GPIO level, on or off. Arduino style: digitalWrite.</div><div class="ttdef"><b>Definition:</b> nano.c:1520</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a404d80a9a9292869c1a2b86f183b3774"><div class="ttname"><a href="jetgpio_8h.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a></div><div class="ttdeci">void gpioTerminate(void)</div><div class="ttdoc">Terminates the library. This function restores the used registers to their previous state and release...</div><div class="ttdef"><b>Definition:</b> nano.c:700</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a96e92eb729c89f2a9a893adf83251dc8"><div class="ttname"><a href="jetgpio_8h.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a></div><div class="ttdeci">int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)</div><div class="ttdoc">This function transfers count bytes of data from txBuf to the SPI device associated with the handle....</div><div class="ttdef"><b>Definition:</b> nano.c:2568</div></div>
+<div class="ttc" id="ajetgpio_8h_html_aaf4b600818f342b2723043fb9fd594c0"><div class="ttname"><a href="jetgpio_8h.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a></div><div class="ttdeci">int i2cOpen(unsigned i2cBus, unsigned i2cFlags)</div><div class="ttdoc">This returns a handle for the device at the address on the I2C bus.</div><div class="ttdef"><b>Definition:</b> nano.c:2090</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ae76dd5363acd174d24526f54c665c629"><div class="ttname"><a href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a></div><div class="ttdeci">int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg)</div><div class="ttdoc">This reads a single byte from the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition:</b> nano.c:2248</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a81675c68b04f3c19be1f743eae7f2136"><div class="ttname"><a href="jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a></div><div class="ttdeci">int gpioPWM(unsigned gpio, unsigned dutycycle)</div><div class="ttdoc">Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite.</div><div class="ttdef"><b>Definition:</b> nano.c:2047</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a754d22c52d797f32f02c86863496b0ec"><div class="ttname"><a href="jetgpio_8h.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a></div><div class="ttdeci">int gpioRead(unsigned gpio)</div><div class="ttdoc">Reads the GPIO level, on or off, 0 or 1. Arduino style: digitalRead. Wheter a pin has been set as inp...</div><div class="ttdef"><b>Definition:</b> nano.c:1423</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a2532ad45eb33d8d476c4d6036f694702"><div class="ttname"><a href="jetgpio_8h.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a></div><div class="ttdeci">int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</div><div class="ttdoc">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bi...</div><div class="ttdef"><b>Definition:</b> nano.c:2388</div></div>
+<div class="ttc" id="ajetgpio_8h_html_aa5456a9b82ea8b5dc5e79c069dc29a7b"><div class="ttname"><a href="jetgpio_8h.html#aa5456a9b82ea8b5dc5e79c069dc29a7b">JET_INPUT</a></div><div class="ttdeci">#define JET_INPUT</div><div class="ttdef"><b>Definition:</b> jetgpio.h:301</div></div>
+<div class="ttc" id="ajetgpio_8h_html_aac119696ea99a19576c6fe858bb8a031"><div class="ttname"><a href="jetgpio_8h.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a></div><div class="ttdeci">int i2cClose(unsigned handle)</div><div class="ttdoc">This closes the I2C device associated with the handle.</div><div class="ttdef"><b>Definition:</b> nano.c:2171</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ab343b74f5cb62baaaded18e4ff1ed939"><div class="ttname"><a href="jetgpio_8h.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a></div><div class="ttdeci">int gpioSetMode(unsigned gpio, unsigned mode)</div><div class="ttdoc">Sets the GPIO mode, typically input or output.</div><div class="ttdef"><b>Definition:</b> nano.c:1003</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ac0fe13b9811377a2f2fec9921795fb8f"><div class="ttname"><a href="jetgpio_8h.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a></div><div class="ttdeci">int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void(*f)())</div><div class="ttdoc">Registers a function to be called (a callback) whenever the specified.</div><div class="ttdef"><b>Definition:</b> nano.c:1777</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
