@@ -32,24 +32,7 @@ Clone/download the content into any folder in your JETSON, cd to that folder and
     sudo make   
     sudo make install                                             
   
-That's it, the library should be installed and ready to be used. Make will detect your model automatically but if that does not happen and you are completely sure about
-the family your machine belongs to, you can always force compilation for a specific model, see below.
-
-For Orin Nano/NX:
-
-    sudo make orin
-
-For Nano:
-
-    sudo make nano
-
-Finally install:
-
-    sudo make install	
-
-To uninstall the library:
-
-    sudo make uninstall
+That's it, the library should be installed and ready to be used. 
   
 <h2 align="left">HOW TO:</h2> 
  
@@ -122,7 +105,7 @@ https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
 
 https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/
 
-The library has been tested on a Jetson nano: tegra210 (TX1) and Jetson Orin Nano: tegra234
+The library has been tested on a Jetson Nano: tegra210 (TX1) and Jetson Orin Nano: tegra234
 
 
 
