@@ -501,7 +501,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency);
 /**<
  * @brief Sets the frequency in hertz to be used for the GPIO.
- * @param gpio 32, 33
+ * @param gpio (15 Orin only), 32, 33
  * @param frequency 25Hz to 200 kHz
  * @return Returns 1 if OK, a negative number otherwise
  *
