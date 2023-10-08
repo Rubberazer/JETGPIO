@@ -106,8 +106,8 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <h2 align="left">INSTALLATION:</h2>
 <p>Clone/download the content into any folder in your JETSON, cd to that folder and type: </p><pre class="fragment">sudo make   
 sudo make install                                             
-</pre><p>That's it, the library should be installed and ready to be used.</p>
-<h2 align="left">HOW TO:</h2>
+</pre><p>That's it, the library should be installed and ready to be used. To uninstall the library: </p><pre class="fragment">sudo make uninstall
+</pre><h2 align="left">HOW TO:</h2>
 <p>You will find code examples to learn how to use the library in both: EXAMPLES_C &amp; EXAMPLES_C++ folders, the first one contains all the C examples, the second one contains the same examples ready to compile in C++. To compile the examples you will find instructions in the comment section at the top of each of the example files</p>
 <ul>
 <li><a href="https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_example.c">jetgpio_example.c</a> &amp; <a href="https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C++/jetgpio_example.cpp">jetgpio_example.cpp</a> show how to setup and use any of the pins as Inputs/Outputs, this will allow you to toggle pins from 0V (logic 0) to 3.3V (logic 1) or read the pin as an input where 3.3V at the pin is a logic 1. Note that when reading inputs, floating pins will throw unreliable results (as there is no actual input)</li>
