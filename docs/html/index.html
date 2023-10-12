@@ -132,9 +132,9 @@ sudo make install
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft"></th><th class="markdownTableHeadCenter">Nano Classic </th><th class="markdownTableHeadRight">Orin Nano  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">Minimum </td><td class="markdownTableBodyCenter">1.3 us </td><td class="markdownTableBodyRight">3.1 us  </td></tr>
+<td class="markdownTableBodyLeft">Minimum </td><td class="markdownTableBodyCenter">1.3 us </td><td class="markdownTableBodyRight">3.1 us **  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">Maximum </td><td class="markdownTableBodyCenter">1.8 us </td><td class="markdownTableBodyRight">4.2 us  </td></tr>
+<td class="markdownTableBodyLeft">Maximum </td><td class="markdownTableBodyCenter">1.8 us </td><td class="markdownTableBodyRight">4.2 us **  </td></tr>
 </table>
 <p>Compiling and running <a href="https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_speed_edge.c">jetgpio_speed_edge.c</a> I am trying to measure the time using a similar setup as described above, the difference here is that I am using the library function: <a class="el" href="jetgpio_8h.html#ac0fe13b9811377a2f2fec9921795fb8f" title="Registers a function to be called (a callback) whenever the specified.">gpioSetISRFunc()</a> which basically goes through the linux gpio driver in order to catch rising and falling edges, the reason to use the linux driver for this has to do with the fact that catching interrupts from user space (this is a library after all) is basically 'problematic' for a number of reasons, in short, if driver performance and/or device tree stuff got in my way I would basically replace the current driver by my own, but that is beyond the scope of this library.</p>
 <table class="markdownTable">
@@ -151,8 +151,9 @@ sudo make install
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft"></th><th class="markdownTableHeadCenter">Nano Classic </th><th class="markdownTableHeadRight">Orin Nano  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">Average </td><td class="markdownTableBodyCenter">0.6 us </td><td class="markdownTableBodyRight">2 us  </td></tr>
+<td class="markdownTableBodyLeft">Average </td><td class="markdownTableBodyCenter">0.6 us </td><td class="markdownTableBodyRight">2 us **  </td></tr>
 </table>
+<p>**Yes, the new Orin has a slower response/higher latency than the old Jetson Nano, this is due to the fact that writing to some registers is being monitored by an external Arm R5 MCU called SPE (Sensor Processing Engine). This CPU is an addition to what is called CPU Complex (the 6 Arm A78A cores that are described on the Orin Nano/NX specs), this CPU is running FreeRTOS and is completely independent from the main system. Some of the tasks performed by this CPU are clock and power supply management for peripherals inside the SOM e.g. PWM, GPIO... but it also plays a "firewall" role, in other words before writing to some registers in the standard CPU Complex the writing instructions have to pass through this "firewall" making the whole thing slower. This extra, out of the system security manager can be very useful on some applications but it has obviously a downside. Again sorting this out goes beyond the scope of any user space application (library) and it would imply flashing the Orin after modifying stuff, which is something along with other things like modifying the device tree (and reflashing probably) that I wanted to avoid when I created this library.</p>
 <p><img src="https://github.com/Rubberazer/JETGPIO/assets/47650457/7f42ef1d-17f6-45bd-a4ce-68e6481ab7a8" alt="oscillo_output" class="inline"/></p>
 <h2 align="left">JETSON NANO AND ORIN PINOUT:</h2>
 <p>The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use the ones below:</p>
