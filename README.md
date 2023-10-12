@@ -73,7 +73,7 @@ The results that I am getting for the round trip (total time to execute both act
 |              | Nano Classic   | Orin Nano     |
 | :---         |     :---:      |          ---: |
 | Minimum      |  1.3 us        |  3.1 us       |
-| Maximum      |  1.8 us        |  4.2 us       |
+| Maximum      |  1.8 us        |  4.2 us       |**
 
 
 Compiling and running [jetgpio_speed_edge.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_speed_edge.c) I am trying to measure the time using a similar setup as described above, the difference here is that I am using the library function: gpioSetISRFunc() which basically goes through the linux gpio driver in order to catch rising and falling edges, the reason to use the linux driver for this has to do with the fact that catching interrupts from user space (this is a library after all) is basically 'problematic' for a number of reasons, in short, if driver performance and/or device tree stuff got in my way I would basically replace the current driver by my own, but that is beyond the scope of this library.
@@ -91,10 +91,10 @@ Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/b
 
 |              | Nano Classic   | Orin Nano     |
 | :---         |     :---:      |          ---: |
-| Average      |  0.6 us        |  2 us         |
+| Average      |  0.6 us        |  2 us         |**
 
 
-
+**Yes, the new Orin has a slower response/higher latency than the old Jetson Nano, this is due to the fact that writing to some registers is being monitored by an external Arm R5 MCU called SPE (Sensor Processing Engine). This CPU is an addition to what is called CPU Complex (the 6 Arm A78A cores that are described on the Orin Nano/NX specs), this CPU is running FreeRTOS and is completely independent from the main system. Some of the tasks performed by this CPU are clock and power supply management for peripherals inside the SOM e.g. PWM, GPIO... but it also plays a "firewall" role, in other words before writing to some registers in the standard CPU Complex the writing instructions have to pass through this "firewall" making the whole thing slower. This extra, out of the system security manager can be very useful on some applications but it has obviously a downside. Again sorting this out goes beyond the scope of any user space application (library) and it would imply flashing the Orin after modifying stuff, which is something along with other things like modifying the device tree (and reflashing probably) that I wanted to avoid when I created this library.
 
 
 ![oscillo_output](https://github.com/Rubberazer/JETGPIO/assets/47650457/7f42ef1d-17f6-45bd-a4ce-68e6481ab7a8)
