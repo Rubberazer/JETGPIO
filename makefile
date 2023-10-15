@@ -14,11 +14,14 @@ all: step1 step2 step3
 step1:
 	$(CC) -Wall -Werror -o $(MODELTARGET) $(MODELFILE)
 	./$(MODELTARGET)
+
 step2:
 	$(eval MODEL := $(shell cat ./hardware))
+
 step3:
 	$(CC) $(CFLAGS) $(MODEL)$(C_EXTENSION)
 	$(CC) $(LDFLAGS) -o $(LIB) $(MODEL)$(OBJ_EXTENSION) $(LIBS)
+
 step4:
 	install -m 0755 $(LIB) /usr/lib
 	install -m 0644 jetgpio.h /usr/include
@@ -32,28 +35,34 @@ step4:
 		systemctl enable pwm_enable.service;\
 		systemctl start pwm_enable.service;\
 	fi
+
 step5:
+	$(eval MODEL := $(shell systemctl is-enabled pwm_enable.service 2>/dev/null))
+
+step6:
 	rm -f /usr/lib/$(LIB)
 	rm -f /usr/include/jetgpio.h
 	ldconfig
-	@if [ $(MODEL) == orin ]; then\
+	@if [ "$(MODEL)" == "enabled" ]; then\
 		systemctl disable pwm_enable.service;\
 		rm -f /etc/systemd/system/pwm_enabler.sh;\
 		rm -f /etc/systemd/system/pwm_enable.service;\
 	fi
+
 nano:
 	$(CC) $(CFLAGS) nano.c
 	$(CC) $(LDFLAGS) -o $(LIB) nano.o $(LIBS)
 	@echo nano >  ./hardware
+
 orin:
 	$(CC) $(CFLAGS) orin.c
 	$(CC) $(LDFLAGS) -o $(LIB) orin.o $(LIBS)
 	@echo orin >  ./hardware
-clean:
-	rm -f *.o $(LIB) get_chip_id
 
+clean:
+	rm -f *.o $(LIB) get_chip_id hardware
 
 install: step2 step4
 
-uninstall: step2 step5
+uninstall: step5 step6
 
