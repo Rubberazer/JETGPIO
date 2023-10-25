@@ -1,6 +1,6 @@
 # JETGPIO library  
 
-C library to manage the GPIO header of the Nvidia JETSONs
+C library to manage the GPIO header of the Nvidia JETSON boards
 
 [ORIN NOW SUPPORTED - NOTIFICATION OF ISSUES WELCOME](https://github.com/Rubberazer/JETGPIO/discussions/14)
 
