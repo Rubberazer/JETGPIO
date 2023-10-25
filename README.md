@@ -9,7 +9,7 @@ C library to manage the GPIO header of the Nvidia JETSONs
 
 - Supported models:
 
-  - JETSON NANO (TX1) family
+  - JETSON NANO and TX1
 
   - (BETA) JETSON ORIN NANO and ORIN NX 
 
