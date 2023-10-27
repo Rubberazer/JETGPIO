@@ -2237,7 +2237,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
 int i2cClose(unsigned handle) {
   char buf[100];
 	
-  if (handle > 1) {
+  if (!(handle == 1 || handle == 7)) {
     printf( "Bad handle (%d)", handle);
     return -1;
   }
@@ -2264,7 +2264,7 @@ int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned b
   union i2c_smbus_data data;
   int status = 0;
 	
-  if (handle >= 2) {
+  if (!(handle == 1 || handle == 7)) {
     printf( "Bad handle (%d)\n", handle);
     status = -1;
   }
@@ -2313,7 +2313,7 @@ int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg) {
   int status = 0;
   union i2c_smbus_data data;
 	
-  if (handle >= 2) {
+  if (!(handle == 1 || handle == 7)) {
     printf( "Bad handle (%d)\n", handle);
     status = -1;
   }
@@ -2359,7 +2359,7 @@ int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned w
   union i2c_smbus_data data;
   int status = 0;
 	
-  if (handle >= 2) {
+  if (!(handle == 1 || handle == 7)) {
     printf( "Bad handle (%d)\n", handle);
     status = -1;
   }
@@ -2409,7 +2409,7 @@ int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg){
   int status = 0;
   union i2c_smbus_data data;
 	
-  if (handle >= 2) {
+  if (!(handle == 1 || handle == 7)) {
     printf( "Bad handle (%d)\n", handle);
     status = -1;
   }
