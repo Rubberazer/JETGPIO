@@ -68,8 +68,8 @@ static volatile uint32_t  PWM1_Init;
 static volatile uint32_t  PWM5_Init;
 static volatile uint32_t  PWM7_Init;
 
-static i2cInfo_t i2cInfo[2];
-static int i2c_speed[2];
+static i2cInfo_t i2cInfo[8];
+static int i2c_speed[8];
 
 static SPIInfo_t SpiInfo[3];
 
@@ -2158,6 +2158,13 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
     return -1;
   }
 
+  if (i2cBus == 0) {
+    i2cBus = 1;
+  }
+  else {
+    i2cBus = 7;
+  }
+  
   if (!(i2cFlags == 0 || i2cFlags == 1 || i2cFlags == 2)) {
     printf("Only flags 0 to 2 are supported to set up bus speed\n");
     return -2;
