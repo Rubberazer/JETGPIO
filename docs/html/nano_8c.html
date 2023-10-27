@@ -623,7 +623,7 @@ Variables</h2></td></tr>
 <p>This returns a handle for the device at the address on the I2C bus. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">i2cBus</td><td>0 or 1, 0 are pins 27 (SDA) &amp; 28 (SCL), 1 are pins 3(SDA) &amp; 5(SCL) Flags allow you to change the bus speed: </td></tr>
+    <tr><td class="paramname">i2cBus</td><td>0 or 1, 0 are pins 27 (SDA) &amp; 28 (SCL), 1 are pins 3(SDA) &amp; 5(SCL) In Orin the pins are the same but the i2c devices are: 0-&gt;i2c-1 &amp; 1-&gt;i2c-7 Flags allow you to change the bus speed: </td></tr>
     <tr><td class="paramname">i2cFlags</td><td>0 -&gt; 100 kHz </td></tr>
     <tr><td class="paramname">i2cFlags</td><td>1 -&gt; 400 kHz </td></tr>
     <tr><td class="paramname">i2cFlags</td><td>2 -&gt; 1 MHz </td></tr>
