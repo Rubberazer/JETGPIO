@@ -722,8 +722,8 @@ int gpioInitialise(void)
   PWM7_Init = *PWM7;
 
   // Initialize i2c
-  i2cInfo[0].state = I2C_CLOSED;
   i2cInfo[1].state = I2C_CLOSED;
+  i2cInfo[7].state = I2C_CLOSED;
     
   // Initialize spi
   SpiInfo[0].state = SPI_CLOSED;

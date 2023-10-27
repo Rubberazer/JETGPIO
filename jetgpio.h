@@ -524,6 +524,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags);
 /**<
  * @brief This returns a handle for the device at the address on the I2C bus.
  * @param i2cBus 0 or 1, 0 are pins 27 (SDA) & 28 (SCL), 1 are pins 3(SDA) & 5(SCL)
+ * In Orin the pins are the same but the i2c devices are: 0->i2c-1 & 1->i2c-7
  * Flags allow you to change the bus speed:
  * @param i2cFlags 0 -> 100 kHz
  * @param i2cFlags 1 -> 400 kHz
