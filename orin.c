@@ -1853,7 +1853,6 @@ void *callback(void *arg) {
      * previous versions of the kernel, I assume the framework/driver is broken @ v5.10, also tried with GPIO V2
      * with the same outcome. NOTE that on this version the flag: GPIO_V2_LINE_FLAG_EVENT_CLOCK_REALTIME is NOT 
      * available, the whole thing smells like a transition (broken) version of either the framework or the driver.
-     * Maybe something wrong with my machine? It would be nice if somebody else tried on a different one
      */
     clock_gettime(CLOCK_REALTIME, &start);			       
     timestamp_new = BILLION * (start.tv_sec) + start.tv_nsec;
