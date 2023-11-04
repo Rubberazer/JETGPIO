@@ -100,7 +100,8 @@ Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/b
 
 
 
-![freenove_i2c_1602_lcd](https://github.com/Rubberazer/JETGPIO/assets/47650457/def4f3ff-c488-4a65-84f2-792843ace9cf)
+![freenove_i2c_1602_lcd](https://github.com/Rubberazer/JETGPIO/assets/47650457/321d70bb-d5f2-4577-b83c-b189f7ed72c9)
+
 
     
 <h2 align="left">JETSON NANO AND ORIN PINOUT:</h2>
