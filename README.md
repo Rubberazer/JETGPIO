@@ -99,7 +99,6 @@ Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/b
 **Yes, the new Orin has a slower response/higher latency than the old Jetson Nano, this is due to the fact that writing to some registers is being monitored by an external Arm R5 MCU called BPMP (Boot and Power Management Processor). This MCU is an addition to what is called CPU Complex (the 6 Arm A78A cores that are described on the Orin Nano/NX specs), this CPU is running FreeRTOS and is completely independent from the main system. Some of the tasks performed by this MCU are clock and power supply management for peripherals inside the SOM e.g. PWM, GPIO... but it also plays a "firewall" role, in other words before writing to some registers in the standard CPU Complex the writing instructions have to pass through this "firewall" making the whole thing slower. This extra, out of the system security manager can be very useful on some applications but it has obviously a downside. Again sorting this out goes beyond the scope of any user space application (library) and it would imply flashing the Orin after modifying stuff, which is something along with other things like modifying the device tree (and reflashing probably) that I wanted to avoid when I created this library.
 
 
-![oscillo_output](https://github.com/Rubberazer/JETGPIO/assets/47650457/7f42ef1d-17f6-45bd-a4ce-68e6481ab7a8)
 
 ![freenove_i2c_1602_lcd](https://github.com/Rubberazer/JETGPIO/assets/47650457/def4f3ff-c488-4a65-84f2-792843ace9cf)
 
