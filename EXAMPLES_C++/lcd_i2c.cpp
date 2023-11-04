@@ -60,9 +60,9 @@ int main(int argc, char *argv[]){
    
   gpioInitialise();
 	
-  // Opening the connection to the LCD I2C slave 0x3f, i2c port 0 (pins 27/28), flags = 0 (100 kHz)
+  // Opening the connection to the LCD I2C slave 0x3f, i2c port 1 (pins 3/5), flags = 0 (100 kHz)
 
-  int lcd = i2cOpen(0,0);
+  int lcd = i2cOpen(1,0);
   
   // Now setting stuff up, device has not register map, all characters are sent as is, not to a specific register address
   // the trick here is to send the same stuff twice for commands and for characters just once and then a 0, which does nothing

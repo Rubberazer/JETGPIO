@@ -50,7 +50,7 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 - [jetgpio_i2c_example.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_i2c_example.c) & [jetgpio_i2c_example.cpp](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C++/jetgpio_i2c_example.cpp) show how to use the i2c comms to talk to a MPU6050 gyroscope connected to i2c0 (pins 27 & 28)
 
-- [lcd_i2c.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/lcd_i2c.c) & [lcd_i2c.cpp](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C++/lcd_i2c.cpp) minimalistic example of how to show a message on the screen of a Freenove i2c 1602 LCD display connected to i2c0 (pins 27 & 28)
+- [lcd_i2c.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/lcd_i2c.c) & [lcd_i2c.cpp](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C++/lcd_i2c.cpp) minimalistic example of how to show a message on the screen of a Freenove i2c 1602 LCD display connected to i2c1 (pins 3 & 5)
 
 - [spi_loop.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/spi_loop.c) & [spi_loop.cpp](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C++/spi_loop.cpp) show how to run a simple loop test on the SPI port(s) by connecting together pins 19 & 21 for port SPI1 and pins 22 & 37 
   for port SPI2
