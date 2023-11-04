@@ -5,69 +5,61 @@
 
 #include <iostream>
 #include <unistd.h>
-#include <string.h>
+#include <cstring>
 #include <jetgpio.h>
-
-// Global variable to interrupt the loop later on 
-static volatile int interrupt = 1;
-
-// Ctrl-c signal function handler
-void inthandler(int signum) 
-{
-  usleep(1000);
-  printf("\nCaught Ctrl-c, coming out ...\n");
-  interrupt = 0;
-}
 
 void send_command(unsigned handle, unsigned i2cAddr, unsigned command){
   unsigned buffer = command & 0xF0;
   buffer |= 0x04;
   unsigned buffer2 = buffer;
   buffer |= 0x08;
-  i2cWriteByteData(handle, i2cAddr, buffer, buffer);
+  i2cWriteByteData(handle, i2cAddr, buffer, 0x0);
   usleep(2000);
   buffer2 &= 0xFB;
-  i2cWriteByteData(handle, i2cAddr, buffer2, buffer2);
+  buffer2 |= 0x08;
+  i2cWriteByteData(handle, i2cAddr, buffer2, 0x0);
 
   buffer = (command & 0x0F) << 4;
   buffer |= 0x04;
   buffer2 = buffer;
   buffer |= 0x08;
-  i2cWriteByteData(handle, i2cAddr, buffer, buffer);
+  i2cWriteByteData(handle, i2cAddr, buffer, 0x0);
   usleep(2000);
   buffer2 &= 0xFB;
-  i2cWriteByteData(handle, i2cAddr, buffer2, buffer2);
+  buffer2 |= 0x08;
+  i2cWriteByteData(handle, i2cAddr, buffer2, 0x0);
 }
 
 void send_data(unsigned handle, unsigned i2cAddr, unsigned data){
   unsigned buffer = data & 0xF0;
   buffer |= 0x05;
-  //unsigned buffer2 = buffer;
+  unsigned buffer2 = buffer;
   buffer |= 0x08;
-  i2cWriteByteData(handle, i2cAddr, buffer, 0);
-  usleep(2000);
-  //buffer2 &= 0xFB;
-  //i2cWriteByteData(handle, i2cAddr, buffer2, buffer2);
+  //i2cWriteByteData(handle, i2cAddr, buffer, 0);
+  //usleep(2000);
+  buffer2 &= 0xFB;
+  buffer2 |= 0x08;
+  i2cWriteByteData(handle, i2cAddr, buffer, buffer2);
 
   buffer = (data & 0x0F) << 4;
   buffer |= 0x05;
-  //buffer2 = buffer;
+  buffer2 = buffer;
   buffer |= 0x08;
-  i2cWriteByteData(handle, i2cAddr, buffer, 0);
-  usleep(2000);
-  //buffer2 &= 0xFB;
-  //i2cWriteByteData(handle, i2cAddr, buffer2, buffer2);
+  //i2cWriteByteData(handle, i2cAddr, buffer, 0);
+  //usleep(2000);
+  buffer2 &= 0xFB;
+  buffer2 |= 0x08;
+  i2cWriteByteData(handle, i2cAddr, buffer, buffer2);
 }
 
 int main(int argc, char *argv[]){
   
   const int LCD_SLAVE_ADDRESS = 0x3f;
 
-  printf("Press Ctrl-c to stop...\n");
+  printf("This will print something on the LCD and it will stay until LCD reset\n");
    
   gpioInitialise();
 	
-
   // Opening the connection to the LCD I2C slave 0x3f, i2c port 0 (pins 27/28), flags = 0 (100 kHz)
 
   int lcd = i2cOpen(0,0);
@@ -95,26 +87,24 @@ int main(int argc, char *argv[]){
   
   usleep(5000);
 
-  i2cWriteByteData(lcd, LCD_SLAVE_ADDRESS, 0x08, 0x08);
+  i2cWriteByteData(lcd, LCD_SLAVE_ADDRESS, 0x08, 0x0);
 
   //Now can start writing to the lcd screen, starting at position 0,0 first line ot the left
 
   char message[15] = {"Jetgpio"};
   char message2[15] = {"by Rubberazer"};
 
-  while(interrupt){
-    send_command(lcd, LCD_SLAVE_ADDRESS, 0x80); //Positioning cursor at point 0,0
-    for (size_t i=0;i<strlen(message);i++){
-      send_data(lcd, LCD_SLAVE_ADDRESS, (unsigned)message[i]);
-    }
-
-    send_command(lcd, LCD_SLAVE_ADDRESS, 0xC1); //Positioning cursor at second line
-    for (size_t i=0;i<strlen(message2);i++){
-      send_data(lcd, LCD_SLAVE_ADDRESS, (unsigned)message2[i]);
-    }
+  
+  send_command(lcd, LCD_SLAVE_ADDRESS, 0x80); //Positioning cursor at point 0,0
+  for (size_t i=0;i<strlen(message);i++){
+    send_data(lcd, LCD_SLAVE_ADDRESS, (unsigned)message[i]);
   }
-  send_command(lcd, LCD_SLAVE_ADDRESS, 0x01); //Clear screen
-    
+
+  send_command(lcd, LCD_SLAVE_ADDRESS, 0xC1); //Positioning cursor at second line
+  for (size_t i=0;i<strlen(message2);i++){
+    send_data(lcd, LCD_SLAVE_ADDRESS, (unsigned)message2[i]);
+  }
+
   // Closing i2c connection
 
   i2cClose(lcd);
