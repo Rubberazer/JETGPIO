@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </li>
 <li>GPIO control of all the header pinout as input or output. Low latency, see also <a href="#the-need-for-speed">The need for speed</a> below for some more information on this</li>
 <li>Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided</li>
-<li>PWM (hardware) control on header pins 15 (Orin only) 32 &amp; 33</li>
+<li>PWM (hardware) control on header pins 32, 33 for all models and also 15 for Orin</li>
 <li>I2C serial communication over pins: 27 (GEN1_I2C_SDA) &amp; 28 (GEN1_I2C_SCL) and 3 (GEN2_I2C_SDA) &amp; 5 (GEN2_I2C_SCL)</li>
 <li>SPI serial communication over pins: 19 (SPI1_MOSI), 21 (SPI1_MISO), 23 (SPI1_SCK) &amp; 24 (SPI1_CS0) and 37 (SPI2_MOSI), 22 (SPI2_MISO), 13 (SPI2_SCK) &amp; 18 (SPI2_CS0)</li>
 <li>No need of previous kernel configuration, no need to change the device tree, no need to reconfigure via /opt/nvidia/jetson-io/jetson-io.py or the like <br  />
