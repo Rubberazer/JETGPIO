@@ -92,14 +92,14 @@ int main(int argc, char *argv[]){
   //Now can start writing to the lcd screen, starting at position 0,0 first line ot the left
 
   char message[16] = {"Jetgpio"};
-  char message2[16] = {"by Rubberazer"};
+  char message2[16] = {" by Rubberazer"};
   
   send_command(lcd, LCD_SLAVE_ADDRESS, 0x80); //Positioning cursor at point 0,0
   for (size_t i=0;i<strlen(message);i++){
     send_data(lcd, LCD_SLAVE_ADDRESS, message[i]);
   }
 
-  send_command(lcd, LCD_SLAVE_ADDRESS, 0xC1); //Positioning cursor at second line
+  send_command(lcd, LCD_SLAVE_ADDRESS, 0xC0); //Positioning cursor at second line
   for (size_t i=0;i<strlen(message2);i++){
     send_data(lcd, LCD_SLAVE_ADDRESS, message2[i]);
   }
