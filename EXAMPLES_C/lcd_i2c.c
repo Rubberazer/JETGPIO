@@ -93,9 +93,8 @@ int main(int argc, char *argv[]){
 
   //Now can start writing to the lcd screen, starting at position 0,0 first line ot the left
 
-  char message[15] = {"Jetgpio"};
-  char message2[15] = {"by Rubberazer"};
-
+  char message[16] = {"Jetgpio"};
+  char message2[16] = {"by Rubberazer"};
   
   send_command(lcd, LCD_SLAVE_ADDRESS, 0x80); //Positioning cursor at point 0,0
   for (int i=0;i<strlen(message);i++){
