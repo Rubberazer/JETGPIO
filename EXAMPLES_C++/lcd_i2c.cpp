@@ -97,12 +97,12 @@ int main(int argc, char *argv[]){
   
   send_command(lcd, LCD_SLAVE_ADDRESS, 0x80); //Positioning cursor at point 0,0
   for (size_t i=0;i<strlen(message);i++){
-    send_data(lcd, LCD_SLAVE_ADDRESS, (unsigned)message[i]);
+    send_data(lcd, LCD_SLAVE_ADDRESS, message[i]);
   }
 
   send_command(lcd, LCD_SLAVE_ADDRESS, 0xC1); //Positioning cursor at second line
   for (size_t i=0;i<strlen(message2);i++){
-    send_data(lcd, LCD_SLAVE_ADDRESS, (unsigned)message2[i]);
+    send_data(lcd, LCD_SLAVE_ADDRESS, message2[i]);
   }
 
   // Closing i2c connection
