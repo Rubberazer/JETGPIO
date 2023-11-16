@@ -25,22 +25,11 @@ var NAVTREE =
   [ "Jetgpio", "index.html", [
     [ "JETGPIO library", "index.html", null ],
     [ "Functions", "./globals_func.html", null ],
-    [ "Data Structures", "annotated.html", [
-      [ "Data Structures", "annotated.html", "annotated_dup" ],
-      [ "Data Structure Index", "classes.html", null ],
-      [ "Data Fields", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Variables", "functions_vars.html", null ]
-      ] ]
-    ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
-        [ "All", "globals.html", "globals_dup" ],
-        [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", null ],
-        [ "Typedefs", "globals_type.html", null ],
-        [ "Macros", "globals_defs.html", "globals_defs" ]
+        [ "All", "globals.html", null ],
+        [ "Functions", "globals_func.html", null ]
       ] ]
     ] ]
   ] ]
@@ -48,8 +37,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"./globals_func.html",
-"jetgpio_8h.html#ad589cca7b5afd4362dede39fc9af7159"
+"./globals_func.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

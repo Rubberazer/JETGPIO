@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['edge_151',['edge',['../structISRFunc.html#a2704ac2052bd84de5123140f083d13c5',1,'ISRFunc']]],
-  ['either_5fedge_152',['EITHER_EDGE',['../jetgpio_8h.html#aff4e22f0a6c14fdc9ca8e6ce97e803de',1,'jetgpio.h']]]
+  ['spiclose_17',['spiClose',['../jetgpio_8h.html#a9fb213bb27196cab00718d2fdfb33688',1,'nano.c']]],
+  ['spiopen_18',['spiOpen',['../jetgpio_8h.html#a2532ad45eb33d8d476c4d6036f694702',1,'nano.c']]],
+  ['spixfer_19',['spiXfer',['../jetgpio_8h.html#a96e92eb729c89f2a9a893adf83251dc8',1,'nano.c']]]
 ];
