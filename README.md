@@ -11,7 +11,7 @@ C library to manage the GPIO header of the Nvidia JETSON boards
 
   - JETSON NANO and TX1
 
-  - (BETA) JETSON ORIN NANO and ORIN NX 
+  - JETSON ORIN NANO and ORIN NX 
 
 - GPIO control of all the header pinout as input or output. Low latency, see also [The need for speed](#the-need-for-speed) below for some more information on this
 
@@ -19,9 +19,9 @@ C library to manage the GPIO header of the Nvidia JETSON boards
 
 - PWM (hardware) control on header pins 32, 33 for all models and also 15 for Orin
 
-- I2C serial communication over pins: 27 (GEN1_I2C_SDA) & 28 (GEN1_I2C_SCL)  and 3 (GEN2_I2C_SDA) & 5 (GEN2_I2C_SCL)
+- I2C serial communication over pins: 27 (SDA) & 28 (SCL)  and 3 (SDA) & 5 (SCL)
 
-- SPI serial communication over pins: 19 (SPI1_MOSI), 21 (SPI1_MISO), 23 (SPI1_SCK) & 24 (SPI1_CS0) and 37 (SPI2_MOSI), 22 (SPI2_MISO), 13 (SPI2_SCK) & 18 (SPI2_CS0)
+- SPI serial communication over pins: 19 (MOSI), 21 (MISO), 23 (SCK) & 24 (CS0) and 37 (MOSI), 22 (MISO), 13 (SCK) & 18 (CS0)
   
 - No need of previous kernel configuration, no need to change the device tree, no need to reconfigure via /opt/nvidia/jetson-io/jetson-io.py or the like  
   
@@ -106,13 +106,13 @@ Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/b
     
 <h2 align="left">JETSON NANO AND ORIN PINOUT:</h2>
 
-The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use the ones below:
+The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA on Nano or I2C1_SDA on Orin, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use the ones below:
 
 https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
 
 https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/
 
-The library has been tested on a Jetson Nano: tegra210 (TX1) and Jetson Orin Nano: tegra234
+The library has been tested on a Jetson Nano: tegra210 (TX1) and on a Jetson Orin Nano: tegra234
 
 
 

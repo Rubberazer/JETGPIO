@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Jetgpio
-   &#160;<span id="projectnumber">0.98</span>
+   &#160;<span id="projectnumber">1.0</span>
    </div>
    <div id="projectbrief">Library to manage the Jetson Nano gpio</div>
   </td>
@@ -93,14 +93,14 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <ul>
 <li>Supported models:<ul>
 <li>JETSON NANO and TX1</li>
-<li>(BETA) JETSON ORIN NANO and ORIN NX</li>
+<li>JETSON ORIN NANO and ORIN NX</li>
 </ul>
 </li>
 <li>GPIO control of all the header pinout as input or output. Low latency, see also <a href="#the-need-for-speed">The need for speed</a> below for some more information on this</li>
 <li>Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided</li>
 <li>PWM (hardware) control on header pins 32, 33 for all models and also 15 for Orin</li>
-<li>I2C serial communication over pins: 27 (GEN1_I2C_SDA) &amp; 28 (GEN1_I2C_SCL) and 3 (GEN2_I2C_SDA) &amp; 5 (GEN2_I2C_SCL)</li>
-<li>SPI serial communication over pins: 19 (SPI1_MOSI), 21 (SPI1_MISO), 23 (SPI1_SCK) &amp; 24 (SPI1_CS0) and 37 (SPI2_MOSI), 22 (SPI2_MISO), 13 (SPI2_SCK) &amp; 18 (SPI2_CS0)</li>
+<li>I2C serial communication over pins: 27 (SDA) &amp; 28 (SCL) and 3 (SDA) &amp; 5 (SCL)</li>
+<li>SPI serial communication over pins: 19 (MOSI), 21 (MISO), 23 (SCK) &amp; 24 (CS0) and 37 (MOSI), 22 (MISO), 13 (SCK) &amp; 18 (CS0)</li>
 <li>No need of previous kernel configuration, no need to change the device tree, no need to reconfigure via /opt/nvidia/jetson-io/jetson-io.py or the like <br  />
 </li>
 </ul>
@@ -158,10 +158,10 @@ sudo make install
 <p>**Yes, the new Orin has a slower response/higher latency than the old Jetson Nano, this is due to the fact that writing to some registers is being monitored by an external CPU called BPMP (Boot and Power Management Processor). This CPU is an addition to what is called CPU Complex (the 6 Arm A78A cores that are described on the Orin Nano/NX specs) and is completely independent from the main system, running its own firmware and with an independent device tree. Some of the tasks performed by this CPU are clock and power supply management for peripherals inside the SOM e.g. PWM, GPIO... but it also plays a "firewall" role, in other words before writing to some registers in the standard CPU Complex the writing instructions have to pass through this "firewall" making the whole thing slower. This extra, out of the system security manager can be very useful on some applications but it has obviously a downside. Again sorting this out goes beyond the scope of any user space application (library) and it would imply flashing the Orin after modifying stuff, which is something along with other things like modifying the device tree (and reflashing probably) that I wanted to avoid when I created this library.</p>
 <p><img src="https://github.com/Rubberazer/JETGPIO/assets/47650457/321d70bb-d5f2-4577-b83c-b189f7ed72c9" alt="freenove_i2c_1602_lcd" class="inline"/></p>
 <h2 align="left">JETSON NANO AND ORIN PINOUT:</h2>
-<p>The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use the ones below:</p>
+<p>The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA on Nano or I2C1_SDA on Orin, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use the ones below:</p>
 <p><a href="https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/">https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/</a></p>
 <p><a href="https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/">https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/</a></p>
-<p>The library has been tested on a Jetson Nano: tegra210 (TX1) and Jetson Orin Nano: tegra234 </p>
+<p>The library has been tested on a Jetson Nano: tegra210 (TX1) and on a Jetson Orin Nano: tegra234 </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

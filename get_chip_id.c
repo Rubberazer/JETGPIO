@@ -80,7 +80,6 @@ int main (void) {
   char hardware[10];
   model = chip_get_id();
   switch (model) {
-
   case ORIN:
     strcpy(hardware, "orin");
     break;
