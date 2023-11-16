@@ -595,15 +595,15 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 /**<
  * @brief This function returns a handle for the SPI device on the channel.
  * Data will be transferred at baud bits per second.  The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select.
- * There are 2 SPI channels SPI1 & SPI2.
+ * There are 2 SPI channels called SPI1 & SPI2 on Nano and SPI0 & SPI1 on Orin.
  * The pins used are given in the following table.
  * 
- * |Port |MISO |MOSI |SCLK |CS0 |CS1 |
- * |-----|-----|-----|-----|----|----|
- * |SPI1 |21   |19   |23   |24  |26  |
- * |SPI2 |22   |37   |13   |18  |16  |
+ * |Port      |MISO |MOSI |SCLK |CS0 |CS1 |
+ * |----------|-----|-----|-----|----|----|
+ * |SPI1/SPI0 |21   |19   |23   |24  |26  |
+ * |SPI2/SPI1 |22   |37   |13   |18  |16  |
  * 
- * @param spiChan 0-1 (0 stands for SPI1 and 1 for SPI2)
+ * @param spiChan 0-1 (0 stands for SPI1 on Nano and SPI0 on Orin, 1 stands for SPI2 on Nano and SPI1 on Orin)
  * @param speed up to 50M (beyond that expect problems, actually we are not going beyond that)
  * @param mode defines the SPI mode
  * 

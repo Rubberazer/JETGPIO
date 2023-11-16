@@ -195,7 +195,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a4088a186656875b960343cef126bad81"><td class="mdescLeft">&#160;</td><td class="mdescRight">This reads two bytes from the specified consecutive register(s) of the device associated with handle.  <a href="orin_8c.html#a4088a186656875b960343cef126bad81">More...</a><br /></td></tr>
 <tr class="separator:a4088a186656875b960343cef126bad81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2532ad45eb33d8d476c4d6036f694702"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a> (unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</td></tr>
-<tr class="memdesc:a2532ad45eb33d8d476c4d6036f694702"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bits per second. The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select. There are 2 SPI channels SPI1 &amp; SPI2. The pins used are given in the following table.  <a href="orin_8c.html#a2532ad45eb33d8d476c4d6036f694702">More...</a><br /></td></tr>
+<tr class="memdesc:a2532ad45eb33d8d476c4d6036f694702"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bits per second. The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select. There are 2 SPI channels called SPI1 &amp; SPI2 on Nano and SPI0 &amp; SPI1 on Orin. The pins used are given in the following table.  <a href="orin_8c.html#a2532ad45eb33d8d476c4d6036f694702">More...</a><br /></td></tr>
 <tr class="separator:a2532ad45eb33d8d476c4d6036f694702"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fb213bb27196cab00718d2fdfb33688"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orin_8c.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a> (unsigned handle)</td></tr>
 <tr class="memdesc:a9fb213bb27196cab00718d2fdfb33688"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions closes the SPI device identified by the handle.  <a href="orin_8c.html#a9fb213bb27196cab00718d2fdfb33688">More...</a><br /></td></tr>
@@ -938,18 +938,18 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function returns a handle for the SPI device on the channel. Data will be transferred at baud bits per second. The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select. There are 2 SPI channels SPI1 &amp; SPI2. The pins used are given in the following table. </p>
+<p>This function returns a handle for the SPI device on the channel. Data will be transferred at baud bits per second. The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select. There are 2 SPI channels called SPI1 &amp; SPI2 on Nano and SPI0 &amp; SPI1 on Orin. The pins used are given in the following table. </p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Port </th><th class="markdownTableHeadNone">MISO </th><th class="markdownTableHeadNone">MOSI </th><th class="markdownTableHeadNone">SCLK </th><th class="markdownTableHeadNone">CS0 </th><th class="markdownTableHeadNone">CS1  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">SPI1 </td><td class="markdownTableBodyNone">21 </td><td class="markdownTableBodyNone">19 </td><td class="markdownTableBodyNone">23 </td><td class="markdownTableBodyNone">24 </td><td class="markdownTableBodyNone">26  </td></tr>
+<td class="markdownTableBodyNone">SPI1/SPI0 </td><td class="markdownTableBodyNone">21 </td><td class="markdownTableBodyNone">19 </td><td class="markdownTableBodyNone">23 </td><td class="markdownTableBodyNone">24 </td><td class="markdownTableBodyNone">26  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">SPI2 </td><td class="markdownTableBodyNone">22 </td><td class="markdownTableBodyNone">37 </td><td class="markdownTableBodyNone">13 </td><td class="markdownTableBodyNone">18 </td><td class="markdownTableBodyNone">16  </td></tr>
+<td class="markdownTableBodyNone">SPI2/SPI1 </td><td class="markdownTableBodyNone">22 </td><td class="markdownTableBodyNone">37 </td><td class="markdownTableBodyNone">13 </td><td class="markdownTableBodyNone">18 </td><td class="markdownTableBodyNone">16  </td></tr>
 </table>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">spiChan</td><td>0-1 (0 stands for SPI1 and 1 for SPI2) </td></tr>
+    <tr><td class="paramname">spiChan</td><td>0-1 (0 stands for SPI1 on Nano and SPI0 on Orin, 1 stands for SPI2 on Nano and SPI1 on Orin) </td></tr>
     <tr><td class="paramname">speed</td><td>up to 50M (beyond that expect problems, actually we are not going beyond that) </td></tr>
     <tr><td class="paramname">mode</td><td>defines the SPI mode</td></tr>
   </table>
