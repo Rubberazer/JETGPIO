@@ -1,6 +1,5 @@
 var jetgpio_8h =
 [
-    [ "chip_get_id", "jetgpio_8h.html#abc4a0f7f1eb1b595b6c129c036731334", null ],
     [ "gpioInitialise", "jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0", null ],
     [ "gpioPWM", "jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136", null ],
     [ "gpioRead", "jetgpio_8h.html#a754d22c52d797f32f02c86863496b0ec", null ],

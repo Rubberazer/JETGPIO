@@ -416,12 +416,6 @@ typedef struct {
 
 /* Functions */
 
-int chip_get_id(void);
-/**<
- * @brief Auxiliary function used by gpioInitialise() to find out whether the hardware is supported by the library
- * @return Returns the Jetson model if supported, otherwise will exit with an error message.
-*/
-
 int gpioInitialise(void);
 /**<
  * @brief Initialises the library.
