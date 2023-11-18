@@ -22,12 +22,12 @@
 #nav-tree .selected {
   background-image: url('tab_a.png');
   background-repeat:repeat-x;
-  color: #DCEFEF;
+  color: #DCDFEF;
   text-shadow: 0px 1px 1px rgba(0, 0, 0, 1.0);
 }
 
 #nav-tree .selected .arrow {
-  color: #90CECE;
+  color: #909ACE;
   text-shadow: none;
 }
 
@@ -56,7 +56,7 @@
 
 #nav-tree .selected a {
   text-decoration:none;
-  color:#DCEFEF;
+  color:#DCDFEF;
 }
 
 #nav-tree .children_ul {
@@ -122,7 +122,7 @@
 
 #nav-tree {
   background-repeat:repeat-x;
-  background-color: #102626;
+  background-color: #101426;
   -webkit-overflow-scrolling : touch; /* iOS 5+ */
 }
 
