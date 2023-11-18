@@ -27,7 +27,7 @@ dark-mode-toggle {
     white-space : nowrap;
     background: black;
     border-radius: 0.65em;
-    box-shadow: inset 0.5px 0.5px 3px 0px #2F396C;
+    box-shadow: inset 0.5px 0.5px 3px 0px #080F12;
     z-index: 102;
 }
 
@@ -117,8 +117,8 @@ dark-mode-toggle {
     display: none;
     position: absolute;
     left: 0; top: 0;
-    border: 1px solid #7C88C6;
-    background-color: #101426;
+    border: 1px solid #316171;
+    background-color: #000101;
     z-index: 10001;
     padding-top: 4px;
     padding-bottom: 4px;
@@ -147,7 +147,7 @@ span.SelectionMark {
 a.SelectItem {
     display: block;
     outline-style: none;
-    color: #909ACE;
+    color: #3D788B;
     text-decoration: none;
     padding-left:   6px;
     padding-right: 12px;
@@ -155,14 +155,14 @@ a.SelectItem {
 
 a.SelectItem:focus,
 a.SelectItem:active {
-    color: #909ACE;
+    color: #3D788B;
     outline-style: none;
     text-decoration: none;
 }
 
 a.SelectItem:hover {
-    color: #BCC2E2;
-    background-color: #28315D;
+    color: #6FACC0;
+    background-color: #050A0C;
     outline-style: none;
     text-decoration: none;
     cursor: pointer;
@@ -180,8 +180,8 @@ iframe#MSearchResults {
     display: none;
     position: absolute;
     left: 0; top: 0;
-    border: 1px solid #7C88C6;
-    background-color: #101426;
+    border: 1px solid #316171;
+    background-color: #000101;
     z-index:10000;
     width: 300px;
     height: 400px;
@@ -207,7 +207,7 @@ iframe#MSearchResults {
 
 div.SRPage {
     margin: 5px 2px;
-    background-color: #101426;
+    background-color: #000101;
 }
 
 .SRChildren {
@@ -220,7 +220,7 @@ div.SRPage {
 
 .SRSymbol {
     font-weight: bold;
-    color: #909ACE;
+    color: #3D788B;
     font-family: Arial,Verdana,sans-serif;
     text-decoration: none;
     outline: none;
@@ -228,7 +228,7 @@ div.SRPage {
 
 a.SRScope {
     display: block;
-    color: #909ACE;
+    color: #3D788B;
     font-family: Arial,Verdana,sans-serif;
     font-size: 8pt;
     text-decoration: none;
