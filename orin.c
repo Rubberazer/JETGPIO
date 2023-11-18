@@ -2101,7 +2101,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       printf("Only gpio numbers 15, 32 and 33 are accepted\n");
     }		
   }
-  else {printf("Only frequencies from 25 to 200000 Hz are allowed\n");
+  else {printf("Only frequencies from 400 to 1595000 Hz are allowed\n");
     status =-2;}
   return status;
 }
