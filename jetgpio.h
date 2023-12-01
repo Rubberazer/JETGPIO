@@ -571,7 +571,7 @@ int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigne
  * @param wVal 0-0xFFFF, the value to write
  * @return Returns 0 if OK, negative number otherwise
  *
- * @code writestat = i2cWriteByteData(MPU6050, 0x68, 0x1B, 0x0000); // writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 @endcode
+ * @code writestat = i2cWriteWordData(MPU6050, 0x68, 0x1B, 0x0000); // writing 0x0000 to register address 0x1B & 0x1C on opened chanel MPU6050 with i2C address 0x68 @endcode
 */
 
 int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg);
@@ -580,9 +580,9 @@ int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg);
  * @param handle >=0, as returned by a call to [*i2cOpen*]
  * @param i2cAddr 0-0x7F, the I2C slave address
  * @param i2cReg 0-255, the register to read
- * @return Returns the byte read (>=0) if OK, otherwise a negative number
+ * @return Returns the word read (>=0) if OK, otherwise a negative number
  *
- * @code gyro_x_H = i2cReadByteData(MPU6050, 0x68, 0x43); // getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 @endcode
+ * @code gyro_x_H = i2cReadWordData(MPU6050, 0x68, 0x43); // getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 @endcode
 */
 
 int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change);

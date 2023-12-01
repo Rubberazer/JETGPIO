@@ -633,8 +633,9 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns the byte read (&gt;=0) if OK, otherwise a negative number</dd></dl>
-<div class="fragment"><div class="line">gyro_x_H = <a class="code hl_function" href="#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 </span></div>
+<dl class="section return"><dt>Returns</dt><dd>Returns the word read (&gt;=0) if OK, otherwise a negative number</dd></dl>
+<div class="fragment"><div class="line">gyro_x_H = <a class="code hl_function" href="#a54bb3be857e985a527e91e55a1315c21">i2cReadWordData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 </span></div>
+<div class="ttc" id="ajetgpio_8h_html_a54bb3be857e985a527e91e55a1315c21"><div class="ttname"><a href="#a54bb3be857e985a527e91e55a1315c21">i2cReadWordData</a></div><div class="ttdeci">int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg)</div><div class="ttdoc">This reads two bytes from the specified consecutive register(s) of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2343</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -741,7 +742,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, negative number otherwise</dd></dl>
-<div class="fragment"><div class="line">writestat = <a class="code hl_function" href="#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x0000); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
+<div class="fragment"><div class="line">writestat = <a class="code hl_function" href="#a9a4e911447c30f1c74727334668535e2">i2cWriteWordData</a>(MPU6050, 0x68, 0x1B, 0x0000); <span class="comment">// writing 0x0000 to register address 0x1B &amp; 0x1C on opened chanel MPU6050 with i2C address 0x68 </span></div>
+<div class="ttc" id="ajetgpio_8h_html_a9a4e911447c30f1c74727334668535e2"><div class="ttname"><a href="#a9a4e911447c30f1c74727334668535e2">i2cWriteWordData</a></div><div class="ttdeci">int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned wVal)</div><div class="ttdoc">This writes two bytes to the specified consecutive register(s) of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2293</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
