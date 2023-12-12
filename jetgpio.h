@@ -496,7 +496,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency);
 /**<
  * @brief Sets the frequency in hertz to be used for the GPIO.
  * @param gpio (15 Orin only), 32, 33
- * @param frequency 25Hz to 200 kHz on Nano and 400 Hz to 1595 kHz on Orin
+ * @param frequency 25Hz to 187 kHz on Nano and 400 Hz to 1595 kHz on Orin
  * @return Returns 1 if OK, a negative number otherwise
  *
  * @code gpioSetPWMfrequency(32, 10000); // Setting up PWM frequency=10kHz @ pin 32 @endcode

@@ -2021,9 +2021,16 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency){
     
   int status = 1;
-  int PFM =0;
-  if ((frequency >= 25) && (frequency <=200000)){
-    PFM = (204800/frequency)-1;
+  int PFM = 0;
+  int divider = 0;
+  if ((frequency >= 25) && (frequency <=187000)){
+    if (frequency < 30000){
+      divider = 187500;
+    }
+    else {
+      divider = 204800;
+    }
+    PFM = (divider/frequency)-1;
     switch (gpio){
     case 32:
       pinPWM->PWM_0[0] = 0x0;
@@ -2039,7 +2046,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency){
     }
     pin_tracker |= (1 << 28);		
   }
-  else {printf("Only frequencies from 25 to 200000 Hz are allowed\n");
+  else {printf("Only frequencies from 25 to 187000 Hz are allowed\n");
     status =-2;}
   return status;
 }

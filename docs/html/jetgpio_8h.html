@@ -235,7 +235,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, a negative number otherwise</dd></dl>
 <div class="fragment"><div class="line"><a class="code hl_function" href="#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(32, 256); <span class="comment">// Sets pin 32 full on.</span></div>
 <div class="line"><a class="code hl_function" href="#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(33, 128); <span class="comment">// Sets pin 33 half on. </span></div>
-<div class="ttc" id="ajetgpio_8h_html_a81675c68b04f3c19be1f743eae7f2136"><div class="ttname"><a href="#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a></div><div class="ttdeci">int gpioPWM(unsigned gpio, unsigned dutycycle)</div><div class="ttdoc">Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite.</div><div class="ttdef"><b>Definition</b> nano.c:2047</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a81675c68b04f3c19be1f743eae7f2136"><div class="ttname"><a href="#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a></div><div class="ttdeci">int gpioPWM(unsigned gpio, unsigned dutycycle)</div><div class="ttdoc">Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite.</div><div class="ttdef"><b>Definition</b> nano.c:2054</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -401,7 +401,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">gpio</td><td>(15 Orin only), 32, 33 </td></tr>
-    <tr><td class="paramname">frequency</td><td>25Hz to 200 kHz on Nano and 400 Hz to 1595 kHz on Orin </td></tr>
+    <tr><td class="paramname">frequency</td><td>25Hz to 187 kHz on Nano and 400 Hz to 1595 kHz on Orin </td></tr>
   </table>
   </dd>
 </dl>
@@ -499,7 +499,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
 <div class="fragment"><div class="line"><a class="code hl_function" href="#aac119696ea99a19576c6fe858bb8a031">i2cClose</a>(MPU6050); <span class="comment">//Closing previously opened connection </span></div>
-<div class="ttc" id="ajetgpio_8h_html_aac119696ea99a19576c6fe858bb8a031"><div class="ttname"><a href="#aac119696ea99a19576c6fe858bb8a031">i2cClose</a></div><div class="ttdeci">int i2cClose(unsigned handle)</div><div class="ttdoc">This closes the I2C device associated with the handle.</div><div class="ttdef"><b>Definition</b> nano.c:2171</div></div>
+<div class="ttc" id="ajetgpio_8h_html_aac119696ea99a19576c6fe858bb8a031"><div class="ttname"><a href="#aac119696ea99a19576c6fe858bb8a031">i2cClose</a></div><div class="ttdeci">int i2cClose(unsigned handle)</div><div class="ttdoc">This closes the I2C device associated with the handle.</div><div class="ttdef"><b>Definition</b> nano.c:2178</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -541,7 +541,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a handle with the I2C bus number being opened (&gt;=0) if OK, otherwise a negative number</dd></dl>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> MPU6050 = <a class="code hl_function" href="#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a>(0,0); <span class="comment">//Opening a connection on pins 27/28 at speed 100kHz </span></div>
-<div class="ttc" id="ajetgpio_8h_html_aaf4b600818f342b2723043fb9fd594c0"><div class="ttname"><a href="#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a></div><div class="ttdeci">int i2cOpen(unsigned i2cBus, unsigned i2cFlags)</div><div class="ttdoc">This returns a handle for the device at the address on the I2C bus.</div><div class="ttdef"><b>Definition</b> nano.c:2090</div></div>
+<div class="ttc" id="ajetgpio_8h_html_aaf4b600818f342b2723043fb9fd594c0"><div class="ttname"><a href="#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a></div><div class="ttdeci">int i2cOpen(unsigned i2cBus, unsigned i2cFlags)</div><div class="ttdoc">This returns a handle for the device at the address on the I2C bus.</div><div class="ttdef"><b>Definition</b> nano.c:2097</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -588,7 +588,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the byte read (&gt;=0) if OK, otherwise a negative number</dd></dl>
 <div class="fragment"><div class="line">gyro_x_H = <a class="code hl_function" href="#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 out of opened connection MPU6050 with i2C address 0x68 </span></div>
-<div class="ttc" id="ajetgpio_8h_html_ae76dd5363acd174d24526f54c665c629"><div class="ttname"><a href="#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a></div><div class="ttdeci">int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg)</div><div class="ttdoc">This reads a single byte from the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2248</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ae76dd5363acd174d24526f54c665c629"><div class="ttname"><a href="#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a></div><div class="ttdeci">int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg)</div><div class="ttdoc">This reads a single byte from the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2255</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -635,7 +635,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the word read (&gt;=0) if OK, otherwise a negative number</dd></dl>
 <div class="fragment"><div class="line">gyro_x_H = <a class="code hl_function" href="#a54bb3be857e985a527e91e55a1315c21">i2cReadWordData</a>(MPU6050, 0x68, 0x43); <span class="comment">// getting register 0x43 and 0x44 out of opened connection MPU6050 with i2C address 0x68 </span></div>
-<div class="ttc" id="ajetgpio_8h_html_a54bb3be857e985a527e91e55a1315c21"><div class="ttname"><a href="#a54bb3be857e985a527e91e55a1315c21">i2cReadWordData</a></div><div class="ttdeci">int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg)</div><div class="ttdoc">This reads two bytes from the specified consecutive register(s) of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2343</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a54bb3be857e985a527e91e55a1315c21"><div class="ttname"><a href="#a54bb3be857e985a527e91e55a1315c21">i2cReadWordData</a></div><div class="ttdeci">int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg)</div><div class="ttdoc">This reads two bytes from the specified consecutive register(s) of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2350</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -689,7 +689,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, negative number otherwise</dd></dl>
 <div class="fragment"><div class="line">writestat = <a class="code hl_function" href="#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a>(MPU6050, 0x68, 0x1B, 0x00); <span class="comment">// writing 0x00 to register address 0x1B on opened chanel MPU6050 with i2C address 0x68 </span></div>
-<div class="ttc" id="ajetgpio_8h_html_a642db3078905bf982f784fb7b428bda4"><div class="ttname"><a href="#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a></div><div class="ttdeci">int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned bVal)</div><div class="ttdoc">This writes a single byte to the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2198</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a642db3078905bf982f784fb7b428bda4"><div class="ttname"><a href="#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a></div><div class="ttdeci">int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned bVal)</div><div class="ttdoc">This writes a single byte to the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2205</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -743,7 +743,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, negative number otherwise</dd></dl>
 <div class="fragment"><div class="line">writestat = <a class="code hl_function" href="#a9a4e911447c30f1c74727334668535e2">i2cWriteWordData</a>(MPU6050, 0x68, 0x1B, 0x0000); <span class="comment">// writing 0x0000 to register address 0x1B &amp; 0x1C on opened chanel MPU6050 with i2C address 0x68 </span></div>
-<div class="ttc" id="ajetgpio_8h_html_a9a4e911447c30f1c74727334668535e2"><div class="ttname"><a href="#a9a4e911447c30f1c74727334668535e2">i2cWriteWordData</a></div><div class="ttdeci">int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned wVal)</div><div class="ttdoc">This writes two bytes to the specified consecutive register(s) of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2293</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a9a4e911447c30f1c74727334668535e2"><div class="ttname"><a href="#a9a4e911447c30f1c74727334668535e2">i2cWriteWordData</a></div><div class="ttdeci">int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned wVal)</div><div class="ttdoc">This writes two bytes to the specified consecutive register(s) of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2300</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -772,7 +772,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
 <div class="fragment"><div class="line"><a class="code hl_function" href="#a9fb213bb27196cab00718d2fdfb33688">spiClose</a>(SPI_init); <span class="comment">//closing previously opened spi port with handle SPI_init </span></div>
-<div class="ttc" id="ajetgpio_8h_html_a9fb213bb27196cab00718d2fdfb33688"><div class="ttname"><a href="#a9fb213bb27196cab00718d2fdfb33688">spiClose</a></div><div class="ttdeci">int spiClose(unsigned handle)</div><div class="ttdoc">This functions closes the SPI device identified by the handle.</div><div class="ttdef"><b>Definition</b> nano.c:2546</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a9fb213bb27196cab00718d2fdfb33688"><div class="ttname"><a href="#a9fb213bb27196cab00718d2fdfb33688">spiClose</a></div><div class="ttdeci">int spiClose(unsigned handle)</div><div class="ttdoc">This functions closes the SPI device identified by the handle.</div><div class="ttdef"><b>Definition</b> nano.c:2553</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -872,7 +872,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns a handle (&gt;=0) if OK, otherwise a negative number</dd></dl>
 <div class="fragment"><div class="line">SPI_init = <a class="code hl_function" href="#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a>(1, 5000000, 0, 0, 8, 1, 1); <span class="comment">// SPI2 (pins 22/37, 500 kHz, mode 0, cs delay 0, 8 bits/word,lsb first 1, cs change 1 </span></div>
-<div class="ttc" id="ajetgpio_8h_html_a2532ad45eb33d8d476c4d6036f694702"><div class="ttname"><a href="#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a></div><div class="ttdeci">int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</div><div class="ttdoc">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bi...</div><div class="ttdef"><b>Definition</b> nano.c:2388</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a2532ad45eb33d8d476c4d6036f694702"><div class="ttname"><a href="#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a></div><div class="ttdeci">int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</div><div class="ttdoc">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bi...</div><div class="ttdef"><b>Definition</b> nano.c:2395</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -926,7 +926,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the number of bytes transferred if OK, otherwise a negative number.</dd></dl>
 <div class="fragment"><div class="line"><a class="code hl_function" href="#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a>(SPI_init, tx, rx, 7); <span class="comment">//transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init </span></div>
-<div class="ttc" id="ajetgpio_8h_html_a96e92eb729c89f2a9a893adf83251dc8"><div class="ttname"><a href="#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a></div><div class="ttdeci">int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)</div><div class="ttdoc">This function transfers count bytes of data from txBuf to the SPI device associated with the handle....</div><div class="ttdef"><b>Definition</b> nano.c:2568</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a96e92eb729c89f2a9a893adf83251dc8"><div class="ttname"><a href="#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a></div><div class="ttdeci">int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)</div><div class="ttdoc">This function transfers count bytes of data from txBuf to the SPI device associated with the handle....</div><div class="ttdef"><b>Definition</b> nano.c:2575</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
