@@ -30,6 +30,7 @@ For more information, please refer to <http://unlicense.org/>
 #include <stdint.h>
 #include <errno.h>
 #include <unistd.h>
+#include <math.h>
 #include <sys/fcntl.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
@@ -2022,15 +2023,8 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency){
     
   int status = 1;
   int PFM = 0;
-  int divider = 0;
   if ((frequency >= 25) && (frequency <=187000)){
-    if (frequency < 30000){
-      divider = 187500;
-    }
-    else {
-      divider = 204800;
-    }
-    PFM = (divider/frequency)-1;
+    PFM = round(187500.0/(double)frequency)-1;
     switch (gpio){
     case 32:
       pinPWM->PWM_0[0] = 0x0;
