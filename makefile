@@ -7,7 +7,7 @@ OBJ_EXTENSION=.o
 CFLAGS=-c -Wall -Werror -fpic
 LDFLAGS=-shared
 LIB=libjetgpio.so
-LIBS=-lpthread -lrt
+LIBS=-lpthread -lrt -lm
 
 all: step1 step2 step3
 
