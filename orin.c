@@ -30,6 +30,7 @@ For more information, please refer to <http://unlicense.org/>
 #include <stdint.h>
 #include <errno.h>
 #include <unistd.h>
+#include <math.h>
 #include <sys/fcntl.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
