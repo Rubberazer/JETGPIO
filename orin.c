@@ -2068,7 +2068,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
   int status = 1;
-  int PFM =0;
+  int PFM = 0;
 
   if ((frequency >= 400) && (frequency <=1595000)){
     PFM = round(1597656.0/(double)frequency)-1;
