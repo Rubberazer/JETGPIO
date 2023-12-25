@@ -2068,10 +2068,10 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
   int status = 1;
-  unsigned PFM =0;
+  int PFM =0;
 
   if ((frequency >= 400) && (frequency <=1595000)){
-    PFM = (1597656/frequency)-1;
+    PFM = round(1597656.0/(double)frequency)-1;
     switch (gpio){
     case 15:
       *pinmux15 = 0x00000400;
