@@ -628,7 +628,7 @@ int spiClose(unsigned handle);
 
 int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len);
 /**<
- * @brief This function transfers count bytes of data from txBuf to the SPI device associated with the handle. Simultaneously len words of data are read from the device and placed in rxBuf.
+ * @brief This function transfers len bytes of data from txBuf to the SPI device associated with the handle. Simultaneously len bytes of data are read from the device and placed in rxBuf.
  * @param handle >=0, as returned by a call to [*spiOpen*]
  * @param txBuf the data bytes to write
  * @param rxBuf the received data bytes
