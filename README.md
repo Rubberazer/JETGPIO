@@ -2,7 +2,7 @@
 
 C library to manage the GPIO header of the Nvidia JETSON boards
 
-[ORIN NOW SUPPORTED](https://github.com/Rubberazer/JETGPIO/discussions/14)
+[ORIN AGX WANTED TO EXPAND THE LIBRARY](https://github.com/Rubberazer/JETGPIO/discussions/21)
 
 
 <h2 align="left">FUNCTIONALITY:</h2>
