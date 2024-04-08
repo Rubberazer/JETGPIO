@@ -41,9 +41,9 @@ else
    printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
 }	
 
-gpioSetPWMfrequency(33, 1000);
+gpioSetPWMfrequency(32, 1000);
 
-gpioPWM(33, 0);
+gpioPWM(32, 0);
 
 int x = 0;
 
@@ -59,7 +59,7 @@ while (x<=256) {
 
     printf("level: %d - ",level);
 
-    status = gpioPWM(33, x);
+    status = gpioPWM(32, x);
 
     printf("status: %d\n",status);
 
@@ -79,7 +79,7 @@ while (x>=0) {
 
     printf("level: %d - ",level);
 
-    status = gpioPWM(33, x);
+    status = gpioPWM(32, x);
 
     printf("status: %d\n",status);
 

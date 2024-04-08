@@ -174,6 +174,9 @@ static void *basePINMUX_G2;
 static void *basePWM1;
 static void *basePWM5;
 static void *basePWM7;
+static unsigned clk_rate_PWM1 = 408000000;
+static unsigned clk_rate_PWM5 = 408000000;
+static unsigned clk_rate_PWM7 = 408000000;
 
 static volatile unsigned global_int;
 static pthread_t callThd[28];
@@ -764,16 +767,34 @@ void gpioTerminate(void) {
   int pagesize = sysconf(_SC_PAGESIZE);
   // Restoring registers to their previous state
 
-  if ((pin_tracker >> 28) & 1){
+  if ((pin_tracker >> 28) & 1) {
     *PWM1 = PWM1_Init;
+    char buf[100];
+    
+    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm1/rate", clk_rate_PWM1);
+    if (system(buf) == -1) { 
+      printf( "Not possible to change clock rate on pwm1\n");
+    }
   }
 
-  if ((pin_tracker >> 29) & 1){
+  if ((pin_tracker >> 29) & 1) {
     *PWM5 = PWM5_Init;
+    char buf[100];
+    
+    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm5/rate", clk_rate_PWM5);
+    if (system(buf) == -1) { 
+      printf( "Not possible to change clock rate on pwm5\n");
+    }
   }
 
-  if ((pin_tracker >> 30) & 1){
+  if ((pin_tracker >> 30) & 1) {
     *PWM7 = PWM7_Init;
+    char buf[100];
+    
+    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm7/rate", clk_rate_PWM7);
+    if (system(buf) == -1) { 
+      printf( "Not possible to change clock rate on pwm7\n");
+    }
   }
     
   if (pin_tracker & 1) { 
@@ -2069,11 +2090,82 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
   int status = 1;
   int PFM = 0;
+  unsigned clk_rate_PWM;
+  char buf[100];
+  FILE *fptr;
 
-  if ((frequency >= 400) && (frequency <=1595000)){
-    PFM = round(1597656.0/(double)frequency)-1;
-    switch (gpio){
+  if ((frequency >= 50) && (frequency <=1593000)) {
+    if (frequency > 796875) {
+      clk_rate_PWM = 408000000; 
+      PFM = round(1593750.0/(double)frequency)-1;
+    }
+    
+    if ((frequency >= 98) && (frequency <= 796875)) {
+      clk_rate_PWM = 204000000;
+      PFM = round(796875.0/(double)frequency)-1;
+    }
+    
+    if (frequency < 98) {
+      clk_rate_PWM = 102000000;
+      PFM = round(398437.5/(double)frequency)-1;
+    }
+    switch(gpio) {
     case 15:
+      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm1/rate");
+      fptr = fopen(buf, "r");
+      
+      if (fptr == NULL) {
+        printf("Not possible to read current clock rate on pwm1\n");
+      }
+	
+      fscanf(fptr, "%u", &clk_rate_PWM1);
+      
+      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm1/rate", clk_rate_PWM);
+      if (system(buf) == -1) { 
+        printf( "Not possible to change clock rate on pwm1\n");
+      }
+      fclose(fptr);
+      break;
+
+    case 32:
+      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm7/rate");
+      fptr = fopen(buf, "r");
+      
+      if (fptr == NULL) {
+        printf("Not possible to read current clock rate on pwm7\n");
+      }
+	
+      fscanf(fptr, "%u", &clk_rate_PWM7);
+      
+      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm7/rate", clk_rate_PWM);
+      if (system(buf) == -1) { 
+        printf( "Not possible to change clock rate on pwm7\n");
+      }
+      fclose(fptr);
+      break;
+    case 33:
+      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm5/rate");
+      fptr = fopen(buf, "r");
+      
+      if (fptr == NULL) {
+        printf("Not possible to read current clock rate on pwm5\n");
+      }
+	
+      fscanf(fptr, "%u", &clk_rate_PWM5);
+      
+      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm5/rate", clk_rate_PWM);
+      if (system(buf) == -1) { 
+        printf( "Not possible to change clock rate on pwm5\n");
+      }
+      fclose(fptr);
+      break;
+    default:
+      status = -1;
+      printf("Only gpio numbers 15, 32 and 33 are accepted\n");
+    }  
+    
+    switch (gpio) {
+    case 15:	
       *pinmux15 = 0x00000400;
       *pincfg15 = CFGO_OUT;
       pin15->CNF[0] = 0x00000001;
@@ -2209,6 +2301,8 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
     printf( "Not possible to change bus speed\n");
   }
 
+  fclose(fptr);
+  
   strcpy(buf, "modprobe i2c_dev");
     
   if (system(buf) == -1) { /* Ignore errors */
@@ -2354,7 +2448,7 @@ int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg) {
   return status;
 }
 
-int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned wVal){
+int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned wVal) {
     
   union i2c_smbus_data data;
   int status = 0;
@@ -2404,7 +2498,7 @@ int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned w
   return status;
 }
 
-int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg){
+int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg) {
     
   int status = 0;
   union i2c_smbus_data data;
