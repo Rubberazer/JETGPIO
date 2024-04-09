@@ -738,7 +738,7 @@ int gpioInitialise(void)
 
   // Allocating memory for the struct
   for (int j = 0; j < 41; j++) {
-    ISRFunc_CFG[j] = malloc (sizeof(ISRFunc));
+    ISRFunc_CFG[j] = calloc (1, sizeof(ISRFunc));
   }
   return status;
 }
