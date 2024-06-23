@@ -2603,7 +2603,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     pin_tracker |= (1 << 31);
   }
 
-  if (spiChan == 1) {
+  if (spiChan == 2) {
     pin37->CNF[0] |= 0x00000003;
     *pinmux37 = 0x00000400;
     *pincfg37 = CFGO_OUT;
@@ -2693,7 +2693,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 }
 
 int spiClose(unsigned handle) {
-  if (handle > 1) {
+  if (handle > 2) {
     printf( "Bad handle (%d)", handle);
     return -1;
   }
