@@ -2137,6 +2137,12 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
         printf( "Not possible to change clock rate on pwm8\n");
       }
       fclose(fptr);
+      *pinmux13 = 0x00000400;
+      *pincfg13 = CFGO_OUT;
+      pin13->CNF[0] = 0x00000001;
+      *PWM8 = 0x0;
+      *PWM8 = PFM;
+      pin_tracker |= (1 << 30);
       break;
     case 15:
       snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm1/rate");
@@ -2153,6 +2159,12 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
         printf( "Not possible to change clock rate on pwm1\n");
       }
       fclose(fptr);
+      *pinmux15 = 0x00000400;
+      *pincfg15 = CFGO_OUT;
+      pin15->CNF[0] = 0x00000001;
+      *PWM1 = 0x0;
+      *PWM1 = PFM;
+      pin_tracker |= (1 << 28);
       break;
     case 18:
       snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm5/rate");
@@ -2169,29 +2181,6 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
         printf( "Not possible to change clock rate on pwm5\n");
       }
       fclose(fptr);
-      break;
-    default:
-      status = -1;
-      printf("Only gpio numbers 13, 15 and 18 are accepted\n");
-    }  
-    switch (gpio) {
-    case 13:
-      *pinmux13 = 0x00000400;
-      *pincfg13 = CFGO_OUT;
-      pin13->CNF[0] = 0x00000001;
-      *PWM8 = 0x0;
-      *PWM8 = PFM;
-      pin_tracker |= (1 << 30);
-      break;
-    case 15:	
-      *pinmux15 = 0x00000400;
-      *pincfg15 = CFGO_OUT;
-      pin15->CNF[0] = 0x00000001;
-      *PWM1 = 0x0;
-      *PWM1 = PFM;
-      pin_tracker |= (1 << 28);
-      break;
-    case 18:
       *pinmux18 = 0x00000401;
       *pincfg18 = CFGO_OUT;
       pin18->CNF[0] = 0x00000001;
@@ -2202,7 +2191,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
     default:
       status = -1;
       printf("Only gpio numbers 13, 15 and 18 are accepted\n");
-    }		
+    }  		
   }
   else {printf("Only frequencies from 50 to 1595000 Hz are allowed\n");
     status =-2;}

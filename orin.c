@@ -2128,8 +2128,13 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
         printf( "Not possible to change clock rate on pwm1\n");
       }
       fclose(fptr);
+      *pinmux15 = 0x00000400;
+      *pincfg15 = CFGO_OUT;
+      pin15->CNF[0] = 0x00000001;
+      *PWM1 = 0x0;
+      *PWM1 = PFM;
+      pin_tracker |= (1 << 28);
       break;
-
     case 32:
       snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm7/rate");
       fptr = fopen(buf, "r");
@@ -2145,6 +2150,12 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
         printf( "Not possible to change clock rate on pwm7\n");
       }
       fclose(fptr);
+      *pinmux32 = 0x00000400;
+      *pincfg32 = CFGO_OUT;
+      pin32->CNF[0] = 0x00000001;
+      *PWM7 = 0x0;
+      *PWM7 = PFM;
+      pin_tracker |= (1 << 30);
       break;
     case 33:
       snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm5/rate");
@@ -2161,30 +2172,6 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
         printf( "Not possible to change clock rate on pwm5\n");
       }
       fclose(fptr);
-      break;
-    default:
-      status = -1;
-      printf("Only gpio numbers 15, 32 and 33 are accepted\n");
-    }  
-    
-    switch (gpio) {
-    case 15:	
-      *pinmux15 = 0x00000400;
-      *pincfg15 = CFGO_OUT;
-      pin15->CNF[0] = 0x00000001;
-      *PWM1 = 0x0;
-      *PWM1 = PFM;
-      pin_tracker |= (1 << 28);
-      break;
-    case 32:
-      *pinmux32 = 0x00000400;
-      *pincfg32 = CFGO_OUT;
-      pin32->CNF[0] = 0x00000001;
-      *PWM7 = 0x0;
-      *PWM7 = PFM;
-      pin_tracker |= (1 << 30);
-      break;
-    case 33:
       *pinmux33 = 0x00000401;
       *pincfg33 = CFGO_OUT;
       pin33->CNF[0] = 0x00000001;
@@ -2195,7 +2182,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
     default:
       status = -1;
       printf("Only gpio numbers 15, 32 and 33 are accepted\n");
-    }		
+    }  		
   }
   else {printf("Only frequencies from 50 to 1595000 Hz are allowed\n");
     status =-2;}
