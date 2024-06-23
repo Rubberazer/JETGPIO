@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Jetgpio<span id="projectnumber">&#160;1.0</span>
+   <div id="projectname">Jetgpio<span id="projectnumber">&#160;1.1</span>
    </div>
    <div id="projectbrief">C library to manage the GPIO header of the Nvidia JETSON boards</div>
   </td>
@@ -95,17 +95,18 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="README"></a> C library to manage the GPIO header of the Nvidia JETSON boards</p>
-<p><a href="https://github.com/Rubberazer/JETGPIO/discussions/21">ORIN AGX WANTED TO EXPAND THE LIBRARY</a></p>
+<p><a href="https://github.com/Rubberazer/JETGPIO/discussions/30">UPDATE: ORIN AGX SUPPORTED IN BETA</a></p>
 <h2 align="left">FUNCTIONALITY:</h2>
 <ul>
 <li>Supported models:<ul>
 <li>JETSON NANO and TX1</li>
 <li>JETSON ORIN NANO and ORIN NX</li>
+<li>JETSON ORIN AGX</li>
 </ul>
 </li>
 <li>GPIO control of all the header pinout as input or output. Low latency, see also The need for speed below for some more information on this</li>
 <li>Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided</li>
-<li>PWM (hardware) control on header pins 32, 33 for all models and also 15 for Orin</li>
+<li>PWM (hardware) control on header pins 32, 33 for all models and also 15 for Orin Nano/NX, for Orin AGX the pins are: 13, 15 &amp; 18</li>
 <li>I2C serial communication over pins: 27 (SDA) &amp; 28 (SCL) and 3 (SDA) &amp; 5 (SCL)</li>
 <li>SPI serial communication over pins: 19 (MOSI), 21 (MISO), 23 (SCK) &amp; 24 (CS0) and 37 (MOSI), 22 (MISO), 13 (SCK) &amp; 18 (CS0)</li>
 <li>No need of previous kernel configuration, no need to change the device tree, no need to reconfigure via /opt/nvidia/jetson-io/jetson-io.py or the like <br  />
@@ -168,7 +169,8 @@ sudo make install
 <p>The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA on Nano or I2C1_SDA on Orin, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use the ones below:</p>
 <p><a href="https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/">https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/</a></p>
 <p><a href="https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/">https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/</a></p>
-<p>The library has been tested on a Jetson Nano: tegra210 (TX1) and on a Jetson Orin Nano: tegra234 </p>
+<p><a href="https://jetsonhacks.com/nvidia-jetson-agx-orin-gpio-header-pinout/">https://jetsonhacks.com/nvidia-jetson-agx-orin-gpio-header-pinout/</a></p>
+<p>The library has been tested on a Jetson Nano: tegra210 (TX1), on a Jetson Orin Nano: tegra234 and also on an Orin AGX. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
