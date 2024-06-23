@@ -738,7 +738,6 @@ int gpioInitialise(void)
     
   // Initialize spi
   SpiInfo[0].state = SPI_CLOSED;
-  SpiInfo[2].state = SPI_CLOSED;
 
   // Global interrupt variable
   global_int = 1;
@@ -1090,6 +1089,12 @@ void gpioTerminate(void) {
   // Ummapping CNF Non AON registers
   munmap(baseCNF_NAON, 4 * pagesize);
 
+  // Ummapping PINMUX AON registers
+  munmap(basePINMUX_AON, pagesize);
+
+  // Ummapping PINMUX AONHV registers	
+  munmap(basePINMUX_AONHV, pagesize);
+  
   // Ummapping PINMUX G7 registers
   munmap(basePINMUX_G7, pagesize);
 

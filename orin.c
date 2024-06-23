@@ -1086,6 +1086,9 @@ void gpioTerminate(void) {
   // Ummapping PINMUX G7 registers
   munmap(basePINMUX_G7, pagesize);
 
+  // Ummapping PINMUX AON registers
+  munmap(basePINMUX_AON, pagesize);
+
   // Ummapping PINMUX G3 registers
   munmap(basePINMUX_G3, pagesize);
 
