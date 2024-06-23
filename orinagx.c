@@ -2679,7 +2679,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 }
 
 int spiClose(unsigned handle) {
-  if (!(handle == 1)) {
+  if (!(handle == 0)) {
     printf( "Bad handle (%d)", handle);
     return -1;
   }
