@@ -2194,7 +2194,6 @@ int gpioPWM(unsigned gpio, unsigned dutycycle) {
   
   if ((dutycycle >= 0) && (dutycycle <=256)) {
     switch (gpio) {
-
     case 15:
       *PWM1 &= ~(0xFFFF0000);
       *PWM1 |= dutycycle<<16;
