@@ -2679,7 +2679,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 }
 
 int spiClose(unsigned handle) {
-  if (handle > 1) {
+  if (!(handle == 1)) {
     printf( "Bad handle (%d)", handle);
     return -1;
   }
@@ -2705,7 +2705,7 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len) {
   int ret;
   struct spi_ioc_transfer tr;
     
-  if (handle > 2) {
+  if (!(handle == 0) ) {
     printf( "Bad handle (%d)\n", handle);
     return -1;
   }
