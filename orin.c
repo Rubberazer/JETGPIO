@@ -2211,7 +2211,7 @@ int gpioPWM(unsigned gpio, unsigned dutycycle) {
       break;
     default:
       status = -1;
-      printf("Only gpio numbers 32 and 33 are accepted,\n");
+      printf("Only gpio numbers 15, 32 and 33 are accepted,\n");
     }
   }
   else {printf("Only a dutycycle from 0 to 256 is allowed\n");
