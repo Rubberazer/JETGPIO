@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 1.0 */
+/* jetgpio version 1.1 */
 /* Nano classic extension */
 
 #include <stdio.h>

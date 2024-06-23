@@ -2,7 +2,7 @@
 
 C library to manage the GPIO header of the Nvidia JETSON boards
 
-[ORIN AGX WANTED TO EXPAND THE LIBRARY](https://github.com/Rubberazer/JETGPIO/discussions/21)
+[UPDATE: ORIN AGX SUPPORTED IN BETA](https://github.com/Rubberazer/JETGPIO/discussions/21)
 
 
 <h2 align="left">FUNCTIONALITY:</h2>
@@ -13,11 +13,13 @@ C library to manage the GPIO header of the Nvidia JETSON boards
 
   - JETSON ORIN NANO and ORIN NX 
 
+  - JETSON ORIN AGX
+
 - GPIO control of all the header pinout as input or output. Low latency, see also [The need for speed](#the-need-for-speed) below for some more information on this
 
 - Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided 
 
-- PWM (hardware) control on header pins 32, 33 for all models and also 15 for Orin
+- PWM (hardware) control on header pins 32, 33 for all models and also 15 for Orin Nano/NX, for Orin AGX the pins are: 13, 15 & 18
 
 - I2C serial communication over pins: 27 (SDA) & 28 (SCL)  and 3 (SDA) & 5 (SCL)
 
@@ -112,7 +114,9 @@ https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
 
 https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/
 
-The library has been tested on a Jetson Nano: tegra210 (TX1) and on a Jetson Orin Nano: tegra234
+https://jetsonhacks.com/nvidia-jetson-agx-orin-gpio-header-pinout/
+
+The library has been tested on a Jetson Nano: tegra210 (TX1), on a Jetson Orin Nano: tegra234 and also on an Orin AGX.
 
 
 

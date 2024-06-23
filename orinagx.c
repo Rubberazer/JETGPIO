@@ -22,7 +22,7 @@ For more information, please refer to <http://unlicense.org/>
 */
 
 /* jetgpio version 1.1 */
-/* Orin Nano & NX extension */
+/* Orin AGX extension */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,15 +64,15 @@ PISRFunc ISRFunc_CFG[41];
 
 static volatile uint32_t *PWM1;
 static volatile uint32_t *PWM5;
-static volatile uint32_t *PWM7;
+static volatile uint32_t *PWM8;
 static volatile uint32_t  PWM1_Init;
 static volatile uint32_t  PWM5_Init;
-static volatile uint32_t  PWM7_Init;
+static volatile uint32_t  PWM8_Init;
 
 static i2cInfo_t i2cInfo[8];
 static int i2c_speed[8];
 
-static SPIInfo_t SpiInfo[3];
+static SPIInfo_t SpiInfo[1];
 
 static volatile GPIO_CNFO *pin3;
 static volatile GPIO_CNFO *pin5;
@@ -165,6 +165,7 @@ static void *baseCNF_AON;
 static void *baseCNF_NAON;
 
 static void *basePINMUX_AON;
+static void *basePINMUX_AONHV;
 static void *basePINMUX_G7;
 static void *basePINMUX_G3;
 static void *basePINMUX_EDP;
@@ -173,10 +174,10 @@ static void *basePINMUX_G2;
 
 static void *basePWM1;
 static void *basePWM5;
-static void *basePWM7;
+static void *basePWM8;
 static unsigned clk_rate_PWM1 = 408000000;
 static unsigned clk_rate_PWM5 = 408000000;
-static unsigned clk_rate_PWM7 = 408000000;
+static unsigned clk_rate_PWM8 = 408000000;
 
 static volatile unsigned global_int;
 static pthread_t callThd[28];
@@ -217,52 +218,58 @@ int gpioInitialise(void)
     return -4;
   }
 
+  //  Mapping PINMUX_AONHV
+  basePINMUX_AONHV = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_AONHV);
+  if (basePINMUX_AONHV == MAP_FAILED) {
+    return -5;
+  }
+
   //  Mapping PINMUX_G7
   basePINMUX_G7 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_G7);
   if (basePINMUX_G7 == MAP_FAILED) {
-    return -5;
+    return -6;
   }
     
   //  Mapping PINMUX_G3
   basePINMUX_G3 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_G3);
   if (basePINMUX_G3 == MAP_FAILED) {
-    return -6;
+    return -7;
   }
 
   //  Mapping PINMUX_EDP
   basePINMUX_EDP = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_EDP);
   if (basePINMUX_EDP == MAP_FAILED) {
-    return -7;
+    return -8;
   }
 
   //  Mapping PINMUX_G4
   basePINMUX_G4 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_G4);
   if (basePINMUX_G4 == MAP_FAILED) {
-    return -8;
+    return -9;
   }
 
   //  Mapping PINMUX_G2
   basePINMUX_G2 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_G2);
   if (basePINMUX_G2 == MAP_FAILED) {
-    return -9;
+    return -10;
   }
   
   //  Mapping PWM1
   basePWM1 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM1);
   if (basePWM1 == MAP_FAILED) {
-    return -10;
+    return -11;
   }
 
   //  Mapping PWM5
   basePWM5 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM5);
   if (basePWM5 == MAP_FAILED) {
-    return -11;
+    return -12;
   }
 
-  //  Mapping PWM7
-  basePWM7 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM7);
-  if (basePWM7 == MAP_FAILED) {
-    return -12;
+  //  Mapping PWM8
+  basePWM8 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM8);
+  if (basePWM8 == MAP_FAILED) {
+    return -13;
   }
 
   // Pointer to CNFO_3
@@ -298,7 +305,7 @@ int gpioInitialise(void)
   pin_CFG.pin5 = *pincfg5;
     
   // Pointer to CNF7
-  pin7 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_7);
+  pin7 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFOX_7);
   pin_CNF.pin7 = pin7->CNF[0];
   pin_DEB.pin7 = pin7->DEB[0];
   pin_IN.pin7 = pin7->IN[0];
@@ -306,11 +313,11 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin7 = pin7->OUT_VLE[0];
     
   // Pointer to PINMUX7
-  pinmux7 = (uint32_t volatile *)((char *)basePINMUX_G7 + PINMUXO_7);
+  pinmux7 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXOX_7);
   pin_MUX.pin7 = *pinmux7;
     
   // Pointer to PINCFG7
-  pincfg7 = (uint32_t volatile *)((char *)basePINMUX_G7 + CFGO_7);
+  pincfg7 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGOX_7);
   pin_CFG.pin7 = *pincfg7;
   
   // Pointer to CNF8
@@ -378,7 +385,7 @@ int gpioInitialise(void)
   pin_CFG.pin12 = *pincfg12;
     
   // Pointer to CNF13
-  pin13 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_13);
+  pin13 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFOX_13);
   pin_CNF.pin13 = pin13->CNF[0];
   pin_DEB.pin13 = pin13->DEB[0];
   pin_IN.pin13 = pin13->IN[0];
@@ -386,11 +393,11 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin13 = pin13->OUT_VLE[0];
       
   // Pointer to PINMUX13
-  pinmux13 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_13);
+  pinmux13 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXOX_13);
   pin_MUX.pin13 = *pinmux13;
     
   // Pointer to PINCFG13
-  pincfg13 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_13);
+  pincfg13 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGOX_13);
   pin_CFG.pin13 = *pincfg13;
     
   // Pointer to CNF15
@@ -410,7 +417,7 @@ int gpioInitialise(void)
   pin_CFG.pin15 = *pincfg15;
     
   // Pointer to CNF16
-  pin16 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_16);
+  pin16 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFOX_16);
   pin_CNF.pin16 = pin16->CNF[0];
   pin_DEB.pin16 = pin16->DEB[0];
   pin_IN.pin16 = pin16->IN[0];
@@ -418,15 +425,15 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin16 = pin16->OUT_VLE[0];
       
   // Pointer to PINMUX16
-  pinmux16 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_16);
+  pinmux16 = (uint32_t volatile *)((char *)basePINMUX_AONHV + PINMUXOX_16);
   pin_MUX.pin16 = *pinmux16;
    
   // Pointer to PINCFG16
-  pincfg16 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_16);
+  pincfg16 = (uint32_t volatile *)((char *)basePINMUX_AONHV + CFGOX_16);
   pin_CFG.pin16 = *pincfg16;
     
   // Pointer to CNF18
-  pin18 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_18);
+  pin18 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFOX_18);
   pin_CNF.pin18 = pin18->CNF[0];
   pin_DEB.pin18 = pin18->DEB[0];
   pin_IN.pin18 = pin18->IN[0];
@@ -434,11 +441,11 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin18 = pin18->OUT_VLE[0];
       
   // Pointer to PINMUX18
-  pinmux18 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_18);
+  pinmux18 = (uint32_t volatile *)((char *)basePINMUX_G4 + PINMUXOX_18);
   pin_MUX.pin18 = *pinmux18;
     
   // Pointer to PINCFG18
-  pincfg18 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_18);
+  pincfg18 = (uint32_t volatile *)((char *)basePINMUX_G4 + CFGOX_18);
   pin_CFG.pin18 = *pincfg18;
     
   // Pointer to CNF19
@@ -474,7 +481,7 @@ int gpioInitialise(void)
   pin_CFG.pin21 = *pincfg21;
     
   // Pointer to CNF22
-  pin22 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_22);
+  pin22 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFOX_22);
   pin_CNF.pin22 = pin22->CNF[0];
   pin_DEB.pin22 = pin22->DEB[0];
   pin_IN.pin22 = pin22->IN[0];
@@ -482,11 +489,11 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin22 = pin22->OUT_VLE[0];
       
   // Pointer to PINMUX22
-  pinmux22 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_22);
+  pinmux22 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXOX_22);
   pin_MUX.pin22 = *pinmux22;
     
   // Pointer to PINCFG22
-  pincfg22 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_22);
+  pincfg22 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGOX_22);
   pin_CFG.pin22 = *pincfg22;
     
   // Pointer to CNF23
@@ -570,7 +577,7 @@ int gpioInitialise(void)
   pin_CFG.pin28 = *pincfg28;
     
   // Pointer to CNF29
-  pin29 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_29);
+  pin29 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFOX_29);
   pin_CNF.pin29 = pin29->CNF[0];
   pin_DEB.pin29 = pin29->DEB[0];
   pin_IN.pin29 = pin29->IN[0];
@@ -578,15 +585,15 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin29 = pin29->OUT_VLE[0];
     
   // Pointer to PINMUX29
-  pinmux29 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXO_29);
+  pinmux29 = (uint32_t volatile *)((char *)basePINMUX_AONHV + PINMUXOX_29);
   pin_MUX.pin29 = *pinmux29;
     
   // Pointer to PINCFG29
-  pincfg29 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGO_29);
+  pincfg29 = (uint32_t volatile *)((char *)basePINMUX_AONHV + CFGOX_29);
   pin_CFG.pin29 = *pincfg29;
     
   // Pointer to CNF31
-  pin31 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_31);
+  pin31 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFOX_31);
   pin_CNF.pin31 = pin31->CNF[0];
   pin_DEB.pin31 = pin31->DEB[0];
   pin_IN.pin31 = pin31->IN[0];
@@ -594,15 +601,15 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin31 = pin31->OUT_VLE[0];
     
   // Pointer to PINMUX31
-  pinmux31 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXO_31);
+  pinmux31 = (uint32_t volatile *)((char *)basePINMUX_AONHV + PINMUXOX_31);
   pin_MUX.pin31 = *pinmux31;
     
   // Pointer to PINCFG31
-  pincfg31 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGO_31);
+  pincfg31 = (uint32_t volatile *)((char *)basePINMUX_AONHV + CFGOX_31);
   pin_CFG.pin31 = *pincfg31;
     
   // Pointer to CNF32
-  pin32 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_32);
+  pin32 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFOX_32);
   pin_CNF.pin32 = pin32->CNF[0];
   pin_DEB.pin32 = pin32->DEB[0];
   pin_IN.pin32 = pin32->IN[0];
@@ -610,15 +617,15 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin32 = pin32->OUT_VLE[0];
     
   // Pointer to PINMUX32
-  pinmux32 = (uint32_t volatile *)((char *)basePINMUX_G4 + PINMUXO_32);
+  pinmux32 = (uint32_t volatile *)((char *)basePINMUX_AONHV + PINMUXOX_32);
   pin_MUX.pin32 = *pinmux32;
    
   // Pointer to PINCFG32
-  pincfg32 = (uint32_t volatile *)((char *)basePINMUX_G4 + CFGO_32);
+  pincfg32 = (uint32_t volatile *)((char *)basePINMUX_AONHV + CFGOX_32);
   pin_CFG.pin32 = *pincfg32;
     
   // Pointer to CNF33
-  pin33 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_33); 
+  pin33 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFOX_33); 
   pin_CNF.pin33 = pin33->CNF[0];
   pin_DEB.pin33 = pin33->DEB[0];
   pin_IN.pin33 = pin33->IN[0];
@@ -626,11 +633,11 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin33 = pin33->OUT_VLE[0];
     
   // Pointer to PINMUX33
-  pinmux33 = (uint32_t volatile *)((char *)basePINMUX_G4 + PINMUXO_33);
+  pinmux33 = (uint32_t volatile *)((char *)basePINMUX_AONHV + PINMUXOX_33);
   pin_MUX.pin33 = *pinmux33;
     
   // Pointer to PINCFG33
-  pincfg33 = (uint32_t volatile *)((char *)basePINMUX_G4 + CFGO_33);
+  pincfg33 = (uint32_t volatile *)((char *)basePINMUX_AONHV + CFGOX_33);
   pin_CFG.pin33 = *pincfg33;
     
   // Pointer to CNF35
@@ -666,7 +673,7 @@ int gpioInitialise(void)
   pin_CFG.pin36 = *pincfg36;
     
   // Pointer to CNF37
-  pin37 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_37);
+  pin37 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFOX_37);
   pin_CNF.pin37 = pin37->CNF[0];
   pin_DEB.pin37 = pin37->DEB[0];
   pin_IN.pin37 = pin37->IN[0];
@@ -674,11 +681,11 @@ int gpioInitialise(void)
   pin_OUT_VLE.pin37 = pin37->OUT_VLE[0];
     
   // Pointer to PINMUX37
-  pinmux37 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_37);
+  pinmux37 = (uint32_t volatile *)((char *)basePINMUX_AONHV + PINMUXOX_37);
   pin_MUX.pin37 = *pinmux37;
     
   // Pointer to PINCFG37
-  pincfg37 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_37);
+  pincfg37 = (uint32_t volatile *)((char *)basePINMUX_AONHV + CFGOX_37);
   pin_CFG.pin37 = *pincfg37;
     
   // Pointer to CNF38
@@ -721,9 +728,9 @@ int gpioInitialise(void)
   PWM5 = (uint32_t volatile *)((char *)basePWM5);
   PWM5_Init = *PWM5;
 
-  // Pointer to PWM7
-  PWM7 = (uint32_t volatile *)((char *)basePWM7);
-  PWM7_Init = *PWM7;
+  // Pointer to PWM8
+  PWM8 = (uint32_t volatile *)((char *)basePWM8);
+  PWM8_Init = *PWM8;
 
   // Initialize i2c
   i2cInfo[1].state = I2C_CLOSED;
@@ -788,12 +795,12 @@ void gpioTerminate(void) {
   }
 
   if ((pin_tracker >> 30) & 1) {
-    *PWM7 = PWM7_Init;
+    *PWM8 = PWM8_Init;
     char buf[100];
     
-    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm7/rate", clk_rate_PWM7);
+    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm8/rate", clk_rate_PWM8);
     if (system(buf) == -1) { 
-      printf( "Not possible to change clock rate on pwm7\n");
+      printf( "Not possible to change clock rate on pwm8\n");
     }
   }
     
@@ -867,7 +874,7 @@ void gpioTerminate(void) {
     *pincfg12 = pin_CFG.pin12;
   }
 
-  if (((pin_tracker >> 7) & 1) || ((pin_tracker >> 32) & 1)) {
+  if (((pin_tracker >> 7) & 1) || ((pin_tracker >> 30) & 1)) {
     pin13->CNF[0] = pin_CNF.pin13;
     pin13->DEB[0] = pin_DEB.pin13;
     pin13->IN[0] = pin_IN.pin13;
@@ -897,7 +904,7 @@ void gpioTerminate(void) {
     *pincfg16 = pin_CFG.pin16;
   }
 
-  if (((pin_tracker >> 10) & 1) || ((pin_tracker >> 32) & 1)) {
+  if (((pin_tracker >> 10) & 1) || ((pin_tracker >> 29) & 1)) {
     pin18->CNF[0] = pin_CNF.pin18;
     pin18->DEB[0] = pin_DEB.pin18;
     pin18->IN[0] = pin_IN.pin18;
@@ -927,7 +934,7 @@ void gpioTerminate(void) {
     *pincfg21 = pin_CFG.pin21;
   }
 
-  if (((pin_tracker >> 13) & 1) || ((pin_tracker >> 32) & 1)) {
+  if ((pin_tracker >> 13) & 1) {
     pin22->CNF[0] = pin_CNF.pin22;
     pin22->DEB[0] = pin_DEB.pin22;
     pin22->IN[0] = pin_IN.pin22;
@@ -1007,7 +1014,7 @@ void gpioTerminate(void) {
     *pincfg31 = pin_CFG.pin31;
   }
 
-  if (((pin_tracker >> 21) & 1) || ((pin_tracker >> 30) & 1)) {
+  if ((pin_tracker >> 21) & 1) {
     pin32->CNF[0] = pin_CNF.pin32;
     pin32->DEB[0] = pin_DEB.pin32;
     pin32->IN[0] = pin_IN.pin32;
@@ -1017,7 +1024,7 @@ void gpioTerminate(void) {
     *pincfg32 = pin_CFG.pin32;
   }
 
-  if (((pin_tracker >> 22) & 1) || ((pin_tracker >> 29) & 1)) {
+  if ((pin_tracker >> 22) & 1) {
     pin33->CNF[0] = pin_CNF.pin33;
     pin33->DEB[0] = pin_DEB.pin33;
     pin33->IN[0] = pin_IN.pin33;
@@ -1047,7 +1054,7 @@ void gpioTerminate(void) {
     *pincfg36 = pin_CFG.pin36;
   }
 
-  if (((pin_tracker >> 25) & 1) || ((pin_tracker >> 32) & 1)) {
+  if ((pin_tracker >> 25) & 1) {
     pin37->CNF[0] = pin_CNF.pin37;
     pin37->DEB[0] = pin_DEB.pin37;
     pin37->IN[0] = pin_IN.pin37;
@@ -1104,8 +1111,8 @@ void gpioTerminate(void) {
   // Ummapping PWM5 registers 
   munmap(basePWM5, pagesize);
 
-  // Ummapping PWM7 registers 
-  munmap(basePWM7, pagesize);
+  // Ummapping PWM8 registers 
+  munmap(basePWM8, pagesize);
   
   // close /dev/mem 
   close(fd_GPIO);
@@ -1927,7 +1934,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
     case 7:
       pin7->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin7->INT_CLR[0] |= 1;
-      gpio_offset = 144;//base is 348
+      gpio_offset = 106;//base is 348
       break;
     case 8:
       pin8->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
@@ -1952,7 +1959,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
     case 13:
       pin13->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin13->INT_CLR[0] |= 1;
-      gpio_offset = 122;
+      gpio_offset = 108;
       break;
     case 15:
       pin15->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
@@ -1962,12 +1969,12 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
     case 16:
       pin16->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin16->INT_CLR[0] |= 1;
-      gpio_offset = 126;
+      gpio_offset = 9;
       break;
     case 18:
       pin18->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin18->INT_CLR[0] |= 1;
-      gpio_offset = 125;
+      gpio_offset = 43;
       break;
     case 19:
       pin19->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
@@ -1982,7 +1989,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
     case 22:
       pin22->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin22->INT_CLR[0] |= 1;
-      gpio_offset = 123;
+      gpio_offset = 96;
       break;
     case 23:
       pin23->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
@@ -2012,22 +2019,22 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
     case 29:
       pin29->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin29->INT_CLR[0] |= 1;
-      gpio_offset = 105;
+      gpio_offset = 1;
       break;
     case 31:
       pin31->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin31->INT_CLR[0] |= 1;
-      gpio_offset = 106;
+      gpio_offset = 0;
       break;
     case 32:
       pin32->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin32->INT_CLR[0] |= 1;
-      gpio_offset = 41;
+      gpio_offset = 8;
       break;
     case 33:
       pin33->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin33->INT_CLR[0] |= 1;
-      gpio_offset = 43;
+      gpio_offset = 2;
       break;
     case 35:
       pin35->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
@@ -2042,7 +2049,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
     case 37:
       pin37->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin37->INT_CLR[0] |= 1;
-      gpio_offset = 124;
+      gpio_offset = 3;
       break;
     case 38:
       pin38->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
@@ -2110,6 +2117,22 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       PFM = round(398437.5/(double)frequency)-1;
     }
     switch(gpio) {
+    case 13:
+      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm8/rate");
+      fptr = fopen(buf, "r");
+      
+      if (fptr == NULL) {
+        printf("Not possible to read current clock rate on pwm8\n");
+      }
+	
+      fscanf(fptr, "%u", &clk_rate_PWM8);
+      
+      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm8/rate", clk_rate_PWM);
+      if (system(buf) == -1) { 
+        printf( "Not possible to change clock rate on pwm8\n");
+      }
+      fclose(fptr);
+      break;
     case 15:
       snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm1/rate");
       fptr = fopen(buf, "r");
@@ -2126,24 +2149,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       }
       fclose(fptr);
       break;
-
-    case 32:
-      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm7/rate");
-      fptr = fopen(buf, "r");
-      
-      if (fptr == NULL) {
-        printf("Not possible to read current clock rate on pwm7\n");
-      }
-	
-      fscanf(fptr, "%u", &clk_rate_PWM7);
-      
-      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm7/rate", clk_rate_PWM);
-      if (system(buf) == -1) { 
-        printf( "Not possible to change clock rate on pwm7\n");
-      }
-      fclose(fptr);
-      break;
-    case 33:
+    case 18:
       snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm5/rate");
       fptr = fopen(buf, "r");
       
@@ -2161,10 +2167,17 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       break;
     default:
       status = -1;
-      printf("Only gpio numbers 15, 32 and 33 are accepted\n");
+      printf("Only gpio numbers 13, 15 and 18 are accepted\n");
     }  
-    
     switch (gpio) {
+    case 13:
+      *pinmux13 = 0x00000400;
+      *pincfg13 = CFGO_OUT;
+      pin13->CNF[0] = 0x00000001;
+      *PWM8 = 0x0;
+      *PWM8 = PFM;
+      pin_tracker |= (1 << 30);
+      break;
     case 15:	
       *pinmux15 = 0x00000400;
       *pincfg15 = CFGO_OUT;
@@ -2173,25 +2186,17 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       *PWM1 = PFM;
       pin_tracker |= (1 << 28);
       break;
-    case 32:
-      *pinmux32 = 0x00000400;
-      *pincfg32 = CFGO_OUT;
-      pin32->CNF[0] = 0x00000001;
-      *PWM7 = 0x0;
-      *PWM7 = PFM;
-      pin_tracker |= (1 << 30);
-      break;
-    case 33:
-      *pinmux33 = 0x00000401;
-      *pincfg33 = CFGO_OUT;
-      pin33->CNF[0] = 0x00000001;
+    case 18:
+      *pinmux18 = 0x00000401;
+      *pincfg18 = CFGO_OUT;
+      pin18->CNF[0] = 0x00000001;
       *PWM5 = 0x0;
       *PWM5 = PFM;
       pin_tracker |= (1 << 29);
       break;
     default:
       status = -1;
-      printf("Only gpio numbers 15, 32 and 33 are accepted\n");
+      printf("Only gpio numbers 13, 15 and 18 are accepted\n");
     }		
   }
   else {printf("Only frequencies from 50 to 1595000 Hz are allowed\n");
@@ -2204,25 +2209,24 @@ int gpioPWM(unsigned gpio, unsigned dutycycle) {
   
   if ((dutycycle >= 0) && (dutycycle <=256)) {
     switch (gpio) {
-
+    case 13:
+      *PWM8 &= ~(0xFFFF0000);
+      *PWM8 |= dutycycle<<16;
+      *PWM8 |= 0x80000000;
+      break;
     case 15:
       *PWM1 &= ~(0xFFFF0000);
       *PWM1 |= dutycycle<<16;
       *PWM1 |= 0x80000000;
       break;  
-    case 32:
-      *PWM7 &= ~(0xFFFF0000);
-      *PWM7 |= dutycycle<<16;
-      *PWM7 |= 0x80000000;
-      break;
-    case 33:
+    case 18:
       *PWM5 &= ~(0xFFFF0000);
       *PWM5 |= dutycycle<<16;
       *PWM5 |= 0x80000000;
       break;
     default:
       status = -1;
-      printf("Only gpio numbers 32 and 33 are accepted,\n");
+      printf("Only gpio numbers 13, 15 and 18 are accepted,\n");
     }
   }
   else {printf("Only a dutycycle from 0 to 256 is allowed\n");
@@ -2262,8 +2266,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
     return -2;
   }
 	
-  switch(i2cFlags) {
-		
+  switch(i2cFlags) {		
   case 0: 
     speed = 100000;
     break;
@@ -2548,13 +2551,9 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
   int fd, slot;
   int ret = 0;
 
-  if (!(spiChan == 0 || spiChan == 1)) {
-    printf( "Bad spi device (%d) only 0 or 1 are accepted\n", spiChan);
+  if (!(spiChan == 0)) {
+    printf( "Bad spi device (%d) only 0 is accepted\n", spiChan);
     return -1;
-  }
-
-  if (spiChan == 1) {
-    spiChan ++; 
   }
 
   if (speed < 0 || speed > 50000000) {
@@ -2598,7 +2597,6 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     return -11;
   }
     
-  if (spiChan == 0) {
     pin19->CNF[0] |= 0x00000003;
     *pinmux19 = 0x00000400;
     *pincfg19 = CFGO_OUT;
@@ -2612,24 +2610,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     *pinmux24 = 0x00000400;
     *pincfg24 = CFGO_OUT;
     pin_tracker |= (1 << 31);
-  }
-
-  if (spiChan == 1) {
-    pin37->CNF[0] |= 0x00000003;
-    *pinmux37 = 0x00000400;
-    *pincfg37 = CFGO_OUT;
-    pin22->CNF[0] |= 0x00000001;
-    *pinmux22 = 0x00000440;
-    *pincfg22 = CFGO_IN;
-    pin13->CNF[0] |= 0x00000003;
-    *pinmux13 = 0x00000400;
-    *pincfg13 = CFGO_OUT;
-    pin18->CNF[0] |= 0x00000003; 
-    *pinmux18 = 0x00000400;
-    *pincfg18 = CFGO_OUT;
-    pin_tracker |= (1UL << 32);
-  }
-
+  
   strcpy(buf, "modprobe spidev bufsiz=65535");
     
   if (system(buf) == -1) { 

@@ -27,7 +27,7 @@ step4:
 	install -m 0644 jetgpio.h /usr/include
 	ldconfig
 	ldconfig -p | grep libjetgpio.so
-	@if [ $(MODEL) == orin ]; then\
+	@if (( $(MODEL) == orin || $(MODEL) == orinagx )); then\
 		cp ./scripts/pwm_enabler.sh /etc/systemd/system;\
 		cp ./scripts/pwm_enable.service /etc/systemd/system;\
 		chmod +x /etc/systemd/system/pwm_enabler.sh;\
@@ -58,6 +58,11 @@ orin:
 	$(CC) $(CFLAGS) orin.c
 	$(CC) $(LDFLAGS) -o $(LIB) orin.o $(LIBS)
 	@echo orin >  ./hardware
+
+orinagx:
+	$(CC) $(CFLAGS) orinagx.c
+	$(CC) $(LDFLAGS) -o $(LIB) orinagx.o $(LIBS)
+	@echo orinagx >  ./hardware
 
 clean:
 	rm -f *.o $(LIB) get_chip_id hardware

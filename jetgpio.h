@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 1.0 */
+/* jetgpio version 1.1 */
 /** @file jetgpio.h */
 
 #ifndef jetgpio_h__
@@ -172,20 +172,22 @@ For more information, please refer to <http://unlicense.org/>
 
 /* GPIO base address Orin */
 
-#define base_CNF_AON 0x0c2f1000         // Base address Orin AON: 3,5,27,28
-#define base_CNF_NAON 0x02210000        // Base address  Orin Non AON: 7,8,10,11,29,31,36,15,12,32,33,35,38,40,13,16,18,19,21,22,23,24,26,37
-#define Pinmux_AON 0x0c302000           // Pinmux + config GPIO Orin PADCTL_A14 pad: 3,5,27,28
-#define Pinmux_G7 0x02448000            // Pinmux + config GPIO Orin PADCTL_A24 pad: 7
-#define Pinmux_G3 0x02430000            // Pinmux + config GPIO Orin PADCTL_A0 pad: 8,10,11,29,31,36
-#define Pinmux_EDP 0x02440000           // Pinmux + config GPIO Orin PADCTL_A16 pad: 15
-#define Pinmux_G4 0x02434000            // Pinmux + config GPIO Orin PADCTL_A4 pad: 12,32,33,35,38,40
-#define Pinmux_G2 0x0243d000            // Pinmux + config GPIO Orin PADCTL_A13 pad: 13,16,18,19,21,22,23,24,26,37
+#define base_CNF_AON 0x0c2f1000         // Base address Nano AON: 3,5,27,28 AGX: 3,5,16,27,28,29,31,32,33,37
+#define base_CNF_NAON 0x02210000        // Base address Nano Non AON: 7,8,10,11,29,31,36,15,12,32,33,35,38,40,13,16,18,19,21,22,23,24,26,37 AGX: 7,8,10,11,36,15,12,35,38,40,13,18,19,21,22,23,24,26
+#define Pinmux_AON 0x0c302000           // Pinmux + config GPIO PADCTL_A14 pad Nano & AGX: 3,5,27,28
+#define Pinmux_AONHV 0x0c303000         // Pinmux + config GPIO PADCTL_A15 pad AGX: 29,31,33,37 
+#define Pinmux_G7 0x02448000            // Pinmux + config GPIO PADCTL_A24 pad Nano: 7
+#define Pinmux_G3 0x02430000            // Pinmux + config GPIO PADCTL_A0 pad Nano: 8,10,11,29,31,36 AGX: 8,10,11,13,22,26
+#define Pinmux_EDP 0x02440000           // Pinmux + config GPIO PADCTL_A16 pad Nano & AGX: 15
+#define Pinmux_G4 0x02434000            // Pinmux + config GPIO PADCTL_A4 pad Nano: 12,32,33,35,38,40 AGX: 18
+#define Pinmux_G2 0x0243d000            // Pinmux + config GPIO PADCTL_A13 pad Nano: 13,16,18,19,21,22,23,24,26,37 AGX: 19,21,23,24,26
 
 /* PWM Control Orin */
 
-#define base_PWM1 0x03280000            // PWM1 Controller base address pin 15
-#define base_PWM5 0x032c0000            // PWM5 Controller base address pin 33
-#define base_PWM7 0x032e0000            // PWM7 Controller base address pin 32 
+#define base_PWM1 0x03280000            // PWM1 Controller base address Nano & AGX: pin 15
+#define base_PWM5 0x032c0000            // PWM5 Controller base address Nano: pin 33, AGX: pin 18 
+#define base_PWM7 0x032e0000            // PWM7 Controller base address Nano: pin 32
+#define base_PWM8 0x032f0000            // PWM8 Controller base address AGX: pin 13 
 
 /* GPIO CNF registers Orin */
 
@@ -280,6 +282,45 @@ For more information, please refer to <http://unlicense.org/>
 #define CFGO_38 0x9c  			// Config 38 G4_CFG2TMC_SOC_GPIO43_0
 #define CFGO_40 0x94  			// Config 40 G4_CFG2TMC_SOC_GPIO42_0
 
+/* GPIO CNF registers Orin AGX */
+
+#define CNFOX_7 0x026c0    		// Pin 7  G3_SOC_GPIO33_0
+#define CNFOX_13 0x02800   		// Pin 13 G3_SOC_GPIO37_0
+#define CNFOX_16 0x0a20   		// Pin 16 AO_HV_CAN1_EN_0
+#define CNFOX_18 0x04200   		// Pin 18 G4_SOC_GPIO21_0
+#define CNFOX_22 0x02480   		// Pin 22 G3_SOC_GPIO23_0
+#define CNFOX_29 0x0820   		// Pin 29 AO_HV_CAN0_DIN_0
+#define CNFOX_31 0x0800   		// Pin 31 AO_HV_CAN0_DOUT_0
+#define CNFOX_32 0x0a00   		// Pin 32 AO_HV_CAN1_STB_0 
+#define CNFOX_33 0x0840   		// Pin 33 AO_HV_CAN1_DOUT_0
+#define CNFOX_37 0x0860   		// Pin 37 AO_HV_CAN1_DIN_0
+
+/* GPIO Pinmux registers Orin AGX */
+
+#define PINMUXOX_7 0x70    		// Pinmux 7  G3_SOC_GPIO33_0 
+#define PINMUXOX_13 0x80   		// Pinmux 13 G3_SOC_GPIO37_0
+#define PINMUXOX_16 0x48   		// Pinmux 16 AO_HV_CAN1_EN_0
+#define PINMUXOX_18 0x40   		// Pinmux 18 G4_SOC_GPIO21_0
+#define PINMUXOX_22 0x20    		// Pinmux 22 G3_SOC_GPIO23_0
+#define PINMUXOX_29 0x18   		// Pinmux 29 AO_HV_CAN0_DIN_0
+#define PINMUXOX_31 0x10   		// Pinmux 31 AO_HV_CAN0_DOUT_0
+#define PINMUXOX_32 0x40   		// Pinmux 32 AO_HV_CAN1_STB_0
+#define PINMUXOX_33 0X0   		// Pinmux 33 AO_HV_CAN1_DOUT_0
+#define PINMUXOX_37 0x8   		// Pinmux 37 AO_HV_CAN1_DIN_0
+
+/* GPIO Cfg registers Orin AGX */
+
+#define CFGOX_7 0x74   			// Config 7  G3_CFG2TMC_SOC_GPIO33_0 
+#define CFGOX_13 0x84  			// Config 13 G3_CFG2TMC_SOC_GPIO37_0
+#define CFGOX_16 0x4c  			// Config 16 AO_HV_CFG2TMC_CAN1_EN_0
+#define CFGOX_18 0x44  			// Config 18 G4_CFG2TMC_SOC_GPIO21_0
+#define CFGOX_22 0x24   		// Config 22 G3_CFG2TMC_SOC_GPIO23_0
+#define CFGOX_29 0x1c  			// Config 29 AO_HV_CFG2TMC_CAN0_DIN_0
+#define CFGOX_31 0x14  			// Config 31 AO_HV_CFG2TMC_CAN0_DOUT_0
+#define CFGOX_32 0x44  			// Config 32 AO_HV_CFG2TMC_CAN1_STB_0
+#define CFGOX_33 0x4  			// Config 33 AO_HV_CFG2TMC_CAN1_DOUT_0
+#define CFGOX_37 0xc  			// Config 37 AO_HV_CFG2TMC_CAN1_DIN_0
+
 /* Typical values Pinmux & Cfg registers Orin */
 
 #define CNFO_IN 0x00000001               // Typical for CNF register as input
@@ -295,6 +336,7 @@ For more information, please refer to <http://unlicense.org/>
 
 #define NANO 210
 #define ORIN 234
+#define ORINAGX 235
 
 /* Define typical input/output */
 
@@ -495,7 +537,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency);
 /**<
  * @brief Sets the frequency in hertz to be used for the GPIO.
- * @param gpio (15 Orin only), 32, 33
+ * @param gpio Nano: 32, 33 Orin Nano,NX: 15, 32, 33 Orin AGX: 13, 15, 18
  * @param frequency 25Hz to 187 kHz on Nano and 50 Hz to 1593 kHz on Orin
  * @return Returns 1 if OK, a negative number otherwise
  *
@@ -506,7 +548,7 @@ int gpioPWM(unsigned gpio, unsigned dutycycle);
 /**<
  * @brief Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on).
  * Arduino style: analogWrite
- * @param gpio (15 Orin only), 32, 33
+ * @param gpio Nano: 32, 33 Orin Nano,NX: 15, 32, 33 Orin AGX: 13, 15, 18
  * @param dutycycle: 0-256 (0 to 100%)
  * @return Returns 0 if OK, a negative number otherwise
  *
@@ -589,7 +631,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 /**<
  * @brief This function returns a handle for the SPI device on the channel.
  * Data will be transferred at baud bits per second.  The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select.
- * There are 2 SPI channels called SPI1 & SPI2 on Nano and SPI0 & SPI1 on Orin.
+ * There are 2 SPI channels called SPI1 & SPI2 on Nano and SPI0 & SPI1 on Orin Nano & NX. For Orin AGX there is only 1 PSI channel: SPI0.
  * The pins used are given in the following table.
  * 
  * |Port      |MISO |MOSI |SCLK |CS0 |CS1 |

@@ -22,7 +22,10 @@ int chip_get_id(void) {
   static void *baseMISC;
   static volatile uint32_t *nano_get_id;
   static volatile uint32_t *orin_get_id;
-
+  size_t page = sysconf(_SC_PAGESIZE);
+  size_t n_pages = sysconf(_SC_PHYS_PAGES);
+  size_t total_ram = page*n_pages/(1024*1024*1024);
+  
   fd_id = open("/dev/mem", O_RDWR | O_SYNC);
   if (fd_id < 0) {
     perror("/dev/mem");
@@ -49,9 +52,16 @@ int chip_get_id(void) {
 
   // Trying for Orin first
   if (((*orin_get_id >>8) & 0xFF) == 0x23) {
-    model = ORIN;
-    printf("T234/Orin detected\n");
+      if (total_ram > 24) {
+	model = ORINAGX;
+	printf("T234/Orin AGX detected\n");
+      }
+      else {
+	model = ORIN;
+	printf("T234/Orin Nano or NX detected\n");
+      }
   }
+  
   // Trying for Nano Classic next
   else if (((*nano_get_id >>8) & 0xFF) == 0x21) {
     model = NANO;
@@ -83,6 +93,9 @@ int main (void) {
   case ORIN:
     strcpy(hardware, "orin");
     break;
+  case ORINAGX:
+    strcpy(hardware, "orinagx");
+    break;
   case NANO:  
     strcpy(hardware, "nano");
     break;
@@ -92,9 +105,10 @@ int main (void) {
     printf("\t\tJetson Nano\n");
     printf("\t\tJetson Orin Nano\n");
     printf("\t\tJetson Orin NX\n");
+    printf("\t\tJetson Orin AGX\n");
     printf("\tAnd therefore supported, you can still force install with:\n");
     printf("\t\tsudo make <model> followed by sudo make install\n");
-    printf("\te.g. sudo make orin\n");
+    printf("\te.g. sudo make orin to compile for Orin Nano or NX\n");
     exit(EXIT_FAILURE);
   }
   FILE *fp = fopen("hardware", "w+");
