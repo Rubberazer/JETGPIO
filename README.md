@@ -19,7 +19,7 @@ C library to manage the GPIO header of the Nvidia JETSON boards
 
 - Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided 
 
-- PWM (hardware) control on header pins 32, 33 for Nano and also 15 for Orin Nano/NX, for Orin AGX the pins are: 13, 15 & 18
+- PWM (hardware) control on header pins 32, 33 on Nano and also 15 on Orin Nano/NX, for Orin AGX the pins are: 13, 15 & 18
 
 - I2C serial communication over pins: 27 (SDA) & 28 (SCL)  and 3 (SDA) & 5 (SCL)
 
