@@ -90,14 +90,14 @@ int main (void) {
   char hardware[10];
   model = chip_get_id();
   switch (model) {
+  case NANO:  
+    strcpy(hardware, "nano");
+    break;
   case ORIN:
     strcpy(hardware, "orin");
     break;
   case ORINAGX:
     strcpy(hardware, "orinagx");
-    break;
-  case NANO:  
-    strcpy(hardware, "nano");
     break;
   default:
     /* Unsupported hardware */
