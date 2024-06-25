@@ -67,7 +67,7 @@ int level = 0;
         level = gpioRead(7);
         printf("level: %d\n",level);
         sleep(1);
-		x++;
+	x++;
     }
 
 // Terminating library 
