@@ -57,6 +57,8 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 - [spi_loop.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/spi_loop.c) & [spi_loop.cpp](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C++/spi_loop.cpp) show how to run a simple loop test on the SPI port(s) by connecting together pins 19 & 21 for port SPI1 and pins 22 & 37 
   for port SPI2
 
+- [ZIG Examples](https://github.com/Rubberazer/JETGPIO/tree/main/EXAMPLES_Zig) just for the sake of it
+
 <h2 align="left">DOCUMENTATION:</h2>
 
 [Some doxygen documentation here](https://rubberazer.github.io/JETGPIO/html/index.html). As a rule of thumb, the library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis). Learnt a lot from that one
