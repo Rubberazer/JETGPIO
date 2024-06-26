@@ -4,7 +4,7 @@
 
 const std = @import("std");
 const jetgpio = @cImport({
-    @cInclude("/usr/include/jetgpio.h");
+    @cInclude("jetgpio.h");
 });
 
 pub fn main() !void {
