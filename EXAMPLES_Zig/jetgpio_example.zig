@@ -14,13 +14,13 @@ pub fn main() !void {
         std.debug.print("Error initiating jetgpio\n", .{});
     }
     // Setting up pin 3 as output
-    const set1 = jetgpio.gpioSetMode(3, 1);
+    const set1 = jetgpio.gpioSetMode(3, jetgpio.JET_OUTPUT);
     if (set1 < 0) {
         std.debug.print("Error setting pin 3\n", .{});
     }
 
     // Setting up pin 7 as input
-    const set2 = jetgpio.gpioSetMode(7, 0);
+    const set2 = jetgpio.gpioSetMode(7, jetgpio.JET_INPUT);
     if (set2 < 0) {
         std.debug.print("Error setting pin 7\n", .{});
     }
