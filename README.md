@@ -40,7 +40,7 @@ That's it, the library should be installed and ready to be used. To uninstall th
   
 <h2 align="left">HOW TO:</h2> 
  
-You will find code examples to learn how to use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains all the C examples, the second one contains the same examples ready to compile in C++. To compile the examples you will find instructions in the comment section at the top of each of the example files. I have also added a fodler with examples in teh Zig programming language to test interoperability.
+You will find code examples to learn how to use the library in both: EXAMPLES_C & EXAMPLES_C++ folders, the first one contains all the C examples, the second one contains the same examples ready to compile in C++. To compile the examples you will find instructions in the comment section at the top of each of the example files. I have also added a folder with examples in the Zig programming language to test interoperability.
 
 - [jetgpio_example.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_example.c) & [jetgpio_example.cpp](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C++/jetgpio_example.cpp) show how to setup and use any of the pins as Inputs/Outputs, this will allow you to toggle pins from 0V (logic 0) to 3.3V (logic 1) or read the pin as an input where 3.3V at the pin is a logic 1. Note that when reading inputs, floating pins will throw unreliable results (as there is no actual input)
 
