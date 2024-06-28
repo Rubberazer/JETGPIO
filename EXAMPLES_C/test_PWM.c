@@ -1,7 +1,7 @@
 /* Usage example of the JETGPIO library
  * Compile with: gcc -Wall -o test_PWM test_PWM.c -ljetgpio
  * Execute with: sudo ./test_PWM
-*/
+ */
 
 #include <stdio.h>
 #include <stdint.h>
@@ -20,38 +20,38 @@ void inthandler(int signum)
 
 int main(int argc, char *argv[])
 {
-int Init;
-int status;
-signal(SIGINT, inthandler);
-signal(SIGHUP, inthandler);
-signal(SIGABRT, inthandler);
-signal(SIGILL, inthandler);
-signal(SIGSEGV, inthandler);
-signal(SIGTERM, inthandler);
-Init = gpioInitialise();
-if (Init < 0)
-{
-   /* jetgpio initialisation failed */
-   printf("Jetgpio initialisation failed. Error code:  %d\n", Init);
-   exit(Init);
-}
-else
-{
-   /* jetgpio initialised okay*/
-   printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
-}	
+  int Init;
+  int status;
+  signal(SIGINT, inthandler);
+  signal(SIGHUP, inthandler);
+  signal(SIGABRT, inthandler);
+  signal(SIGILL, inthandler);
+  signal(SIGSEGV, inthandler);
+  signal(SIGTERM, inthandler);
+  Init = gpioInitialise();
+  if (Init < 0)
+    {
+      /* jetgpio initialisation failed */
+      printf("Jetgpio initialisation failed. Error code:  %d\n", Init);
+      exit(Init);
+    }
+  else
+    {
+      /* jetgpio initialised okay*/
+      printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
+    }	
 
-gpioSetPWMfrequency(32, 1000);
+  gpioSetPWMfrequency(32, 1000);
 
-gpioPWM(32, 0);
+  gpioPWM(32, 0);
 
-int x = 0;
+  int x = 0;
 
-int level = 0;
+  int level = 0;
 
-// Increase brightness 
+  // Increase brightness 
 
-while (x<=256) {
+  while (x<=256) {
 
     usleep(100000);
 
@@ -66,12 +66,12 @@ while (x<=256) {
     usleep(100000);
 
     x=x+1;
-}
+  }
 
-x = 256;
-// Decrease brightness 
+  x = 256;
+  // Decrease brightness 
 
-while (x>=0) {
+  while (x>=0) {
 
     usleep(100000);
 
@@ -87,7 +87,7 @@ while (x>=0) {
 
     x=x-1;
 
-}
-gpioTerminate();
-exit(0);
+  }
+  gpioTerminate();
+  exit(0);
 }

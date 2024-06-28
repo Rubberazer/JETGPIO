@@ -1,7 +1,7 @@
 /* Usage example of the JETGPIO library
  * Compile with: gcc -Wall -o jetgpio_output jetgpio_output.c -ljetgpio
  * Execute with: sudo ./jetgpio_output
-*/
+ */
 
 #include <stdio.h>
 #include <stdint.h>
@@ -24,41 +24,41 @@ void inthandler(int signum)
 
 int main(int argc, char *argv[])
 {
-int Init;
+  int Init;
 
-/* Capture Ctrl-c */
-signal(SIGINT, inthandler);
+  /* Capture Ctrl-c */
+  signal(SIGINT, inthandler);
 
-Init = gpioInitialise();
-if (Init < 0)
-{
-   /* jetgpio initialisation failed */
-   printf("Jetgpio initialisation failed. Error code:  %d\n", Init);
-   exit(Init);
-}
-else
-{
-   /* jetgpio initialised okay*/
-   printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
-}	
+  Init = gpioInitialise();
+  if (Init < 0)
+    {
+      /* jetgpio initialisation failed */
+      printf("Jetgpio initialisation failed. Error code:  %d\n", Init);
+      exit(Init);
+    }
+  else
+    {
+      /* jetgpio initialised okay*/
+      printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
+    }	
 
-// Setting up pin 38 as OUTPUT
+  // Setting up pin 38 as OUTPUT
 
-gpioSetMode(38, JET_OUTPUT);
+  gpioSetMode(38, JET_OUTPUT);
 
-while (interrupt) {
+  while (interrupt) {
     gpioWrite(38,1);
     gpioWrite(38,0);
 
-}
+  }
 
-// Pin 38 at 0
-gpioWrite(38, 0);
+  // Pin 38 at 0
+  gpioWrite(38, 0);
 
-// Terminating library 
-gpioTerminate();
+  // Terminating library 
+  gpioTerminate();
 
-exit(0);
+  exit(0);
 	
 }
 

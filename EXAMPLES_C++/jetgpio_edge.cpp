@@ -1,7 +1,7 @@
 /* Usage example of the JETGPIO library
  * Compile with: g++ -Wall -o jetgpio_edge jetgpio_edge.cpp -ljetgpio
  * Execute with: sudo ./jetgpio_edge
-*/
+ */
 
 #include <iostream>
 #include <unistd.h>
@@ -24,67 +24,67 @@ void inthandler(int signum)
 /* Function to be called upon if edge is detected */
 void calling()
 {
-    printf("edge detected with EPOCH timestamp: %lu\n", timestamp);
-    // terminating while loop
-    //interrupt = 0;
+  printf("edge detected with EPOCH timestamp: %lu\n", timestamp);
+  // terminating while loop
+  //interrupt = 0;
 }
 
 int main(int argc, char *argv[])
 {
-int Init;
+  int Init;
 
 /* Capture Ctrl-c */
-signal(SIGINT, inthandler);
+  signal(SIGINT, inthandler);
 
-Init = gpioInitialise();
-if (Init < 0)
-{
-   /* jetgpio initialisation failed */
-   printf("Jetgpio initialisation failed. Error code:  %d\n", Init);
-   exit(Init);
-}
-else
-{
-   /* jetgpio initialised okay*/
-   printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
-}
+  Init = gpioInitialise();
+  if (Init < 0)
+    {
+      /* jetgpio initialisation failed */
+      printf("Jetgpio initialisation failed. Error code:  %d\n", Init);
+      exit(Init);
+    }
+  else
+    {
+      /* jetgpio initialised okay*/
+      printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
+    }
 
 // Setting up pin 3 as INPUT first
-int stat = gpioSetMode(3, JET_INPUT);
-if (stat < 0)
-{
-   // gpio setting up failed 
-   printf("gpio setting up failed. Error code:  %d\n", stat);
-   exit(Init);
-}
-else
-{
-   // gpio setting up okay
-   printf("gpio setting up okay. Return code:  %d\n", stat);
-}
+  int stat = gpioSetMode(3, JET_INPUT);
+  if (stat < 0)
+    {
+      // gpio setting up failed 
+      printf("gpio setting up failed. Error code:  %d\n", stat);
+      exit(Init);
+    }
+  else
+    {
+      // gpio setting up okay
+      printf("gpio setting up okay. Return code:  %d\n", stat);
+    }
 
 // Now setting up pin 3 to detect edges, rising & falling edge with a 1000 useconds debouncing and when event is detected calling func "calling"
-int stat2 = gpioSetISRFunc(3, EITHER_EDGE, 1000, &timestamp, &calling);
-if (stat2 < 0)
-{
-   /* gpio setting up failed */
-   printf("gpio edge setting up failed. Error code:  %d\n", stat2);
-   exit(Init);
-}
-else
-{
-   /* gpio setting up okay*/
-   printf("gpio edge setting up okay. Return code:  %d\n", stat2);
-}
+  int stat2 = gpioSetISRFunc(3, EITHER_EDGE, 1000, &timestamp, &calling);
+  if (stat2 < 0)
+    {
+      /* gpio setting up failed */
+      printf("gpio edge setting up failed. Error code:  %d\n", stat2);
+      exit(Init);
+    }
+  else
+    {
+      /* gpio setting up okay*/
+      printf("gpio edge setting up okay. Return code:  %d\n", stat2);
+    }
 
 /* Now wait for the edge to be detected */
- printf("Capturing edges, press Ctrl-c to terminate\n");
- while (interrupt) {
-     // Do some stuff
-     sleep(1);
- }
+  printf("Capturing edges, press Ctrl-c to terminate\n");
+  while (interrupt) {
+    // Do some stuff
+    sleep(1);
+  }
 // Terminating library
-gpioTerminate();
-exit(0);
+  gpioTerminate();
+  exit(0);
 }
 

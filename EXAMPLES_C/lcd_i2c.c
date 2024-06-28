@@ -1,7 +1,7 @@
 /* Usage example of the JETGPIO library
  * Compile with: gcc -Wall -o lcd_i2c lcd_i2c.c -ljetgpio
  * Execute with: sudo ./lcd_i2c
-*/
+ */
 
 #include <stdio.h>
 #include <stdint.h>
