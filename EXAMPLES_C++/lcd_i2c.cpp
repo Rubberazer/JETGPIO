@@ -105,11 +105,9 @@ int main(int argc, char *argv[]){
   }
 
   // Closing i2c connection
-
   i2cClose(lcd);
 
   // Terminating library
-
   gpioTerminate();
 
   exit(0);

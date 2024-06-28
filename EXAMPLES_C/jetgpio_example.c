@@ -54,8 +54,7 @@ int main(int argc, char *argv[])
       printf("gpio setting up okay. Return code:  %d\n", stat2);
     }
 
-  // Writing 1 and 0 to pin 3 a 1 second intervals while reading pin 7
- 
+  // Writing 1 and 0 to pin 3 a 1 second intervals while reading pin 7 
   int x =0;
   int level = 0;
   while (x<5) {

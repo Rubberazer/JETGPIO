@@ -28,13 +28,12 @@ int main(int argc, char *argv[])
       printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
     }
 
-/* Port SPI2 pins: 37, 22, 13 & 18
-   to perform a simple loop test, pins 22: SPI2_MISO & 37:SPI2_MOSI should be connected
-   with a short jumper cable, when the cable is disconnected the output on screen will show
-   all the rx values as zeros 
-   spiOpen() parameters go as follows: spiOpen(port number, speed in Hz, mode, cs pin delay in us, 
-   bits per word, least significant bit first, cs change)
-*/
+  /* Port SPI2 pins: 37, 22, 13 & 18
+     to perform a simple loop test, pins 22: SPI2_MISO & 37:SPI2_MOSI should be connected
+     with a short jumper cable, when the cable is disconnected the output on screen will show all the rx values as zeros 
+     spiOpen() parameters go as follows: spiOpen(port number, speed in Hz, mode, cs pin delay in us, 
+     bits per word, least significant bit first, cs change)
+  */
 
   SPI_init = spiOpen(1, 5000000, 0, 0, 8, 1, 1);
   if (SPI_init < 0)
@@ -57,8 +56,7 @@ int main(int argc, char *argv[])
   tx[5] = 0xFF;
   tx[6] = 0x11;
 
-//Transfer data through register numbers for x, y & z axis
-
+  //Transfer data through register numbers for x, y & z axis
   int i = 0;
   while (i<20){
 
@@ -96,10 +94,10 @@ int main(int argc, char *argv[])
     sleep(1);
   }
 
-// Closing spi port
+  // Closing spi port
   spiClose(SPI_init);
 
-// Terminating library
+  // Terminating library
   gpioTerminate();
 
   exit(0);

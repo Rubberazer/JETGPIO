@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
       printf("gpio setting up okay. Return code:  %d\n", stat);
     }
 
-// Now setting up pin 3 to detect edges, rising & falling edge with a 1000 useconds debouncing and when event is detected calling func "calling"
+  // Now setting up pin 3 to detect edges, rising & falling edge with a 1000 useconds debouncing and when event is detected calling func "calling"
   int stat2 = gpioSetISRFunc(3, EITHER_EDGE, 1000, &timestamp, &calling);
   if (stat2 < 0)
     {
@@ -77,13 +77,13 @@ int main(int argc, char *argv[])
       printf("gpio edge setting up okay. Return code:  %d\n", stat2);
     }
 
-/* Now wait for the edge to be detected */
+  /* Now wait for the edge to be detected */
   printf("Capturing edges, press Ctrl-c to terminate\n");
   while (interrupt) {
     // Do some stuff
     sleep(1);
   }
-// Terminating library
+  // Terminating library
   gpioTerminate();
   exit(0);
 }

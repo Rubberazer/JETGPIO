@@ -50,7 +50,6 @@ int main(int argc, char *argv[])
   int level = 0;
 
   // Increase brightness 
-
   while (x<=256) {
 
     usleep(100000);
@@ -69,8 +68,8 @@ int main(int argc, char *argv[])
   }
 
   x = 256;
+  
   // Decrease brightness 
-
   while (x>=0) {
 
     usleep(100000);

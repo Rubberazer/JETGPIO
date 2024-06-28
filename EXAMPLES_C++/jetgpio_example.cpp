@@ -24,8 +24,7 @@ int main(int argc, char *argv[])
       printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
     }	
 
-// Setting up pin 3 as OUTPUT and 7 as INPUT
-
+  // Setting up pin 3 as OUTPUT and 7 as INPUT
   int stat1 = gpioSetMode(3, JET_OUTPUT);
   if (stat1 < 0)
     {
@@ -52,8 +51,7 @@ int main(int argc, char *argv[])
       printf("gpio setting up okay. Return code:  %d\n", stat2);
     }
 
-// Writing 1 and 0 to pin 3 at 1 second intervals while reading pin 7
- 
+  // Writing 1 and 0 to pin 3 at 1 second intervals while reading pin 7
   int x =0;
   int level = 0;
   while (x<5) {
@@ -70,7 +68,7 @@ int main(int argc, char *argv[])
     x++;
   }
 
-// Terminating library 
+  // Terminating library 
   gpioTerminate();
 
   exit(0);

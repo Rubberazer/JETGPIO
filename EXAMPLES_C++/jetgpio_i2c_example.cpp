@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
       printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
     }	
 
-/* Opening the connection to the I2C slave MPU6050 */
+  /* Opening the connection to the I2C slave MPU6050 */
   int MPU6050 = i2cOpen(0,0);
   
   if (MPU6050 >=  0)
@@ -61,17 +61,17 @@ int main(int argc, char *argv[])
       printf("Open I2C port failed. Quitting MPU6050 Error code:  %d\n", MPU6050);
     }
     
-/* Wake up the MPU-6050 with slave address 0x68 since it starts in sleep mode */
+  /* Wake up the MPU-6050 with slave address 0x68 since it starts in sleep mode */
   int writestat = i2cWriteByteData(MPU6050, MPU6050_SLAVE_ADDRESS, PWR_MGMT_1, 0x00); 
   printf("write return: %d\n",writestat);
   usleep(100000);  
   
-/* Now set up the accelerator  range to 4G */
+  /* Now set up the accelerator  range to 4G */
   writestat = i2cWriteByteData(MPU6050, MPU6050_SLAVE_ADDRESS, ACCEL_CONFIG, ACCEL_RANGE_4G); 
   printf("write return: %d\n",writestat);
   usleep(100000);
   
-/* Now set up the gyroscope  range to 250 deg/second */
+  /* Now set up the gyroscope  range to 250 deg/second */
   writestat = i2cWriteByteData(MPU6050, MPU6050_SLAVE_ADDRESS, GYRO_CONFIG, GYRO_RANGE_250DEG);
   printf("write return: %d\n",writestat);
   usleep(100000);
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
     x++;
   }
 
-/* Closing i2c connection */
+  /* Closing i2c connection */
   int i2cstat = i2cClose(MPU6050);
 
   if (i2cstat >=  0)
@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
       printf("Closing I2C port failed. Quitting MPU6050 thread Error code:  %d\n", i2cstat);
     }
 
-/* Terminating library */
+  /* Terminating library */
   gpioTerminate();
   exit(0);
 	

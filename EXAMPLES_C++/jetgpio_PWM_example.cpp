@@ -39,8 +39,7 @@ int main(int argc, char *argv[])
       /* PWM frequency set up okay*/
       printf("PWM frequency set up okay at pin 32. Return code:  %d\n", PWMstat);
     }
-/* Set up PWM duty cycle to approx 50% (0=0% to 256=100%) @ pin 32*/
-
+  /* Set up PWM duty cycle to approx 50% (0=0% to 256=100%) @ pin 32*/
   int PWMstat2 = gpioPWM(32, 127);
 
   if (PWMstat2 < 0)
@@ -61,7 +60,7 @@ int main(int argc, char *argv[])
     sleep(2);
     x++;
   }
-// Terminating library 
+  // Terminating library 
   gpioTerminate();
   printf("PWM stopped, bye!\n");
   exit(0);
