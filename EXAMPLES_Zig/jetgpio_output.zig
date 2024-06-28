@@ -32,7 +32,7 @@ pub fn main() !void {
     }
 
     // Setting up pin 38 as output
-    const set1 = jetgpio.gpioSetMode(38, 1);
+    const set1 = jetgpio.gpioSetMode(38, jetgpio.JET_OUTPUT);
     if (set1 < 0) {
         std.debug.print("Error setting pin 38\n", .{});
     }
