@@ -61,10 +61,9 @@ else
 {
    // gpio setting up okay
    printf("gpio setting up okay. Return code:  %d\n", stat);
-
-// Now setting up pin 3 to detect edges, rising & falling edge with a 1000 useconds debouncing and when event is detected calling func "calling"
 }
 
+// Now setting up pin 3 to detect edges, rising & falling edge with a 1000 useconds debouncing and when event is detected calling func "calling"
 int stat2 = gpioSetISRFunc(3, EITHER_EDGE, 1000, &timestamp, &calling);
 if (stat2 < 0)
 {
