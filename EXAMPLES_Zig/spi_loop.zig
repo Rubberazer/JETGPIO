@@ -34,7 +34,7 @@ pub fn main() !void {
     //Transfer data
     var i: i8 = 0;
     while (i < 20) {
-        // Here some weird casting, expected something more straightforward but...oh, well, very strict type control and all that
+        // Here some weird casting, expected something more straightforward but...oh well, very strict type control and all that
         // also, this is interacting with a C abi after all! more than good enough
         const set2 = jetgpio.spiXfer(@intCast(spiInit), @constCast(tx.ptr), rx.ptr, 7);
         if (set2 < 0) {
