@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
   tx[5] = 0xFF;
   tx[6] = 0x11;
 
-  //Transfer data through register numbers for x, y & z axis
+  //Transfer data
 
   int i = 0;
   while (i<20){
