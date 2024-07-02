@@ -47,7 +47,7 @@ fn send_data(handle: u32, i2cAddr: u32, data: u32) void {
 
 pub fn main() !void {
     const LCD_SLAVE_ADDRESS: u32 = 0x3f;
-    std.debug.print("This will print something on the LCD and it will stay until LCD reset\n", .{});
+    std.debug.print("This will print something on a Freenove i2c 1602 LCD connected to pins 3,5 and it will stay until LCD reset\n", .{});
 
     const init = jetgpio.gpioInitialise();
     if (init < 0) {

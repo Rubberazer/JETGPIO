@@ -56,7 +56,7 @@ int main(int argc, char *argv[]){
   
   const int LCD_SLAVE_ADDRESS = 0x3f;
 
-  printf("This will print something on the LCD and it will stay until LCD reset\n");
+  printf("This will print something on a Freenove i2c 1602 LCD connected to pins 3,5 and it will stay until LCD reset\n");
    
   gpioInitialise();
 	
