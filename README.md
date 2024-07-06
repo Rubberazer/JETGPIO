@@ -108,9 +108,9 @@ Compiling and running [jetgpio_output.c](https://github.com/Rubberazer/JETGPIO/b
 
 
     
-<h2 align="left">JETSON NANO AND ORIN PINOUT:</h2>
+<h2 align="left">JETSON NANO AND ORIN FAMILY PINOUT:</h2>
 
-The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA on Nano or I2C1_SDA on Orin, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use the ones below:
+The library uses the typical 40 pin header numbering, taking the dev kit as reference so for instance pin 3 is I2C_2_SDA on Nano, I2C1_SDA on Orin Nano and I2C5_DAT on Orin AGX, pin 1 is 3.3 VDC power and so on. You can check the official NVIDIA pinmux configuration for reference or if not available you can use the ones below:
 
 https://jetsonhacks.com/nvidia-jetson-nano-j41-header-pinout/
 
@@ -118,7 +118,7 @@ https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/
 
 https://jetsonhacks.com/nvidia-jetson-agx-orin-gpio-header-pinout/
 
-The library has been tested on a Jetson Nano: tegra210 (TX1), on a Jetson Orin Nano: tegra234 and also on an Orin AGX.
+The library has been tested on a Jetson Nano: tegra210 (TX1), on a Jetson Orin Nano and also on an Orin AGX.
 
 
 
