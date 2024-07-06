@@ -639,7 +639,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
  * |SPI1/SPI0 |21   |19   |23   |24  |26  |
  * |SPI2/SPI1 |22   |37   |13   |18  |16  |
  * 
- * @param spiChan 0-1 (0 stands for SPI1 on Nano and SPI0 on Orin, 1 stands for SPI2 on Nano and SPI1 on Orin)
+ * @param spiChan 0-1 (0 stands for SPI1 on Nano, SPI0 on Orin Nano and SPI1 on Orin AGX, 1 stands for SPI2 on Nano and SPI1 on Orin Nano)
  * @param speed up to 50M (beyond that expect problems, actually we are not going beyond that)
  * @param mode defines the SPI mode
  * 
