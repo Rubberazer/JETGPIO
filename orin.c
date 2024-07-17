@@ -2128,7 +2128,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
         printf( "Not possible to change clock rate on pwm1\n");
       }
       fclose(fptr);
-      *pinmux15 = 0x00000400;
+      *pinmux15 = 0x00000440;
       *pincfg15 = CFGO_OUT;
       pin15->CNF[0] = 0x00000001;
       *PWM1 = 0x0;
@@ -2150,7 +2150,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
         printf( "Not possible to change clock rate on pwm7\n");
       }
       fclose(fptr);
-      *pinmux32 = 0x00000400;
+      *pinmux32 = 0x00000440;
       *pincfg32 = CFGO_OUT;
       pin32->CNF[0] = 0x00000001;
       *PWM7 = 0x0;
@@ -2172,7 +2172,7 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
         printf( "Not possible to change clock rate on pwm5\n");
       }
       fclose(fptr);
-      *pinmux33 = 0x00000401;
+      *pinmux33 = 0x00000441;
       *pincfg33 = CFGO_OUT;
       pin33->CNF[0] = 0x00000001;
       *PWM5 = 0x0;
