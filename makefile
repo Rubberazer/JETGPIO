@@ -27,7 +27,7 @@ step4:
 	install -m 0644 jetgpio.h /usr/include
 	ldconfig
 	ldconfig -p | grep libjetgpio.so
-	@if (( $(MODEL) == orin || $(MODEL) == orinagx )); then\
+	@if  [ $(MODEL) = "orin" ] || [ $(MODEL) = "orinagx" ]; then\
 		cp ./scripts/pwm_enabler.sh /etc/systemd/system;\
 		cp ./scripts/pwm_enable.service /etc/systemd/system;\
 		chmod +x /etc/systemd/system/pwm_enabler.sh;\
