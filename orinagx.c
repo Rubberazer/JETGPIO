@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 1.1 */
+/* jetgpio version 1.2 */
 /* Orin AGX extension */
 
 #include <stdio.h>
@@ -44,6 +44,7 @@ For more information, please refer to <http://unlicense.org/>
 #include <linux/types.h>
 #include <linux/gpio.h>
 #include <pthread.h>
+#include <linux/version.h>
 
 #include "jetgpio.h"
 
@@ -70,8 +71,9 @@ static volatile uint32_t  PWM5_Init;
 static volatile uint32_t  PWM8_Init;
 
 static i2cInfo_t i2cInfo[8];
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
 static int i2c_speed[8];
-
+#endif
 static SPIInfo_t SpiInfo[1];
 
 static volatile GPIO_CNFO *pin3;
@@ -2241,7 +2243,6 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
   char dev[20], buf[100];
   int fd, slot, speed;
   uint32_t funcs;
-  FILE *fptr;
 
   if (!(i2cBus == 0 || i2cBus == 1)) {
     printf("Bad i2c device (%d) only 0 or 1 are accepted\n", i2cBus);
@@ -2273,7 +2274,9 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
   default:
     i2cFlags = 3;
   }
-	
+
+  speed = speed * 1;
+  
   slot = -5;
 	
   if (i2cInfo[i2cBus].state == I2C_CLOSED) {
@@ -2283,12 +2286,15 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
   else { printf("i2c bus already open\n");
     return -3;
   }
-	
+
+  #if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
+  FILE *fptr;
   snprintf(buf, sizeof(buf), "/sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2cBus);
   fptr = fopen(buf, "r");
 	
   if (fptr == NULL) {
     printf("Not possible to read current bus speed\n");
+	return -4;
   }
 	
   fscanf(fptr, "%d", &i2c_speed[i2cBus]);
@@ -2296,9 +2302,11 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
   snprintf(buf, sizeof(buf), "echo %d > /sys/bus/i2c/devices/i2c-%d/bus_clk_rate", speed, i2cBus);
   if (system(buf) == -1) { 
     printf( "Not possible to change bus speed\n");
+	return -7;
   }
 
   fclose(fptr);
+  #endif
   
   strcpy(buf, "modprobe i2c_dev");
     
@@ -2326,8 +2334,6 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
 }
 
 int i2cClose(unsigned handle) {
-  char buf[100];
-	
   if (!(handle == 1 || handle == 7)) {
     printf( "Bad handle (%d)", handle);
     return -1;
@@ -2342,12 +2348,16 @@ int i2cClose(unsigned handle) {
 
   i2cInfo[handle].fd = -1;
   i2cInfo[handle].state = I2C_CLOSED;
-   
+
+  #if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
+  char buf[100];
   snprintf(buf, sizeof(buf), "echo %d > /sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2c_speed[handle], handle);
   if (system(buf) == -1) { 
     printf( "Not possible to return bus speed to original value\n");
+	return -1;
   }
-
+  #endif
+  
   return 0;
 }
 

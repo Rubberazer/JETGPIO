@@ -21,7 +21,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-/* jetgpio version 1.1 */
+/* jetgpio version 1.2 */
 /** @file jetgpio.h */
 
 #ifndef jetgpio_h__
@@ -561,7 +561,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags);
  * @brief This returns a handle for the device at the address on the I2C bus.
  * @param i2cBus 0 or 1, 0 are pins 27 (SDA) & 28 (SCL), 1 are pins 3(SDA) & 5(SCL)
  * In Orin the pins are the same but the i2c devices are: 0->i2c-1 & 1->i2c-7
- * Flags allow you to change the bus speed:
+ * Flags allow you to change the bus speed. NOTE - FLAGS WILL NOT CAUSE ANY EFFECT FOR MACHINES WITH JETPACK >= 6:
  * @param i2cFlags 0 -> 100 kHz
  * @param i2cFlags 1 -> 400 kHz
  * @param i2cFlags 2 -> 1 MHz
