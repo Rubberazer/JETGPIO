@@ -1,8 +1,0 @@
-[Unit]
-Description=Enable pwm1, pwm5 & pwm7 clocks
-
-[Service]
-ExecStart=/bin/bash /etc/systemd/system/pwm_enabler.sh
-
-[Install]
-WantedBy=multi-user.target
