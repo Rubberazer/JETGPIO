@@ -2551,10 +2551,12 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     return -1;
   }
 
+  #if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
   if (spiChan == 1) {
     spiChan ++; 
   }
-
+  #endif
+  
   if (speed < 0 || speed > 50000000) {
     printf( "Speed in bits/second (%d) shouldn't be bigger that 50 Mbit/s\n", speed);
     return -2;
