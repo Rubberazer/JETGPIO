@@ -2603,10 +2603,10 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 	*pincfg19 = CFGO_OUT;
     pin19->CNF[0] |= 0x00000003;
 	*pinmux21 = 0x00000440;
-    *pincfg21 = CFGO_IN;
+	*pincfg21 = CFGO_IN;
     pin21->CNF[0] |= 0x00000001;
-	*pinmux23 = 0x00000400; 
-    *pincfg23 = CFGO_OUT;
+	*pinmux23 = 0x00000400;
+	*pincfg23 = CFGO_OUT;
     pin23->CNF[0] |= 0x00000003;
 	*pinmux24 = 0x00000400;
 	*pincfg24 = CFGO_OUT;
@@ -2616,16 +2616,16 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
   
   if (spiChan == 1 || spiChan == 2) {
 	*pinmux37 = 0x00000400;
-    *pincfg37 = CFGO_OUT;
+	*pincfg37 = CFGO_OUT;
 	pin37->CNF[0] |= 0x00000003;
 	*pinmux22 = 0x00000440;
-    *pincfg22 = CFGO_IN;
+	*pincfg22 = CFGO_IN;
     pin22->CNF[0] |= 0x00000001;
 	*pinmux13 = 0x00000400;
-    *pincfg13 = CFGO_OUT;
+	*pincfg13 = CFGO_OUT;
     pin13->CNF[0] |= 0x00000003;
 	*pinmux18 = 0x00000400;
-    *pincfg18 = CFGO_OUT;
+	*pincfg18 = CFGO_OUT;
     pin18->CNF[0] |= 0x00000003; 
     pin_tracker |= (1UL << 32);
   }
