@@ -2613,6 +2613,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     pin24->CNF[0] |= 0x00000003;
     pin_tracker |= (1 << 31);
   }
+  
   if (spiChan == 1 || spiChan == 2) {
 	*pinmux37 = 0x00000400;
     *pincfg37 = CFGO_OUT;

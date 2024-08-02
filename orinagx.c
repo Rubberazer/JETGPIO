@@ -2620,7 +2620,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     printf( "Not possible to load the linux spidev module (driver) \n");
     return -12;
   }
- 
+
   snprintf(dev, 19, "/dev/spidev%d.0", spiChan);
   fd = open(dev, O_RDWR);
   if (fd < 0) {
