@@ -2601,22 +2601,21 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     return -11;
   }
     
-    pin19->CNF[0] |= 0x00000003;
-    *pinmux19 = 0x00000400;
-    *pincfg19 = CFGO_OUT;
-    pin21->CNF[0] |= 0x00000001;
-    *pinmux21 = 0x00000440;
-    *pincfg21 = CFGO_IN;
-    pin23->CNF[0] |= 0x00000003;
-    *pinmux23 = 0x00000400; 
-    *pincfg23 = CFGO_OUT;
-    pin24->CNF[0] |= 0x00000003;
-    *pinmux24 = 0x00000400;
-    *pincfg24 = CFGO_OUT;
-    pin_tracker |= (1 << 31);
+  *pinmux19 = 0x00000400;
+  *pincfg19 = CFGO_OUT;
+  pin19->CNF[0] |= 0x00000003;
+  *pinmux21 = 0x00000440;
+  *pincfg21 = CFGO_IN;
+  pin21->CNF[0] |= 0x00000001;
+  *pinmux23 = 0x00000400; 
+  *pincfg23 = CFGO_OUT;
+  pin23->CNF[0] |= 0x00000003;
+  *pinmux24 = 0x00000400;
+  *pincfg24 = CFGO_OUT;
+  pin24->CNF[0] |= 0x00000003;
+  pin_tracker |= (1 << 31);
   
-  strcpy(buf, "modprobe spidev bufsiz=65535");
-    
+  strcpy(buf, "modprobe spidev bufsiz=65535");  
   if (system(buf) == -1) { 
     printf( "Not possible to load the linux spidev module (driver) \n");
     return -12;
@@ -2712,7 +2711,7 @@ int spiClose(unsigned handle) {
 }
 
 int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len) {
-  int ret;
+  int ret = 0;
   struct spi_ioc_transfer tr;
     
   if (!(handle == 0) ) {
