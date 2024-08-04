@@ -361,11 +361,6 @@ For more information, please refer to <http://unlicense.org/>
 #define SPI_RESERVED 1
 #define SPI_OPENED   2
 
-/* Externel peripheral clocks on Orin */
-
-#define EXTPERIPH3 3
-#define EXTPERIPH4 4
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -685,12 +680,6 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len);
  * @code spiXfer(SPI_init, tx, rx, 7); //transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init @endcode
 */
 
-int extPeripheralRate(unsigned clk_name, unsigned rate);
-
-int extPeripheralEnable(unsigned clk_name);
-
-int extPeripheralDisable(unsigned clk_name);
-  
 #ifdef __cplusplus
 }
 #endif

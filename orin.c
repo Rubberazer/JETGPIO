@@ -46,7 +46,6 @@ For more information, please refer to <http://unlicense.org/>
 #include <pthread.h>
 #include <linux/version.h>
 
-#include "Jetclocks/jetclocks.h"
 #include "jetgpio.h"
 
 #define BILLION 1000000000L
@@ -2729,8 +2728,7 @@ int spiClose(unsigned handle) {
 int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len) {
   int ret = 0;
   struct spi_ioc_transfer tr;
-  memset(&tr, 0, sizeof(tr));
-  
+    
   if (handle > 2) {
     printf( "Bad handle (%d)\n", handle);
     return -1;
@@ -2752,104 +2750,4 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len) {
     return -2;
   }
   return ret;
-}
-
-int extPeripheralRate(unsigned clk_name, unsigned rate) {
-  struct jetclk clock;
-  memset(&clock, 0, sizeof(clock));
-
-  if (rate < 3200000 || rate > 51000000) {
-    printf( "Clock rate should be a number between 81600000 and 3875000 Hz\n");
-    return -1;
-  }
-  clock.clk_set_rate = rate;
-  
-  int dev = open("/dev/jetclocks", O_WRONLY);
-  if(dev < 0) {
-    printf("Opening /dev/jetclocks not possible\n");
-    return -2;
-  }
-  
-  switch (clk_name) {
-    
-  case EXTPERIPH3:
-    strncpy(clock.clk, "extperiph3", sizeof(clock.clk));
-    ioctl(dev, CLK_SET_RATE, &clock);	  
-    break;
-  case EXTPERIPH4:
-    strncpy(clock.clk, "extperiph4", sizeof(clock.clk));
-    ioctl(dev, CLK_SET_RATE, &clock);
-    break;
-  default:
-    printf("Only EXTPERIPH3 and EXTPERIPH4 values are accepted\n");
-    break;
-  }
-  close(dev);
-  return 0;
-}
-
-int extPeripheralEnable(unsigned clk_name) {
-  struct jetclk clock;
-  memset(&clock, 0, sizeof(clock));
-
-  int dev = open("/dev/jetclocks", O_WRONLY);
-  if(dev < 0) {
-    printf("Opening /dev/jetclocks not possible\n");
-    return -2;
-  }
-
-  switch (clk_name) {
-    
-  case EXTPERIPH3:
-    strncpy(clock.clk, "extperiph3", sizeof(clock.clk));
-    ioctl(dev, CLK_ENABLE, &clock);
-    *pinmux29 = 0x401;
-    *pincfg29 = CFGO_OUT;
-    pin29->CNF[0] = 0x3;	  
-    break;
-  case EXTPERIPH4:
-    strncpy(clock.clk, "extperiph4", sizeof(clock.clk));
-    ioctl(dev, CLK_ENABLE, &clock);
-    *pinmux31 = 0x401;
-    *pincfg31 = CFGO_OUT;
-    pin31->CNF[0] = 0x3;	  
-    break;
-  default:
-    printf("Only EXTPERIPH3 and EXTPERIPH4 values are accepted\n");
-    break;
-  }
-  close(dev);
-  return 0;
-}
-
-int extPeripheralDisable(unsigned clk_name) {
-  struct jetclk clock;
-  memset(&clock, 0, sizeof(clock));
-
-  int dev = open("/dev/jetclocks", O_WRONLY);
-  if(dev < 0) {
-    printf("Opening /dev/jetclocks not possible\n");
-    return -2;
-  }
-
-  switch (clk_name) {
-    
-  case EXTPERIPH3:
-    strncpy(clock.clk, "extperiph3", sizeof(clock.clk));
-    ioctl(dev, CLK_DISABLE, &clock);
-    *pinmux29 = 0x0;
-    pin29->CNF[0] = 0x0;	  
-    break;
-  case EXTPERIPH4:
-    strncpy(clock.clk, "extperiph4", sizeof(clock.clk));
-    ioctl(dev, CLK_DISABLE, &clock);
-    *pinmux31 = 0x0;
-    pin31->CNF[0] = 0x0;	  
-    break;
-  default:
-    printf("Only EXTPERIPH3 and EXTPERIPH4 values are accepted\n");
-    break;
-  }
-  close(dev);
-  return 0;
 }

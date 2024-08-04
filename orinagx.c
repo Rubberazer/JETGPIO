@@ -2713,8 +2713,7 @@ int spiClose(unsigned handle) {
 int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len) {
   int ret = 0;
   struct spi_ioc_transfer tr;
-  memset(&tr, 0, sizeof(tr));
-  
+    
   if (!(handle == 0) ) {
     printf( "Bad handle (%d)\n", handle);
     return -1;
