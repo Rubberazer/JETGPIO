@@ -123,7 +123,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <h2 align="left">INSTALLATION:</h2>
 <p>Clone/download the content into any folder in your JETSON, cd to that folder and type: </p><pre class="fragment">sudo make   
 sudo make install                                             
-</pre><p>That's it, the library should be installed and ready to be used. To uninstall the library: </p><pre class="fragment">sudo make uninstall
+</pre><p>If you have an Orin, you should reboot at this point to get all the functionality, also make install will print information on screen, keep an eye on that in case something is out of place. This doesnt affect the old Jetson Nano. To uninstall the library: </p><pre class="fragment">sudo make uninstall
 </pre><h2 align="left">HOW TO:</h2>
 <p>You will find code examples to learn how to use the library in both: EXAMPLES_C &amp; EXAMPLES_C++ folders, the first one contains all the C examples, the second one contains the same examples ready to compile in C++. To compile the examples you will find instructions in the comment section at the top of each of the example files. I have also added a folder with examples in the Zig programming language to test interoperability.</p>
 <ul>

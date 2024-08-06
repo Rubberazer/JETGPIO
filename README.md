@@ -36,7 +36,7 @@ Clone/download the content into any folder in your JETSON, cd to that folder and
     sudo make   
     sudo make install                                             
   
-That's it, the library should be installed and ready to be used. To uninstall the library:
+If you have an Orin, you should reboot at this point to get all the functionality, also make install will print information on screen, keep an eye on that in case something is out of place. This doesnt affect the old Jetson Nano. To uninstall the library:
 
     sudo make uninstall
   
