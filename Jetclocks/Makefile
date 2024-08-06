@@ -31,6 +31,7 @@ install:
 		echo "`awk '/LABEL primary/{f=1} /APPEND/{f=0;print} f' /boot/extlinux/extlinux.conf | sed '/#/d'`" > $(PWD)/extlinux.conf.temp;\
 		sed -i 's/LABEL\sprimary/LABEL jetclocks/g' $(PWD)/extlinux.conf.temp;\
 		sed -i 's/MENU\sLABEL\sjetclocks/MENU LABEL primary/g' $(PWD)/extlinux.conf.temp;\
+		sed -i '/FDT/d' $(PWD)/extlinux.conf.temp;\
 		sed -i '/LINUX/a\      FDT /boot/dtb/jetclocks.dtb' $(PWD)/extlinux.conf.temp;\
 		echo "`cat $(PWD)/extlinux.conf.temp`" >> /boot/extlinux/$(EXTFILE);\
 		sed -i 's/DEFAULT\sprimary/DEFAULT jetclocks/g' /boot/extlinux/$(EXTFILE);\
