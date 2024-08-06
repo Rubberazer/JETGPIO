@@ -1,1 +1,0 @@
-cmd_/home/darkstar/development/jetgpio/github_module/Jetclocks/modules.order := {   echo /home/darkstar/development/jetgpio/github_module/Jetclocks/jetclocks.ko; :; } | awk '!x[$$0]++' - > /home/darkstar/development/jetgpio/github_module/Jetclocks/modules.order
