@@ -12,8 +12,8 @@ clean:
 install:
 	$(eval EXTFILE := $(shell find /boot/extlinux -name "extlinux.conf" -exec basename {} \;))
 	$(eval CHECKER := $(shell grep /boot/extlinux/$(EXTFILE) -e "DEFAULT jetclocks"))
-	$(eval DTBFILE := $(shell find /boot/dtb -name "*kernel*.dtb"  -exec basename {} \;))
-	@if [ "$(CHECKER)" = "" ]; then\
+	$(eval DTBFILE := $(shell find /boot/dtb -name "*kernel*.dtb" -exec basename {} \; | head -n 1))
+	@if [ "$(CHECKER)" = "" ] && [ "$(DTBFILE)" != "" ]; then\
 		make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules_install;\
 		touch /etc/modules-load.d/jetclocks.conf;\
 		echo "# Load jetclocks module\njetclocks" > /etc/modules-load.d/jetclocks.conf;\
