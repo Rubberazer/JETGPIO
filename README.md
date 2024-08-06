@@ -2,8 +2,8 @@
 
 C library to manage the GPIO header of the Nvidia JETSON boards
 
-IMPORTANT NOTICE: THIS VERSION OF THE LIBRARY INSTALLS AND WORKS ALONG WITH A KERNEL MODULE [JETCLOCKS](https://github.com/Rubberazer/Jetclocks) THIS PROVIDES EXTRA FUNCTIONALITY AND ALLOWS TO PLAY WITH CLOCKS FREQUENCIES IN A SIMPLER WAY.
-IF YOU DONT WANT THAT, AND PREFER THE OLD STANDALONE JETGPIO YOU WILL FIND IT AS A RELEASE HERE: [STANDALONE JETGPIO](https://github.com/Rubberazer/JETGPIO/releases/tag/v1.2)
+IMPORTANT NOTICE: This version of the library, installs and works along a kernel module: [JETCLOCKS](https://github.com/Rubberazer/Jetclocks). This provides extra functionality, and allows to play with clocks frequencies in a simpler way.
+If you dont want that and prefer the old, standalone JETGPIO, you will find it as a release here: [STANDALONE JETGPIO](https://github.com/Rubberazer/JETGPIO/releases/tag/v1.2)
 
 <h2 align="left">FUNCTIONALITY:</h2>
 
