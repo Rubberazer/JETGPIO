@@ -30,13 +30,14 @@ If you don't want that and prefer the old, standalone JETGPIO, you will find it 
 - No need of previous kernel configuration, no need to change the device tree, no need to reconfigure via /opt/nvidia/jetson-io/jetson-io.py or the like  
   
 <h2 align="left">INSTALLATION:</h2>
- 
+NOTICE: make install will automatically install the library and the kernel module but, if you have heavily tuned your: /boot/extlinux/extlinux.conf and device tree blob e.g. remove the default blob and so forth, the automatic module installation might fail, in those cases manual module installation is recommended, see instructions in: [Jetclocks](https://github.com/Rubberazer/Jetclocks). 
+
 Clone/download the content into any folder in your JETSON, cd to that folder and type:
   
     sudo make   
     sudo make install                                             
   
-If you have an Orin, you should reboot at this point to get all the functionality, also make install will print information on screen, keep an eye on that in case something is out of place. This doesnt affect the old Jetson Nano. To uninstall the library:
+If you have an Orin, you should reboot at this point to get all the functionality, also make install will print information on screen, keep an eye on that in case something is out of place. To uninstall the library:
 
     sudo make uninstall
   
