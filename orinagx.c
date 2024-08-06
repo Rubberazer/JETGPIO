@@ -1,27 +1,27 @@
-/*
-This is free and unencumbered software released into the public domain.
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
-In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-For more information, please refer to <http://unlicense.org/>
-*/
+/*MIT License
+ *
+ *Copyright (c) 2024 Rubberazer
+ *
+ *Permission is hereby granted, free of charge, to any person obtaining a copy
+ *of this software and associated documentation files (the "Software"), to deal
+ *in the Software without restriction, including without limitation the rights
+ *to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *copies of the Software, and to permit persons to whom the Software is
+ *furnished to do so, subject to the following conditions:
+ *
+ *The above copyright notice and this permission notice shall be included in all
+ *copies or substantial portions of the Software.
+ *
+ *THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *SOFTWARE.
+ */
 
-/* jetgpio version 1.2 */
+/* jetgpio version 2.0 */
 /* Orin AGX extension */
 
 #include <stdio.h>
@@ -46,6 +46,7 @@ For more information, please refer to <http://unlicense.org/>
 #include <pthread.h>
 #include <linux/version.h>
 
+#include "Jetclocks/jetclocks.h"
 #include "jetgpio.h"
 
 #define BILLION 1000000000L
@@ -777,32 +778,50 @@ void gpioTerminate(void) {
 
   if ((pin_tracker >> 28) & 1) {
     *PWM1 = PWM1_Init;
-    char buf[100];
-    
-    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm1/rate", clk_rate_PWM1);
-    if (system(buf) == -1) { 
-      printf( "Not possible to change clock rate on pwm1\n");
+    struct jetclk clock;
+    memset(&clock, 0, sizeof(clock));
+  
+    int  dev = open("/dev/jetclocks", O_WRONLY);
+    if(dev < 0) {
+      printf("Opening /dev/jetclocks not possible\n");
     }
+
+    clock.clk_set_rate = clk_rate_PWM1;
+    strncpy(clock.clk, "pwm1", sizeof(clock.clk));
+    ioctl(dev, CLK_SET_RATE, &clock);
+    close(dev);
   }
 
   if ((pin_tracker >> 29) & 1) {
     *PWM5 = PWM5_Init;
-    char buf[100];
-    
-    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm5/rate", clk_rate_PWM5);
-    if (system(buf) == -1) { 
-      printf( "Not possible to change clock rate on pwm5\n");
+    struct jetclk clock;
+    memset(&clock, 0, sizeof(clock));
+
+    int  dev = open("/dev/jetclocks", O_WRONLY);
+    if(dev < 0) {
+      printf("Opening /dev/jetclocks not possible\n");
     }
+
+    clock.clk_set_rate = clk_rate_PWM5;
+    strncpy(clock.clk, "pwm5", sizeof(clock.clk));
+    ioctl(dev, CLK_SET_RATE, &clock);
+    close(dev);
   }
 
   if ((pin_tracker >> 30) & 1) {
     *PWM8 = PWM8_Init;
-    char buf[100];
-    
-    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm8/rate", clk_rate_PWM8);
-    if (system(buf) == -1) { 
-      printf( "Not possible to change clock rate on pwm8\n");
+    struct jetclk clock;
+    memset(&clock, 0, sizeof(clock));
+  
+    int  dev = open("/dev/jetclocks", O_WRONLY);
+    if(dev < 0) {
+      printf("Opening /dev/jetclocks not possible\n");
     }
+
+    clock.clk_set_rate = clk_rate_PWM8;
+    strncpy(clock.clk, "pwm8", sizeof(clock.clk));
+    ioctl(dev, CLK_SET_RATE, &clock);
+    close(dev);
   }
     
   if (pin_tracker & 1) { 
@@ -825,7 +844,7 @@ void gpioTerminate(void) {
     *pincfg5 = pin_CFG.pin5;
   }
     
-  if ((pin_tracker >> 2) & 1) {
+  if (((pin_tracker >> 2) & 1) || ((pin_tracker >> 32) & 1)) {
     pin7->CNF[0] = pin_CNF.pin7;
     pin7->DEB[0] = pin_DEB.pin7;
     pin7->IN[0] = pin_IN.pin7;
@@ -2105,9 +2124,10 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
   int status = 1;
   int PFM = 0;
   unsigned clk_rate_PWM;
-  char buf[100];
-  FILE *fptr;
-
+  int dev;
+  struct jetclk clock;
+  memset(&clock, 0, sizeof(clock));
+  
   if ((frequency >= 50) && (frequency <=1593000)) {
     if (frequency > 796875) {
       clk_rate_PWM = 408000000; 
@@ -2123,22 +2143,21 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       clk_rate_PWM = 102000000;
       PFM = round(398437.5/(double)frequency)-1;
     }
+
+    clock.clk_set_rate = clk_rate_PWM;
+    
     switch(gpio) {
     case 13:
-      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm8/rate");
-      fptr = fopen(buf, "r");
-      
-      if (fptr == NULL) {
-        printf("Not possible to read current clock rate on pwm8\n");
+      dev = open("/dev/jetclocks", O_WRONLY);
+      if(dev < 0) {
+	printf("Opening /dev/jetclocks not possible\n");
+	return -1;
       }
-	
-      fscanf(fptr, "%u", &clk_rate_PWM8);
+      strncpy(clock.clk, "pwm8", sizeof(clock.clk));
+      ioctl(dev, CLK_SET_RATE, &clock);
+      ioctl(dev, CLK_ENABLE, &clock);
+      close(dev);
       
-      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm8/rate", clk_rate_PWM);
-      if (system(buf) == -1) { 
-        printf( "Not possible to change clock rate on pwm8\n");
-      }
-      fclose(fptr);
       *pinmux13 = 0x00000400;
       *pincfg13 = CFGO_OUT;
       pin13->CNF[0] = 0x00000001;
@@ -2147,20 +2166,16 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       pin_tracker |= (1 << 30);
       break;
     case 15:
-      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm1/rate");
-      fptr = fopen(buf, "r");
-      
-      if (fptr == NULL) {
-        printf("Not possible to read current clock rate on pwm1\n");
+      dev = open("/dev/jetclocks", O_WRONLY);
+      if(dev < 0) {
+	printf("Opening /dev/jetclocks not possible\n");
+	return -1;
       }
-	
-      fscanf(fptr, "%u", &clk_rate_PWM1);
+      strncpy(clock.clk, "pwm1", sizeof(clock.clk));
+      ioctl(dev, CLK_SET_RATE, &clock);
+      ioctl(dev, CLK_ENABLE, &clock);
+      close(dev);
       
-      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm1/rate", clk_rate_PWM);
-      if (system(buf) == -1) { 
-        printf( "Not possible to change clock rate on pwm1\n");
-      }
-      fclose(fptr);
       *pinmux15 = 0x00000400;
       *pincfg15 = CFGO_OUT;
       pin15->CNF[0] = 0x00000001;
@@ -2169,20 +2184,16 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       pin_tracker |= (1 << 28);
       break;
     case 18:
-      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm5/rate");
-      fptr = fopen(buf, "r");
-      
-      if (fptr == NULL) {
-        printf("Not possible to read current clock rate on pwm5\n");
+      dev = open("/dev/jetclocks", O_WRONLY);
+      if(dev < 0) {
+	printf("Opening /dev/jetclocks not possible\n");
+	return -1;
       }
-	
-      fscanf(fptr, "%u", &clk_rate_PWM5);
+      strncpy(clock.clk, "pwm5", sizeof(clock.clk));
+      ioctl(dev, CLK_SET_RATE, &clock);
+      ioctl(dev, CLK_ENABLE, &clock);
+      close(dev);
       
-      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm5/rate", clk_rate_PWM);
-      if (system(buf) == -1) { 
-        printf( "Not possible to change clock rate on pwm5\n");
-      }
-      fclose(fptr);
       *pinmux18 = 0x00000401;
       *pincfg18 = CFGO_OUT;
       pin18->CNF[0] = 0x00000001;
@@ -2191,12 +2202,12 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       pin_tracker |= (1 << 29);
       break;
     default:
-      status = -1;
+      status = -2;
       printf("Only gpio numbers 13, 15 and 18 are accepted\n");
     }  		
   }
   else {printf("Only frequencies from 50 to 1595000 Hz are allowed\n");
-    status =-2;}
+    status =-3;}
   return status;
 }
 
@@ -2713,7 +2724,8 @@ int spiClose(unsigned handle) {
 int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len) {
   int ret = 0;
   struct spi_ioc_transfer tr;
-    
+  memset(&tr, 0, sizeof(tr));
+  
   if (!(handle == 0) ) {
     printf( "Bad handle (%d)\n", handle);
     return -1;
@@ -2735,4 +2747,83 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len) {
     return -2;
   }
   return ret;
+}
+
+int extPeripheralRate(unsigned clk_name, unsigned rate) {
+  struct jetclk clock;
+  memset(&clock, 0, sizeof(clock));
+
+  if (!(clk_name == EXTPERIPH4)) {
+    printf("Only value EXTPERIPH4 is accepted\n");
+    return -1;
+  }
+  
+  if (rate < 3200000 || rate > 51000000) {
+    printf( "Clock rate should be a number between 3200000 and 51000000 Hz\n");
+    return -2;
+  }
+  clock.clk_set_rate = rate;
+  
+  int dev = open("/dev/jetclocks", O_WRONLY);
+  if(dev < 0) {
+    printf("Opening /dev/jetclocks not possible\n");
+    return -3;
+  }
+  
+  strncpy(clock.clk, "extperiph4", sizeof(clock.clk));
+  ioctl(dev, CLK_SET_RATE, &clock);
+    
+  close(dev);
+  return 0;
+}
+
+int extPeripheralEnable(unsigned clk_name) {
+  struct jetclk clock;
+  memset(&clock, 0, sizeof(clock));
+
+  if (!(clk_name == EXTPERIPH4)) {
+    printf("Only value EXTPERIPH4 is accepted\n");
+    return -1;
+  }
+  
+  int dev = open("/dev/jetclocks", O_WRONLY);
+  if(dev < 0) {
+    printf("Opening /dev/jetclocks not possible\n");
+    return -2;
+  }
+  
+  strncpy(clock.clk, "extperiph4", sizeof(clock.clk));
+  ioctl(dev, CLK_ENABLE, &clock);
+  *pinmux7 = 0x401;
+  *pincfg7 = CFGO_OUT;
+  pin7->CNF[0] = 0x3;	  
+  pin_tracker |= (1UL << 32);
+  
+  close(dev);
+  return 0;
+}
+
+int extPeripheralDisable(unsigned clk_name) {
+  struct jetclk clock;
+  memset(&clock, 0, sizeof(clock));
+  
+  if (!(clk_name == EXTPERIPH4)) {
+    printf("Only value EXTPERIPH4 is accepted\n");
+    return -1;
+  }
+  
+  int dev = open("/dev/jetclocks", O_WRONLY);
+  if(dev < 0) {
+    printf("Opening /dev/jetclocks not possible\n");
+    return -2;
+  }
+
+  *pinmux7 = 0x474;
+  *pincfg7 = 0x0;
+  pin7->CNF[0] = 0x0;	  
+  strncpy(clock.clk, "extperiph4", sizeof(clock.clk));
+  ioctl(dev, CLK_DISABLE, &clock);
+  
+  close(dev);
+  return 0;
 }

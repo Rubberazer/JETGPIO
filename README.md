@@ -2,8 +2,8 @@
 
 C library to manage the GPIO header of the Nvidia JETSON boards
 
-[UPDATE: ORIN AGX NOW SUPPORTED](https://github.com/Rubberazer/JETGPIO/discussions/30)
-
+IMPORTANT NOTICE: THIS VERSION OF THE LIBRARY WORKS ALONG A KERNEL MODULE [JETCLOCKS](https://github.com/Rubberazer/Jetclocks) THIS PROVIDES EXTRA FUNCTIONALITY AND ALLOWS TO PLAY WITH CLOCKS FREQUENCIES IN A SIMPLER WAY.
+IF YOU DONT WANT THAT, AND PREFER THE OLD STANDALONE JETGPIO YOU WILL FIND IT AS A RELEASE HERE: [STANDALONE JETGPIO](https://github.com/Rubberazer/JETGPIO/releases/tag/v1.2)
 
 <h2 align="left">FUNCTIONALITY:</h2>
 
@@ -24,6 +24,8 @@ C library to manage the GPIO header of the Nvidia JETSON boards
 - I2C serial communication over pins: 27 (SDA) & 28 (SCL)  and 3 (SDA) & 5 (SCL)
 
 - SPI serial communication over pins: 19 (MOSI), 21 (MISO), 23 (SCK) & 24 (CS0) and 37 (MOSI), 22 (MISO), 13 (SCK) & 18 (CS0)
+
+- Orin family only, output clocks: Extperiph3 (pin 29) & Extperiph4 (31) in Orin Nano and Extperiph4 (pin 7) in Orin AGX
   
 - No need of previous kernel configuration, no need to change the device tree, no need to reconfigure via /opt/nvidia/jetson-io/jetson-io.py or the like  
   
@@ -56,6 +58,8 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 - [spi_loop.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/spi_loop.c) & [spi_loop.cpp](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C++/spi_loop.cpp) show how to run a simple loop test on the SPI port(s) by connecting together pins 19 & 21 for port SPI1 and pins 22 & 37 
   for port SPI2
+
+- [jetgpio_extperiph.c](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C/jetgpio_extperiph.c) & [spi_loop.cpp](https://github.com/Rubberazer/JETGPIO/blob/main/EXAMPLES_C++/jetgpio_extperiph.cpp) show how to source Extperiph4 to pin 31 in Orin Nano or pin 7 in Orin AGX
 
 - [ZIG Examples](https://github.com/Rubberazer/JETGPIO/tree/main/EXAMPLES_Zig) just for the sake of it
 

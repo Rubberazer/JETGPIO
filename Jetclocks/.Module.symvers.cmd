@@ -1,0 +1,1 @@
+cmd_/home/darkstar/development/jetgpio/github_module/Jetclocks/Module.symvers := sed 's/\.ko$$/\.o/' /home/darkstar/development/jetgpio/github_module/Jetclocks/modules.order | scripts/mod/modpost -m   -o /home/darkstar/development/jetgpio/github_module/Jetclocks/Module.symvers -e -i Module.symvers   -T -

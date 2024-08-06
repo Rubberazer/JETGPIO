@@ -1,5 +1,8 @@
 var jetgpio_8h =
 [
+    [ "extPeripheralDisable", "jetgpio_8h.html#a57d03c186ca277c0d7e7e083ecabe0ad", null ],
+    [ "extPeripheralEnable", "jetgpio_8h.html#ade07dffcbf229d1fc1c49295c115a176", null ],
+    [ "extPeripheralRate", "jetgpio_8h.html#a73ecd022656b5a94e93bde3f285f6aa3", null ],
     [ "gpioInitialise", "jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0", null ],
     [ "gpioPWM", "jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136", null ],
     [ "gpioRead", "jetgpio_8h.html#a754d22c52d797f32f02c86863496b0ec", null ],

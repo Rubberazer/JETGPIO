@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Jetgpio<span id="projectnumber">&#160;1.2</span>
+   <div id="projectname">Jetgpio<span id="projectnumber">&#160;2.0</span>
    </div>
    <div id="projectbrief">C library to manage the GPIO header of the Nvidia JETSON boards</div>
   </td>
@@ -100,30 +100,30 @@ $(function(){initNavTree('jetgpio_8h_source.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">jetgpio.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="jetgpio_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">This is free and unencumbered software released into the public domain.</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">Anyone is free to copy, modify, publish, use, compile, sell, or</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">distribute this software, either in source code form or as a compiled</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">binary, for any purpose, commercial or non-commercial, and by any</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">means.</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">In jurisdictions that recognize copyright laws, the author or authors</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">of this software dedicate any and all copyright interest in the</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">software to the public domain. We make this dedication for the benefit</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">of the public at large and to the detriment of our heirs and</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">successors. We intend this dedication to be an overt act of</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">relinquishment in perpetuity of all present and future rights to this</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">software under copyright law.</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">OTHER DEALINGS IN THE SOFTWARE.</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">For more information, please refer to &lt;http://unlicense.org/&gt;</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">*/</span></div>
+<a href="jetgpio_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*MIT License</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> *Copyright (c) 2024 Rubberazer</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> *Permission is hereby granted, free of charge, to any person obtaining a copy</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> *of this software and associated documentation files (the &quot;Software&quot;), to deal</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> *in the Software without restriction, including without limitation the rights</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *copies of the Software, and to permit persons to whom the Software is</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *furnished to do so, subject to the following conditions:</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> *The above copyright notice and this permission notice shall be included in all</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> *copies or substantial portions of the Software.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> *THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> *IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"> *FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment"> *AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> *LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> *OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> *SOFTWARE.</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">/* jetgpio version 1.2 */</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">/* jetgpio version 2.0 */</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#ifndef jetgpio_h__</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#define jetgpio_h__</span></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
@@ -461,130 +461,140 @@ $(function(){initNavTree('jetgpio_8h_source.html',''); initResizable(true); });
 <div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span><span class="preprocessor">#define SPI_RESERVED 1</span></div>
 <div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span><span class="preprocessor">#define SPI_OPENED   2</span></div>
 <div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span> </div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span><span class="comment">/* Variables */</span></div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>  uint32_t CNF[4];</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>  uint32_t OE[4];</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>  uint32_t OUT[4];</div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>  uint32_t IN[4];</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>  uint32_t INT_STA[4];</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>  uint32_t INT_ENB[4];</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>  uint32_t INT_LVL[4];</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>  uint32_t INT_CLR[4];</div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>} GPIO_CNF;</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span> </div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>  uint32_t CNF[1];</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>  uint32_t DEB[1];</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>  uint32_t IN[1];</div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>  uint32_t OUT[1];</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>  uint32_t OUT_VLE[1];</div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>  uint32_t INT_CLR[1];</div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>} GPIO_CNFO;</div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span> </div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>  </div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>  uint32_t pin3;</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>  uint32_t pin5;</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>  uint32_t pin7;</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>  uint32_t pin8;</div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>  uint32_t pin10;</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>  uint32_t pin11;</div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>  uint32_t pin12;</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>  uint32_t pin13;</div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>  uint32_t pin15;</div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>  uint32_t pin16;</div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>  uint32_t pin18;</div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>  uint32_t pin19;</div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>  uint32_t pin21;</div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>  uint32_t pin22;</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>  uint32_t pin23;</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>  uint32_t pin24;</div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>  uint32_t pin26;</div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>  uint32_t pin27;</div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>  uint32_t pin28;</div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>  uint32_t pin29;</div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>  uint32_t pin31;</div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>  uint32_t pin32;</div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>  uint32_t pin33;</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>  uint32_t pin35;</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>  uint32_t pin36;</div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>  uint32_t pin37;</div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>  uint32_t pin38;</div>
-<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>  uint32_t pin40;</div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>} GPIO_CNF_Init;</div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span> </div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>  uint32_t stat_reg;</div>
-<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>  uint32_t gpio;</div>
-<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>  uint32_t edge;</div>
-<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>  uint32_t gpio_offset;</div>
-<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>  uint64_t *timestamp;</div>
-<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>  void (*f)();</div>
-<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>  uint32_t debounce;</div>
-<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>} ISRFunc;</div>
-<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span> </div>
-<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span><span class="keyword">typedef</span> ISRFunc *PISRFunc;</div>
-<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span> </div>
-<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>  uint32_t PWM_0[4];</div>
-<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>  uint32_t PWM_1[4];</div>
-<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>  uint32_t PWM_2[4];</div>
-<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>  uint32_t PWM_3[4];</div>
-<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>} GPIO_PWM;</div>
-<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span> </div>
-<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>  uint32_t state;</div>
-<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>  int32_t fd;</div>
-<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>  uint32_t addr;</div>
-<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>  uint32_t flags;</div>
-<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>  uint32_t funcs;</div>
-<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>} i2cInfo_t;</div>
-<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span> </div>
-<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>  uint32_t state;</div>
-<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>  int32_t fd;</div>
-<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>  uint32_t mode;</div>
-<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>  uint32_t speed;</div>
-<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>  uint32_t cs_delay;</div>
-<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>  uint32_t cs_change;</div>
-<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>  uint32_t bits_word;</div>
-<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>} SPIInfo_t;</div>
-<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span> </div>
-<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span><span class="comment">/* Functions */</span></div>
-<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span> </div>
-<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span><span class="keywordtype">void</span> <a class="code hl_function" href="jetgpio_8h.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> mode);</div>
-<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a>(<span class="keywordtype">unsigned</span> gpio);</div>
-<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> level);</div>
-<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> edge, <span class="keywordtype">unsigned</span> debounce, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> *timestamp, <span class="keywordtype">void</span> (*f)());</div>
-<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> frequency);</div>
-<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> dutycycle);</div>
-<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a>(<span class="keywordtype">unsigned</span> i2cBus, <span class="keywordtype">unsigned</span> i2cFlags);</div>
-<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a>(<span class="keywordtype">unsigned</span> handle);</div>
-<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">unsigned</span> i2cAddr, <span class="keywordtype">unsigned</span> i2cReg, <span class="keywordtype">unsigned</span> bVal);</div>
-<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">unsigned</span> i2cAddr, <span class="keywordtype">unsigned</span> i2cReg);</div>
-<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a9a4e911447c30f1c74727334668535e2">i2cWriteWordData</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">unsigned</span> i2cAddr, <span class="keywordtype">unsigned</span> i2cReg, <span class="keywordtype">unsigned</span> wVal);</div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a54bb3be857e985a527e91e55a1315c21">i2cReadWordData</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">unsigned</span> i2cAddr, <span class="keywordtype">unsigned</span> i2cReg);</div>
-<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a>(<span class="keywordtype">unsigned</span> spiChan, <span class="keywordtype">unsigned</span> speed, <span class="keywordtype">unsigned</span> mode, <span class="keywordtype">unsigned</span> cs_delay, <span class="keywordtype">unsigned</span> bits_word, <span class="keywordtype">unsigned</span> lsb_first, <span class="keywordtype">unsigned</span> cs_change);</div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a>(<span class="keywordtype">unsigned</span> handle);</div>
-<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">char</span> *txBuf, <span class="keywordtype">char</span> *rxBuf, <span class="keywordtype">unsigned</span> len);</div>
-<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>}</div>
-<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span> </div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span><span class="preprocessor">#endif  </span><span class="comment">// jetgpio_h__</span></div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span><span class="comment">/* Externel peripheral clocks on Orin */</span></div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span> </div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span><span class="preprocessor">#define EXTPERIPH3 3</span></div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span><span class="preprocessor">#define EXTPERIPH4 4</span></div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span> </div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span> </div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span><span class="comment">/* Variables */</span></div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span> </div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>  uint32_t CNF[4];</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>  uint32_t OE[4];</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>  uint32_t OUT[4];</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>  uint32_t IN[4];</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>  uint32_t INT_STA[4];</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>  uint32_t INT_ENB[4];</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>  uint32_t INT_LVL[4];</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>  uint32_t INT_CLR[4];</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>} GPIO_CNF;</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span> </div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>  uint32_t CNF[1];</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>  uint32_t DEB[1];</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>  uint32_t IN[1];</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>  uint32_t OUT[1];</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>  uint32_t OUT_VLE[1];</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>  uint32_t INT_CLR[1];</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>} GPIO_CNFO;</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span> </div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>  </div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>  uint32_t pin3;</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>  uint32_t pin5;</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>  uint32_t pin7;</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>  uint32_t pin8;</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>  uint32_t pin10;</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>  uint32_t pin11;</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>  uint32_t pin12;</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>  uint32_t pin13;</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>  uint32_t pin15;</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>  uint32_t pin16;</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>  uint32_t pin18;</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>  uint32_t pin19;</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>  uint32_t pin21;</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>  uint32_t pin22;</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>  uint32_t pin23;</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>  uint32_t pin24;</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>  uint32_t pin26;</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>  uint32_t pin27;</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>  uint32_t pin28;</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>  uint32_t pin29;</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>  uint32_t pin31;</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>  uint32_t pin32;</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>  uint32_t pin33;</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>  uint32_t pin35;</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>  uint32_t pin36;</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>  uint32_t pin37;</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>  uint32_t pin38;</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>  uint32_t pin40;</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>} GPIO_CNF_Init;</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span> </div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>  uint32_t stat_reg;</div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>  uint32_t gpio;</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>  uint32_t edge;</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>  uint32_t gpio_offset;</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>  uint64_t *timestamp;</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>  void (*f)();</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>  uint32_t debounce;</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>} ISRFunc;</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span> </div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span><span class="keyword">typedef</span> ISRFunc *PISRFunc;</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span> </div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>  uint32_t PWM_0[4];</div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>  uint32_t PWM_1[4];</div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>  uint32_t PWM_2[4];</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>  uint32_t PWM_3[4];</div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>} GPIO_PWM;</div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span> </div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>  uint32_t state;</div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>  int32_t fd;</div>
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>  uint32_t addr;</div>
+<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>  uint32_t flags;</div>
+<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>  uint32_t funcs;</div>
+<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>} i2cInfo_t;</div>
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span> </div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>  uint32_t state;</div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>  int32_t fd;</div>
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>  uint32_t mode;</div>
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>  uint32_t speed;</div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>  uint32_t cs_delay;</div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>  uint32_t cs_change;</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>  uint32_t bits_word;</div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>} SPIInfo_t;</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span> </div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span><span class="comment">/* Functions */</span></div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span> </div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00483" name="l00483"></a><span class="lineno">  483</span><span class="keywordtype">void</span> <a class="code hl_function" href="jetgpio_8h.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> mode);</div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a>(<span class="keywordtype">unsigned</span> gpio);</div>
+<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> level);</div>
+<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> edge, <span class="keywordtype">unsigned</span> debounce, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> *timestamp, <span class="keywordtype">void</span> (*f)());</div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a982f8292ecf78abc5bdeeb330a2e0a05">gpioSetPWMfrequency</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> frequency);</div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a>(<span class="keywordtype">unsigned</span> gpio, <span class="keywordtype">unsigned</span> dutycycle);</div>
+<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a>(<span class="keywordtype">unsigned</span> i2cBus, <span class="keywordtype">unsigned</span> i2cFlags);</div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#aac119696ea99a19576c6fe858bb8a031">i2cClose</a>(<span class="keywordtype">unsigned</span> handle);</div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">unsigned</span> i2cAddr, <span class="keywordtype">unsigned</span> i2cReg, <span class="keywordtype">unsigned</span> bVal);</div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">unsigned</span> i2cAddr, <span class="keywordtype">unsigned</span> i2cReg);</div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a9a4e911447c30f1c74727334668535e2">i2cWriteWordData</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">unsigned</span> i2cAddr, <span class="keywordtype">unsigned</span> i2cReg, <span class="keywordtype">unsigned</span> wVal);</div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a54bb3be857e985a527e91e55a1315c21">i2cReadWordData</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">unsigned</span> i2cAddr, <span class="keywordtype">unsigned</span> i2cReg);</div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a>(<span class="keywordtype">unsigned</span> spiChan, <span class="keywordtype">unsigned</span> speed, <span class="keywordtype">unsigned</span> mode, <span class="keywordtype">unsigned</span> cs_delay, <span class="keywordtype">unsigned</span> bits_word, <span class="keywordtype">unsigned</span> lsb_first, <span class="keywordtype">unsigned</span> cs_change);</div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a9fb213bb27196cab00718d2fdfb33688">spiClose</a>(<span class="keywordtype">unsigned</span> handle);</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a>(<span class="keywordtype">unsigned</span> handle, <span class="keywordtype">char</span> *txBuf, <span class="keywordtype">char</span> *rxBuf, <span class="keywordtype">unsigned</span> len);</div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a73ecd022656b5a94e93bde3f285f6aa3">extPeripheralRate</a>(<span class="keywordtype">unsigned</span> clk_name, <span class="keywordtype">unsigned</span> rate);</div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#ade07dffcbf229d1fc1c49295c115a176">extPeripheralEnable</a>(<span class="keywordtype">unsigned</span> clk_name);</div>
+<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span><span class="keywordtype">int</span> <a class="code hl_function" href="jetgpio_8h.html#a57d03c186ca277c0d7e7e083ecabe0ad">extPeripheralDisable</a>(<span class="keywordtype">unsigned</span> clk_name);</div>
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>}</div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span> </div>
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span><span class="preprocessor">#endif  </span><span class="comment">// jetgpio_h__</span></div>
 <div class="ttc" id="ajetgpio_8h_html_a15ec7e76572f925b9e206018fd5d22e9"><div class="ttname"><a href="jetgpio_8h.html#a15ec7e76572f925b9e206018fd5d22e9">gpioWrite</a></div><div class="ttdeci">int gpioWrite(unsigned gpio, unsigned level)</div><div class="ttdoc">Sets the GPIO level, on or off. Arduino style: digitalWrite.</div><div class="ttdef"><b>Definition</b> nano.c:1521</div></div>
 <div class="ttc" id="ajetgpio_8h_html_a2532ad45eb33d8d476c4d6036f694702"><div class="ttname"><a href="jetgpio_8h.html#a2532ad45eb33d8d476c4d6036f694702">spiOpen</a></div><div class="ttdeci">int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, unsigned bits_word, unsigned lsb_first, unsigned cs_change)</div><div class="ttdoc">This function returns a handle for the SPI device on the channel. Data will be transferred at baud bi...</div><div class="ttdef"><b>Definition</b> nano.c:2389</div></div>
 <div class="ttc" id="ajetgpio_8h_html_a404d80a9a9292869c1a2b86f183b3774"><div class="ttname"><a href="jetgpio_8h.html#a404d80a9a9292869c1a2b86f183b3774">gpioTerminate</a></div><div class="ttdeci">void gpioTerminate(void)</div><div class="ttdoc">Terminates the library. This function restores the used registers to their previous state and release...</div><div class="ttdef"><b>Definition</b> nano.c:701</div></div>
 <div class="ttc" id="ajetgpio_8h_html_a54bb3be857e985a527e91e55a1315c21"><div class="ttname"><a href="jetgpio_8h.html#a54bb3be857e985a527e91e55a1315c21">i2cReadWordData</a></div><div class="ttdeci">int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned i2cReg)</div><div class="ttdoc">This reads two bytes from the specified consecutive register(s) of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2344</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a57d03c186ca277c0d7e7e083ecabe0ad"><div class="ttname"><a href="jetgpio_8h.html#a57d03c186ca277c0d7e7e083ecabe0ad">extPeripheralDisable</a></div><div class="ttdeci">int extPeripheralDisable(unsigned clk_name)</div><div class="ttdoc">Orin family only. This functions disables one of the external peripheral clocks. There are 2 (pins 29...</div><div class="ttdef"><b>Definition</b> orin.c:2837</div></div>
 <div class="ttc" id="ajetgpio_8h_html_a642db3078905bf982f784fb7b428bda4"><div class="ttname"><a href="jetgpio_8h.html#a642db3078905bf982f784fb7b428bda4">i2cWriteByteData</a></div><div class="ttdeci">int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg, unsigned bVal)</div><div class="ttdoc">This writes a single byte to the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2199</div></div>
+<div class="ttc" id="ajetgpio_8h_html_a73ecd022656b5a94e93bde3f285f6aa3"><div class="ttname"><a href="jetgpio_8h.html#a73ecd022656b5a94e93bde3f285f6aa3">extPeripheralRate</a></div><div class="ttdeci">int extPeripheralRate(unsigned clk_name, unsigned rate)</div><div class="ttdoc">Orin family only. This functions changes the rate of one of the external peripheral clocks....</div><div class="ttdef"><b>Definition</b> orin.c:2768</div></div>
 <div class="ttc" id="ajetgpio_8h_html_a754d22c52d797f32f02c86863496b0ec"><div class="ttname"><a href="jetgpio_8h.html#a754d22c52d797f32f02c86863496b0ec">gpioRead</a></div><div class="ttdeci">int gpioRead(unsigned gpio)</div><div class="ttdoc">Reads the GPIO level, on or off, 0 or 1. Arduino style: digitalRead. Wheter a pin has been set as inp...</div><div class="ttdef"><b>Definition</b> nano.c:1424</div></div>
 <div class="ttc" id="ajetgpio_8h_html_a80d84e5dd32fd8ec04cb0370eab0a5b0"><div class="ttname"><a href="jetgpio_8h.html#a80d84e5dd32fd8ec04cb0370eab0a5b0">gpioInitialise</a></div><div class="ttdeci">int gpioInitialise(void)</div><div class="ttdoc">Initialises the library. gpioInitialise must be called before using the other library functions,...</div><div class="ttdef"><b>Definition</b> nano.c:185</div></div>
 <div class="ttc" id="ajetgpio_8h_html_a81675c68b04f3c19be1f743eae7f2136"><div class="ttname"><a href="jetgpio_8h.html#a81675c68b04f3c19be1f743eae7f2136">gpioPWM</a></div><div class="ttdeci">int gpioPWM(unsigned gpio, unsigned dutycycle)</div><div class="ttdoc">Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on). Arduino style: analogWrite.</div><div class="ttdef"><b>Definition</b> nano.c:2048</div></div>
@@ -596,6 +606,7 @@ $(function(){initNavTree('jetgpio_8h_source.html',''); initResizable(true); });
 <div class="ttc" id="ajetgpio_8h_html_aaf4b600818f342b2723043fb9fd594c0"><div class="ttname"><a href="jetgpio_8h.html#aaf4b600818f342b2723043fb9fd594c0">i2cOpen</a></div><div class="ttdeci">int i2cOpen(unsigned i2cBus, unsigned i2cFlags)</div><div class="ttdoc">This returns a handle for the device at the address on the I2C bus.</div><div class="ttdef"><b>Definition</b> nano.c:2091</div></div>
 <div class="ttc" id="ajetgpio_8h_html_ab343b74f5cb62baaaded18e4ff1ed939"><div class="ttname"><a href="jetgpio_8h.html#ab343b74f5cb62baaaded18e4ff1ed939">gpioSetMode</a></div><div class="ttdeci">int gpioSetMode(unsigned gpio, unsigned mode)</div><div class="ttdoc">Sets the GPIO mode, typically input or output.</div><div class="ttdef"><b>Definition</b> nano.c:1004</div></div>
 <div class="ttc" id="ajetgpio_8h_html_ac0fe13b9811377a2f2fec9921795fb8f"><div class="ttname"><a href="jetgpio_8h.html#ac0fe13b9811377a2f2fec9921795fb8f">gpioSetISRFunc</a></div><div class="ttdeci">int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned long *timestamp, void(*f)())</div><div class="ttdoc">Registers a function to be called (a callback) whenever the specified.</div><div class="ttdef"><b>Definition</b> nano.c:1778</div></div>
+<div class="ttc" id="ajetgpio_8h_html_ade07dffcbf229d1fc1c49295c115a176"><div class="ttname"><a href="jetgpio_8h.html#ade07dffcbf229d1fc1c49295c115a176">extPeripheralEnable</a></div><div class="ttdeci">int extPeripheralEnable(unsigned clk_name)</div><div class="ttdoc">Orin family only. This functions enables one of the external peripheral clocks. There are 2 (pins 29 ...</div><div class="ttdef"><b>Definition</b> orin.c:2802</div></div>
 <div class="ttc" id="ajetgpio_8h_html_ae76dd5363acd174d24526f54c665c629"><div class="ttname"><a href="jetgpio_8h.html#ae76dd5363acd174d24526f54c665c629">i2cReadByteData</a></div><div class="ttdeci">int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned i2cReg)</div><div class="ttdoc">This reads a single byte from the specified register of the device associated with handle.</div><div class="ttdef"><b>Definition</b> nano.c:2249</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

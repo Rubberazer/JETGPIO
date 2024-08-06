@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Jetgpio<span id="projectnumber">&#160;1.2</span>
+   <div id="projectname">Jetgpio<span id="projectnumber">&#160;2.0</span>
    </div>
    <div id="projectbrief">C library to manage the GPIO header of the Nvidia JETSON boards</div>
   </td>
@@ -172,8 +172,106 @@ Functions</h2></td></tr>
 <tr class="memitem:a96e92eb729c89f2a9a893adf83251dc8" id="r_a96e92eb729c89f2a9a893adf83251dc8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a> (unsigned handle, char *txBuf, char *rxBuf, unsigned len)</td></tr>
 <tr class="memdesc:a96e92eb729c89f2a9a893adf83251dc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function transfers len bytes of data from txBuf to the SPI device associated with the handle. Simultaneously len bytes of data are read from the device and placed in rxBuf.  <br /></td></tr>
 <tr class="separator:a96e92eb729c89f2a9a893adf83251dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73ecd022656b5a94e93bde3f285f6aa3" id="r_a73ecd022656b5a94e93bde3f285f6aa3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73ecd022656b5a94e93bde3f285f6aa3">extPeripheralRate</a> (unsigned clk_name, unsigned rate)</td></tr>
+<tr class="memdesc:a73ecd022656b5a94e93bde3f285f6aa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orin family only. This functions changes the rate of one of the external peripheral clocks. There are 2 (pins 29 and 31) in Orin Nano and only one (pin 7) in Orin AGX.  <br /></td></tr>
+<tr class="separator:a73ecd022656b5a94e93bde3f285f6aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade07dffcbf229d1fc1c49295c115a176" id="r_ade07dffcbf229d1fc1c49295c115a176"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade07dffcbf229d1fc1c49295c115a176">extPeripheralEnable</a> (unsigned clk_name)</td></tr>
+<tr class="memdesc:ade07dffcbf229d1fc1c49295c115a176"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orin family only. This functions enables one of the external peripheral clocks. There are 2 (pins 29 and 31) in Orin Nano and only one (pin 7) in Orin AGX.  <br /></td></tr>
+<tr class="separator:ade07dffcbf229d1fc1c49295c115a176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57d03c186ca277c0d7e7e083ecabe0ad" id="r_a57d03c186ca277c0d7e7e083ecabe0ad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57d03c186ca277c0d7e7e083ecabe0ad">extPeripheralDisable</a> (unsigned clk_name)</td></tr>
+<tr class="memdesc:a57d03c186ca277c0d7e7e083ecabe0ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orin family only. This functions disables one of the external peripheral clocks. There are 2 (pins 29 and 31) in Orin Nano and only one (pin 7) in Orin AGX.  <br /></td></tr>
+<tr class="separator:a57d03c186ca277c0d7e7e083ecabe0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a57d03c186ca277c0d7e7e083ecabe0ad" name="a57d03c186ca277c0d7e7e083ecabe0ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57d03c186ca277c0d7e7e083ecabe0ad">&#9670;&#160;</a></span>extPeripheralDisable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int extPeripheralDisable </td>
+          <td>(</td>
+          <td class="paramtype">unsigned</td>          <td class="paramname"><span class="paramname"><em>clk_name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Orin family only. This functions disables one of the external peripheral clocks. There are 2 (pins 29 and 31) in Orin Nano and only one (pin 7) in Orin AGX. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clk_name</td><td>possible values are: EXTPERIPH3 -&gt; pin 29 Orin Nano, EXTPERIPH4 -&gt; pin 31 Orin Nano and pin 7 in Orin AGX </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
+<div class="fragment"><div class="line"><a class="code hl_function" href="#a57d03c186ca277c0d7e7e083ecabe0ad">extPeripheralDisable</a>(EXTPERIPH3); <span class="comment">// disabling clock routed to pin 29 in Orin Nano </span></div>
+<div class="ttc" id="ajetgpio_8h_html_a57d03c186ca277c0d7e7e083ecabe0ad"><div class="ttname"><a href="#a57d03c186ca277c0d7e7e083ecabe0ad">extPeripheralDisable</a></div><div class="ttdeci">int extPeripheralDisable(unsigned clk_name)</div><div class="ttdoc">Orin family only. This functions disables one of the external peripheral clocks. There are 2 (pins 29...</div><div class="ttdef"><b>Definition</b> orin.c:2837</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ade07dffcbf229d1fc1c49295c115a176" name="ade07dffcbf229d1fc1c49295c115a176"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade07dffcbf229d1fc1c49295c115a176">&#9670;&#160;</a></span>extPeripheralEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int extPeripheralEnable </td>
+          <td>(</td>
+          <td class="paramtype">unsigned</td>          <td class="paramname"><span class="paramname"><em>clk_name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Orin family only. This functions enables one of the external peripheral clocks. There are 2 (pins 29 and 31) in Orin Nano and only one (pin 7) in Orin AGX. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clk_name</td><td>possible values are: EXTPERIPH3 -&gt; pin 29 Orin Nano, EXTPERIPH4 -&gt; pin 31 Orin Nano and pin 7 in Orin AGX </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
+<div class="fragment"><div class="line"><a class="code hl_function" href="#ade07dffcbf229d1fc1c49295c115a176">extPeripheralEnable</a>(EXTPERIPH3); <span class="comment">// enabling clock routed to pin 29 in Orin Nano </span></div>
+<div class="ttc" id="ajetgpio_8h_html_ade07dffcbf229d1fc1c49295c115a176"><div class="ttname"><a href="#ade07dffcbf229d1fc1c49295c115a176">extPeripheralEnable</a></div><div class="ttdeci">int extPeripheralEnable(unsigned clk_name)</div><div class="ttdoc">Orin family only. This functions enables one of the external peripheral clocks. There are 2 (pins 29 ...</div><div class="ttdef"><b>Definition</b> orin.c:2802</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a73ecd022656b5a94e93bde3f285f6aa3" name="a73ecd022656b5a94e93bde3f285f6aa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73ecd022656b5a94e93bde3f285f6aa3">&#9670;&#160;</a></span>extPeripheralRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int extPeripheralRate </td>
+          <td>(</td>
+          <td class="paramtype">unsigned</td>          <td class="paramname"><span class="paramname"><em>clk_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned</td>          <td class="paramname"><span class="paramname"><em>rate</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Orin family only. This functions changes the rate of one of the external peripheral clocks. There are 2 (pins 29 and 31) in Orin Nano and only one (pin 7) in Orin AGX. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clk_name</td><td>possible values are: EXTPERIPH3 -&gt; pin 29 Orin Nano, EXTPERIPH4 -&gt; pin 31 Orin Nano and pin 7 in Orin AGX </td></tr>
+    <tr><td class="paramname">rate</td><td>number between 3200000 to 51000000, this is the value of the clock in Hz </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 if OK, otherwise a negative number</dd></dl>
+<div class="fragment"><div class="line"><a class="code hl_function" href="#a73ecd022656b5a94e93bde3f285f6aa3">extPeripheralRate</a>(EXTPERIPH3, 25000000); <span class="comment">// setting up clock routed to pin 29 in Orin Nano to 25MHz </span></div>
+<div class="ttc" id="ajetgpio_8h_html_a73ecd022656b5a94e93bde3f285f6aa3"><div class="ttname"><a href="#a73ecd022656b5a94e93bde3f285f6aa3">extPeripheralRate</a></div><div class="ttdeci">int extPeripheralRate(unsigned clk_name, unsigned rate)</div><div class="ttdoc">Orin family only. This functions changes the rate of one of the external peripheral clocks....</div><div class="ttdef"><b>Definition</b> orin.c:2768</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 <a id="a80d84e5dd32fd8ec04cb0370eab0a5b0" name="a80d84e5dd32fd8ec04cb0370eab0a5b0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a80d84e5dd32fd8ec04cb0370eab0a5b0">&#9670;&#160;</a></span>gpioInitialise()</h2>
 
@@ -826,7 +924,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the number of bytes transferred if OK, otherwise a negative number.</dd></dl>
-<div class="fragment"><div class="line"><a class="code hl_function" href="#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a>(SPI_init, tx, rx, 7); <span class="comment">//transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init </span></div>
+<div class="fragment"><div class="line"><a class="code hl_function" href="#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a>(SPI_init, tx, rx, 7); <span class="comment">// transfers tx data with a data lenght of 7 words and  receiving rx data from prevously opened connection with handle SPI_init </span></div>
 <div class="ttc" id="ajetgpio_8h_html_a96e92eb729c89f2a9a893adf83251dc8"><div class="ttname"><a href="#a96e92eb729c89f2a9a893adf83251dc8">spiXfer</a></div><div class="ttdeci">int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len)</div><div class="ttdoc">This function transfers len bytes of data from txBuf to the SPI device associated with the handle....</div><div class="ttdef"><b>Definition</b> nano.c:2569</div></div>
 </div><!-- fragment --> 
 </div>

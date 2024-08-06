@@ -1,0 +1,1 @@
+cmd_/home/darkstar/development/jetgpio/github_module/Jetclocks/jetclocks.mod := printf '%s\n'   jetclocks.o | awk '!x[$$0]++ { print("/home/darkstar/development/jetgpio/github_module/Jetclocks/"$$0) }' > /home/darkstar/development/jetgpio/github_module/Jetclocks/jetclocks.mod
