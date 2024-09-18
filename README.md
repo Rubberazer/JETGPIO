@@ -2,8 +2,8 @@
 
 C library to manage the GPIO header of the Nvidia JETSON boards
 
-***IMPORTANT NOTICE: This version of the library installs and works along a kernel module: [Jetclocks](https://github.com/Rubberazer/Jetclocks). This provides extra functionality and allows to play with clocks in a simpler way.
-If you don't want that and prefer the old, standalone JETGPIO, you will find it as a release here: [standalone JETGPIO](https://github.com/Rubberazer/JETGPIO/releases/tag/v1.2)***
+***IMPORTANT NOTICE: The following applies to the Orin family only. This version of the library installs and works along a kernel module: [Jetclocks](https://github.com/Rubberazer/Jetclocks). This provides extra functionality but the automatic installation process could clash with other tools that also perform automatic updates of the device tree, such as the famous jetson-io.py. In those cases the module can still be installed manually, check the Jetclocks repo for more information.
+If you think this could be a problem, you will find the standalone version of JETGPIO as a release here: [standalone JETGPIO](https://github.com/Rubberazer/JETGPIO/releases/tag/v1.2)***
 
 <h2 align="left">FUNCTIONALITY:</h2>
 
