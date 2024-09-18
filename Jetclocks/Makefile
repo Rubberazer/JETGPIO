@@ -43,8 +43,10 @@ uninstall:
 	$(eval JETFILE := $(shell find /lib/modules/$(uname -r) -name "jetclocks.ko"))
 	@rm -f $(JETFILE)
 	@rm -f /etc/modules-load.d/jetclocks.conf
+	@rm -f /usr/include/jetclocks.h
 	@echo "$(JETFILE) removed"	
 	@echo "/etc/modules-load.d/jetclocks.conf removed"
+	@echo "/usr/include/jetclocks.h removed"
 	depmod -a
 	$(eval EXTFILE := $(shell find /boot/extlinux -name "*jetclocks.backup" -exec basename {} \;))
 	@if [ "$(EXTFILE)" != "" ]; then\
