@@ -11,7 +11,7 @@ If you think this could be a problem, you will find the standalone version of JE
 
   - JETSON NANO and TX1
 
-  - JETSON ORIN NANO (including ORIN NANO SUPER) and ORIN NX 
+  - JETSON ORIN NANO/NANO SUPER and ORIN NX 
 
   - JETSON ORIN AGX
 
