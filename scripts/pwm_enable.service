@@ -1,0 +1,8 @@
+[Unit]
+Description=Enable pwm1 & pwm8 clocks on Xavier
+
+[Service]
+ExecStart=/bin/bash /etc/systemd/system/pwm_enabler.sh
+
+[Install]
+WantedBy=multi-user.target

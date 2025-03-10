@@ -50,7 +50,7 @@ int chip_get_id(void) {
   nano_get_id = (uint32_t volatile *)((char *)baseAPBMISC + APB_MISC_GP_HIDREV_0);
   orin_get_id = (uint32_t volatile *)((char *)baseMISC + MISCREG_HIDREV_0);
 
-  // Trying for Orin first
+  // Trying for Orin & Xavier first
   if (((*orin_get_id >>8) & 0xFF) == 0x23) {
       if (total_ram > 24) {
 	model = ORINAGX;
@@ -61,7 +61,13 @@ int chip_get_id(void) {
 	printf("T234/Orin Nano or NX detected\n");
       }
   }
-  
+  //Trying for Xavier next
+  else if (((*orin_get_id >>8) & 0xFF) == 0x19) {
+      if (total_ram < 24) {
+	model = XAVIER;
+	printf("T194/Xavier NX detected\n");
+      }
+  }
   // Trying for Nano Classic next
   else if (((*nano_get_id >>8) & 0xFF) == 0x21) {
     model = NANO;
@@ -99,6 +105,9 @@ int main (void) {
   case ORINAGX:
     strcpy(hardware, "orinagx");
     break;
+  case XAVIER:
+    strcpy(hardware, "xavier");
+    break;
   default:
     /* Unsupported hardware */
     printf("\tUnsupported hardware, if you think this is not correct and you believe this is either a:\n");
@@ -106,6 +115,7 @@ int main (void) {
     printf("\t\tJetson Orin Nano\n");
     printf("\t\tJetson Orin NX\n");
     printf("\t\tJetson Orin AGX\n");
+    printf("\t\tJetson Xavier NX\n");
     printf("\tAnd therefore supported, you can still force install with:\n");
     printf("\t\tsudo make <model> followed by sudo make install\n");
     printf("\te.g. sudo make orin to compile for Orin Nano or NX\n");

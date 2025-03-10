@@ -13,8 +13,8 @@ pub fn main() !void {
     if (init < 0) {
         std.debug.print("Error initiating jetgpio\n", .{});
     }
-    // Setting up pin 3 as output
-    const set1 = jetgpio.gpioSetMode(3, jetgpio.JET_OUTPUT);
+    // Setting up pin 8 as output
+    const set1 = jetgpio.gpioSetMode(8, jetgpio.JET_OUTPUT);
     if (set1 < 0) {
         std.debug.print("Error setting pin 3\n", .{});
     }
@@ -25,17 +25,17 @@ pub fn main() !void {
         std.debug.print("Error setting pin 7\n", .{});
     }
 
-    // Writing 1 and 0 to pin 3 a 1 second intervals while reading pin 7
+    // Writing 1 and 0 to pin 8 a 1 second intervals while reading pin 7
     var i: u8 = 0;
     var level: i32 = 0;
     var ret: i32 = 0;
     while (i < 5) {
-        ret = jetgpio.gpioWrite(3, 1);
+        ret = jetgpio.gpioWrite(8, 1);
         std.time.sleep(1000);
         level = jetgpio.gpioRead(7);
         std.debug.print("level: {}\n", .{level});
         std.time.sleep(1000000000);
-        ret = jetgpio.gpioWrite(3, 0);
+        ret = jetgpio.gpioWrite(8, 0);
         std.time.sleep(1000);
         level = jetgpio.gpioRead(7);
         std.debug.print("level: {}\n", .{level});

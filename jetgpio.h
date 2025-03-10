@@ -1,6 +1,6 @@
 /*MIT License
  *
- *Copyright (c) 2024 Rubberazer
+ *Copyright (c) 2025 Rubberazer
  *
  *Permission is hereby granted, free of charge, to any person obtaining a copy
  *of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  *SOFTWARE.
  */
 
-/* jetgpio version 2.0 */
+/* jetgpio version 2.1 */
 /** @file jetgpio.h */
 
 #ifndef jetgpio_h__
@@ -35,9 +35,9 @@
 /* Chip id for Nano Classic & Orin */
 
 #define APB_MISC_BASE 0x70000000  	//Base Nano already defined as baseCFG
-#define MISC 0x00100000			//Base Orin
+#define MISC 0x00100000			//Base Orin & Xavier
 #define APB_MISC_GP_HIDREV_0 0x804 	//Offset Nano
-#define MISCREG_HIDREV_0 0x4		//Offset Orin
+#define MISCREG_HIDREV_0 0x4		//Offset Orin & Xavier
 
 /* GPIO base address Nano Classic */
 
@@ -332,11 +332,118 @@
 #define CFGO_IN 0x00000000               // Typical for config register as input
 #define CFGO_OUT 0x01f1f000              // Typical for config register as output
 
+/* GPIO base address Xavier */
+
+#define base_CNF_xavier_AON 0x0c2f1000         // Base address Xavier AON: 15,27,28
+#define base_CNF_xavier_NAON 0x02210000        // Base address Xavier Non AON: 7,8,10,11,12,13,16,18,19,21,22,23,24,26,29,31,32,33,35,36,37,38,40
+#define Pinmux_xavier_AON 0x0c302000           // Pinmux + config GPIO PADCTL_A14 pad Xavier: 3,5,15,27,28
+#define Pinmux_xavier_Audio 0x02431000         // Pinmux + config GPIO PADCTL_A1 pad Xavier: 7,12,35,38,40
+#define Pinmux_xavier_CAM 0x02430000           // Pinmux + config GPIO PADCTL_A0 pad Xavier: 8,10,11,29,31,32,36 
+#define Pinmux_xavier_UART 0x0243d000          // Pinmux + config GPIO PADCTL_A13 pad Xavier: 13,16,18,19,21,22,23,24,26,37,
+#define Pinmux_xavier_EDP 0x02440000           // Pinmux + config GPIO PADCTL_A16 pad Xavier: 33, 
+
+/* PWM Control Xavier */
+
+#define base_xavier_PWM1 0x03280000            // PWM1 Controller base address Xavier: pin 33
+#define base_xavier_PWM8 0x032f0000            // PWM8 Controller base address Xavier: pin 32
+
+/* GPIO CNF registers Xavier */
+
+#define CNFX_7 0x03680    		// Pin 7  AUD_MCLK
+#define CNFX_8 0x02e40    		// Pin 8  UART1_TX
+#define CNFX_10 0x02e60   		// Pin 10 UART1_RX
+#define CNFX_11 0x02e80   		// Pin 11 UART1_RTS
+#define CNFX_12 0x038a0   		// Pin 12 DAP5_SCLK
+#define CNFX_13 0x02200   		// Pin 13 SPI3_SCK
+#define CNFX_15 0x00280   		// Pin 15 TOUCH_CLK
+#define CNFX_16 0x02280   		// Pin 16 SPI3_CS1
+#define CNFX_18 0x02260   		// Pin 18 SPI3_CS0
+#define CNFX_19 0x024a0   		// Pin 19 SPI1_MOSI
+#define CNFX_21 0x02480   		// Pin 21 SPI1_MISO
+#define CNFX_22 0x02220   		// Pin 22 SPI3_MISO
+#define CNFX_23 0x02460   		// Pin 23 SPI1_SCK
+#define CNFX_24 0x024c0   		// Pin 24 SPI1_CS0
+#define CNFX_26 0x024e0   		// Pin 26 SPI1_CS1
+#define CNFX_27 0x00400    		// Pin 27 GEN2_I2C_SDA
+#define CNFX_28 0x002e0    		// Pin 28 GEN2_I2C_SCL
+#define CNFX_29 0x02ca0   		// Pin 29 SOC_GPIO41
+#define CNFX_31 0x02cc0   		// Pin 31 SOC_GPIO42
+#define CNFX_32 0x02e00   		// Pin 32 SOC_GPIO44
+#define CNFX_33 0x02820   		// Pin 33 SOC_GPIO54
+#define CNFX_35 0x03a00   		// Pin 35 DAP5_FS
+#define CNFX_36 0x02ea0   		// Pin 36 UART1_CTS
+#define CNFX_37 0x02240   		// Pin 37 SPI3_MOSI
+#define CNFX_38 0x038e0   		// Pin 38 DAP5_DIN
+#define CNFX_40 0x038c0   		// Pin 40 DAP5_DOUT
+
+/* GPIO Pinmux registers Xavier */
+
+#define PINMUXX_3 0x18    		// Pinmux 3  PADCTL_AO_GEN8_I2C_SDA_0 
+#define PINMUXX_5 0x20    		// Pinmux 5  PADCTL_AO_GEN8_I2C_SCL_0
+#define PINMUXX_7 0x20    		// Pinmux 7  PADCTL_AUDIO_AUD_MCLK_0 
+#define PINMUXX_8 0xa8    		// Pinmux 8  PADCTL_CAM_UART1_TX_0
+#define PINMUXX_10 0xa0   		// Pinmux 10 PADCTL_CAM_UART1_RX_0
+#define PINMUXX_11 0x98   		// Pinmux 11 PADCTL_CAM_UART1_RTS_0
+#define PINMUXX_12 0x80   		// Pinmux 12 PADCTL_AUDIO_DAP5_SCLK_0
+#define PINMUXX_13 0x48   		// Pinmux 13 PADCTL_UART_SPI3_SCK_0
+#define PINMUXX_15 0x00   		// Pinmux 15 PADCTL_AO_TOUCH_CLK_0
+#define PINMUXX_16 0x28   		// Pinmux 16 PADCTL_UART_SPI3_CS1_0
+#define PINMUXX_18 0x18   		// Pinmux 18 PADCTL_UART_SPI3_CS0_0
+#define PINMUXX_19 0x58   		// Pinmux 19 PADCTL_UART_SPI1_MOSI_0
+#define PINMUXX_21 0x20   		// Pinmux 21 PADCTL_UART_SPI1_MISO_0
+#define PINMUXX_22 0x08   		// Pinmux 22 PADCTL_UART_SPI3_MISO_0
+#define PINMUXX_23 0x40   		// Pinmux 23 PADCTL_UART_SPI1_SCK_0
+#define PINMUXX_24 0x10   		// Pinmux 24 PADCTL_UART_SPI1_CS0_0
+#define PINMUXX_26 0x50   		// Pinmux 26 PADCTL_UART_SPI1_CS1_0
+#define PINMUXX_27 0x40   		// Pinmux 27 PADCTL_AO_GEN2_I2C_SDA_0
+#define PINMUXX_28 0x30   		// Pinmux 28 PADCTL_AO_GEN2_I2C_SCL_0
+#define PINMUXX_29 0x28   		// Pinmux 29 PADCTL_CAM_SOC_GPIO41_0
+#define PINMUXX_31 0x30   		// Pinmux 31 PADCTL_CAM_SOC_GPIO42_0
+#define PINMUXX_32 0x40   		// Pinmux 32 PADCTL_CAM_SOC_GPIO44_0
+#define PINMUXX_33 0X20   		// Pinmux 33 PADCTL_EDP_SOC_GPIO54_0
+#define PINMUXX_35 0x68   		// Pinmux 35 PADCTL_AUDIO_DAP5_FS_0
+#define PINMUXX_36 0x90   		// Pinmux 36 PADCTL_CAM_UART1_CTS_0
+#define PINMUXX_37 0x60   		// Pinmux 37 PADCTL_UART_SPI3_MOSI_0
+#define PINMUXX_38 0x70   		// Pinmux 38 PADCTL_AUDIO_DAP5_DIN_0 
+#define PINMUXX_40 0x78   		// Pinmux 40 PADCTL_AUDIO_DAP5_DOUT_0
+
+/* GPIO Cfg registers Xavier */
+
+#define CFGX_3 0x1c   			// Config 3  PADCTL_AO_CFG2TMC_GEN8_I2C_SDA_0
+#define CFGX_5 0X24   			// Config 5  PADCTL_AO_CFG2TMC_GEN8_I2C_SCL_0 
+#define CFGX_7 0x24   			// Config 7  PADCTL_AUDIO_CFG2TMC_AUD_MCLK_0 
+#define CFGX_8 0xac   			// Config 8  PADCTL_CAM_CFG2TMC_UART1_TX_0
+#define CFGX_10 0xa4  			// Config 10 PADCTL_CAM_CFG2TMC_UART1_RX_0
+#define CFGX_11 0x9c  			// Config 11 PADCTL_CAM_CFG2TMC_UART1_RTS_0 
+#define CFGX_12 0x84  			// Config 12 PADCTL_AUDIO_CFG2TMC_DAP5_SCLK_0
+#define CFGX_13 0x4c  			// Config 13 PADCTL_UART_CFG2TMC_SPI3_SCK_0 
+#define CFGX_15 0x04  			// Config 15 PADCTL_AO_CFG2TMC_TOUCH_CLK_0
+#define CFGX_16 0x2c  			// Config 16 PADCTL_UART_CFG2TMC_SPI3_CS1_0
+#define CFGX_18 0x1c  			// Config 18 PADCTL_UART_CFG2TMC_SPI3_CS0_0 
+#define CFGX_19 0x5c  			// Config 19 PADCTL_UART_CFG2TMC_SPI1_MOSI_0 
+#define CFGX_21 0x24  			// Config 21 PADCTL_UART_CFG2TMC_SPI1_MISO_0
+#define CFGX_22 0x0c  			// Config 22 PADCTL_UART_CFG2TMC_SPI3_MISO_0
+#define CFGX_23 0x44  			// Config 23 PADCTL_UART_CFG2TMC_SPI1_SCK_0
+#define CFGX_24 0x14  			// Config 24 PADCTL_UART_CFG2TMC_SPI1_CS0_0
+#define CFGX_26 0x54  			// Config 26 PADCTL_UART_CFG2TMC_SPI1_CS1_0
+#define CFGX_27 0x44  			// Config 27 PADCTL_AO_CFG2TMC_GEN2_I2C_SDA_0 
+#define CFGX_28 0x34  			// Config 28 PADCTL_AO_CFG2TMC_GEN2_I2C_SCL_0
+#define CFGX_29 0x2c  			// Config 29 PADCTL_CAM_CFG2TMC_SOC_GPIO41_0
+#define CFGX_31 0x34  			// Config 31 PADCTL_CAM_CFG2TMC_SOC_GPIO42_0
+#define CFGX_32 0x44  			// Config 32 PADCTL_CAM_CFG2TMC_SOC_GPIO44_0
+#define CFGX_33 0x24  			// Config 33 PADCTL_EDP_CFG2TMC_SOC_GPIO54_0
+#define CFGX_35 0x6c  			// Config 35 PADCTL_AUDIO_CFG2TMC_DAP5_FS_0
+#define CFGX_36 0x94  			// Config 36 PADCTL_CAM_CFG2TMC_UART1_CTS_0
+#define CFGX_37 0x64  			// Config 37 PADCTL_UART_CFG2TMC_SPI3_MOSI_0
+#define CFGX_38 0x74  			// Config 38 PADCTL_AUDIO_CFG2TMC_DAP5_DIN_0
+#define CFGX_40 0x7c  			// Config 40 PADCTL_AUDIO_CFG2TMC_DAP5_DOUT_0
+
 /* Define outputs get_chip_id */
 
 #define NANO 210
 #define ORIN 234
 #define ORINAGX 235
+#define XAVIER 194
 
 /* Define typical input/output */
 
@@ -494,7 +601,7 @@ int gpioSetMode(unsigned gpio, unsigned mode);
 /**<
  * @brief Sets the GPIO mode, typically input or output.
  *
- * @param gpio 3-40
+ * @param gpio 3-40, 7-40 on Xavier NX dev kit
  * @param mode JET_INPUT, JET_OUTPUT
  * @return Returns 0 if OK, -1 otherwise
  *
@@ -506,7 +613,7 @@ int gpioRead(unsigned gpio);
 /**<
  * @brief Reads the GPIO level, on or off, 0 or 1.
  * Arduino style: digitalRead. Wheter a pin has been set as input or output it can be read with this function.
- * @param gpio 3-40
+ * @param gpio 3-40, 7-40 on Xavier NX dev kit
  * @return Returns the GPIO level if OK, otherwise a negative number
  *
  * @code printf("pin 24 is level %d", gpioRead(24)); @endcode
@@ -516,7 +623,7 @@ int gpioWrite(unsigned gpio, unsigned level);
 /**<
  * @brief Sets the GPIO level, on or off.
  * Arduino style: digitalWrite
- * @param gpio 3-40
+ * @param gpio 3-40, 7-40 on Xavier NX dev kit
  * @param level 0-1
  * @return Returns 0 if OK, otherwise a negative number
  *
@@ -528,7 +635,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
  * @brief Registers a function to be called (a callback) whenever the specified.
  * @brief GPIO interrupt occurs.
  * This function will start a thread that will monitor the status of the interrupt.One function may be registered per GPIO.
- * @param gpio 3-40
+ * @param gpio 3-40, 7-40 on Xavier NX dev kit
  * @param edge RISING_EDGE, FALLING_EDGE, or EITHER_EDGE
  * @param debounce 0-1000 useconds, to avoid bouncing specially on mechanical inputs
  * @param timestamp: timestamp of the detected edge in nanoseconds in EPOCH format
@@ -542,8 +649,8 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 int gpioSetPWMfrequency(unsigned gpio, unsigned frequency);
 /**<
  * @brief Sets the frequency in hertz to be used for the GPIO.
- * @param gpio Nano: 32, 33 Orin Nano,NX: 15, 32, 33 Orin AGX: 13, 15, 18
- * @param frequency 25Hz to 187 kHz on Nano and 50 Hz to 1593 kHz on Orin
+ * @param gpio Nano & Xavier NX: 32, 33 Orin Nano,NX: 15, 32, 33 Orin AGX: 13, 15, 18
+ * @param frequency 25Hz to 187 kHz on Nano and 50 Hz to 1593 kHz on Orin and Xavier
  * @return Returns 1 if OK, a negative number otherwise
  *
  * @code gpioSetPWMfrequency(32, 10000); // Setting up PWM frequency=10kHz @ pin 32 @endcode
@@ -553,7 +660,7 @@ int gpioPWM(unsigned gpio, unsigned dutycycle);
 /**<
  * @brief Starts PWM on the GPIO, dutycycle between 0 (off) and range (fully on).
  * Arduino style: analogWrite
- * @param gpio Nano: 32, 33 Orin Nano,NX: 15, 32, 33 Orin AGX: 13, 15, 18
+ * @param gpio Nano & Xavier NX: 32, 33 Orin Nano,NX: 15, 32, 33 Orin AGX: 13, 15, 18
  * @param dutycycle: 0-256 (0 to 100%)
  * @return Returns 0 if OK, a negative number otherwise
  *
@@ -566,6 +673,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags);
  * @brief This returns a handle for the device at the address on the I2C bus.
  * @param i2cBus 0 or 1, 0 are pins 27 (SDA) & 28 (SCL), 1 are pins 3(SDA) & 5(SCL)
  * In Orin the pins are the same but the i2c devices are: 0->i2c-1 & 1->i2c-7
+ * In Xavier NX the pins are the same but the i2c devices are: 0->i2c-1 & 1->i2c-8
  * Flags allow you to change the bus speed. NOTE - FLAGS WILL NOT CAUSE ANY EFFECT FOR MACHINES WITH JETPACK >= 6:
  * @param i2cFlags 0 -> 100 kHz
  * @param i2cFlags 1 -> 400 kHz
@@ -636,7 +744,7 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
 /**<
  * @brief This function returns a handle for the SPI device on the channel.
  * Data will be transferred at baud bits per second.  The flags may be used to modify the default behaviour of a 4-wire operation, mode 0, active low chip select.
- * There are 2 SPI channels called SPI1 & SPI2 on Nano and SPI0 & SPI1 on Orin Nano & NX. For Orin AGX there is only 1 SPI channel: SPI1 (pins 21, 19...so forth).
+ * There are 2 SPI channels called SPI1 & SPI2 on Nano and SPI0 & SPI1 on Orin Nano, Orin NX and Xavier NX. For Orin AGX there is only 1 SPI channel: SPI1 (pins 21, 19...so forth).
  * The pins used are given in the following table.
  * 
  * |Port      |MISO |MOSI |SCLK |CS0 |CS1 |

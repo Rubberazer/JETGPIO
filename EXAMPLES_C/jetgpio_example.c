@@ -26,9 +26,9 @@ int main(int argc, char *argv[])
       printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
     }	
 
-  // Setting up pin 3 as OUTPUT and 7 as INPUT
+  // Setting up pin 8 as OUTPUT and 7 as INPUT
 
-  int stat1 = gpioSetMode(3, JET_OUTPUT);
+  int stat1 = gpioSetMode(8, JET_OUTPUT);
   if (stat1 < 0)
     {
       /* gpio setting up failed */
@@ -58,12 +58,12 @@ int main(int argc, char *argv[])
   int x =0;
   int level = 0;
   while (x<5) {
-    gpioWrite(3, 1);
+    gpioWrite(8, 1);
     usleep(1000);
     level = gpioRead(7);
     printf("level: %d\n",level);
     sleep(1);
-    gpioWrite(3, 0);
+    gpioWrite(8, 0);
     usleep(1000);
     level = gpioRead(7);
     printf("level: %d\n",level);

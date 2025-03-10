@@ -22,7 +22,7 @@
  */
 
 /* jetgpio version 2.1 */
-/* Orin Nano & NX extension */
+/* Xavier NX extension */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,7 +46,6 @@
 #include <pthread.h>
 #include <linux/version.h>
 
-#include "Jetclocks/jetclocks.h"
 #include "jetgpio.h"
 
 #define BILLION 1000000000L
@@ -55,7 +54,6 @@ static int fd_GPIO;
 
 static volatile GPIO_CNF_Init pin_CNF;
 static volatile GPIO_CNF_Init pin_DEB;
-static volatile GPIO_CNF_Init pin_IN;
 static volatile GPIO_CNF_Init pin_OUT;
 static volatile GPIO_CNF_Init pin_OUT_VLE;
 static volatile GPIO_CNF_Init pin_INT_CLR;
@@ -65,20 +63,16 @@ static volatile GPIO_CNF_Init pin_CFG;
 PISRFunc ISRFunc_CFG[41];
 
 static volatile uint32_t *PWM1;
-static volatile uint32_t *PWM5;
-static volatile uint32_t *PWM7;
+static volatile uint32_t *PWM8;
 static volatile uint32_t  PWM1_Init;
-static volatile uint32_t  PWM5_Init;
-static volatile uint32_t  PWM7_Init;
+static volatile uint32_t  PWM8_Init;
 
-static i2cInfo_t i2cInfo[8];
+static i2cInfo_t i2cInfo[9];
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
-static int i2c_speed[8];
+static int i2c_speed[9];
 #endif
 static SPIInfo_t SpiInfo[3];
 
-static volatile GPIO_CNFO *pin3;
-static volatile GPIO_CNFO *pin5;
 static volatile GPIO_CNFO *pin7;
 static volatile GPIO_CNFO *pin8;
 static volatile GPIO_CNFO *pin10;
@@ -106,8 +100,6 @@ static volatile GPIO_CNFO *pin37;
 static volatile GPIO_CNFO *pin38;
 static volatile GPIO_CNFO *pin40;
 
-static volatile uint32_t *pinmux3;
-static volatile uint32_t *pinmux5;
 static volatile uint32_t *pinmux7;
 static volatile uint32_t *pinmux8;
 static volatile uint32_t *pinmux10;
@@ -135,8 +127,6 @@ static volatile uint32_t *pinmux37;
 static volatile uint32_t *pinmux38;
 static volatile uint32_t *pinmux40;
 
-static volatile uint32_t *pincfg3;
-static volatile uint32_t *pincfg5;
 static volatile uint32_t *pincfg7;
 static volatile uint32_t *pincfg8;
 static volatile uint32_t *pincfg10;
@@ -168,21 +158,18 @@ static void *baseCNF_AON;
 static void *baseCNF_NAON;
 
 static void *basePINMUX_AON;
-static void *basePINMUX_G7;
-static void *basePINMUX_G3;
+static void *basePINMUX_Audio;
+static void *basePINMUX_CAM;
+static void *basePINMUX_UART;
 static void *basePINMUX_EDP;
-static void *basePINMUX_G4;
-static void *basePINMUX_G2;
 
 static void *basePWM1;
-static void *basePWM5;
-static void *basePWM7;
+static void *basePWM8;
 static unsigned clk_rate_PWM1 = 408000000;
-static unsigned clk_rate_PWM5 = 408000000;
-static unsigned clk_rate_PWM7 = 408000000;
+static unsigned clk_rate_PWM8 = 408000000;
 
 static volatile unsigned global_int;
-static pthread_t callThd[28];
+static pthread_t callThd[26];
 static pthread_attr_t attr;
 static int pth_err;
 static void *status_thread;
@@ -194,7 +181,6 @@ int gpioInitialise(void)
   int status = 1;
   //  Getting the page size
   int pagesize = sysconf(_SC_PAGESIZE);
-	
   //  read physical memory (needs root)
   fd_GPIO = open("/dev/mem", O_RDWR | O_SYNC);
   if (fd_GPIO < 0) {
@@ -202,535 +188,461 @@ int gpioInitialise(void)
     fprintf(stderr, "Please run this program as root (for example with sudo)\n");
     return -1;
   }
-  //  Mapping GPIO_CNF_AON
-  baseCNF_AON = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CNF_AON);
+  //  Mapping base_CNF_xavier_AON
+  baseCNF_AON = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CNF_xavier_AON);
   if (baseCNF_AON == MAP_FAILED) {
     return -2;
   }
 
-  //  Mapping GPIO_CNF_NAON
-  baseCNF_NAON = mmap(0, 5 * pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CNF_NAON);
+  //  Mapping base_CNF_xavier_NAON
+  baseCNF_NAON = mmap(0, 5 * pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_CNF_xavier_NAON);
   if (baseCNF_NAON == MAP_FAILED) {
     return -3;
   }
     
-  //  Mapping PINMUX_AON
-  basePINMUX_AON = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_AON);
+  //  Mapping Pinmux_xavier_AON
+  basePINMUX_AON = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_xavier_AON);
   if (basePINMUX_AON == MAP_FAILED) {
     return -4;
   }
 
-  //  Mapping PINMUX_G7
-  basePINMUX_G7 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_G7);
-  if (basePINMUX_G7 == MAP_FAILED) {
+  //  Mapping Pinmux_xavier_Audio
+  basePINMUX_Audio = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_xavier_Audio);
+  if (basePINMUX_Audio == MAP_FAILED) {
     return -5;
   }
     
-  //  Mapping PINMUX_G3
-  basePINMUX_G3 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_G3);
-  if (basePINMUX_G3 == MAP_FAILED) {
+  //  Mapping Pinmux_xavier_CAM
+  basePINMUX_CAM = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_xavier_CAM);
+  if (basePINMUX_CAM == MAP_FAILED) {
     return -6;
   }
 
-  //  Mapping PINMUX_EDP
-  basePINMUX_EDP = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_EDP);
-  if (basePINMUX_EDP == MAP_FAILED) {
+  //  Mapping Pinmux_xavier_UART
+  basePINMUX_UART = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_xavier_UART);
+  if (basePINMUX_UART == MAP_FAILED) {
     return -7;
   }
 
-  //  Mapping PINMUX_G4
-  basePINMUX_G4 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_G4);
-  if (basePINMUX_G4 == MAP_FAILED) {
+  //  Mapping Pinmux_xavier_EDP
+  basePINMUX_EDP = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_xavier_EDP);
+  if (basePINMUX_EDP == MAP_FAILED) {
     return -8;
-  }
-
-  //  Mapping PINMUX_G2
-  basePINMUX_G2 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, Pinmux_G2);
-  if (basePINMUX_G2 == MAP_FAILED) {
-    return -9;
   }
   
   //  Mapping PWM1
-  basePWM1 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM1);
+  basePWM1 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_xavier_PWM1);
   if (basePWM1 == MAP_FAILED) {
+    return -9;
+  }
+
+  //  Mapping PWM8
+  basePWM8 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_xavier_PWM8);
+  if (basePWM8 == MAP_FAILED) {
     return -10;
   }
 
-  //  Mapping PWM5
-  basePWM5 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM5);
-  if (basePWM5 == MAP_FAILED) {
-    return -11;
-  }
-
-  //  Mapping PWM7
-  basePWM7 = mmap(0, pagesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd_GPIO, base_PWM7);
-  if (basePWM7 == MAP_FAILED) {
-    return -12;
-  }
-
-  // Pointer to CNFO_3
-  pin3 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFO_3);
-  pin_CNF.pin3 = pin3->CNF[0];
-  pin_DEB.pin3 = pin3->DEB[0];
-  pin_IN.pin3 = pin3->IN[0];
-  pin_OUT.pin3 = pin3->OUT[0];
-  pin_OUT_VLE.pin3 = pin3->OUT_VLE[0];
-    
-  // Pointer to PINMUX3
-  pinmux3 = (uint32_t volatile *)((char *)basePINMUX_AON + PINMUXO_3);
-  pin_MUX.pin3 = *pinmux3;
-    
-  // Pointer to PINCFG3
-  pincfg3 = (uint32_t volatile *)((char *)basePINMUX_AON + CFGO_3);
-  pin_CFG.pin3 = *pincfg3;
-  
-  // Pointer to CNF5
-  pin5 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFO_5);
-  pin_CNF.pin5 = pin5->CNF[0];
-  pin_DEB.pin5 = pin5->DEB[0];
-  pin_IN.pin5 = pin5->IN[0];
-  pin_OUT.pin5 = pin5->OUT[0];
-  pin_OUT_VLE.pin5 = pin5->OUT_VLE[0];
-    
-  // Pointer to PINMUX5
-  pinmux5 = (uint32_t volatile *)((char *)basePINMUX_AON + PINMUXO_5);
-  pin_MUX.pin5 = *pinmux5;
-    
-  // Pointer to PINCFG5
-  pincfg5 = (uint32_t volatile *)((char *)basePINMUX_AON + CFGO_5);
-  pin_CFG.pin5 = *pincfg5;
-    
   // Pointer to CNF7
-  pin7 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_7);
+  pin7 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_7);
   pin_CNF.pin7 = pin7->CNF[0];
   pin_DEB.pin7 = pin7->DEB[0];
-  pin_IN.pin7 = pin7->IN[0];
   pin_OUT.pin7 = pin7->OUT[0];
   pin_OUT_VLE.pin7 = pin7->OUT_VLE[0];
     
   // Pointer to PINMUX7
-  pinmux7 = (uint32_t volatile *)((char *)basePINMUX_G7 + PINMUXO_7);
+  pinmux7 = (uint32_t volatile *)((char *)basePINMUX_Audio + PINMUXX_7);
   pin_MUX.pin7 = *pinmux7;
     
   // Pointer to PINCFG7
-  pincfg7 = (uint32_t volatile *)((char *)basePINMUX_G7 + CFGO_7);
+  pincfg7 = (uint32_t volatile *)((char *)basePINMUX_Audio + CFGX_7);
   pin_CFG.pin7 = *pincfg7;
   
   // Pointer to CNF8
-  pin8 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_8);
+  pin8 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_8);
   pin_CNF.pin8 = pin8->CNF[0];
   pin_DEB.pin8 = pin8->DEB[0];
-  pin_IN.pin8 = pin8->IN[0];
   pin_OUT.pin8 = pin8->OUT[0];
   pin_OUT_VLE.pin8 = pin8->OUT_VLE[0];
   
   // Pointer to PINMUX8
-  pinmux8 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXO_8);
+  pinmux8 = (uint32_t volatile *)((char *)basePINMUX_CAM + PINMUXX_8);
   pin_MUX.pin8 = *pinmux8;
     
   // Pointer to PINCFG8
-  pincfg8 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGO_8);
+  pincfg8 = (uint32_t volatile *)((char *)basePINMUX_CAM + CFGX_8);
   pin_CFG.pin8 = *pincfg8;
     
   // Pointer to CNF10
-  pin10 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_10);
+  pin10 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_10);
   pin_CNF.pin10 = pin10->CNF[0];
   pin_DEB.pin10 = pin10->DEB[0];
-  pin_IN.pin10 = pin10->IN[0];
   pin_OUT.pin10 = pin10->OUT[0];
   pin_OUT_VLE.pin10 = pin10->OUT_VLE[0];
     
   // Pointer to PINMUX10
-  pinmux10 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXO_10);
+  pinmux10 = (uint32_t volatile *)((char *)basePINMUX_CAM + PINMUXX_10);
   pin_MUX.pin10 = *pinmux10;
     
   // Pointer to PINCFG10
-  pincfg10 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGO_10);
+  pincfg10 = (uint32_t volatile *)((char *)basePINMUX_CAM + CFGX_10);
   pin_CFG.pin10 = *pincfg10;
     
   // Pointer to CNF11
-  pin11 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_11);
+  pin11 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_11);
   pin_CNF.pin11 = pin11->CNF[0];
   pin_DEB.pin11 = pin11->DEB[0];
-  pin_IN.pin11 = pin11->IN[0];
   pin_OUT.pin11 = pin11->OUT[0];
   pin_OUT_VLE.pin11 = pin11->OUT_VLE[0];
   
   // Pointer to PINMUX11
-  pinmux11 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXO_11);
+  pinmux11 = (uint32_t volatile *)((char *)basePINMUX_CAM + PINMUXX_11);
   pin_MUX.pin11 = *pinmux11;
     
   // Pointer to PINCFG11
-  pincfg11 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGO_11);
+  pincfg11 = (uint32_t volatile *)((char *)basePINMUX_CAM + CFGX_11);
   pin_CFG.pin11 = *pincfg11;
     
   // Pointer to CNF12
-  pin12 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_12);
+  pin12 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_12);
   pin_CNF.pin12 = pin12->CNF[0];
   pin_DEB.pin12 = pin12->DEB[0];
-  pin_IN.pin12 = pin12->IN[0];
   pin_OUT.pin12 = pin12->OUT[0];
   pin_OUT_VLE.pin12 = pin12->OUT_VLE[0];
     
   // Pointer to PINMUX12
-  pinmux12 = (uint32_t volatile *)((char *)basePINMUX_G4 + PINMUXO_12);
+  pinmux12 = (uint32_t volatile *)((char *)basePINMUX_Audio + PINMUXX_12);
   pin_MUX.pin12 = *pinmux12;
     
   // Pointer to PINCFG12
-  pincfg12 = (uint32_t volatile *)((char *)basePINMUX_G4 + CFGO_12);
+  pincfg12 = (uint32_t volatile *)((char *)basePINMUX_Audio + CFGX_12);
   pin_CFG.pin12 = *pincfg12;
     
   // Pointer to CNF13
-  pin13 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_13);
+  pin13 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_13);
   pin_CNF.pin13 = pin13->CNF[0];
   pin_DEB.pin13 = pin13->DEB[0];
-  pin_IN.pin13 = pin13->IN[0];
   pin_OUT.pin13 = pin13->OUT[0];
   pin_OUT_VLE.pin13 = pin13->OUT_VLE[0];
       
   // Pointer to PINMUX13
-  pinmux13 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_13);
+  pinmux13 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_13);
   pin_MUX.pin13 = *pinmux13;
     
   // Pointer to PINCFG13
-  pincfg13 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_13);
+  pincfg13 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_13);
   pin_CFG.pin13 = *pincfg13;
     
   // Pointer to CNF15
-  pin15 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_15);
+  pin15 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFX_15);
   pin_CNF.pin15 = pin15->CNF[0];
   pin_DEB.pin15 = pin15->DEB[0];
-  pin_IN.pin15 = pin15->IN[0];
   pin_OUT.pin15 = pin15->OUT[0];
   pin_OUT_VLE.pin15 = pin15->OUT_VLE[0];
     
   // Pointer to PINMUX15
-  pinmux15 = (uint32_t volatile *)((char *)basePINMUX_EDP + PINMUXO_15);
+  pinmux15 = (uint32_t volatile *)((char *)basePINMUX_AON + PINMUXX_15);
   pin_MUX.pin15 = *pinmux15;
     
   // Pointer to PINCFG15
-  pincfg15 = (uint32_t volatile *)((char *)basePINMUX_EDP + CFGO_15);
+  pincfg15 = (uint32_t volatile *)((char *)basePINMUX_AON + CFGX_15);
   pin_CFG.pin15 = *pincfg15;
     
   // Pointer to CNF16
-  pin16 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_16);
+  pin16 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_16);
   pin_CNF.pin16 = pin16->CNF[0];
   pin_DEB.pin16 = pin16->DEB[0];
-  pin_IN.pin16 = pin16->IN[0];
   pin_OUT.pin16 = pin16->OUT[0];
   pin_OUT_VLE.pin16 = pin16->OUT_VLE[0];
       
   // Pointer to PINMUX16
-  pinmux16 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_16);
+  pinmux16 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_16);
   pin_MUX.pin16 = *pinmux16;
    
   // Pointer to PINCFG16
-  pincfg16 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_16);
+  pincfg16 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_16);
   pin_CFG.pin16 = *pincfg16;
     
   // Pointer to CNF18
-  pin18 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_18);
+  pin18 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_18);
   pin_CNF.pin18 = pin18->CNF[0];
   pin_DEB.pin18 = pin18->DEB[0];
-  pin_IN.pin18 = pin18->IN[0];
   pin_OUT.pin18 = pin18->OUT[0];
   pin_OUT_VLE.pin18 = pin18->OUT_VLE[0];
       
   // Pointer to PINMUX18
-  pinmux18 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_18);
+  pinmux18 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_18);
   pin_MUX.pin18 = *pinmux18;
     
   // Pointer to PINCFG18
-  pincfg18 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_18);
+  pincfg18 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_18);
   pin_CFG.pin18 = *pincfg18;
     
   // Pointer to CNF19
-  pin19 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_19);
+  pin19 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_19);
   pin_CNF.pin19 = pin19->CNF[0];
   pin_DEB.pin19 = pin19->DEB[0];
-  pin_IN.pin19 = pin19->IN[0];
   pin_OUT.pin19 = pin19->OUT[0];
   pin_OUT_VLE.pin19 = pin19->OUT_VLE[0];
       
   // Pointer to PINMUX19
-  pinmux19 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_19);
+  pinmux19 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_19);
   pin_MUX.pin19 = *pinmux19;
     
   // Pointer to PINCFG19
-  pincfg19 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_19);
+  pincfg19 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_19);
   pin_CFG.pin19 = *pincfg19;
     
   // Pointer to CNF21
-  pin21 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_21);
+  pin21 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_21);
   pin_CNF.pin21 = pin21->CNF[0];
   pin_DEB.pin21 = pin21->DEB[0];
-  pin_IN.pin21 = pin21->IN[0];
   pin_OUT.pin21 = pin21->OUT[0];
   pin_OUT_VLE.pin21 = pin21->OUT_VLE[0];
       
   // Pointer to PINMUX21
-  pinmux21 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_21);
+  pinmux21 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_21);
   pin_MUX.pin21 = *pinmux21;
     
   // Pointer to PINCFG21
-  pincfg21 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_21);
+  pincfg21 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_21);
   pin_CFG.pin21 = *pincfg21;
     
   // Pointer to CNF22
-  pin22 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_22);
+  pin22 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_22);
   pin_CNF.pin22 = pin22->CNF[0];
   pin_DEB.pin22 = pin22->DEB[0];
-  pin_IN.pin22 = pin22->IN[0];
   pin_OUT.pin22 = pin22->OUT[0];
   pin_OUT_VLE.pin22 = pin22->OUT_VLE[0];
       
   // Pointer to PINMUX22
-  pinmux22 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_22);
+  pinmux22 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_22);
   pin_MUX.pin22 = *pinmux22;
     
   // Pointer to PINCFG22
-  pincfg22 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_22);
+  pincfg22 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_22);
   pin_CFG.pin22 = *pincfg22;
     
   // Pointer to CNF23
-  pin23 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_23);
+  pin23 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_23);
   pin_CNF.pin23 = pin23->CNF[0];
   pin_DEB.pin23 = pin23->DEB[0];
-  pin_IN.pin23 = pin23->IN[0];
   pin_OUT.pin23 = pin23->OUT[0];
   pin_OUT_VLE.pin23 = pin23->OUT_VLE[0];
       
   // Pointer to PINMUX23
-  pinmux23 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_23);
+  pinmux23 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_23);
   pin_MUX.pin23 = *pinmux23;
     
   // Pointer to PINCFG23
-  pincfg23 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_23);
+  pincfg23 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_23);
   pin_CFG.pin23 = *pincfg23;
     
   // Pointer to CNF24
-  pin24 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_24);
+  pin24 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_24);
   pin_CNF.pin24 = pin24->CNF[0];
   pin_DEB.pin24 = pin24->DEB[0];
-  pin_IN.pin24 = pin24->IN[0];
   pin_OUT.pin24 = pin24->OUT[0];
   pin_OUT_VLE.pin24 = pin24->OUT_VLE[0];
       
   // Pointer to PINMUX24
-  pinmux24 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_24);
+  pinmux24 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_24);
   pin_MUX.pin24 = *pinmux24;
     
   // Pointer to PINCFG24
-  pincfg24 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_24);
+  pincfg24 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_24);
   pin_CFG.pin24 = *pincfg24;
     
   // Pointer to CNF26
-  pin26 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_26);
+  pin26 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_26);
   pin_CNF.pin26 = pin26->CNF[0];
   pin_DEB.pin26 = pin26->DEB[0];
-  pin_IN.pin26 = pin26->IN[0];
   pin_OUT.pin26 = pin26->OUT[0];
   pin_OUT_VLE.pin26 = pin26->OUT_VLE[0];
       
   // Pointer to PINMUX26
-  pinmux26 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_26);
+  pinmux26 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_26);
   pin_MUX.pin26 = *pinmux26;
     
   // Pointer to PINCFG26
-  pincfg26 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_26);
+  pincfg26 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_26);
   pin_CFG.pin26 = *pincfg26;
     
   // Pointer to CNF27
-  pin27 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFO_27);
+  pin27 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFX_27);
   pin_CNF.pin27 = pin27->CNF[0];
   pin_DEB.pin27 = pin27->DEB[0];
-  pin_IN.pin27 = pin27->IN[0];
   pin_OUT.pin27 = pin27->OUT[0];
   pin_OUT_VLE.pin27 = pin27->OUT_VLE[0];
       
   // Pointer to PINMUX27
-  pinmux27 = (uint32_t volatile *)((char *)basePINMUX_AON + PINMUXO_27);
+  pinmux27 = (uint32_t volatile *)((char *)basePINMUX_AON + PINMUXX_27);
   pin_MUX.pin27 = *pinmux27;
     
   // Pointer to PINCFG27
-  pincfg27 = (uint32_t volatile *)((char *)basePINMUX_AON + CFGO_27);
+  pincfg27 = (uint32_t volatile *)((char *)basePINMUX_AON + CFGX_27);
   pin_CFG.pin27 = *pincfg27;
   
   // Pointer to CNF28
-  pin28 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFO_28);
+  pin28 = (GPIO_CNFO volatile *)((char *)baseCNF_AON + CNFX_28);
   pin_CNF.pin28 = pin28->CNF[0];
   pin_DEB.pin28 = pin28->DEB[0];
-  pin_IN.pin28 = pin28->IN[0];
   pin_OUT.pin28 = pin28->OUT[0];
   pin_OUT_VLE.pin28 = pin28->OUT_VLE[0];
     
   // Pointer to PINMUX28
-  pinmux28 = (uint32_t volatile *)((char *)basePINMUX_AON + PINMUXO_28);
+  pinmux28 = (uint32_t volatile *)((char *)basePINMUX_AON + PINMUXX_28);
   pin_MUX.pin28 = *pinmux28;
     
   // Pointer to PINCFG28
-  pincfg28 = (uint32_t volatile *)((char *)basePINMUX_AON + CFGO_28);
+  pincfg28 = (uint32_t volatile *)((char *)basePINMUX_AON + CFGX_28);
   pin_CFG.pin28 = *pincfg28;
     
   // Pointer to CNF29
-  pin29 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_29);
+  pin29 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_29);
   pin_CNF.pin29 = pin29->CNF[0];
   pin_DEB.pin29 = pin29->DEB[0];
-  pin_IN.pin29 = pin29->IN[0];
   pin_OUT.pin29 = pin29->OUT[0];
   pin_OUT_VLE.pin29 = pin29->OUT_VLE[0];
     
   // Pointer to PINMUX29
-  pinmux29 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXO_29);
+  pinmux29 = (uint32_t volatile *)((char *)basePINMUX_CAM + PINMUXX_29);
   pin_MUX.pin29 = *pinmux29;
     
   // Pointer to PINCFG29
-  pincfg29 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGO_29);
+  pincfg29 = (uint32_t volatile *)((char *)basePINMUX_CAM + CFGX_29);
   pin_CFG.pin29 = *pincfg29;
     
   // Pointer to CNF31
-  pin31 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_31);
+  pin31 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_31);
   pin_CNF.pin31 = pin31->CNF[0];
   pin_DEB.pin31 = pin31->DEB[0];
-  pin_IN.pin31 = pin31->IN[0];
   pin_OUT.pin31 = pin31->OUT[0];
   pin_OUT_VLE.pin31 = pin31->OUT_VLE[0];
     
   // Pointer to PINMUX31
-  pinmux31 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXO_31);
+  pinmux31 = (uint32_t volatile *)((char *)basePINMUX_CAM + PINMUXX_31);
   pin_MUX.pin31 = *pinmux31;
     
   // Pointer to PINCFG31
-  pincfg31 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGO_31);
+  pincfg31 = (uint32_t volatile *)((char *)basePINMUX_CAM + CFGX_31);
   pin_CFG.pin31 = *pincfg31;
     
   // Pointer to CNF32
-  pin32 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_32);
+  pin32 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_32);
   pin_CNF.pin32 = pin32->CNF[0];
   pin_DEB.pin32 = pin32->DEB[0];
-  pin_IN.pin32 = pin32->IN[0];
   pin_OUT.pin32 = pin32->OUT[0];
   pin_OUT_VLE.pin32 = pin32->OUT_VLE[0];
     
   // Pointer to PINMUX32
-  pinmux32 = (uint32_t volatile *)((char *)basePINMUX_G4 + PINMUXO_32);
+  pinmux32 = (uint32_t volatile *)((char *)basePINMUX_CAM + PINMUXX_32);
   pin_MUX.pin32 = *pinmux32;
    
   // Pointer to PINCFG32
-  pincfg32 = (uint32_t volatile *)((char *)basePINMUX_G4 + CFGO_32);
+  pincfg32 = (uint32_t volatile *)((char *)basePINMUX_CAM + CFGX_32);
   pin_CFG.pin32 = *pincfg32;
     
   // Pointer to CNF33
-  pin33 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_33); 
+  pin33 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_33); 
   pin_CNF.pin33 = pin33->CNF[0];
   pin_DEB.pin33 = pin33->DEB[0];
-  pin_IN.pin33 = pin33->IN[0];
   pin_OUT.pin33 = pin33->OUT[0];
   pin_OUT_VLE.pin33 = pin33->OUT_VLE[0];
     
   // Pointer to PINMUX33
-  pinmux33 = (uint32_t volatile *)((char *)basePINMUX_G4 + PINMUXO_33);
+  pinmux33 = (uint32_t volatile *)((char *)basePINMUX_EDP + PINMUXX_33);
   pin_MUX.pin33 = *pinmux33;
     
   // Pointer to PINCFG33
-  pincfg33 = (uint32_t volatile *)((char *)basePINMUX_G4 + CFGO_33);
+  pincfg33 = (uint32_t volatile *)((char *)basePINMUX_EDP + CFGX_33);
   pin_CFG.pin33 = *pincfg33;
     
   // Pointer to CNF35
-  pin35 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_35);
+  pin35 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_35);
   pin_CNF.pin35 = pin35->CNF[0];
   pin_DEB.pin35 = pin35->DEB[0];
-  pin_IN.pin35 = pin35->IN[0];
   pin_OUT.pin35 = pin35->OUT[0];
   pin_OUT_VLE.pin35 = pin35->OUT_VLE[0];
     
   // Pointer to PINMUX35
-  pinmux35 = (uint32_t volatile *)((char *)basePINMUX_G4 + PINMUXO_35);
+  pinmux35 = (uint32_t volatile *)((char *)basePINMUX_Audio + PINMUXX_35);
   pin_MUX.pin35 = *pinmux35;
     
   // Pointer to PINCFG35
-  pincfg35 = (uint32_t volatile *)((char *)basePINMUX_G4 + CFGO_35);
+  pincfg35 = (uint32_t volatile *)((char *)basePINMUX_Audio + CFGX_35);
   pin_CFG.pin35 = *pincfg35;
     
   // Pointer to CNF36
-  pin36 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_36);
+  pin36 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_36);
   pin_CNF.pin36 = pin36->CNF[0];
   pin_DEB.pin36 = pin36->DEB[0];
-  pin_IN.pin36 = pin36->IN[0];
   pin_OUT.pin36 = pin36->OUT[0];
   pin_OUT_VLE.pin36 = pin36->OUT_VLE[0];
     
   // Pointer to PINMUX36
-  pinmux36 = (uint32_t volatile *)((char *)basePINMUX_G3 + PINMUXO_36);
+  pinmux36 = (uint32_t volatile *)((char *)basePINMUX_CAM + PINMUXX_36);
   pin_MUX.pin36 = *pinmux36;
     
   // Pointer to PINCFG36
-  pincfg36 = (uint32_t volatile *)((char *)basePINMUX_G3 + CFGO_36);
+  pincfg36 = (uint32_t volatile *)((char *)basePINMUX_CAM + CFGX_36);
   pin_CFG.pin36 = *pincfg36;
     
   // Pointer to CNF37
-  pin37 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_37);
+  pin37 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_37);
   pin_CNF.pin37 = pin37->CNF[0];
   pin_DEB.pin37 = pin37->DEB[0];
-  pin_IN.pin37 = pin37->IN[0];
   pin_OUT.pin37 = pin37->OUT[0];
   pin_OUT_VLE.pin37 = pin37->OUT_VLE[0];
     
   // Pointer to PINMUX37
-  pinmux37 = (uint32_t volatile *)((char *)basePINMUX_G2 + PINMUXO_37);
+  pinmux37 = (uint32_t volatile *)((char *)basePINMUX_UART + PINMUXX_37);
   pin_MUX.pin37 = *pinmux37;
     
   // Pointer to PINCFG37
-  pincfg37 = (uint32_t volatile *)((char *)basePINMUX_G2 + CFGO_37);
+  pincfg37 = (uint32_t volatile *)((char *)basePINMUX_UART + CFGX_37);
   pin_CFG.pin37 = *pincfg37;
     
   // Pointer to CNF38
-  pin38 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_38);
+  pin38 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_38);
   pin_CNF.pin38 = pin38->CNF[0];
   pin_DEB.pin38 = pin38->DEB[0];
-  pin_IN.pin38 = pin38->IN[0];
   pin_OUT.pin38 = pin38->OUT[0];
   pin_OUT_VLE.pin38 = pin38->OUT_VLE[0];
     
   // Pointer to PINMUX38
-  pinmux38 = (uint32_t volatile *)((char *)basePINMUX_G4 + PINMUXO_38);
+  pinmux38 = (uint32_t volatile *)((char *)basePINMUX_Audio + PINMUXX_38);
   pin_MUX.pin38 = *pinmux38;
     
   // Pointer to PINCFG38
-  pincfg38 = (uint32_t volatile *)((char *)basePINMUX_G4 + CFGO_38);
+  pincfg38 = (uint32_t volatile *)((char *)basePINMUX_Audio + CFGX_38);
   pin_CFG.pin38 = *pincfg38;
    
   // Pointer to CNF40
-  pin40 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFO_40);
+  pin40 = (GPIO_CNFO volatile *)((char *)baseCNF_NAON + CNFX_40);
   pin_CNF.pin40 = pin40->CNF[0];
   pin_DEB.pin40 = pin40->DEB[0];
-  pin_IN.pin40 = pin40->IN[0];
   pin_OUT.pin40 = pin40->OUT[0];
   pin_OUT_VLE.pin40 = pin40->OUT_VLE[0];
     
   // Pointer to PINMUX40
-  pinmux40 = (uint32_t volatile *)((char *)basePINMUX_G4 + PINMUXO_40);
+  pinmux40 = (uint32_t volatile *)((char *)basePINMUX_Audio + PINMUXX_40);
   pin_MUX.pin40 = *pinmux40;
     
   // Pointer to PINCFG40
-  pincfg40 = (uint32_t volatile *)((char *)basePINMUX_G4 + CFGO_40);
+  pincfg40 = (uint32_t volatile *)((char *)basePINMUX_Audio + CFGX_40);
   pin_CFG.pin40 = *pincfg40;
     
   // Pointer to PWM1
   PWM1 = (uint32_t volatile *)((char *)basePWM1);
   PWM1_Init = *PWM1;
 
-  // Pointer to PWM5
-  PWM5 = (uint32_t volatile *)((char *)basePWM5);
-  PWM5_Init = *PWM5;
-
-  // Pointer to PWM7
-  PWM7 = (uint32_t volatile *)((char *)basePWM7);
-  PWM7_Init = *PWM7;
+  // Pointer to PWM8
+  PWM8 = (uint32_t volatile *)((char *)basePWM8);
+  PWM8_Init = *PWM8;
 
   // Initialize i2c
   i2cInfo[1].state = I2C_CLOSED;
-  i2cInfo[7].state = I2C_CLOSED;
+  i2cInfo[8].state = I2C_CLOSED;
     
   // Initialize spi
   SpiInfo[0].state = SPI_CLOSED;
@@ -772,365 +684,251 @@ void gpioTerminate(void) {
 
   if ((pin_tracker >> 28) & 1) {
     *PWM1 = PWM1_Init;
-    struct jetclk clock;
-    memset(&clock, 0, sizeof(clock));
-
-    int  dev = open("/dev/jetclocks", O_WRONLY);
-    if(dev < 0) {
-      printf("Opening /dev/jetclocks not possible\n");
+    char buf[100];
+    
+    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm1/rate", clk_rate_PWM1);
+    if (system(buf) == -1) { 
+      printf( "Not possible to change clock rate on pwm1\n");
     }
-
-    clock.clk_set_rate = clk_rate_PWM1;
-    strncpy(clock.clk, "pwm1", sizeof(clock.clk));
-    ioctl(dev, CLK_SET_RATE, &clock);
-    close(dev);
-  }
-
-  if ((pin_tracker >> 29) & 1) {
-    *PWM5 = PWM5_Init;
-    struct jetclk clock;
-    memset(&clock, 0, sizeof(clock));
-
-    int  dev = open("/dev/jetclocks", O_WRONLY);
-    if(dev < 0) {
-      printf("Opening /dev/jetclocks not possible\n");
-    }
-
-    clock.clk_set_rate = clk_rate_PWM5;
-    strncpy(clock.clk, "pwm5", sizeof(clock.clk));
-    ioctl(dev, CLK_SET_RATE, &clock);
-    close(dev);
   }
 
   if ((pin_tracker >> 30) & 1) {
-    *PWM7 = PWM7_Init;
-    struct jetclk clock;
-    memset(&clock, 0, sizeof(clock));
-
-    int  dev = open("/dev/jetclocks", O_WRONLY);
-    if(dev < 0) {
-      printf("Opening /dev/jetclocks not possible\n");
+    *PWM8 = PWM8_Init;
+    char buf[100];
+    
+    snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm8/rate", clk_rate_PWM8);
+    if (system(buf) == -1) { 
+      printf( "Not possible to change clock rate on pwm7\n");
     }
-
-    clock.clk_set_rate = clk_rate_PWM7;
-    strncpy(clock.clk, "pwm7", sizeof(clock.clk));
-    ioctl(dev, CLK_SET_RATE, &clock);
-    close(dev);
-  }
-    
-  if (pin_tracker & 1) { 
-    pin3->CNF[0] = pin_CNF.pin3;
-    pin3->DEB[0] = pin_DEB.pin3;
-    pin3->IN[0] = pin_IN.pin3;
-    pin3->OUT[0] = pin_OUT.pin3;
-    pin3->OUT_VLE[0] = pin_OUT_VLE.pin3;
-    *pinmux3 = pin_MUX.pin3;
-    *pincfg3 = pin_CFG.pin3;
-  }
-    
-  if ((pin_tracker >> 1) & 1) {
-    pin5->CNF[0] = pin_CNF.pin5;
-    pin5->DEB[0] = pin_DEB.pin5;
-    pin5->IN[0] = pin_IN.pin5;
-    pin5->OUT[0] = pin_OUT.pin5;
-    pin5->OUT_VLE[0] = pin_OUT_VLE.pin5;
-    *pinmux5 = pin_MUX.pin5;
-    *pincfg5 = pin_CFG.pin5;
   }
     
   if ((pin_tracker >> 2) & 1) {
     pin7->CNF[0] = pin_CNF.pin7;
     pin7->DEB[0] = pin_DEB.pin7;
-    pin7->IN[0] = pin_IN.pin7;
     pin7->OUT[0] = pin_OUT.pin7;
     pin7->OUT_VLE[0] = pin_OUT_VLE.pin7;
     *pinmux7 = pin_MUX.pin7;
     *pincfg7 = pin_CFG.pin7;
   }
-    
   if ((pin_tracker >> 3) & 1) {
     pin8->CNF[0] = pin_CNF.pin8;
     pin8->DEB[0] = pin_DEB.pin8;
-    pin8->IN[0] = pin_IN.pin8;
     pin8->OUT[0] = pin_OUT.pin8;
     pin8->OUT_VLE[0] = pin_OUT_VLE.pin8;
     *pinmux8 = pin_MUX.pin8;
     *pincfg8 = pin_CFG.pin8;
-  }
-    
+  } 
   if ((pin_tracker >> 4) & 1) {
     pin10->CNF[0] = pin_CNF.pin10;
     pin10->DEB[0] = pin_DEB.pin10;
-    pin10->IN[0] = pin_IN.pin10;
     pin10->OUT[0] = pin_OUT.pin10;
     pin10->OUT_VLE[0] = pin_OUT_VLE.pin10;
     *pinmux10 = pin_MUX.pin10;
     *pincfg10 = pin_CFG.pin10;
   }
-    
   if ((pin_tracker >> 5) & 1) {
     pin11->CNF[0] = pin_CNF.pin11;
     pin11->DEB[0] = pin_DEB.pin11;
-    pin11->IN[0] = pin_IN.pin11;
     pin11->OUT[0] = pin_OUT.pin11;
     pin11->OUT_VLE[0] = pin_OUT_VLE.pin11;
     *pinmux11 = pin_MUX.pin11;
     *pincfg11 = pin_CFG.pin11;
-  }
-    
+  } 
   if ((pin_tracker >> 6) & 1) {
     pin12->CNF[0] = pin_CNF.pin12;
     pin12->DEB[0] = pin_DEB.pin12;
-    pin12->IN[0] = pin_IN.pin12;
     pin12->OUT[0] = pin_OUT.pin12;
     pin12->OUT_VLE[0] = pin_OUT_VLE.pin12;
     *pinmux12 = pin_MUX.pin12;
     *pincfg12 = pin_CFG.pin12;
   }
-
   if (((pin_tracker >> 7) & 1) || ((pin_tracker >> 32) & 1)) {
     pin13->CNF[0] = pin_CNF.pin13;
     pin13->DEB[0] = pin_DEB.pin13;
-    pin13->IN[0] = pin_IN.pin13;
     pin13->OUT[0] = pin_OUT.pin13;
     pin13->OUT_VLE[0] = pin_OUT_VLE.pin13;
     *pinmux13 = pin_MUX.pin13;
     *pincfg13 = pin_CFG.pin13;
   }
-
-  if (((pin_tracker >> 8) & 1) || ((pin_tracker >> 28) & 1)) {
+  if ((pin_tracker >> 8) & 1) {
     pin15->CNF[0] = pin_CNF.pin15;
     pin15->DEB[0] = pin_DEB.pin15;
-    pin15->IN[0] = pin_IN.pin15;
     pin15->OUT[0] = pin_OUT.pin15;
     pin15->OUT_VLE[0] = pin_OUT_VLE.pin15;
     *pinmux15 = pin_MUX.pin15;
     *pincfg15 = pin_CFG.pin15;
   }
-
   if ((pin_tracker >> 9) & 1) {
     pin16->CNF[0] = pin_CNF.pin16;
     pin16->DEB[0] = pin_DEB.pin16;
-    pin16->IN[0] = pin_IN.pin16;
     pin16->OUT[0] = pin_OUT.pin16;
     pin16->OUT_VLE[0] = pin_OUT_VLE.pin16;
     *pinmux16 = pin_MUX.pin16;
     *pincfg16 = pin_CFG.pin16;
   }
-
   if (((pin_tracker >> 10) & 1) || ((pin_tracker >> 32) & 1)) {
     pin18->CNF[0] = pin_CNF.pin18;
     pin18->DEB[0] = pin_DEB.pin18;
-    pin18->IN[0] = pin_IN.pin18;
     pin18->OUT[0] = pin_OUT.pin18;
     pin18->OUT_VLE[0] = pin_OUT_VLE.pin18;
     *pinmux18 = pin_MUX.pin18;
     *pincfg18 = pin_CFG.pin18;
   }
-
   if (((pin_tracker >> 11) & 1) || ((pin_tracker >> 31) & 1)) {
     pin19->CNF[0] = pin_CNF.pin19;
     pin19->DEB[0] = pin_DEB.pin19;
-    pin19->IN[0] = pin_IN.pin19;
     pin19->OUT[0] = pin_OUT.pin19;
     pin19->OUT_VLE[0] = pin_OUT_VLE.pin19;
     *pinmux19 = pin_MUX.pin19;
     *pincfg19 = pin_CFG.pin19;
   }
-
   if (((pin_tracker >> 12) & 1) || ((pin_tracker >> 31) & 1)) {
     pin21->CNF[0] = pin_CNF.pin21;
     pin21->DEB[0] = pin_DEB.pin21;
-    pin21->IN[0] = pin_IN.pin21;
     pin21->OUT[0] = pin_OUT.pin21;
     pin21->OUT_VLE[0] = pin_OUT_VLE.pin21;
     *pinmux21 = pin_MUX.pin21;
     *pincfg21 = pin_CFG.pin21;
   }
-
   if (((pin_tracker >> 13) & 1) || ((pin_tracker >> 32) & 1)) {
     pin22->CNF[0] = pin_CNF.pin22;
     pin22->DEB[0] = pin_DEB.pin22;
-    pin22->IN[0] = pin_IN.pin22;
     pin22->OUT[0] = pin_OUT.pin22;
     pin22->OUT_VLE[0] = pin_OUT_VLE.pin22;
     *pinmux22 = pin_MUX.pin22;
     *pincfg22 = pin_CFG.pin22;
   }
-
   if (((pin_tracker >> 14) & 1) || ((pin_tracker >> 31) & 1)) {
     pin23->CNF[0] = pin_CNF.pin23;
     pin23->DEB[0] = pin_DEB.pin23;
-    pin23->IN[0] = pin_IN.pin23;
     pin23->OUT[0] = pin_OUT.pin23;
     pin23->OUT_VLE[0] = pin_OUT_VLE.pin23;
     *pinmux23 = pin_MUX.pin23;
     *pincfg23 = pin_CFG.pin23;
   }
-
   if (((pin_tracker >> 15) & 1) || ((pin_tracker >> 31) & 1)) {
     pin24->CNF[0] = pin_CNF.pin24;
     pin24->DEB[0] = pin_DEB.pin24;
-    pin24->IN[0] = pin_IN.pin24;
     pin24->OUT[0] = pin_OUT.pin24;
     pin24->OUT_VLE[0] = pin_OUT_VLE.pin24;
     *pinmux24 = pin_MUX.pin24;
     *pincfg24 = pin_CFG.pin24;
   }
-
   if ((pin_tracker >> 16) & 1) {
     pin26->CNF[0] = pin_CNF.pin26;
     pin26->DEB[0] = pin_DEB.pin26;
-    pin26->IN[0] = pin_IN.pin26;
     pin26->OUT[0] = pin_OUT.pin26;
     pin26->OUT_VLE[0] = pin_OUT_VLE.pin26;
     *pinmux26 = pin_MUX.pin26;
     *pincfg26 = pin_CFG.pin26;
   }
-
   if ((pin_tracker >> 17) & 1) {
     pin27->CNF[0] = pin_CNF.pin27;
     pin27->DEB[0] = pin_DEB.pin27;
-    pin27->IN[0] = pin_IN.pin27;
     pin27->OUT[0] = pin_OUT.pin27;
     pin27->OUT_VLE[0] = pin_OUT_VLE.pin27;
     *pinmux27 = pin_MUX.pin27;
     *pincfg27 = pin_CFG.pin27;
   }
-  
   if ((pin_tracker >> 18) & 1) {
     pin28->CNF[0] = pin_CNF.pin28;
     pin28->DEB[0] = pin_DEB.pin28;
-    pin28->IN[0] = pin_IN.pin28;
     pin28->OUT[0] = pin_OUT.pin28;
     pin28->OUT_VLE[0] = pin_OUT_VLE.pin28;
     *pinmux28 = pin_MUX.pin28;
     *pincfg28 = pin_CFG.pin28;
   }
-
-  if (((pin_tracker >> 19) & 1) || ((pin_tracker >> 33) & 1)) {
+  if ((pin_tracker >> 19) & 1) {
     pin29->CNF[0] = pin_CNF.pin29;
     pin29->DEB[0] = pin_DEB.pin29;
-    pin29->IN[0] = pin_IN.pin29;
     pin29->OUT[0] = pin_OUT.pin29;
     pin29->OUT_VLE[0] = pin_OUT_VLE.pin29;
     *pinmux29 = pin_MUX.pin29;
     *pincfg29 = pin_CFG.pin29;
   }
-
-  if (((pin_tracker >> 20) & 1) || ((pin_tracker >> 34) & 1)) {
+  if ((pin_tracker >> 20) & 1) {
     pin31->CNF[0] = pin_CNF.pin31;
     pin31->DEB[0] = pin_DEB.pin31;
-    pin31->IN[0] = pin_IN.pin31;
     pin31->OUT[0] = pin_OUT.pin31;
     pin31->OUT_VLE[0] = pin_OUT_VLE.pin31;
     *pinmux31 = pin_MUX.pin31;
     *pincfg31 = pin_CFG.pin31;
   }
-
   if (((pin_tracker >> 21) & 1) || ((pin_tracker >> 30) & 1)) {
     pin32->CNF[0] = pin_CNF.pin32;
     pin32->DEB[0] = pin_DEB.pin32;
-    pin32->IN[0] = pin_IN.pin32;
     pin32->OUT[0] = pin_OUT.pin32;
     pin32->OUT_VLE[0] = pin_OUT_VLE.pin32;
     *pinmux32 = pin_MUX.pin32;
     *pincfg32 = pin_CFG.pin32;
   }
-
   if (((pin_tracker >> 22) & 1) || ((pin_tracker >> 29) & 1)) {
     pin33->CNF[0] = pin_CNF.pin33;
     pin33->DEB[0] = pin_DEB.pin33;
-    pin33->IN[0] = pin_IN.pin33;
     pin33->OUT[0] = pin_OUT.pin33;
     pin33->OUT_VLE[0] = pin_OUT_VLE.pin3;
     *pinmux33 = pin_MUX.pin33;
     *pincfg33 = pin_CFG.pin33;
   }
-
   if ((pin_tracker >> 23) & 1) {
     pin35->CNF[0] = pin_CNF.pin35;
     pin35->DEB[0] = pin_DEB.pin35;
-    pin35->IN[0] = pin_IN.pin35;
     pin35->OUT[0] = pin_OUT.pin35;
     pin35->OUT_VLE[0] = pin_OUT_VLE.pin35;
     *pinmux35 = pin_MUX.pin35;
     *pincfg35 = pin_CFG.pin35;
   }
-
   if ((pin_tracker >> 24) & 1) {
     pin36->CNF[0] = pin_CNF.pin36;
     pin36->DEB[0] = pin_DEB.pin36;
-    pin36->IN[0] = pin_IN.pin36;
     pin36->OUT[0] = pin_OUT.pin36;
     pin36->OUT_VLE[0] = pin_OUT_VLE.pin36;
     *pinmux36 = pin_MUX.pin36;
     *pincfg36 = pin_CFG.pin36;
   }
-
   if (((pin_tracker >> 25) & 1) || ((pin_tracker >> 32) & 1)) {
     pin37->CNF[0] = pin_CNF.pin37;
     pin37->DEB[0] = pin_DEB.pin37;
-    pin37->IN[0] = pin_IN.pin37;
     pin37->OUT[0] = pin_OUT.pin37;
     pin37->OUT_VLE[0] = pin_OUT_VLE.pin37;
     *pinmux37 = pin_MUX.pin37;
     *pincfg37 = pin_CFG.pin37;
   }
-
   if ((pin_tracker >> 26) & 1) {
     pin38->CNF[0] = pin_CNF.pin38;
     pin38->DEB[0] = pin_DEB.pin38;
-    pin38->IN[0] = pin_IN.pin38;
     pin38->OUT[0] = pin_OUT.pin38;
     pin38->OUT_VLE[0] = pin_OUT_VLE.pin38;
     *pinmux38 = pin_MUX.pin38;
     *pincfg38 = pin_CFG.pin38;
   }
-
   if ((pin_tracker >> 27) & 1) {
     pin40->CNF[0] = pin_CNF.pin40;
     pin40->DEB[0] = pin_DEB.pin40;
-    pin40->IN[0] = pin_IN.pin40;
     pin40->OUT[0] = pin_OUT.pin40;
     pin40->OUT_VLE[0] = pin_OUT_VLE.pin40;
     *pinmux40 = pin_MUX.pin40;
     *pincfg40 = pin_CFG.pin40;
   }
-	
+
   // Ummapping CNF AON registers
   munmap(baseCNF_AON, pagesize);
-    
   // Ummapping CNF Non AON registers
   munmap(baseCNF_NAON, 5 * pagesize);
-
-  // Ummapping PINMUX G7 registers
-  munmap(basePINMUX_G7, pagesize);
-
   // Ummapping PINMUX AON registers
   munmap(basePINMUX_AON, pagesize);
-
-  // Ummapping PINMUX G3 registers
-  munmap(basePINMUX_G3, pagesize);
-
+  // Ummapping PINMUX Audio registers
+  munmap(basePINMUX_Audio, pagesize);
+  // Ummapping PINMUX CAM registers
+  munmap(basePINMUX_CAM, pagesize);
+  // Ummapping PINMUX UART registers
+  munmap(basePINMUX_UART, pagesize);
   // Ummapping PINMUX EDP registers
   munmap(basePINMUX_EDP, pagesize);
-
-  // Ummapping PINMUX G4 registers
-  munmap(basePINMUX_G4, pagesize);
-
-  // Ummapping PINMUX G2 registers
-  munmap(basePINMUX_G2, pagesize);
-  
   // Ummapping PWM1 registers 
   munmap(basePWM1, pagesize);
-
-  // Ummapping PWM5 registers 
-  munmap(basePWM5, pagesize);
-
-  // Ummapping PWM7 registers 
-  munmap(basePWM7, pagesize);
-  
+  // Ummapping PWM8 registers 
+  munmap(basePWM8, pagesize);
   // close /dev/mem 
   close(fd_GPIO);
 }
@@ -1140,20 +938,6 @@ int gpioSetMode(unsigned gpio, unsigned mode) {
   if (mode == JET_INPUT) {
     switch (gpio){
 		
-    case 3:
-      *pinmux3 = PINMUXO_IN;
-      *pincfg3 = CFGO_IN;
-      pin3->CNF[0] = CNFO_IN;
-      pin3->OUT[0] |= 0x00000001;
-      pin_tracker |= 1;
-      break;
-    case 5:
-      *pinmux5 = PINMUXO_IN;
-      *pincfg5 = CFGO_IN;
-      pin5->CNF[0] = CNFO_IN;
-      pin5->OUT[0] |= 0x00000001;
-      pin_tracker |= (1 << 1);
-      break;
     case 7:
       *pinmux7 = PINMUXO_IN;
       *pincfg7 = CFGO_IN;
@@ -1338,27 +1122,13 @@ int gpioSetMode(unsigned gpio, unsigned mode) {
       break;
     default:
       status = -1;
-      printf("Only gpio numbers from 3 to 40 are accepted, this function will read the level on the Jetson header pins,\n");
+      printf("Only gpio numbers from 7 to 40 are accepted, this function will read the level on the Jetson header pins,\n");
       printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
     }
   }
   else if (mode == JET_OUTPUT) {
     switch (gpio) {
 		
-    case 3:
-      *pinmux3 = PINMUXO_OUT1;
-      *pincfg3 = CFGO_OUT;
-      pin3->CNF[0] = CNFO_OUT;
-      pin3->OUT[0] &= ~(0x00000001);
-      pin_tracker |= 1;
-      break;
-    case 5:
-      *pinmux5 = PINMUXO_OUT1;
-      *pincfg5 = CFGO_OUT;
-      pin5->CNF[0] = CNFO_OUT;
-      pin5->OUT[0] &= ~(0x00000001);
-      pin_tracker |= (1 << 1);
-      break;
     case 7:
       *pinmux7 = PINMUXO_OUT;
       *pincfg7 = CFGO_OUT;
@@ -1543,7 +1313,7 @@ int gpioSetMode(unsigned gpio, unsigned mode) {
       break;
     default:
       status = -2;
-      printf("Only gpio numbers from 3 to 40 are accepted, this function will only write the level on the Jetson header pins,\n");
+      printf("Only gpio numbers from 7 to 40 are accepted, this function will only write the level on the Jetson header pins,\n");
       printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
     }
   }
@@ -1556,13 +1326,7 @@ int gpioSetMode(unsigned gpio, unsigned mode) {
 int gpioRead(unsigned gpio) {
   int level = 0;
   switch (gpio){
-		
-  case 3:
-    level = pin3->IN[0] & 1;
-    break;
-  case 5:
-    level = pin5->IN[0] & 1;
-    break;
+      
   case 7:
     level = pin7->IN[0] & 1;
     break;
@@ -1643,7 +1407,7 @@ int gpioRead(unsigned gpio) {
     break;
   default:
     level = -1;
-    printf("Only gpio numbers from 3 to 40 are accepted, this function will only read the level of the Jetson header pins,\n");
+    printf("Only gpio numbers from 7 to 40 are accepted, this function will only read the level of the Jetson header pins,\n");
     printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
   }
   return level;
@@ -1653,13 +1417,7 @@ int gpioWrite(unsigned gpio, unsigned level) {
   int status = 1;
   if (level == 0) {
     switch (gpio){
-		
-    case 3:
-      pin3->OUT_VLE[0] &= level;
-      break;
-    case 5:
-      pin5->OUT_VLE[0] &= level;
-      break;
+
     case 7:
       pin7->OUT_VLE[0] &= level;
       break;
@@ -1740,19 +1498,13 @@ int gpioWrite(unsigned gpio, unsigned level) {
       break;
     default:
       status = -1;
-      printf("Only gpio numbers from 3 to 40 are accepted, this function will only read the level of the Jetson header pins,\n");
+      printf("Only gpio numbers from 7 to 40 are accepted, this function will only read the level of the Jetson header pins,\n");
       printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
     }
   }
   else if (level == 1) {
     switch (gpio){
 		
-    case 3:
-      pin3->OUT_VLE[0] |= level;
-      break;
-    case 5:
-      pin5->OUT_VLE[0] |= level;
-      break;
     case 7:
       pin7->OUT_VLE[0] |= level;
       break;
@@ -1833,7 +1585,7 @@ int gpioWrite(unsigned gpio, unsigned level) {
       break;
     default:
       status = -2;
-      printf("Only gpio numbers from 3 to 40 are accepted, this function will only read the level of the Jetson header pins,\n");
+      printf("Only gpio numbers from 7 to 40 are accepted, this function will only read the level of the Jetson header pins,\n");
       printf("numbered as the header pin numbers e.g. AUD_MCLK is pin header number 7\n");
     }
   }
@@ -1855,12 +1607,13 @@ void *callback(void *arg) {
   char dev[20];
   int fd;
   int ret;
-   struct timespec start;
+  struct timespec start;
 
   struct gpioevent_request req = {0};
   struct gpioevent_data event = {0};
   
-  if (gpio == 3 || gpio == 5 || gpio == 27 || gpio == 28) {
+  
+  if (gpio == 15 || gpio == 27 || gpio == 28) {
     strcpy(dev, "/dev/gpiochip1");
   }
   else {
@@ -1894,11 +1647,7 @@ void *callback(void *arg) {
       printf("Failed to read event (%d)\n", ret);
       break;
     }
-    /* Had to do this as the timestamp returned by event.timestamp was rubbish, it was good to run a diff between 
-     * 2 timestamps but it wasn't CLOCK_REALTIME, neither looked like MONOTONIC as the EPOCH was in the future. As this was working fine in 
-     * previous versions of the kernel, I assume the framework/driver is broken @ v5.10, also tried with GPIO V2
-     * with the same outcome. NOTE that on this version the flag: GPIO_V2_LINE_FLAG_EVENT_CLOCK_REALTIME is NOT 
-     * available, the whole thing smells like a transition (broken) version of either the framework or the driver.
+    /* TO COMPLETE COMMENT HERE
      */
     clock_gettime(CLOCK_REALTIME, &start);			       
     timestamp_new = BILLION * (start.tv_sec) + start.tv_nsec;
@@ -1938,149 +1687,139 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 
     switch (gpio) {
 		
-    case 3:
-      pin3->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
-      pin3->INT_CLR[0] |= 1;
-      gpio_offset = 22;//base is 316
-      break;
-    case 5:
-      pin5->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
-      pin5->INT_CLR[0] |= 1;
-      gpio_offset = 21;
-      break;
     case 7:
       pin7->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin7->INT_CLR[0] |= 1;
-      gpio_offset = 144;//base is 348
+      gpio_offset = 148;
       break;
     case 8:
       pin8->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin8->INT_CLR[0] |= 1;
-      gpio_offset = 110;
+      gpio_offset = 138;
       break;
     case 10:
       pin10->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin10->INT_CLR[0] |= 1;
-      gpio_offset = 111;
+      gpio_offset = 139;
       break;
     case 11:
       pin11->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin11->INT_CLR[0] |= 1;
-      gpio_offset = 112;
+      gpio_offset = 140;
       break;
     case 12:
       pin12->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin12->INT_CLR[0] |= 1;
-      gpio_offset = 50;
+      gpio_offset = 157;
       break;
     case 13:
       pin13->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin13->INT_CLR[0] |= 1;
-      gpio_offset = 122;
+      gpio_offset = 192;
       break;
     case 15:
       pin15->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin15->INT_CLR[0] |= 1;
-      gpio_offset = 85;
+      gpio_offset = 20;
       break;
     case 16:
       pin16->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin16->INT_CLR[0] |= 1;
-      gpio_offset = 126;
+      gpio_offset = 196;
       break;
     case 18:
       pin18->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin18->INT_CLR[0] |= 1;
-      gpio_offset = 125;
+      gpio_offset = 195;
       break;
     case 19:
       pin19->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin19->INT_CLR[0] |= 1;
-      gpio_offset = 135;
+      gpio_offset = 205;
       break;
     case 21:
       pin21->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin21->INT_CLR[0] |= 1;
-      gpio_offset = 134;
+      gpio_offset = 204;
       break;
     case 22:
       pin22->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin22->INT_CLR[0] |= 1;
-      gpio_offset = 123;
+      gpio_offset = 193;
       break;
     case 23:
       pin23->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin23->INT_CLR[0] |= 1;
-      gpio_offset = 133;
+      gpio_offset = 203;
       break;
     case 24:
       pin24->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin24->INT_CLR[0] |= 1;
-      gpio_offset = 136;
+      gpio_offset = 206;
       break;
     case 26:
       pin26->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin26->INT_CLR[0] |= 1;
-      gpio_offset = 137;
+      gpio_offset = 207;
       break;
     case 27:
       pin27->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin27->INT_CLR[0] |= 1;
-      gpio_offset = 20;
+      gpio_offset = 24;
       break;
     case 28:
       pin28->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin28->INT_CLR[0] |= 1;
-      gpio_offset = 19;
+      gpio_offset = 23;
       break;
     case 29:
       pin29->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin29->INT_CLR[0] |= 1;
-      gpio_offset = 105;
+      gpio_offset = 133;
       break;
     case 31:
       pin31->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin31->INT_CLR[0] |= 1;
-      gpio_offset = 106;
+      gpio_offset = 134;
       break;
     case 32:
       pin32->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin32->INT_CLR[0] |= 1;
-      gpio_offset = 41;
+      gpio_offset = 136;
       break;
     case 33:
       pin33->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin33->INT_CLR[0] |= 1;
-      gpio_offset = 43;
+      gpio_offset = 105;
       break;
     case 35:
       pin35->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin35->INT_CLR[0] |= 1;
-      gpio_offset = 53;
+      gpio_offset = 160;
       break;
     case 36:
       pin36->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin36->INT_CLR[0] |= 1;
-      gpio_offset = 113;
+      gpio_offset = 141;
       break;
     case 37:
       pin37->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin37->INT_CLR[0] |= 1;
-      gpio_offset = 124;
+      gpio_offset = 194;
       break;
     case 38:
       pin38->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin38->INT_CLR[0] |= 1;
-      gpio_offset = 52;
+      gpio_offset = 159;
       break;
     case 40:
       pin40->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin40->INT_CLR[0] |= 1;
-      gpio_offset = 51;
+      gpio_offset = 158;
       break;
     default:
       status = -2;
-      printf("Only gpio numbers from 3 to 40 are accepted\n");
+      printf("Only gpio numbers from 7 to 40 are accepted\n");
     }
   }
   
@@ -2115,9 +1854,8 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
   int status = 1;
   int PFM = 0;
   unsigned clk_rate_PWM;
-  int dev;
-  struct jetclk clock;
-  memset(&clock, 0, sizeof(clock));
+  char buf[100];
+  FILE *fptr;
 
   if ((frequency >= 50) && (frequency <=1593000)) {
     if (frequency > 796875) {
@@ -2134,72 +1872,59 @@ int gpioSetPWMfrequency(unsigned gpio, unsigned frequency) {
       clk_rate_PWM = 102000000;
       PFM = round(398437.5/(double)frequency)-1;
     }
-
-    clock.clk_set_rate = clk_rate_PWM;
-    
     switch(gpio) {
-    case 15:
-      dev = open("/dev/jetclocks", O_WRONLY);
-      if(dev < 0) {
-	printf("Opening /dev/jetclocks not possible\n");
-	return -1;
-      }
-      strncpy(clock.clk, "pwm1", sizeof(clock.clk));
-      ioctl(dev, CLK_SET_RATE, &clock);
-      ioctl(dev, CLK_ENABLE, &clock);
-      close(dev);
-      
-      *pinmux15 = 0x00000400;
-      *pincfg15 = CFGO_OUT;
-      pin15->CNF[0] = 0x00000001;
-      *PWM1 = 0x0;
-      *PWM1 = PFM;
-      pin_tracker |= (1 << 28);
-      break;
+   
     case 32:
-      dev = open("/dev/jetclocks", O_WRONLY);
-      if(dev < 0) {
-	printf("Opening /dev/jetclocks not possible\n");
-	return -1;
-      }
-      strncpy(clock.clk, "pwm7", sizeof(clock.clk));
-      ioctl(dev, CLK_SET_RATE, &clock);
-      ioctl(dev, CLK_ENABLE, &clock);
-      close(dev);
+      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm8/rate");
+      fptr = fopen(buf, "r");
       
-      *pinmux32 = 0x00000400;
+      if (fptr == NULL) {
+        printf("Not possible to read current clock rate on pwm8\n");
+      }
+	
+      fscanf(fptr, "%u", &clk_rate_PWM8);
+      
+      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm8/rate", clk_rate_PWM);
+      if (system(buf) == -1) { 
+        printf( "Not possible to change clock rate on pwm8\n");
+      }
+      fclose(fptr);
+      *pinmux32 = 0x00000401;
       *pincfg32 = CFGO_OUT;
       pin32->CNF[0] = 0x00000001;
-      *PWM7 = 0x0;
-      *PWM7 = PFM;
+      *PWM8 = 0x0;
+      *PWM8 = PFM;
       pin_tracker |= (1 << 30);
       break;
     case 33:
-      dev = open("/dev/jetclocks", O_WRONLY);
-      if(dev < 0) {
-	printf("Opening /dev/jetclocks not possible\n");
-	return -1;
-      }
-      strncpy(clock.clk, "pwm5", sizeof(clock.clk));
-      ioctl(dev, CLK_SET_RATE, &clock);
-      ioctl(dev, CLK_ENABLE, &clock);
-      close(dev);
+      snprintf(buf, sizeof(buf), "/sys/kernel/debug/bpmp/debug/clk/pwm1/rate");
+      fptr = fopen(buf, "r");
       
-      *pinmux33 = 0x00000401;
+      if (fptr == NULL) {
+        printf("Not possible to read current clock rate on pwm1\n");
+      }
+	
+      fscanf(fptr, "%u", &clk_rate_PWM1);
+      
+      snprintf(buf, sizeof(buf), "echo %u > /sys/kernel/debug/bpmp/debug/clk/pwm1/rate", clk_rate_PWM);
+      if (system(buf) == -1) { 
+        printf( "Not possible to change clock rate on pwm1\n");
+      }
+      fclose(fptr);
+      *pinmux33 = 0x00000402;
       *pincfg33 = CFGO_OUT;
       pin33->CNF[0] = 0x00000001;
-      *PWM5 = 0x0;
-      *PWM5 = PFM;
+      *PWM1 = 0x0;
+      *PWM1 = PFM;
       pin_tracker |= (1 << 29);
       break;
     default:
-      status = -2;
-      printf("Only gpio numbers 15, 32 and 33 are accepted\n");
+      status = -1;
+      printf("Only gpio numbers 32 and 33 are accepted\n");
     }  		
   }
   else {printf("Only frequencies from 50 to 1595000 Hz are allowed\n");
-    status =-3;}
-  close(dev);
+    status =-2;}
   return status;
 }
 
@@ -2208,24 +1933,20 @@ int gpioPWM(unsigned gpio, unsigned dutycycle) {
   
   if ((dutycycle >= 0) && (dutycycle <=256)) {
     switch (gpio) {
-    case 15:
+ 
+    case 32:
+      *PWM8 &= ~(0xFFFF0000);
+      *PWM8 |= dutycycle<<16;
+      *PWM8 |= 0x80000000;
+      break;
+    case 33:
       *PWM1 &= ~(0xFFFF0000);
       *PWM1 |= dutycycle<<16;
       *PWM1 |= 0x80000000;
-      break;  
-    case 32:
-      *PWM7 &= ~(0xFFFF0000);
-      *PWM7 |= dutycycle<<16;
-      *PWM7 |= 0x80000000;
-      break;
-    case 33:
-      *PWM5 &= ~(0xFFFF0000);
-      *PWM5 |= dutycycle<<16;
-      *PWM5 |= 0x80000000;
       break;
     default:
       status = -1;
-      printf("Only gpio numbers 15, 32 and 33 are accepted,\n");
+      printf("Only gpio numbers 32 and 33 are accepted,\n");
     }
   }
   else {printf("Only a dutycycle from 0 to 256 is allowed\n");
@@ -2256,7 +1977,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
     i2cBus = 1;
   }
   else {
-    i2cBus = 7;
+    i2cBus = 8;
   }
   
   if (!(i2cFlags == 0 || i2cFlags == 1 || i2cFlags == 2)) {
@@ -2290,7 +2011,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
     return -3;
   }
   
-  #if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
   FILE *fptr;
   snprintf(buf, sizeof(buf), "/sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2cBus);
   fptr = fopen(buf, "r");
@@ -2305,11 +2026,11 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
   snprintf(buf, sizeof(buf), "echo %d > /sys/bus/i2c/devices/i2c-%d/bus_clk_rate", speed, i2cBus);
   if (system(buf) == -1) { 
     printf( "Not possible to change bus speed\n");
-	return -7;
+    return -7;
   }
 
   fclose(fptr);
-  #endif
+#endif
   
   strcpy(buf, "modprobe i2c_dev");
     
@@ -2337,7 +2058,7 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
 }
 
 int i2cClose(unsigned handle) {	
-  if (!(handle == 1 || handle == 7)) {
+  if (!(handle == 1 || handle == 8)) {
     printf( "Bad handle (%d)", handle);
     return -1;
   }
@@ -2352,14 +2073,14 @@ int i2cClose(unsigned handle) {
   i2cInfo[handle].fd = -1;
   i2cInfo[handle].state = I2C_CLOSED;
 
-  #if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
   char buf[100];
   snprintf(buf, sizeof(buf), "echo %d > /sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2c_speed[handle], handle);
   if (system(buf) == -1) { 
     printf( "Not possible to return bus speed to original value\n");
-	return -1;
+    return -1;
   }
-  #endif
+#endif
   
   return 0;
 }
@@ -2368,7 +2089,7 @@ int i2cWriteByteData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned b
   union i2c_smbus_data data;
   int status = 0;
 	
-  if (!(handle == 1 || handle == 7)) {
+  if (!(handle == 1 || handle == 8)) {
     printf( "Bad handle (%d)\n", handle);
     status = -1;
   }
@@ -2417,7 +2138,7 @@ int i2cReadByteData(unsigned handle, unsigned i2cAddr, unsigned reg) {
   int status = 0;
   union i2c_smbus_data data;
 	
-  if (!(handle == 1 || handle == 7)) {
+  if (!(handle == 1 || handle == 8)) {
     printf( "Bad handle (%d)\n", handle);
     status = -1;
   }
@@ -2463,7 +2184,7 @@ int i2cWriteWordData(unsigned handle, unsigned i2cAddr, unsigned reg, unsigned w
   union i2c_smbus_data data;
   int status = 0;
 	
-  if (!(handle == 1 || handle == 7)) {
+  if (!(handle == 1 || handle == 8)) {
     printf( "Bad handle (%d)\n", handle);
     status = -1;
   }
@@ -2513,7 +2234,7 @@ int i2cReadWordData(unsigned handle, unsigned i2cAddr, unsigned reg) {
   int status = 0;
   union i2c_smbus_data data;
 	
-  if (!(handle == 1 || handle == 7)) {
+  if (!(handle == 1 || handle == 8)) {
     printf( "Bad handle (%d)\n", handle);
     status = -1;
   }
@@ -2563,11 +2284,11 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     return -1;
   }
 
-  #if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
   if (spiChan == 1) {
     spiChan ++; 
   }
-  #endif
+#endif
   
   if (speed < 0 || speed > 50000000) {
     printf( "Speed in bits/second (%d) shouldn't be bigger that 50 Mbit/s\n", speed);
@@ -2729,8 +2450,6 @@ int spiClose(unsigned handle) {
     close(SpiInfo[handle].fd);
   }
     
-  //*apbdev_pmc_pwr_det_val = 0x00fcbc2d;
-    
   SpiInfo[handle].fd = -1;
   SpiInfo[handle].state = SPI_CLOSED;
 
@@ -2740,8 +2459,7 @@ int spiClose(unsigned handle) {
 int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len) {
   int ret = 0;
   struct spi_ioc_transfer tr;
-  memset(&tr, 0, sizeof(tr));
-  
+    
   if (handle > 2) {
     printf( "Bad handle (%d)\n", handle);
     return -1;
@@ -2763,106 +2481,4 @@ int spiXfer(unsigned handle, char *txBuf, char *rxBuf, unsigned len) {
     return -2;
   }
   return ret;
-}
-
-int extPeripheralRate(unsigned clk_name, unsigned rate) {
-  struct jetclk clock;
-  memset(&clock, 0, sizeof(clock));
-
-  if (rate < 3200000 || rate > 51000000) {
-    printf( "Clock rate should be a number between 3200000 and 51000000 Hz\n");
-    return -1;
-  }
-  clock.clk_set_rate = rate;
-  
-  int dev = open("/dev/jetclocks", O_WRONLY);
-  if(dev < 0) {
-    printf("Opening /dev/jetclocks not possible\n");
-    return -2;
-  }
-  
-  switch (clk_name) {
-    
-  case EXTPERIPH3:
-    strncpy(clock.clk, "extperiph3", sizeof(clock.clk));
-    ioctl(dev, CLK_SET_RATE, &clock);	  
-    break;
-  case EXTPERIPH4:
-    strncpy(clock.clk, "extperiph4", sizeof(clock.clk));
-    ioctl(dev, CLK_SET_RATE, &clock);
-    break;
-  default:
-    printf("Only EXTPERIPH3 and EXTPERIPH4 values are accepted\n");
-    break;
-  }
-  close(dev);
-  return 0;
-}
-
-int extPeripheralEnable(unsigned clk_name) {
-  struct jetclk clock;
-  memset(&clock, 0, sizeof(clock));
-
-  int dev = open("/dev/jetclocks", O_WRONLY);
-  if(dev < 0) {
-    printf("Opening /dev/jetclocks not possible\n");
-    return -2;
-  }
-
-  switch (clk_name) {
-  case EXTPERIPH3:
-    strncpy(clock.clk, "extperiph3", sizeof(clock.clk));
-    ioctl(dev, CLK_ENABLE, &clock);
-    *pinmux29 = 0x401;
-    *pincfg29 = CFGO_OUT;
-    pin29->CNF[0] = 0x3;
-    pin_tracker |= (1UL << 33);
-    break;
-  case EXTPERIPH4:
-    strncpy(clock.clk, "extperiph4", sizeof(clock.clk));
-    ioctl(dev, CLK_ENABLE, &clock);
-    *pinmux31 = 0x401;
-    *pincfg31 = CFGO_OUT;
-    pin31->CNF[0] = 0x3;
-    pin_tracker |= (1UL << 34);
-    break;
-  default:
-    printf("Only EXTPERIPH3 and EXTPERIPH4 values are accepted\n");
-    break;
-  }
-  close(dev);
-  return 0;
-}
-
-int extPeripheralDisable(unsigned clk_name) {
-  struct jetclk clock;
-  memset(&clock, 0, sizeof(clock));
-
-  int dev = open("/dev/jetclocks", O_WRONLY);
-  if(dev < 0) {
-    printf("Opening /dev/jetclocks not possible\n");
-    return -2;
-  }
-
-  switch (clk_name) {  
-  case EXTPERIPH3:
-    *pinmux29 = 0x474;
-    *pincfg29 = 0x0;
-    pin29->CNF[0] = 0x0;	 
-    strncpy(clock.clk, "extperiph3", sizeof(clock.clk));
-    ioctl(dev, CLK_DISABLE, &clock); 
-    break;
-  case EXTPERIPH4:
-    *pinmux31 = 0x474;
-    *pincfg31 = 0x0;
-    pin31->CNF[0] = 0x0;
-    strncpy(clock.clk, "extperiph4", sizeof(clock.clk));
-    ioctl(dev, CLK_DISABLE, &clock);	  
-    break;
-  default:
-    printf("Only EXTPERIPH3 and EXTPERIPH4 values are accepted\n");
-    break;
-  }
-  close(dev);
-  return 0;
 }

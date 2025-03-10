@@ -14,12 +14,14 @@ If you think this could be a problem, you will find the standalone version of JE
   - JETSON ORIN NANO/NANO SUPER and ORIN NX 
 
   - JETSON ORIN AGX
+  
+  - JETSON XAVIER NX
 
 - GPIO control of all the header pinout as input or output. Low latency, see also [The need for speed](#the-need-for-speed) below for some more information on this
 
 - Catching rising or falling edges in any header pin working as input. Timestamp of the event in nanoseconds in epoch format is provided 
 
-- PWM (hardware) control on header pins 32, 33 on Nano and also 15 on Orin Nano/NX, for Orin AGX the pins are: 13, 15 & 18
+- PWM (hardware) control on header pins 32, 33 on Nano and Xavier NX and also 15 on Orin Nano/NX, for Orin AGX the pins are: 13, 15 & 18
 
 - I2C serial communication over pins: 27 (SDA) & 28 (SCL)  and 3 (SDA) & 5 (SCL)
 
@@ -125,7 +127,9 @@ https://jetsonhacks.com/nvidia-jetson-orin-nano-gpio-header-pinout/
 
 https://jetsonhacks.com/nvidia-jetson-agx-orin-gpio-header-pinout/
 
-The library has been tested on a Jetson Nano: tegra210 (TX1), on a Jetson Orin Nano and also on an Orin AGX.
+https://jetsonhacks.com/nvidia-jetson-xavier-nx-gpio-header-pinout/
+
+The library has been tested on a Jetson Nano: tegra210 (TX1), on a Jetson Orin Nano, Orin AGX and also on a Xavier NX.
 
 
 

@@ -1,6 +1,6 @@
 /*MIT License
  *
- *Copyright (c) 2024 Rubberazer
+ *Copyright (c) 2025 Rubberazer
  *
  *Permission is hereby granted, free of charge, to any person obtaining a copy
  *of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  *SOFTWARE.
  */
 
-/* jetgpio version 2.0 */
+/* jetgpio version 2.1 */
 /* Nano classic extension */
 
 #include <stdio.h>
