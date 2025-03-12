@@ -1,6 +1,7 @@
 # JETGPIO library
 
-[UPDATE XAVIER NX NOW SUPPORTED IN BETA](https://github.com/Rubberazer/JETGPIO/discussions/37)
+[UPDATE XAVIER NX NOW SUPPORTED IN BETA](https://github.com/Rubberazer/JETGPIO/discussions/37). 
+This was possible thanks to [ELEKTRINA](https://www.elektrina.si/?page=home&lang=en), they donated the Xavier's dev kit that allowed me to develop the new version
 
 C library to manage the GPIO header of the Nvidia JETSON boards
 
