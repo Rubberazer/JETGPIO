@@ -17,7 +17,7 @@ install:
 	@if [ "$(CHECKER)" = "" ] && [ "$(DTBFILE)" != "" ]; then\
 		make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules_install;\
 		touch /etc/modules-load.d/jetclocks.conf;\
-		echo "# Load jetclocks module\njetclocks" > /etc/modules-load.d/jetclocks.conf;\
+		echo -e "# Load jetclocks module\njetclocks" > /etc/modules-load.d/jetclocks.conf;\
 		cp $(PWD)/jetclocks.h /usr/include;\
 		depmod -a;\
 		echo "jetclocks.conf created into /etc/modules-load.d/";\
