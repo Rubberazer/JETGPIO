@@ -50,8 +50,8 @@ int main(int argc, char *argv[])
       printf("Jetgpio initialisation OK. Return code:  %d\n", Init);
     }
 
-  // Setting up pin 3 as INPUT first
-  int stat = gpioSetMode(3, JET_INPUT);
+  // Setting up pin 7 as INPUT first
+  int stat = gpioSetMode(7, JET_INPUT);
   if (stat < 0)
     {
       // gpio setting up failed 
@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
       printf("gpio setting up okay. Return code:  %d\n", stat);
     }
 
-  // Now setting up pin 3 to detect edges, rising & falling edge with a 1000 useconds debouncing and when event is detected calling func "calling"
-  int stat2 = gpioSetISRFunc(3, EITHER_EDGE, 1000, &timestamp, &calling);
+  // Now setting up pin 7 to detect edges, rising & falling edge with a 1000 useconds debouncing and when event is detected calling func "calling"
+  int stat2 = gpioSetISRFunc(7, EITHER_EDGE, 1000, &timestamp, &calling);
   if (stat2 < 0)
     {
       /* gpio setting up failed */

@@ -68,9 +68,7 @@ static volatile uint32_t  PWM1_Init;
 static volatile uint32_t  PWM8_Init;
 
 static i2cInfo_t i2cInfo[9];
-#if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
 static int i2c_speed[9];
-#endif
 static SPIInfo_t SpiInfo[3];
 
 static volatile GPIO_CNFO *pin7;
@@ -1614,10 +1612,18 @@ void *callback(void *arg) {
   
   
   if (gpio == 15 || gpio == 27 || gpio == 28) {
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
     strcpy(dev, "/dev/gpiochip1");
+#else
+    strcpy(dev, "/dev/gpiochip2");
+#endif
   }
   else {
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
     strcpy(dev, "/dev/gpiochip0");
+#else
+    strcpy(dev, "/dev/gpiochip1");
+#endif
   }
   
   fd = open(dev, O_RDONLY);
@@ -1690,132 +1696,236 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
     case 7:
       pin7->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin7->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 148;
+#else
+      gpio_offset = 118;
+#endif
       break;
     case 8:
       pin8->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin8->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 138;
+#else
+      gpio_offset = 110;
+#endif
       break;
     case 10:
       pin10->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin10->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 139;
+#else
+      gpio_offset = 111;
+#endif
       break;
     case 11:
       pin11->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin11->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 140;
+#else
+       gpio_offset = 112;
+#endif
       break;
     case 12:
       pin12->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin12->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 157;
+#else
+      gpio_offset = 127;
+#endif
       break;
     case 13:
       pin13->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin13->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 192;
+#else
+      gpio_offset = 149;
+#endif
       break;
     case 15:
       pin15->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin15->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 20;
+#else
+      gpio_offset = 16;
+#endif
       break;
     case 16:
       pin16->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin16->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 196;
+#else
+      gpio_offset = 153;
+#endif
       break;
     case 18:
       pin18->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin18->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 195;
+#else
+      gpio_offset = 152;
+#endif
       break;
     case 19:
       pin19->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin19->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 205;
+#else
+      gpio_offset = 162;
+#endif
       break;
     case 21:
       pin21->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin21->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 204;
+#else
+      gpio_offset = 161;
+#endif
       break;
     case 22:
       pin22->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin22->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 193;
+#else
+      gpio_offset = 150;
+#endif
       break;
     case 23:
       pin23->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin23->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 203;
+#else
+      gpio_offset = 160;
+#endif
       break;
     case 24:
       pin24->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin24->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 206;
+#else
+      gpio_offset = 163;
+#endif
       break;
     case 26:
       pin26->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin26->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 207;
+#else
+      gpio_offset = 164;
+#endif
       break;
     case 27:
       pin27->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin27->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 24;
+#else
+      gpio_offset = 20;
+#endif
       break;
     case 28:
       pin28->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin28->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 23;
+#else
+      gpio_offset = 19;
+#endif
       break;
     case 29:
       pin29->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin29->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 133;
+#else
+      gpio_offset = 105;
+#endif
       break;
     case 31:
       pin31->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin31->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 134;
+#else
+      gpio_offset = 106;
+#endif
       break;
     case 32:
       pin32->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin32->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 136;
+#else
+      gpio_offset = 108;
+#endif
       break;
     case 33:
       pin33->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin33->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 105;
+#else
+      gpio_offset = 84;
+#endif
       break;
     case 35:
       pin35->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin35->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 160;
+#else
+      gpio_offset = 130;
+#endif
       break;
     case 36:
       pin36->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin36->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 141;
+#else
+      gpio_offset = 113;
+#endif
       break;
     case 37:
       pin37->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin37->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 194;
+#else
+      gpio_offset = 151;
+#endif
       break;
     case 38:
       pin38->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin38->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 159;
+#else
+      gpio_offset = 129;
+#endif
       break;
     case 40:
       pin40->CNF[0] = (edge == RISING_EDGE ? 0xd9 : (edge == FALLING_EDGE ? 0xc9 : 0xcd));
       pin40->INT_CLR[0] |= 1;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 158;
+#else
+      gpio_offset = 128;
+#endif
       break;
     default:
       status = -2;
@@ -2011,7 +2121,6 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
     return -3;
   }
   
-#if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
   FILE *fptr;
   snprintf(buf, sizeof(buf), "/sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2cBus);
   fptr = fopen(buf, "r");
@@ -2030,7 +2139,6 @@ int i2cOpen(unsigned i2cBus, unsigned i2cFlags) {
   }
 
   fclose(fptr);
-#endif
   
   strcpy(buf, "modprobe i2c_dev");
     
@@ -2073,14 +2181,12 @@ int i2cClose(unsigned handle) {
   i2cInfo[handle].fd = -1;
   i2cInfo[handle].state = I2C_CLOSED;
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
   char buf[100];
   snprintf(buf, sizeof(buf), "echo %d > /sys/bus/i2c/devices/i2c-%d/bus_clk_rate", i2c_speed[handle], handle);
   if (system(buf) == -1) { 
     printf( "Not possible to return bus speed to original value\n");
     return -1;
   }
-#endif
   
   return 0;
 }
@@ -2284,11 +2390,9 @@ int spiOpen(unsigned spiChan, unsigned speed, unsigned mode, unsigned cs_delay, 
     return -1;
   }
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(5,14,1)
   if (spiChan == 1) {
     spiChan ++; 
   }
-#endif
   
   if (speed < 0 || speed > 50000000) {
     printf( "Speed in bits/second (%d) shouldn't be bigger that 50 Mbit/s\n", speed);
