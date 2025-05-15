@@ -1726,7 +1726,7 @@ int gpioSetISRFunc(unsigned gpio, unsigned edge, unsigned debounce, unsigned lon
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
       gpio_offset = 140;
 #else
-       gpio_offset = 112;
+      gpio_offset = 112;
 #endif
       break;
     case 12:
