@@ -71,6 +71,10 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 - [ZIG Examples](https://github.com/Rubberazer/JETGPIO/tree/main/EXAMPLES_Zig) just for the sake of it
 
+<h2 align="left">PYTHON?:</h2>
+
+Not really, this is a pure C library, but this repo: [ultrasonic_jetson_orinnano_jetpack6.2](https://github.com/Romihi/ultrasonic_jetson_orinnano_jetpack6.2) is a partial Python wrapper to use with some pins, it might be a good example to get started if you need to use Python, I am not involved in any way though, just pointing to its existence.
+
 <h2 align="left">DOCUMENTATION:</h2>
 
 [Some doxygen documentation here](https://rubberazer.github.io/JETGPIO/html/index.html). As a rule of thumb, the library functions names and usage mimic the ones of the pigpio library (which I recommend if you work with Raspberry Pis). Learnt a lot from that one
