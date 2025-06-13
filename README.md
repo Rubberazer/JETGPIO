@@ -73,7 +73,7 @@ You will find code examples to learn how to use the library in both: EXAMPLES_C 
 
 <h2 align="left">PYTHON?:</h2>
 
-Not really, this is a pure C library, but this repo: [ultrasonic_jetson_orinnano_jetpack6.2](https://github.com/Romihi/ultrasonic_jetson_orinnano_jetpack6.2) is a partial Python wrapper to use with some pins, it might be a good example to get started if you need to use Python, I am not involved in any way though, just pointing to its existence.
+Not really, this is a pure C library, but this repo: [ultrasonic_jetson_orinnano_jetpack6.2](https://github.com/Romihi/ultrasonic_jetson_orinnano_jetpack6.2) is a partial Python wrapper to use with some pins, it might be a good example to get started if you need to use Python, I am not involved in any way though, just pointing to its existence
 
 <h2 align="left">DOCUMENTATION:</h2>
 
